@@ -2,13 +2,17 @@ param([Parameter(Mandatory=$true)]
       [string]$libraryName,
       [string]$baseDirectory)
 
-$templateDirectory = pwd.Path + '\t'
-cd ..
+$templateDirectory = (pwd).Path + '\t'
 $baseDirectory = (pwd).Path 
-cd $templateDirectory
 $libraryDirectory = "$baseDirectory\$libraryName"
 $templateString = "x_template_x"
 
+
+if($libraryName -eq("t"))
+{
+    Write-Host "Name 't' is not permitted. Reserved for template directory."
+    return
+}
 
 if($libraryName.Contains(".") -or $libraryName.Contains(" "))
 {
@@ -33,10 +37,10 @@ if($existingDir.Name -eq $libraryName)
 #--------------------------------------------------------------------------
 
 mkdir $libraryDirectory 
+$templateDirectory
+$libraryDirectory
 
 xcopy $templateDirectory $libraryDirectory /E
-
-
 
 $files = Get-ChildItem $libraryDirectory -Exclude *bin*, *obj* -Recurse -File
 
