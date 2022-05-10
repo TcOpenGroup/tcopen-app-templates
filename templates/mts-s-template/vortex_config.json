@@ -1,0 +1,32 @@
+{
+  "ConfigFile": null,
+  "OutputDirectory": "C:\\MTS\\Develop\\gh\\TcOpenGroup\\tcopen-app-templates\\templates\\mts-s-template\\out",
+  "SolutionPath": "C:\\MTS\\Develop\\gh\\TcOpenGroup\\tcopen-app-templates\\templates\\mts-s-template\\789\\789.sln",
+  "CompilableAttributesSignatures": [
+    "wpf",
+    "clr"
+  ],
+  "TypeAttributesContainer": {
+    "AttributesDictionary": {
+      "vortex.compiler.Coding.BuilderOnliner": {
+        "Attributes": []
+      },
+      "vortex.compiler.Coding.BuilderPlainer": {
+        "Attributes": []
+      },
+      "vortex.compiler.Coding.BuilderOnlinerInterface": {
+        "Attributes": []
+      },
+      "vortex.compiler.Coding.BuilderShadowerInterface": {
+        "Attributes": []
+      }
+    }
+  },
+  "CreatePlcLibraries": false,
+  "UpdateControllerVersionInfo": false,
+  "CloseVisualStudionOnDone": false,
+  "BuildConnectorProjects": false,
+  "IsLibraryCapable": true,
+  "DoInferUnknownTypes": false,
+  "DoRequireOpenSolution": false
+}

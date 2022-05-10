@@ -14,10 +14,6 @@
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" /> 
   </ItemGroup>
 
-	<ItemGroup>		
-		<ProjectReference Include="..\x_tempalte_xPlcConnector\x_template_xPlcConnector.csproj" />
-	</ItemGroup>
-
 	<!--PROJ-START
   <ItemGroup>	
     <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoCore\src\TcoCore.Wpf\TcOpen.Inxton.TcoCore.Wpf.csproj" />
@@ -36,6 +32,9 @@
     <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.6.0-386-Create-application-template.913" />
     <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.6.0-386-Create-application-template.913" />
     <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.6.0-386-Create-application-template.913" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
   <!--PCKG-END-->
 
