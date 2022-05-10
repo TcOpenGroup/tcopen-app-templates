@@ -48,7 +48,7 @@ Remove-Item "tcopen-app-templates-$branch" -Force -ErrorAction SilentlyContinue 
 
 $projectDirectory
 Set-Location $projectDirectory
-./scaffold.ps1 $projectName
+./scaffold $projectName
 
 #--------------------------------------------------------------------------
 #                           Cleaning up
