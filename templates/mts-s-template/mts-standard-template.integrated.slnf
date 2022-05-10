@@ -21,10 +21,10 @@
       "..\\TcOpen\\src\\TcoInspectors\\src\\Wpf\\TcOpen.Inxton.TcoInspectors.Wpf\\TcOpen.Inxton.TcoInspectors.Wpf.csproj",
       "..\\TcOpen\\src\\TcoPneumatics\\src\\TcoPneumatics.Wpf\\TcOpen.Inxton.TcoPneumatics.Wpf.csproj",
       "..\\TcOpen\\src\\TcoPneumatics\\src\\TcoPneumaticsConnector\\TcoPneumaticsConnector.csproj",
-      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_x-xae\\x_template_x-xae.tsproj",
-      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_xHmi.Wpf\\x_template_xHmi.Wpf.csproj",
-      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_xPlcConnector\\x_template_xPlcConnector.csproj",
-      "templates\\mts-s-template\\t\\x_tempalte_x\\tests\\x_tempalte_xTests\\x_tempalte_xTests.csproj"
+      "templates\\mts-s-template\\t\\x_template_x\\src\\x_tempalte_x-xae\\x_template_x-xae.tsproj",
+      "templates\\mts-s-template\\t\\x_template_x\\src\\x_tempalte_xHmi.Wpf\\x_template_xHmi.Wpf.csproj",
+      "templates\\mts-s-template\\t\\x_template_x\\src\\x_tempalte_xPlcConnector\\x_template_xPlcConnector.csproj",
+      "templates\\mts-s-template\\t\\x_template_x\\tests\\x_tempalte_xTests\\x_tempalte_xTests.csproj"
     ]
   }
 }
