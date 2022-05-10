@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFrameworks>net48;net5.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Localizations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localizations.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Localizations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localizations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <!--PCKG-START-->
+  <ItemGroup>
+    <PackageReference Include="TcOpen.Inxton.App" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.TcoCoreConnector" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.TcoDataConnector" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.TcoElementsConnector" Version="0.6.0-386-Create-application-template.913" />
+    <PackageReference Include="TcOpen.TcoInspectorsConnector" Version="0.6.0-386-Create-application-template.913" />    
+    <PackageReference Include="TcOpen.TcoPneumaticsConnector" Version="0.6.0-386-Create-application-template.913" />
+  </ItemGroup>
+  <!--PCKG-END-->  
+  
+  <!--PROJ-START
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoCore\src\TcoCoreConnector\TcoCoreConnector.csproj" />    
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoData\src\Repository\RavenDb\TcOpen.Inxton.RavenDb\TcOpen.Inxton.RavenDb.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoData\src\TcoDataConnector\TcoDataConnector.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoElements\src\TcoElementsConnector\TcoElementsConnector.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoInspectors\src\TcoInspectorsConnector\TcoInspectorsConnector.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\TcOpen\src\TcoPneumatics\src\TcoPneumaticsConnector\TcoPneumaticsConnector.csproj" />
+  </ItemGroup>
+  PROJ-END-->
+</Project>

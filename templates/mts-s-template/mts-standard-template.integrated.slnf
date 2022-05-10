@@ -1,0 +1,30 @@
+{
+  "solution": {
+    "path": "..\\..\\templates-tcopen.sln",
+    "projects": [
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\Abstractions\\TcOpen.Inxton.Abstractions.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\Application\\TcOpen.Inxton.App.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\Logging\\TcoOpen.Inxton.Logging\\TcOpen.Inxton.Logging.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\Security.Wpf\\TcOpen.Inxton.Local.Security.Wpf.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\Security\\TcOpen.Inxton.Local.Security.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\TcOpen.Inxton.Wpf\\TcOpen.Inxton.Wpf.csproj",
+      "..\\TcOpen\\src\\TcOpen.Inxton\\src\\TcOpen.Inxton\\TcOpen.Inxton.csproj",
+      "..\\TcOpen\\src\\TcoCore\\src\\TcoCore.Wpf\\TcOpen.Inxton.TcoCore.Wpf.csproj",
+      "..\\TcOpen\\src\\TcoCore\\src\\TcoCoreConnector\\TcoCoreConnector.csproj",
+      "..\\TcOpen\\src\\TcoData\\src\\Data\\TcOpen.Inxton.Data.csproj",
+      "..\\TcOpen\\src\\TcoData\\src\\Repository\\RavenDb\\TcOpen.Inxton.RavenDb\\TcOpen.Inxton.RavenDb.csproj",
+      "..\\TcOpen\\src\\TcoData\\src\\TcoDataConnector\\TcoDataConnector.csproj",
+      "..\\TcOpen\\src\\TcoData\\src\\Wpf\\TcoData.Wpf\\TcOpen.Inxton.Data.Wpf.csproj",
+      "..\\TcOpen\\src\\TcoElements\\src\\TcoElementsConnector\\TcoElementsConnector.csproj",
+      "..\\TcOpen\\src\\TcoElements\\src\\Wpf\\TcoElements.Wpf\\TcOpen.Inxton.TcoElements.Wpf.csproj",
+      "..\\TcOpen\\src\\TcoInspectors\\src\\TcoInspectorsConnector\\TcoInspectorsConnector.csproj",
+      "..\\TcOpen\\src\\TcoInspectors\\src\\Wpf\\TcOpen.Inxton.TcoInspectors.Wpf\\TcOpen.Inxton.TcoInspectors.Wpf.csproj",
+      "..\\TcOpen\\src\\TcoPneumatics\\src\\TcoPneumatics.Wpf\\TcOpen.Inxton.TcoPneumatics.Wpf.csproj",
+      "..\\TcOpen\\src\\TcoPneumatics\\src\\TcoPneumaticsConnector\\TcoPneumaticsConnector.csproj",
+      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_x-xae\\x_template_x-xae.tsproj",
+      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_xHmi.Wpf\\x_template_xHmi.Wpf.csproj",
+      "templates\\mts-s-template\\t\\x_tempalte_x\\src\\x_tempalte_xPlcConnector\\x_template_xPlcConnector.csproj",
+      "templates\\mts-s-template\\t\\x_tempalte_x\\tests\\x_tempalte_xTests\\x_tempalte_xTests.csproj"
+    ]
+  }
+}
