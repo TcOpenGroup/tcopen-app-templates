@@ -92,6 +92,8 @@ Write-Host 'Renaming folder names'
 
 $directories = Get-ChildItem $libraryDirectory -Directory -Recurse
 
+$directories
+
 [array]::Reverse($directories)
 
 foreach ($directory in $directories)
@@ -108,6 +110,15 @@ foreach ($directory in $directories)
 #                       Clean up
 #--------------------------------------------------------------------------
 Remove-Item "$libraryDirectory\scaffoldnewlibrary.ps1" -ErrorAction SilentlyContinue 
+
+#--------------------------------------------------------------------------
+#                      Build    
+#--------------------------------------------------------------------------
+
+dotnet build $libraryDirectory
+$ivfrun = "$libraryDirectory\_Vortex\builder\vortex.compiler.console.exe"
+& $ivfrun  -n false -s "$libraryDirectory\$libraryName.sln"
+dotnet build $libraryDirectory
 
 #--------------------------------------------------------------------------
 #                      Done
