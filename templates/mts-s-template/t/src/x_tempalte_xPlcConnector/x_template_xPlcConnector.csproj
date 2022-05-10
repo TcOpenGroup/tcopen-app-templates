@@ -20,8 +20,9 @@
   </ItemGroup>
 
   <!--PCKG-START-->
-  <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.App" Version="0.6.0-386-Create-application-template.913" />
+  <ItemGroup>	  
+	<PackageReference Include="Inxton.vortex.compiler.console" Version="1.15.9-alpha.703" />
+	<PackageReference Include="TcOpen.Inxton.App" Version="0.6.0-386-Create-application-template.913" />
     <PackageReference Include="TcOpen.Inxton.Local.Security" Version="0.6.0-386-Create-application-template.913" />
     <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.6.0-386-Create-application-template.913" />
     <PackageReference Include="TcOpen.TcoCoreConnector" Version="0.6.0-386-Create-application-template.913" />
