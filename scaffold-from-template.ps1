@@ -1,4 +1,4 @@
-param([string]$Branch = "wip",
+param([string]$Branch = "dev",
     [Parameter(Mandatory=$true)]    
     [string]$ProjectName,    
     [string]$TemplateId = "mts-s-template")
