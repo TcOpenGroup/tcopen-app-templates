@@ -13,8 +13,8 @@ namespace TcOpen.Scaffold
                    .WithParsed(o =>
                    {
                        var context = new Context(o);
-                       context.Execute();                      
-                   });   
+                       context.Execute();
+                   });                   
         }
 
        
