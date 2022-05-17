@@ -7,97 +7,99 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-
-public static class Program
+namespace mts_s_template
 {
-    public static int Main(string[] args)
+    public static class Program
     {
-        return new CakeHost()
-            .UseContext<BuildContext>()
-            .Run(args);        
-    }
-}
-
-[TaskName("Clean")]
-public sealed class CleanTask : FrostingTask<BuildContext>
-{
-    public override void Run(BuildContext context)
-    {
-        context.Clean();        
-    }
-}
-
-[TaskName("Restore")]
-[IsDependentOn(typeof(CleanTask))]
-public sealed class RestoreTask : FrostingTask<BuildContext>
-{
-    // Tasks can be asynchronous
-    public override void Run(BuildContext context)
-    {
-        foreach (var projectFile in context.TemplateProjects)
+        public static int Main(string[] args)
         {
-            context.RestorePackages(projectFile);
+            return new CakeHost()
+                .UseContext<BuildContext>()
+                .Run(args);
         }
-
     }
-}
 
-[TaskName("IvcBuild")]
-[IsDependentOn(typeof(RestoreTask))]
-public sealed class IvcBuildTask : FrostingTask<BuildContext>
-{
-    // Tasks can be asynchronous
-    public override void Run(BuildContext context)
+    [TaskName("Clean")]
+    public sealed class CleanTask : FrostingTask<BuildContext>
     {
-        foreach (var solutionFile in context.TemplateSolutions)
+        public override void Run(BuildContext context)
         {
-            context.RunIvc(solutionFile);
+            context.Clean();
         }
-
     }
-}
 
-[TaskName("Build")]
-[IsDependentOn(typeof(IvcBuildTask))]
-public sealed class BuildTask : FrostingTask<BuildContext>
-{
-    // Tasks can be asynchronous
-    public override void Run(BuildContext context)
-    {        
-        foreach (var solutionFile in context.TemplateSolutions)
-        {          
-            var runner = new MSBuildRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
-            runner.Run(solutionFile, new MSBuildSettings());
-        }       
-    }
-}
-
-[TaskName("Test")]
-[IsDependentOn(typeof(BuildTask))]
-[ContinueOnError]
-public sealed class TestTask : FrostingTask<BuildContext>
-{   
-    public override void Run(BuildContext context)
+    [TaskName("Restore")]
+    [IsDependentOn(typeof(CleanTask))]
+    public sealed class RestoreTask : FrostingTask<BuildContext>
     {
-        context.LoadXaeToPlc(context.TemplateSolutions.FirstOrDefault());
-        var testRunner = new Cake.Common.Tools.VSTest.VSTestRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
-        testRunner.Run(context.TemplateTestFiles.Select(p => new FilePath(p)), new Cake.Common.Tools.VSTest.VSTestSettings());
-    }
-}
+        // Tasks can be asynchronous
+        public override void Run(BuildContext context)
+        {
+            foreach (var projectFile in context.TemplateProjects)
+            {
+                context.RestorePackages(projectFile);
+            }
 
-[TaskName("TearDown")]
-[IsDependentOn(typeof(TestTask))]
-public sealed class TearDownTask : FrostingTask<BuildContext>
-{
-    public override void Run(BuildContext context)
+        }
+    }
+
+    [TaskName("IvcBuild")]
+    [IsDependentOn(typeof(RestoreTask))]
+    public sealed class IvcBuildTask : FrostingTask<BuildContext>
     {
-        context.CloseVsSolution(context.TemplateSolutions.FirstOrDefault());        
-    }
-}
+        // Tasks can be asynchronous
+        public override void Run(BuildContext context)
+        {
+            foreach (var solutionFile in context.TemplateSolutions)
+            {
+                context.RunIvc(solutionFile);
+            }
 
-[TaskName("Default")]
-[IsDependentOn(typeof(TearDownTask))]
-public class DefaultTask : FrostingTask
-{
-    
+        }
+    }
+
+    [TaskName("Build")]
+    [IsDependentOn(typeof(IvcBuildTask))]
+    public sealed class BuildTask : FrostingTask<BuildContext>
+    {
+        // Tasks can be asynchronous
+        public override void Run(BuildContext context)
+        {
+            foreach (var solutionFile in context.TemplateSolutions)
+            {
+                var runner = new MSBuildRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
+                runner.Run(solutionFile, new MSBuildSettings());
+            }
+        }
+    }
+
+    [TaskName("Test")]
+    [IsDependentOn(typeof(BuildTask))]
+    [ContinueOnError]
+    public sealed class TestTask : FrostingTask<BuildContext>
+    {
+        public override void Run(BuildContext context)
+        {
+            context.LoadXaeToPlc(context.TemplateSolutions.FirstOrDefault());
+            var testRunner = new Cake.Common.Tools.VSTest.VSTestRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
+            testRunner.Run(context.TemplateTestFiles.Select(p => new FilePath(p)), new Cake.Common.Tools.VSTest.VSTestSettings());
+        }
+    }
+
+    [TaskName("TearDown")]
+    [IsDependentOn(typeof(TestTask))]
+    public sealed class TearDownTask : FrostingTask<BuildContext>
+    {
+        public override void Run(BuildContext context)
+        {
+            context.CloseVsSolution(context.TemplateSolutions.FirstOrDefault());
+        }
+    }
+
+    [TaskName("Default")]
+    [IsDependentOn(typeof(TearDownTask))]
+    public class DefaultTask : FrostingTask
+    {
+
+    }
 }
