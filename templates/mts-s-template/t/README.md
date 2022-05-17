@@ -2,15 +2,25 @@
 
 ## Preliminary note
 
-The TcOpen group develops this application x_tempalte_x in and for the MTS company. We are making it available to the community for use or inspiration.
+The TcOpen group develops this application in and for the MTS company. We are making it available to the community for use or inspiration.
 
 The application x_tempalte_x will develop to meet the needs of the MTS. We will accept the input from the community.
 There are, though, some limits imposed on the changes of this particular x_tempalte_x.
 TcOpen will develop different application x_tempalte_xs that will be more open to change.
 
+## Pre-requisites
+
+### TcOpen framework pre-requisites
+
+Checkout general pre-requisites for TcOpen framework [here](https://github.com/TcOpenGroup/TcOpen/blob/dev/README.md#prerequisites).
+
+### Template specific pre-requisites
+
+- This template uses RavenDB as storage you will need to register and install an instance of RavenDB. Instructions [here](https://github.com/TcOpenGroup/TcOpen/tree/dev/src/TcoData/src/Repository/RavenDb#how-to-install-it).
+
 ## Overview
 
-This application x_tempalte_x aims to provide scaffolding for automated production/assembly machinery such as:
+This application aims to provide scaffolding for automated production/assembly machinery such as:
 
 - single assembly station.
 - group of standalone assembly stations with an ID system.
@@ -82,11 +92,9 @@ Each station (controlled unit) has a header that contains a set of information:
 - `Operation ended` end operations time stamp on a given station.
 - `Operator` name or id of the operator logged into the given station at the time of processing of the part.
 
-
 ### How are data handled in stations (controlled units)
 
 **Creating entity**: The first station in the chain of production loads *Process settings* to the part (entity) and opens the part for production (Result := InProgress).
-
 
 **Opening entity**: Each following station retrieves data of the given part by its ID at the beginning of the process and checks whether it belongs to the station by checking that EntityHeader.NextStation matches the ID of the station. If the NextStation and ID match the station will start the operation on a given station otherwise the part will be released from the station without performing any operation. When the operations start the part is opened for production on the station (assigns id of the station to Entity header's Operations Opened). The process follows the settings available for the station. During the process, the station fills in traceability data (measurements, detection, ids of assembled parts, etc.) 
 
