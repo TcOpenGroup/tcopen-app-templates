@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
 	  <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
       <IsPackable>false</IsPackable>
@@ -11,10 +10,9 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\..\src\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
     <ProjectReference Include="..\..\src\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
-
 </Project>
