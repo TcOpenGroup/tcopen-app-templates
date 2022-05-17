@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -42,6 +43,8 @@ namespace TcOpen.Scaffold
             DownloadBranchAndExtractBranch();            
             CopyTemplateFolder();
             ReplaceTemplateTags();
+
+            Process.Start("explorer.exe", Path.Combine(CurrentDirectory, this.Options.ProjectName));
         }
 
         private readonly string CurrentDirectory;

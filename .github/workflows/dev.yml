@@ -21,4 +21,4 @@ jobs:
           fetch-depth: 0
       - name: Cake
         run: >
-          .\templates\mts-s-template\build.ps1          
+          .\build.ps1          
