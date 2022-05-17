@@ -17,11 +17,11 @@ namespace x_template_xTests
             var slnFolder = Path.GetFullPath(Path.Combine(Assembly.GetExecutingAssembly().Location, "..\\..\\..\\..\\..\\..\\..\\..\\..\\")); //Environment.GetEnvironmentVariable("slnFolder") ?? @"..\";
 
 #if DEBUG
-            var x_template_xFolder = @"src\TcOpenAppx_template_xs\StandardMtsx_template_x\src\Hmix_template_x.Wpf\bin\Debug\net48";
+            var x_template_xFolder = @"templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net48";
 #else
             var x_template_xFolder = @"src\TcOpenAppx_template_xs\StandardMtsx_template_x\src\Hmix_template_x.Wpf\bin\Release\net48";
 #endif
-            var x_template_xExe = "Hmix_template_x.Wpf.exe";
+            var x_template_xExe = "x_template_xHmi.Wpf.exe";
             var applicationPath = Path.GetFullPath(Path.Combine(slnFolder, x_template_xFolder, x_template_xExe));
             var app = Path.GetFullPath(applicationPath);
             if (File.Exists(applicationPath))

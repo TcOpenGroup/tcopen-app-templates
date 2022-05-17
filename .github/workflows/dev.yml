@@ -1,0 +1,24 @@
+name: dev
+
+on: 
+  push:
+    branches : 
+      - dev
+  pull_request: 
+    paths:
+      - 'src/**'
+      - 'pipelines/**'
+      - '.github/**'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: self-hosted
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+        with :
+          path : '.'
+          fetch-depth: 0
+      - name: Cake
+        run: >
+          .\build.ps1          
