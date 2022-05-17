@@ -16,7 +16,5 @@ namespace TcOpen.Scaffold
                        context.Execute();
                    });                   
         }
-
-       
     }
 }
