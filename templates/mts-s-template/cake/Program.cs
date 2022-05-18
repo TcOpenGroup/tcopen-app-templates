@@ -51,6 +51,7 @@ namespace mts_s_template
         // Tasks can be asynchronous
         public override void Run(BuildContext context)
         {
+
             var cupdater = context.TemplateProjects.Where(p => new FileInfo(p).Name == "cupdater.csproj").FirstOrDefault();
             var settings = new Cake.Common.Tools.DotNet.MSBuild.DotNetMSBuildSettings();                        
             settings.Properties.Add("SolutionDir", new List<string>() { new FileInfo(context.TemplateSolutions.FirstOrDefault()).DirectoryName + "\\" });
