@@ -19,9 +19,8 @@ jobs:
         with :
           path : '.'
           fetch-depth: 0
-      - name: Cake-mts-s-template
+      - name: Cake
+        env:
+          gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}
         run: >
-          .\templates\mts-s-template\build.ps1
-      - name: Cake-scaffolder
-        run: >
-          .\scaffolder\TcOpen.Scaffold\TcOpen.Scaffold.sln
+          .\build.ps1          

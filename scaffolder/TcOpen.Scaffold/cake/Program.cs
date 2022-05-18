@@ -1,6 +1,9 @@
 using Cake.Core;
 using Cake.Frosting;
 using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.GitVersion;
+using Cake.Common.Build.GitHubActions;
+using Cake.Common.Security;
 using System;
 using System.IO;
 using Octokit;
@@ -25,8 +28,8 @@ namespace scaffolder_build
             : base(context)
         {
             Delay = context.Arguments.HasArgument("delay");
+            
         }
-
 
         public void ZipFolder(string sourceFolder, string destinationFile)
         {
@@ -63,7 +66,7 @@ namespace scaffolder_build
     {
         // Tasks can be asynchronous
         public override void Run(BuildContext context)
-        {
+        {            
             context.DotNetBuild("..\\TcOpen.Scaffold.sln", new Cake.Common.Tools.DotNet.Build.DotNetBuildSettings()
             {
                 Configuration = "Release"
@@ -88,6 +91,8 @@ namespace scaffolder_build
     {
         public override void Run(BuildContext context)
         {
+            //var githubActionsProvider = new Cake.Common.Build.GitHubActions.GitHubActionsProvider(context.Environment, context.FileSystem);
+                      
             var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
             var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
             githubClient.Credentials = new Credentials(githubToken);
