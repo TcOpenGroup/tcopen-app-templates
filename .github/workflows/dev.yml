@@ -19,6 +19,9 @@ jobs:
         with :
           path : '.'
           fetch-depth: 0
-      - name: Cake
+      - name: Cake-mts-s-template
         run: >
-          .\build.ps1          
+          .\templates\mts-s-template\build.ps1
+      - name: Cake-scaffolder
+        run: >
+          .\scaffolder\TcOpen.Scaffold\TcOpen.Scaffold.sln
