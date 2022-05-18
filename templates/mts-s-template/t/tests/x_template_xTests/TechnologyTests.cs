@@ -29,14 +29,14 @@ namespace x_template_xTests
 
         [Test]
         public void run_ground_mode()
-        {                        
+        {
             var technology = Entry.Plc.MAIN._technology;
             technology._cu00x._manualTask.Execute();    // This is just to reset all other tasks                                       
-            
+
             technology._groundAllTask.Execute();
 
             Assert.AreEqual(eTaskState.Busy, (eTaskState)technology._cu00x._groundTask._task._taskState.Synchron);
-            System.Threading.Thread.Sleep(1000); // Wait for ground to finish.
+            System.Threading.Thread.Sleep(2500); // Wait for ground to finish.
             Assert.AreEqual(eTaskState.Done, (eTaskState)technology._cu00x._groundTask._task._taskState.Synchron);
             Assert.IsTrue(technology._cu00x._groundTask._groundDone.Synchron);
         }
@@ -47,15 +47,16 @@ namespace x_template_xTests
             var technology = Entry.Plc.MAIN._technology;
             var technologyTask = technology._automatAllTask;
             var cuTask = technology._cu00x._automatTask;
-            technology._cu00x._manualTask.Execute();    // This is just to reset all other tasks                                       
+            technology._cu00x._manualTask.Execute();    // This is just to reset all other tasks
+            System.Threading.Thread.Sleep(2500);
             Assert.IsFalse(technology._cu00x._groundTask._groundDone.Synchron);
 
             technologyTask.Execute();
 
             Assert.AreEqual(eTaskState.Ready, (eTaskState)cuTask._task._taskState.Synchron);
-            System.Threading.Thread.Sleep(300); // Wait for ground to finish.
+            System.Threading.Thread.Sleep(2500); // Wait for ground to finish.
             Assert.AreEqual(eTaskState.Ready, (eTaskState)cuTask._task._taskState.Synchron);
-           
+
         }
 
         [Test]
@@ -73,6 +74,8 @@ namespace x_template_xTests
             Assert.IsTrue(technology._cu00x._groundTask._groundDone.Synchron);
 
             technologyTask.Execute();
+
+            System.Threading.Thread.Sleep(1000);
 
             Assert.AreEqual(eTaskState.Busy, (eTaskState)cuTask._task._taskState.Synchron);
         }
