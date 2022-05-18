@@ -92,26 +92,29 @@ namespace scaffolder_build
         public override void Run(BuildContext context)
         {
             //var githubActionsProvider = new Cake.Common.Build.GitHubActions.GitHubActionsProvider(context.Environment, context.FileSystem);
-                      
-            var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
-            var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
-            githubClient.Credentials = new Credentials(githubToken);
 
-            var release = githubClient.Repository.Release.Create(
-                "TcOpenGroup",
-                "tcopen-app-templates",
-                new NewRelease($"v{GitVersionInformation.SemVer}")
-                {
-                    Name = $"v{GitVersionInformation.SemVer}",
-                    Body = $"Release v{GitVersionInformation.SemVer}",
-                    Draft = true,
-                    Prerelease = true
-                }
-            ).Result;
+            if (context.GitVersion().BranchName == "dev")
+            {
+                var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
+                var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
+                githubClient.Credentials = new Credentials(githubToken);
 
-            var asset = new ReleaseAssetUpload("..\\artifacts\\TcOpen.Scaffold.UI.zip", "application/zip", new StreamReader("..\\artifacts\\TcOpen.Scaffold.UI.zip").BaseStream, TimeSpan.FromSeconds(3600));
+                var release = githubClient.Repository.Release.Create(
+                    "TcOpenGroup",
+                    "tcopen-app-templates",
+                    new NewRelease($"v{GitVersionInformation.SemVer}")
+                    {
+                        Name = $"v{GitVersionInformation.SemVer}",
+                        Body = $"Release v{GitVersionInformation.SemVer}",
+                        Draft = true,
+                        Prerelease = true
+                    }
+                ).Result;
 
-            githubClient.Repository.Release.UploadAsset(release, asset).Wait();
+                var asset = new ReleaseAssetUpload("..\\artifacts\\TcOpen.Scaffold.UI.zip", "application/zip", new StreamReader("..\\artifacts\\TcOpen.Scaffold.UI.zip").BaseStream, TimeSpan.FromSeconds(3600));
+
+                githubClient.Repository.Release.UploadAsset(release, asset).Wait();
+            }
         }
     }
 
