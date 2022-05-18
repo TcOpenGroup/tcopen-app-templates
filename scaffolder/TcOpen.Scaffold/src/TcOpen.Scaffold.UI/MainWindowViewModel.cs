@@ -12,10 +12,23 @@ namespace TcOpen.Scaffold.UI
         private bool isScaffoling;
 
         public MainWindowViewModel()
-        {
+        {                        
+            if(!Context.CheckUpdate())
+            {
+                MessageBox.Show("New version is available");
+            }
+
             ScaffoldCommand = new Prism.Commands.DelegateCommand(() => Exectute());
             SelectOutputFolderCommand = new Prism.Commands.DelegateCommand(() => SelectOutputFolder());
             IsNotScaffoling = true;
+        }
+
+        public string Version
+        {
+            get
+            {
+                return GitVersionInformation.SemVer;
+            }
         }
 
         public bool IsNotScaffoling

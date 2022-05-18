@@ -1,12 +1,9 @@
+using Cake.Common.Tools.DotNet;
 using Cake.Core;
 using Cake.Frosting;
-using Cake.Common.Tools.DotNet;
-using Cake.Common.Tools.GitVersion;
-using Cake.Common.Build.GitHubActions;
-using Cake.Common.Security;
+using Octokit;
 using System;
 using System.IO;
-using Octokit;
 
 namespace scaffolder_build
 {
@@ -28,7 +25,7 @@ namespace scaffolder_build
             : base(context)
         {
             Delay = context.Arguments.HasArgument("delay");
-            
+
         }
 
         public void ZipFolder(string sourceFolder, string destinationFile)
@@ -66,7 +63,7 @@ namespace scaffolder_build
     {
         // Tasks can be asynchronous
         public override void Run(BuildContext context)
-        {            
+        {
             context.DotNetBuild("..\\TcOpen.Scaffold.sln", new Cake.Common.Tools.DotNet.Build.DotNetBuildSettings()
             {
                 Configuration = "Release"
@@ -80,6 +77,18 @@ namespace scaffolder_build
     {
         public override void Run(BuildContext context)
         {
+            context.DotNetPublish("..\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",
+                new Cake.Common.Tools.DotNet.Publish.DotNetPublishSettings()
+                {
+                    Configuration = "Release",
+                    Framework = "net5.0-windows",
+                    PublishSingleFile = true,
+                    SelfContained = true,
+                    PublishReadyToRun = true,
+                    Runtime = "win10-x64",                    
+                    OutputDirectory = "..\\src\\TcOpen.Scaffold.UI\\Publish"
+                });
+
             context.ZipFolder("..\\src\\TcOpen.Scaffold.UI\\bin\\Release\\net5.0-windows", "..\\artifacts\\TcOpen.Scaffold.UI.zip");
         }
     }
@@ -102,9 +111,10 @@ namespace scaffolder_build
                 var release = githubClient.Repository.Release.Create(
                     "TcOpenGroup",
                     "tcopen-app-templates",
-                    new NewRelease($"v{GitVersionInformation.SemVer}")
+                    new NewRelease($"{GitVersionInformation.SemVer}")
                     {
-                        Name = $"v{GitVersionInformation.SemVer}",
+                        Name = $"{GitVersionInformation.SemVer}",
+                        TargetCommitish = GitVersionInformation.Sha,
                         Body = $"Release v{GitVersionInformation.SemVer}",
                         Draft = true,
                         Prerelease = true

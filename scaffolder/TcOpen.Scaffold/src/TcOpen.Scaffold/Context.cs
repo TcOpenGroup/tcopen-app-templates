@@ -37,8 +37,37 @@ namespace TcOpen.Scaffold
             }
         }
 
-        public void Execute()
+        public static bool CheckUpdate()
         {
+            var githubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Guid.NewGuid().ToString()));
+            
+            var releases = githubClient.Repository.Release.GetAll("TcOpenGroup", "tcopen-app-templates").Result.ToList();
+
+            var versions = releases.Select(p => {
+                Semver.SemVersion semVersion = null;
+                if (Semver.SemVersion.TryParse(p.Name, Semver.SemVersionStyles.Any, out semVersion))
+                {
+                    return semVersion;
+                }
+                else
+                {
+                    return new Semver.SemVersion(0);
+                }
+              });
+
+            Semver.SemVersion currentSemVersion;
+            Semver.SemVersion.TryParse(GitVersionInformation.SemVer, Semver.SemVersionStyles.Any, out currentSemVersion);
+            
+            if(versions.Any(p => p > currentSemVersion))
+            {
+                return false;               
+            }
+
+            return true;
+        }
+
+        public void Execute()
+        {          
             var branches = GetGitHubRepositoryBranches();            
             DownloadBranchAndExtractBranch();            
             CopyTemplateFolder();
