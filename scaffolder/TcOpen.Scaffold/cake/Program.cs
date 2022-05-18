@@ -93,7 +93,7 @@ namespace scaffolder_build
         {
             //var githubActionsProvider = new Cake.Common.Build.GitHubActions.GitHubActionsProvider(context.Environment, context.FileSystem);
 
-            if (context.GitVersion().BranchName == "dev")
+            if (GitVersionInformation.BranchName == "dev")
             {
                 var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
                 var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
