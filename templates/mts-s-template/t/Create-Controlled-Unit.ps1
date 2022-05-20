@@ -1,17 +1,17 @@
 Param( [Parameter(Mandatory=$true)]
        [string]$newCuName,
-       [Parameter(Mandatory=$true , HelpMessage="Use CU00x as the default x_tempalte_x")]
-       [string]$Cux_tempalte_xName )
+       [Parameter(Mandatory=$true , HelpMessage="Use CU00x as the default Template")]
+       [string]$CuTemplateName )
 
-function Copy-x_tempalte_x($newName)
+function Copy-Template($newName)
 {
-    $x_tempalte_xFolder = $Cux_tempalte_xName
-    Copy-Item  $x_tempalte_xFolder $newName -Recurse
+    $TemplateFolder = $CuTemplateName
+    Copy-Item  $TemplateFolder $newName -Recurse
 }
 
 function Rename-Files($newName)
 {
-    Get-ChildItem -File -Recurse | Rename-Item -NewName { $_.Name -Replace $Cux_tempalte_xName, $newName }
+    Get-ChildItem -File -Recurse | Rename-Item -NewName { $_.Name -Replace $CuTemplateName, $newName }
 }
 
 function Rename-Function-Blocks($newName)
@@ -19,7 +19,7 @@ function Rename-Function-Blocks($newName)
     $files = Get-ChildItem -File -Recurse 
     foreach($file in $files)
     {
-        $newContent = (Get-Content $file.FullName ).Replace($Cux_tempalte_xName,$newName) 
+        $newContent = (Get-Content $file.FullName ).Replace($CuTemplateName,$newName) 
         Set-Content $file.FullName $newContent
     }
 }
@@ -38,8 +38,8 @@ function Remove-Tc-Id
 
 function Add-ProcessData-Instance($name, $processDataDutPath)
 {
-    $processDatax_tempalte_x = "`n`t`t$Cux_tempalte_xName : $Cux_tempalte_xNameProcessData := (Parent := THISSTRUCT);"
-    $newProcessData = $processDatax_tempalte_x.Replace($Cux_tempalte_xName,$name)
+    $processDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateNameProcessData := (Parent := THISSTRUCT);"
+    $newProcessData = $processDataTemplate.Replace($CuTemplateName,$name)
     $startOfProcessDataRegion = (Get-Content $processDataDutPath | Select-String "END_STRUCT" ).LineNumber
     $processDataDUT = Get-Content $processDataDutPath
     $processDataDUT[$startOfProcessDataRegion -2] += $newProcessData
@@ -48,8 +48,8 @@ function Add-ProcessData-Instance($name, $processDataDutPath)
 
 function Add-TechnologyData-Instance($name, $processDataDutPath)
 {
-    $techDatax_tempalte_x = "`n`t`t$Cux_tempalte_xName : $Cux_tempalte_xNameTechnologicalData := (Parent := THISSTRUCT);"
-    $newProcessData = $techDatax_tempalte_x.Replace($Cux_tempalte_xName,$name)
+    $techDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateNameTechnologicalData := (Parent := THISSTRUCT);"
+    $newProcessData = $techDataTemplate.Replace($CuTemplateName,$name)
     $startOfProcessDataRegion = (Get-Content $processDataDutPath | Select-String "END_STRUCT" ).LineNumber
     $processDataDUT = Get-Content $processDataDutPath
     $processDataDUT[$startOfProcessDataRegion -2] += $newProcessData
@@ -77,7 +77,7 @@ function Link-Files-With-Project($name, $plcProjPath)
     $plcProjContent = Get-Content $plcProjPath
     $technologyNode = '<Compile Include="Technology\Technology.TcPOU">'   
     $technologyNodeLineNumber = ($plcProjContent | Select-String $technologyNode -SimpleMatch).LineNumber
-    $x_tempalte_x =@"
+    $Template =@"
     <Compile Include="Technology\PLACEHOLDER">
       <SubType>Code</SubType>
     </Compile>
@@ -86,27 +86,27 @@ function Link-Files-With-Project($name, $plcProjPath)
     $toAdd = ""
     foreach($file in $filesToAdd)
     {
-        $toAdd += $x_tempalte_x.Replace("PLACEHOLDER", $file.Replace(".\","") )
+        $toAdd += $Template.Replace("PLACEHOLDER", $file.Replace(".\","") )
     }
     $plcProjContent[$technologyNodeLineNumber-2] += $toAdd
     Set-Content $plcProjPath $plcProjContent
 }
 
-function x_tempalte_x-Exits($x_tempalte_xName)
+function Template-Exits($TemplateName)
 {
-    return (Test-Path $x_tempalte_xName)
+    return (Test-Path $TemplateName)
 }
 
 function Create-New-Controlled-Unit($name)
 {
-   Push-Location ".\src\XAE\MainPlc\Technology"
-   if (-Not (x_tempalte_x-Exits $Cux_tempalte_xName))
+   Push-Location ".\src\x_template_x-xae\x_template_xPlc\Technology"
+   if (-Not (Template-Exits $CuTemplateName))
    {
-    Write-Host "x_tempalte_x does not exits"
+    Write-Host "Template does not exits"
     Pop-Location
     return
    }
-   Copy-x_tempalte_x $name
+   Copy-Template $name
    Push-Location $name  
    Rename-Files $name
    Rename-Function-Blocks $name
@@ -114,8 +114,8 @@ function Create-New-Controlled-Unit($name)
    Pop-Location
    Add-ProcessData-Instance $name ((Get-Item ".\Data\ProcessData.TcDUT").FullName)
    Add-TechnologyData-Instance $name ((Get-Item ".\Data\TechnologyData.TcDUT").FullName)
-   Add-Cu-Folder $name ((Get-Item ".\..\MainPlc.plcproj").FullName)
-   Link-Files-With-Project $name ((Get-Item ".\..\MainPlc.plcproj").FullName)
+   Add-Cu-Folder $name ((Get-Item ".\..\x_template_xPlc.plcproj").FullName)
+   Link-Files-With-Project $name ((Get-Item ".\..\x_template_xPlc.plcproj").FullName)
    Pop-Location
 }
 
