@@ -44,7 +44,7 @@ namespace Build.Scaffolder
         {
             context.ProjectRootDirectory = Path.GetFullPath(Path.Combine(context.Environment.WorkingDirectory.FullPath, "..//scaffolder//TcOpen.Scaffold"));
             // delete artifacts folder
-            var artifactsFolder = context.FileSystem.GetDirectory("..\\artifacts");
+            var artifactsFolder = context.FileSystem.GetDirectory(context.ArtifactsFolder);
             if (artifactsFolder.Exists)
             {
                 artifactsFolder.Delete(true);
@@ -73,19 +73,30 @@ namespace Build.Scaffolder
     {
         public override void Run(BuildContext context)
         {
-            context.DotNetPublish($"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",
+            PublishArtifact(context, "net5.0-windows", "TcOpen.Scaffold.UI.zip",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish");
+            PublishArtifact(context, "net5.0", "TcOpen.Scaffold.Runner.zip", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\TcOpen.Scaffold.Runner.csproj", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\Publish");
+        }
+
+        private static void PublishArtifact(BuildContext context,
+                                            string framework,
+                                            string name, 
+                                            string projectFile, 
+                                            string outputFolder)
+        {
+            
+            context.DotNetPublish(projectFile,
                 new Cake.Common.Tools.DotNet.Publish.DotNetPublishSettings()
                 {
                     Configuration = "Release",
-                    Framework = "net5.0-windows",
+                    Framework = framework ,
                     PublishSingleFile = true,
                     SelfContained = false,
-                    PublishReadyToRun = true,
+                    PublishReadyToRun = true,  
                     Runtime = "win10-x64",
-                    OutputDirectory = "${context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish"
+                    OutputDirectory = outputFolder
                 });
 
-            context.ZipFolder($"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\bin\\Release\\net5.0-windows", "..\\artifacts\\TcOpen.Scaffold.UI.zip");
+            context.ZipFolder(outputFolder, Path.GetFullPath(Path.Combine(context.ArtifactsFolder, name)));
         }
     }
 
@@ -116,9 +127,12 @@ namespace Build.Scaffolder
                     }
                 ).Result;
 
-                var asset = new ReleaseAssetUpload($"{context.ProjectRootDirectory}\\artifacts\\TcOpen.Scaffold.UI.zip", "application/zip", new StreamReader($"{context.ProjectRootDirectory}\\artifacts\\TcOpen.Scaffold.UI.zip").BaseStream, TimeSpan.FromSeconds(3600));
 
-                githubClient.Repository.Release.UploadAsset(release, asset).Wait();
+                foreach (var artifact in Directory.EnumerateFiles(context.ArtifactsFolder, "*.zip").Select(p => new FileInfo(p)))
+                {
+                    var asset = new ReleaseAssetUpload(artifact.Name, "application/zip", new StreamReader(artifact.FullName).BaseStream, TimeSpan.FromSeconds(3600));
+                    githubClient.Repository.Release.UploadAsset(release, asset).Wait();
+                }                
             }
         }
     }

@@ -26,6 +26,10 @@ namespace Build
             System.IO.Compression.ZipFile.CreateFromDirectory(sourceFolder, destinationFile);
         }
 
+        private readonly string _artifactsFolder;
+
+        public string ArtifactsFolder => _artifactsFolder;
+
         public string ProjectRootDirectory { get; set; }
         public string TemplateDirectory => System.IO.Path.Combine(ProjectRootDirectory, "t");
 
@@ -170,7 +174,7 @@ namespace Build
         public BuildContext(ICakeContext context)
             : base(context)
         {
-            
+            _artifactsFolder = Path.GetFullPath(Path.Combine(Environment.WorkingDirectory.FullPath, "..//artifacts"));
         }        
     }
 }

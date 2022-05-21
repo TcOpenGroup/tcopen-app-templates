@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F7A3C700-2833-471F-8976-7B0B33EAB89C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Scaffold", "src\TcOpen.Scaffold\TcOpen.Scaffold.csproj", "{13093824-9D60-4DCA-8665-43B803BC1FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tco", "src\TcOpen.Scaffold\tco.csproj", "{13093824-9D60-4DCA-8665-43B803BC1FD6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Scaffold.UI", "src\TcOpen.Scaffold.UI\TcOpen.Scaffold.UI.csproj", "{5AB5EC31-24CA-4CD4-AB1A-E8039D7A29D4}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_repo", "_repo", "{D5417734
 		..\..\GitVersion.yml = ..\..\GitVersion.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Scaffold.Runner", "src\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj", "{1BB114E2-E773-4FA9-B17E-918AB933AAC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Scaffold.Runner", "src\TcOpen.Scaffold.Runner\TcOpen.Scaffold.Runner.csproj", "{7148306E-6608-46D4-9AB4-00B98360FF23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,10 @@ Global
 		{5AB5EC31-24CA-4CD4-AB1A-E8039D7A29D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB5EC31-24CA-4CD4-AB1A-E8039D7A29D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB5EC31-24CA-4CD4-AB1A-E8039D7A29D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BB114E2-E773-4FA9-B17E-918AB933AAC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BB114E2-E773-4FA9-B17E-918AB933AAC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BB114E2-E773-4FA9-B17E-918AB933AAC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BB114E2-E773-4FA9-B17E-918AB933AAC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7148306E-6608-46D4-9AB4-00B98360FF23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7148306E-6608-46D4-9AB4-00B98360FF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7148306E-6608-46D4-9AB4-00B98360FF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7148306E-6608-46D4-9AB4-00B98360FF23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,7 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{13093824-9D60-4DCA-8665-43B803BC1FD6} = {F7A3C700-2833-471F-8976-7B0B33EAB89C}
 		{5AB5EC31-24CA-4CD4-AB1A-E8039D7A29D4} = {F7A3C700-2833-471F-8976-7B0B33EAB89C}
-		{1BB114E2-E773-4FA9-B17E-918AB933AAC1} = {F7A3C700-2833-471F-8976-7B0B33EAB89C}
+		{7148306E-6608-46D4-9AB4-00B98360FF23} = {F7A3C700-2833-471F-8976-7B0B33EAB89C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54834823-6D84-4690-AEEF-4FA784731842}

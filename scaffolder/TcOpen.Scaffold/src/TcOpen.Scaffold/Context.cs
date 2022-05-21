@@ -39,23 +39,9 @@ namespace TcOpen.Scaffold
                 CurrentDirectory = Environment.CurrentDirectory;
             }
         }
-
-        public static void GetNewestVersion()
-        {
-            var latest = Updater.GetNewestVersion(GitVersionInformation.SemVer);
-            if(latest != null)
-            {                
-                Updater.UpdateToNewestRelease(latest);
-            }
-
-            var entryAssembly = Assembly.GetEntryAssembly().Location;
-            var currentDirectory = new FileInfo(entryAssembly).Directory.FullName;
-            var outputFile = Path.Combine(currentDirectory, "latest.zip");          
-        }
-       
+             
         public void Execute()
-        {          
-            var branches = GetGitHubRepositoryBranches();            
+        {                        
             DownloadBranchAndExtractBranch();            
             CopyTemplateFolder();
             ReplaceTemplateTags();
@@ -191,20 +177,6 @@ namespace TcOpen.Scaffold
                     DirectoryCopy(subdir.FullName, temppath, copySubDirs);
                 }
             }
-        }
-
-        private IEnumerable<object> GetGitHubRepositoryBranches()
-        {
-            var client = new WebClient();
-            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-            var json = client.DownloadString("https://api.github.com/repos/TcOpenGroup/tcopen-app-templates/branches");
-            var branches = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<object>>(json);
-            return branches;
-        }
-
-      
-
-
-
+        }       
     }
 }

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,7 +10,6 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>TcOpen template twincat</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
@@ -22,9 +20,7 @@
     <PackageReference Include="Octokit" Version="0.51.0" />   
     <PackageReference Include="Semver" Version="2.1.0" />   
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
   </ItemGroup>
-
 </Project>

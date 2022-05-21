@@ -20,8 +20,6 @@ namespace TcOpen.Scaffold.UI
             IsNotScaffoling = true;
         }
 
-
-
         public string Version
         {
             get
@@ -29,13 +27,11 @@ namespace TcOpen.Scaffold.UI
                 return GitVersionInformation.SemVer;
             }
         }
-
         public bool IsNotScaffoling
         {
             get => isScaffoling;
             set { isScaffoling = value; this.RaisePropertyChanged(nameof(IsNotScaffoling)); }
         } 
-
         private async void Exectute()
         {
             IsNotScaffoling = false;
@@ -43,7 +39,6 @@ namespace TcOpen.Scaffold.UI
             await Task.Run(() => context.Execute());
             IsNotScaffoling = true;
         }
-
         private void SelectOutputFolder()
         {
             using (var fbd = new FolderBrowserDialog())
@@ -56,9 +51,7 @@ namespace TcOpen.Scaffold.UI
                 }
             }
         }
-
         public Options Options { get; set; } = new Options() { Branch = "dev", ProjectName = "MyProject", TemplateName = "mts-s-template" };
-
         public Prism.Commands.DelegateCommand ScaffoldCommand { get; }
         public Prism.Commands.DelegateCommand SelectOutputFolderCommand { get; }        
     }
