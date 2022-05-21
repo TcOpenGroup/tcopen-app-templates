@@ -1,6 +1,4 @@
-using Build;
 using Cake.Core;
-using Cake.Core.Diagnostics;
 using Cake.Frosting;
 using EnvDTE;
 using System;
@@ -9,14 +7,29 @@ using System.IO;
 using System.Linq;
 using TCatSysManagerLib;
 
-namespace mts_s_template
+namespace Build
 {
     public class BuildContext : FrostingContext
     {
-        public string RootRepository => Path.GetFullPath(Path.Combine(Environment.WorkingDirectory.FullPath, ".."));
-        public string TemplateDirectory => Path.GetFullPath(Path.Combine(Environment.WorkingDirectory.FullPath, "../t"));
 
-        public string TemplateTestsDirectory => Path.GetFullPath(Path.Combine(TemplateDirectory, "tests"));
+        public bool CleanEnabled { get; private set; }
+
+        public void ZipFolder(string sourceFolder, string destinationFile)
+        {
+            var outputDirectory = new FileInfo(destinationFile).Directory;
+
+            if (!outputDirectory.Exists)
+            {
+                outputDirectory.Create();
+            }
+
+            System.IO.Compression.ZipFile.CreateFromDirectory(sourceFolder, destinationFile);
+        }
+
+        public string ProjectRootDirectory { get; set; }
+        public string TemplateDirectory => System.IO.Path.Combine(ProjectRootDirectory, "t");
+
+        public string TemplateTestsDirectory => System.IO.Path.GetFullPath(System.IO.Path.Combine(TemplateDirectory, "tests"));
 
         public IEnumerable<string> TemplateTestFiles => Directory.EnumerateFiles(TemplateTestsDirectory, "*test*.dll", SearchOption.AllDirectories)
                                                         .Concat(Directory.EnumerateFiles(TemplateTestsDirectory, "*Test*.dll", SearchOption.AllDirectories));
@@ -32,7 +45,7 @@ namespace mts_s_template
             EnvDTE.DTE dte = GetVsInstance(solutionFile);
 
             var solutionFileInfo = new FileInfo(solutionFile).Directory;
-            var pathToIvc = Path.Combine(solutionFileInfo.FullName, "_Vortex\\builder\\vortex.compiler.console.exe");
+            var pathToIvc = System.IO.Path.Combine(solutionFileInfo.FullName, "_Vortex\\builder\\vortex.compiler.console.exe");
             // var vsProcess = ProcessRunner.Start($"{Environment.GetEnvironmentVariable("TcoDevenv")}", new Cake.Core.IO.ProcessSettings() { Arguments = $"{solutionFile}" });
             var ivcProcess = ProcessRunner.Start(pathToIvc, new Cake.Core.IO.ProcessSettings() { Arguments = $"-s {solutionFile}" });
 
@@ -141,6 +154,7 @@ namespace mts_s_template
 
             return DTE;
         }
+
         public void Clean()
         {
             // Clean directories
@@ -152,11 +166,11 @@ namespace mts_s_template
             .Concat(Directory.EnumerateDirectories(TemplateDirectory, "_meta", SearchOption.AllDirectories))
             .ToList().ForEach(dir => { Directory.Delete(dir, true); });
         }
-
+       
         public BuildContext(ICakeContext context)
             : base(context)
         {
-
-        }
+            
+        }        
     }
 }

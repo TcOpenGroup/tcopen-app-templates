@@ -1,51 +1,48 @@
-using Cake.Common.Tools.DotNet;
+﻿using Cake.Common.Tools.DotNet;
 using Cake.Core;
 using Cake.Frosting;
 using Octokit;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace scaffolder_build
+namespace Build.Scaffolder
 {
-    public static class Program
+    public class Const
     {
-        public static int Main(string[] args)
+        public const string BuildGroupName = " : Scaffolder";
+    }
+
+    [TaskName("Startup" + Const.BuildGroupName)]
+    [IsDependentOn(typeof(mts_s_template.LastTask))]
+    public sealed class StartUpTask : FrostingTask<BuildContext>
+    {
+        public override void Run(BuildContext context)
         {
-            return new CakeHost()
-                .UseContext<BuildContext>()
-                .Run(args);
+            
         }
     }
 
-    public class BuildContext : FrostingContext
+    [TaskName("Setup" + Const.BuildGroupName)]
+    [IsDependentOn(typeof(StartUpTask))]
+    public sealed class SetupTask : FrostingTask<BuildContext>
     {
-        public bool Delay { get; set; }
-
-        public BuildContext(ICakeContext context)
-            : base(context)
+        public override void Run(BuildContext context)
         {
-            Delay = context.Arguments.HasArgument("delay");
-
-        }
-
-        public void ZipFolder(string sourceFolder, string destinationFile)
-        {
-            var outputDirectory = new FileInfo(destinationFile).Directory;
-
-            if (!outputDirectory.Exists)
-            {
-                outputDirectory.Create();
-            }
-
-            System.IO.Compression.ZipFile.CreateFromDirectory(sourceFolder, destinationFile);
+            context.ProjectRootDirectory = Path.GetFullPath(Path.Combine(context.Environment.WorkingDirectory.FullPath, "..//scaffolder//TcOpen.Scaffold"));            
         }
     }
 
-    [TaskName("Clean")]
+    [TaskName("Clean" + Const.BuildGroupName)]
+    [IsDependentOn(typeof(SetupTask))]
     public sealed class CleanTask : FrostingTask<BuildContext>
     {
         public override void Run(BuildContext context)
         {
+            context.ProjectRootDirectory = Path.GetFullPath(Path.Combine(context.Environment.WorkingDirectory.FullPath, "..//scaffolder//TcOpen.Scaffold"));
             // delete artifacts folder
             var artifactsFolder = context.FileSystem.GetDirectory("..\\artifacts");
             if (artifactsFolder.Exists)
@@ -53,48 +50,46 @@ namespace scaffolder_build
                 artifactsFolder.Delete(true);
             }
 
-            context.DotNetClean("..\\TcOpen.Scaffold.sln");
+            context.DotNetClean($"{context.ProjectRootDirectory}\\TcOpen.Scaffold.sln");
         }
     }
 
-    [TaskName("Build")]
+    [TaskName("Build" + Const.BuildGroupName)]
     [IsDependentOn(typeof(CleanTask))]
     public sealed class BuildTask : FrostingTask<BuildContext>
-    {
-        // Tasks can be asynchronous
+    {    
         public override void Run(BuildContext context)
         {
-            context.DotNetBuild("..\\TcOpen.Scaffold.sln", new Cake.Common.Tools.DotNet.Build.DotNetBuildSettings()
+            context.DotNetBuild($"{context.ProjectRootDirectory}\\TcOpen.Scaffold.sln", new Cake.Common.Tools.DotNet.Build.DotNetBuildSettings()
             {
                 Configuration = "Release"
             });
         }
     }
 
-    [TaskName("Create artifacts")]
+    [TaskName("Create artifacts" + Const.BuildGroupName)]
     [IsDependentOn(typeof(BuildTask))]
     public sealed class ArtifactTask : FrostingTask<BuildContext>
     {
         public override void Run(BuildContext context)
         {
-            context.DotNetPublish("..\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",
+            context.DotNetPublish($"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",
                 new Cake.Common.Tools.DotNet.Publish.DotNetPublishSettings()
                 {
                     Configuration = "Release",
                     Framework = "net5.0-windows",
                     PublishSingleFile = true,
-                    SelfContained = true,
+                    SelfContained = false,
                     PublishReadyToRun = true,
-                    Runtime = "win10-x64",                    
-                    OutputDirectory = "..\\src\\TcOpen.Scaffold.UI\\Publish"
+                    Runtime = "win10-x64",
+                    OutputDirectory = "${context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish"
                 });
 
-            context.ZipFolder("..\\src\\TcOpen.Scaffold.UI\\bin\\Release\\net5.0-windows", "..\\artifacts\\TcOpen.Scaffold.UI.zip");
+            context.ZipFolder($"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\bin\\Release\\net5.0-windows", "..\\artifacts\\TcOpen.Scaffold.UI.zip");
         }
     }
 
-
-    [TaskName("Publish release")]
+    [TaskName("Publish release" + Const.BuildGroupName)]
     [IsDependentOn(typeof(ArtifactTask))]
     public sealed class PublishReleaseTask : FrostingTask<BuildContext>
     {
@@ -102,7 +97,7 @@ namespace scaffolder_build
         {
             //var githubActionsProvider = new Cake.Common.Build.GitHubActions.GitHubActionsProvider(context.Environment, context.FileSystem);
 
-            if (GitVersionInformation.BranchName == "dev")
+            //if (GitVersionInformation.BranchName == "dev")
             {
                 var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
                 var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
@@ -121,17 +116,16 @@ namespace scaffolder_build
                     }
                 ).Result;
 
-                var asset = new ReleaseAssetUpload("..\\artifacts\\TcOpen.Scaffold.UI.zip", "application/zip", new StreamReader("..\\artifacts\\TcOpen.Scaffold.UI.zip").BaseStream, TimeSpan.FromSeconds(3600));
+                var asset = new ReleaseAssetUpload($"{context.ProjectRootDirectory}\\artifacts\\TcOpen.Scaffold.UI.zip", "application/zip", new StreamReader($"{context.ProjectRootDirectory}\\artifacts\\TcOpen.Scaffold.UI.zip").BaseStream, TimeSpan.FromSeconds(3600));
 
                 githubClient.Repository.Release.UploadAsset(release, asset).Wait();
             }
         }
     }
 
-
-    [TaskName("Default")]
+    [TaskName("Default" + Const.BuildGroupName)]
     [IsDependentOn(typeof(PublishReleaseTask))]
-    public class DefaultTask : FrostingTask
+    public class LastTask : FrostingTask
     {
     }
 }
