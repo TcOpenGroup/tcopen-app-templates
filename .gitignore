@@ -243,3 +243,4 @@ nugets/
 
 # CI/CD
 artifacts/
+.tools/
