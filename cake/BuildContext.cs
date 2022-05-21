@@ -3,15 +3,18 @@ using Cake.Frosting;
 using EnvDTE;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.IO.Compression;
 using TCatSysManagerLib;
 
 namespace Build
 {
     public class BuildContext : FrostingContext
     {
-
+     
         public bool CleanEnabled { get; private set; }
 
         public void ZipFolder(string sourceFolder, string destinationFile)
@@ -27,8 +30,11 @@ namespace Build
         }
 
         private readonly string _artifactsFolder;
+        private readonly string _toolsFolder;
 
         public string ArtifactsFolder => _artifactsFolder;
+
+        public string ToolsFolder => _toolsFolder;
 
         public string ProjectRootDirectory { get; set; }
         public string TemplateDirectory => System.IO.Path.Combine(ProjectRootDirectory, "t");
@@ -175,6 +181,7 @@ namespace Build
             : base(context)
         {
             _artifactsFolder = Path.GetFullPath(Path.Combine(Environment.WorkingDirectory.FullPath, "..//artifacts"));
+            _toolsFolder = Path.GetFullPath(Path.Combine(Environment.WorkingDirectory.FullPath, "..//.tools"));
         }        
     }
 }

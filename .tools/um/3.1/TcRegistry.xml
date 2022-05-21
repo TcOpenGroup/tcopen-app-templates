@@ -8,6 +8,7 @@
 					<Key Name="System">
 						<Value Name="RunAsDevice" Type="DW">1</Value>
 						<Value Name="AmsNetId" Type="BIN">C0A804010101</Value>
+						<Value Name="LockedMemSize" Type="DW">33554432</Value>
 					</Key>
 					<Key Name="3.1">
 						<Value Name="BootDir" Type="SZ">.\3.1\Boot\</Value>
