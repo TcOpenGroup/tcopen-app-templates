@@ -62,9 +62,11 @@ namespace TcOpen.Scaffold
             Console.WriteLine($"Downloading new version {release.Name}...");
 
             var assets = release.Assets.Select(p => new { p.Name, p.BrowserDownloadUrl });
-            var entryAssembly = Assembly.GetExecutingAssembly().Location;
-            var currentDirectory = new FileInfo(entryAssembly).Directory.FullName;
-            var outputDirectory = Path.Combine(currentDirectory, "l");
+            //// self contained does not have .dll but only exe, entry assembly returns '.dll' file though. In self-contained we need to the the location of exe file.
+            //var entryAssemblyFileInfo = new FileInfo(Assembly.GetEntryAssembly().Location);            
+            //var entryAssembly = entryAssemblyFileInfo.Extension == "exe" ? entryAssemblyFileInfo.FullName : entryAssemblyFileInfo.FullName.Replace(".dll", ".exe");
+            //var currentDirectory = new FileInfo(entryAssembly).Directory.FullName;
+            var outputDirectory = Path.Combine(Environment.CurrentDirectory, "l");
 
             if (!Directory.Exists(outputDirectory))
             {
