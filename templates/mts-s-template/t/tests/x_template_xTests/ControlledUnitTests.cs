@@ -26,6 +26,8 @@ namespace x_template_xTests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
+            var a = x_template_xApp.Get;
+
             Entry.Plc.Connector.BuildAndStart();
 
             var ProcessSettningsRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "ProcessSettings", "", "");
@@ -62,7 +64,7 @@ namespace x_template_xTests
             //var b = Entry.Plc.MAIN._technology._cu00x._groundTask._task._enabled.Cyclic && Entry.Plc.MAIN._technology._cu00x._groundTask._task._isServiceable.Cyclic;
             //var c = Entry.Plc.MAIN._technology._cu00x._manualTask._enabled.Cyclic && Entry.Plc.MAIN._technology._cu00x._manualTask._isServiceable.Cyclic;
 
-            var a = x_template_xApp.Get;
+           
         }
 
         [SetUp]
@@ -99,6 +101,7 @@ namespace x_template_xTests
 
             //            Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._manualTask._taskState.Synchron);
             //            Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._automatTask._task._taskState.Synchron);
+            System.Threading.Thread.Sleep(100);
             Assert.AreEqual(eTaskState.Busy, (eTaskState)cu._groundTask._task._taskState.Synchron);
             while ((eTaskState)cu._groundTask._task._taskState.Synchron == eTaskState.Busy) ;
             while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;

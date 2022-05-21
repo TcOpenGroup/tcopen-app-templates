@@ -35,6 +35,8 @@ namespace x_template_xTests
 
             technology._groundAllTask.Execute();
 
+            System.Threading.Thread.Sleep(250);
+
             Assert.AreEqual(eTaskState.Busy, (eTaskState)technology._cu00x._groundTask._task._taskState.Synchron);
             System.Threading.Thread.Sleep(2500); // Wait for ground to finish.
             Assert.AreEqual(eTaskState.Done, (eTaskState)technology._cu00x._groundTask._task._taskState.Synchron);

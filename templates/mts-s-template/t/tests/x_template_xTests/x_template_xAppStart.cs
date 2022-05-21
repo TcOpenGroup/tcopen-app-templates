@@ -25,7 +25,10 @@ namespace x_template_xTests
             var applicationPath = Path.GetFullPath(Path.Combine(slnFolder, x_template_xFolder, x_template_xExe));
             var app = Path.GetFullPath(applicationPath);
             if (File.Exists(applicationPath))
+            {
                 appProcess = Process.Start(applicationPath);
+                System.Threading.Thread.Sleep(10000);
+            }
             else
                 throw new EntryPointNotFoundException(applicationPath + "Not found. Current PWD " + Environment.CurrentDirectory);
 
