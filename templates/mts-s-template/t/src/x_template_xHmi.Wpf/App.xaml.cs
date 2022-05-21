@@ -14,6 +14,7 @@ using TcOpen.Inxton.TcoCore.Wpf;
 using Vortex.Presentation.Wpf;
 using Raven.Embedded;
 using System.IO;
+using System.Reflection;
 
 namespace x_template_xHmi.Wpf
 {
@@ -28,7 +29,7 @@ namespace x_template_xHmi.Wpf
 
             EmbeddedServer.Instance.StartServer(new ServerOptions
             {
-                DataDirectory = Path.Combine(Environment.CurrentDirectory, "data"),
+                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
                 AcceptEula = true,
                 ServerUrl = "http://127.0.0.1:8080"
             });
