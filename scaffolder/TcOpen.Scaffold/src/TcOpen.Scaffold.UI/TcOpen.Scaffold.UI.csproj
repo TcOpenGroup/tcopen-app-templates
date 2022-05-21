@@ -10,16 +10,58 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Updater\CommandLine.dll" />
+    <None Remove="Updater\Octokit.dll" />
+    <None Remove="Updater\Semver.dll" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.deps.json" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.dll" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.exe" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.pdb" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.runtimeconfig.dev.json" />
+    <None Remove="Updater\TcOpen.Scaffold.Updater.runtimeconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Updater\CommandLine.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\Octokit.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\Semver.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.runtimeconfig.dev.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Updater\TcOpen.Scaffold.Updater.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
-    <PackageReference Include="Octokit" Version="0.51.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />    
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
     <ProjectReference Include="..\TcOpen.Scaffold\TcOpen.Scaffold.csproj" />
   </ItemGroup>
 

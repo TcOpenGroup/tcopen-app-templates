@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace TcOpen.Scaffold.UI
@@ -12,16 +13,14 @@ namespace TcOpen.Scaffold.UI
         private bool isScaffoling;
 
         public MainWindowViewModel()
-        {                        
-            if(!Context.CheckUpdate())
-            {
-                MessageBox.Show("New version is available");
-            }
-
+        {
+            // Checking for updates          
             ScaffoldCommand = new Prism.Commands.DelegateCommand(() => Exectute());
             SelectOutputFolderCommand = new Prism.Commands.DelegateCommand(() => SelectOutputFolder());
             IsNotScaffoling = true;
         }
+
+
 
         public string Version
         {

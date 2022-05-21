@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -37,35 +40,19 @@ namespace TcOpen.Scaffold
             }
         }
 
-        public static bool CheckUpdate()
+        public static void GetNewestVersion()
         {
-            var githubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Guid.NewGuid().ToString()));
-            
-            var releases = githubClient.Repository.Release.GetAll("TcOpenGroup", "tcopen-app-templates").Result.ToList();
-
-            var versions = releases.Select(p => {
-                Semver.SemVersion semVersion = null;
-                if (Semver.SemVersion.TryParse(p.Name, Semver.SemVersionStyles.Any, out semVersion))
-                {
-                    return semVersion;
-                }
-                else
-                {
-                    return new Semver.SemVersion(0);
-                }
-              });
-
-            Semver.SemVersion currentSemVersion;
-            Semver.SemVersion.TryParse(GitVersionInformation.SemVer, Semver.SemVersionStyles.Any, out currentSemVersion);
-            
-            if(versions.Any(p => p > currentSemVersion))
-            {
-                return false;               
+            var latest = Updater.GetNewestVersion(GitVersionInformation.SemVer);
+            if(latest != null)
+            {                
+                Updater.UpdateToNewestRelease(latest);
             }
 
-            return true;
+            var entryAssembly = Assembly.GetEntryAssembly().Location;
+            var currentDirectory = new FileInfo(entryAssembly).Directory.FullName;
+            var outputFile = Path.Combine(currentDirectory, "latest.zip");          
         }
-
+       
         public void Execute()
         {          
             var branches = GetGitHubRepositoryBranches();            

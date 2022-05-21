@@ -23,4 +23,8 @@
     <PackageReference Include="Semver" Version="2.1.0" />   
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
+  </ItemGroup>
+
 </Project>
