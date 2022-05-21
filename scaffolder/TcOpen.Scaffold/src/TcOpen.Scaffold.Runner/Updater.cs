@@ -62,7 +62,7 @@ namespace TcOpen.Scaffold
             Console.WriteLine($"Downloading new version {release.Name}...");
 
             var assets = release.Assets.Select(p => new { p.Name, p.BrowserDownloadUrl });
-            var entryAssembly = Assembly.GetEntryAssembly().Location;
+            var entryAssembly = Assembly.GetExecutingAssembly().Location;
             var currentDirectory = new FileInfo(entryAssembly).Directory.FullName;
             var outputDirectory = Path.Combine(currentDirectory, "l");
 
