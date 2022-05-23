@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <materialDesign:Card Margin="10">
             <StackPanel Margin="10">
@@ -47,5 +48,6 @@
         <materialDesign:Card Margin="10" Grid.Row="1">
             <Button Command="{Binding ScaffoldCommand}" IsEnabled="{Binding IsNotScaffoling}">SCAFFOLD</Button>
         </materialDesign:Card>
+        <TextBlock Grid.Row="2" Text="{Binding Version}" Style="{DynamicResource MaterialDesignTextBlock}" HorizontalAlignment="Right" FontSize="8" Margin="5"/>
     </Grid>
 </Window>

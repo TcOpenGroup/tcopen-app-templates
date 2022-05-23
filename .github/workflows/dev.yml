@@ -20,5 +20,7 @@ jobs:
           path : '.'
           fetch-depth: 0
       - name: Cake
+        env:
+          gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}
         run: >
           .\build.ps1          

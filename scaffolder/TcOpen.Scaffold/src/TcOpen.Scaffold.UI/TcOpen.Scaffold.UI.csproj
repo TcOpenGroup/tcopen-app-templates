@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	 <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
@@ -12,13 +14,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
-    <PackageReference Include="Octokit" Version="0.51.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />    
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcOpen.Scaffold\TcOpen.Scaffold.csproj" />
+    <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
+    <ProjectReference Include="..\TcOpen.Scaffold\tco.csproj" />
   </ItemGroup>
 
 </Project>

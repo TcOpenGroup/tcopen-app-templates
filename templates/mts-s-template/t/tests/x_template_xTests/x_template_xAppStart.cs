@@ -19,13 +19,16 @@ namespace x_template_xTests
 #if DEBUG
             var x_template_xFolder = @"templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net48";
 #else
-            var x_template_xFolder = @"src\TcOpenAppx_template_xs\StandardMtsx_template_x\src\Hmix_template_x.Wpf\bin\Release\net48";
+            var x_template_xFolder = @"templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Release\net48";
 #endif
             var x_template_xExe = "x_template_xHmi.Wpf.exe";
             var applicationPath = Path.GetFullPath(Path.Combine(slnFolder, x_template_xFolder, x_template_xExe));
             var app = Path.GetFullPath(applicationPath);
             if (File.Exists(applicationPath))
+            {
                 appProcess = Process.Start(applicationPath);
+                System.Threading.Thread.Sleep(10000);
+            }
             else
                 throw new EntryPointNotFoundException(applicationPath + "Not found. Current PWD " + Environment.CurrentDirectory);
 
@@ -47,19 +50,19 @@ namespace x_template_xTests
 
         public static x_template_xApp Get
         {
-            get 
+            get
             {
                 if (_instance == null)
                 {
-                    _instance = new x_template_xApp();                         
+                    _instance = new x_template_xApp();
                 }
 
                 return _instance;
             }
-            
+
         }
-            
-       
-        
+
+
+
     }
 }

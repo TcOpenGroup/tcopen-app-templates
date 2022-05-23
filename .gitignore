@@ -240,3 +240,7 @@ nugets/
 
 # VSCode
 .vscode/
+
+# CI/CD
+artifacts/
+.tools/

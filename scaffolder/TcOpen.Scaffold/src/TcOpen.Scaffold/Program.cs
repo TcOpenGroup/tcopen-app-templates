@@ -9,6 +9,7 @@ namespace TcOpen.Scaffold
     {
         static void Main(string[] args)
         {
+            Console.WriteLine($"Running version: {GitVersionInformation.SemVer}");
             Parser.Default.ParseArguments<Options>(args)
                    .WithParsed(o =>
                    {

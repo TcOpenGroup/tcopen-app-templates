@@ -18,6 +18,14 @@
   <ItemGroup>
       <PackageReference Include="Cake.Frosting" Version="2.2.0" />
       <PackageReference Include="envdte100" Version="17.2.32505.113" />
+	  <PackageReference Include="Cake.Frosting" Version="2.2.0" />
+	  <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Octokit" Version="0.51.0" />
+	  <PackageReference Include="Octokit.Extensions" Version="1.0.7" />	 
+	  <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
       <PackageReference Include="NuGet.CommandLine" Version="6.1.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
