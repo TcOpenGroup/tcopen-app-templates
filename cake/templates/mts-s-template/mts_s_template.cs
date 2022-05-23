@@ -111,8 +111,19 @@ namespace Build.mts_s_template
         }
     }
 
-    [TaskName("Closing" + Const.BuildGroupName)]
+    [TaskName("Create artifacts" + Const.BuildGroupName)]
     [IsDependentOn(typeof(TestTask))]
+    [ContinueOnError]
+    public sealed class CreateArtifactsTask : FrostingTask<BuildContext>
+    {
+        public override void Run(BuildContext context)
+        {
+            context.ZipFolder(System.IO.Path.Combine(context.ProjectRootDirectory, "t"), System.IO.Path.Combine(context.ArtifactsFolder, "mts-s-template.zip")); 
+        }
+    }
+
+    [TaskName("Closing" + Const.BuildGroupName)]
+    [IsDependentOn(typeof(CreateArtifactsTask))]
     [ContinueOnError]
     public sealed class LastTask : FrostingTask<BuildContext>
     {
