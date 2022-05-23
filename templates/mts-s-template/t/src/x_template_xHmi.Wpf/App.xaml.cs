@@ -24,25 +24,20 @@ namespace x_template_xHmi.Wpf
     public partial class App : Application
     {
         public App()
-        {
-            // Start embedded ravendb server
-            
-            EmbeddedServer.Instance.StartServer(new ServerOptions
-            {
-                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
-                AcceptEula = true,
-                ServerUrl = "http://127.0.0.1:8080",                
-            });
-
+        {            
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
+
+            StartRavenDBEmbeddedServer();
 
             var authenticationService = SecurityManager
                 .Create(new RavenDbRepository<UserData>(new RavenDbRepositorySettings<UserData>(new string[] { Constants.CONNECTION_STRING_DB }, "Users", "", "")));
-            
+
+           
+
             // App setup
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
-                                        .WriteTo.Console()     
+                                        .WriteTo.Console()
                                         .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
                                         .MinimumLevel.Verbose()
                                         .Enrich.WithEnvironmentName()
@@ -50,7 +45,7 @@ namespace x_template_xHmi.Wpf
                                         .Enrich.WithEnrichedProperties()))
                 .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
                 .SetSecurity(authenticationService)
-                .SetEditValueChangeLogging(Entry.Plc.Connector)              
+                .SetEditValueChangeLogging(Entry.Plc.Connector)
                 .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
                 .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN }));
 
@@ -60,6 +55,7 @@ namespace x_template_xHmi.Wpf
             }
 
             
+
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
 
             SetUpRepositories();
@@ -69,9 +65,32 @@ namespace x_template_xHmi.Wpf
             x_template_xPlc.MAIN._technology._logger.StartLoggingMessages(TcoCore.eMessageCategory.Trace);
 
             SecurityManager.Manager.Service.AuthenticateUser("default", "");
-            
+
         }
-             
+
+        private static void StartRavenDBEmbeddedServer()
+        {
+            // Start embedded RavenDB server
+
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("Starting embedded RavenDB server instance. " +
+                "\nYou should not use this instance in production. " +
+                "\nUsing embedded RavenDB server you agree to the respective EULA." +
+                "\nYou will need to register the licence." +
+                "\nThe data are strored in temporary 'bin' folder of your application, " +
+                "\nif you want to persist your data safely redirect the DataDirectory into different location.");
+            Console.WriteLine("---------------------------------------------------");
+
+            EmbeddedServer.Instance.StartServer(new ServerOptions
+            {
+                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
+                AcceptEula = true,
+                ServerUrl = "http://127.0.0.1:8080",
+            });
+            
+            EmbeddedServer.Instance.OpenStudioInBrowser();
+        }
+
         private void SetUpRepositories()
         {
             var ProcessDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ProcessSettings", "", "");
