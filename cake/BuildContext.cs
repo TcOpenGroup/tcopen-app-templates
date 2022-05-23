@@ -178,6 +178,14 @@ namespace Build
             .ToList().ForEach(dir => { Directory.Delete(dir, true); });
         }
 
+        public void CleanBins(string directory)
+        {
+            // Clean directories
+            Directory.EnumerateDirectories(directory, "bin", SearchOption.AllDirectories)
+            .Concat(Directory.EnumerateDirectories(directory, "obj", SearchOption.AllDirectories))            
+            .ToList().ForEach(dir => { Directory.Delete(dir, true); });
+        }
+
         public void PublishCsProjAsArtifact(BuildContext context,
                                            string framework,
                                            string name,
