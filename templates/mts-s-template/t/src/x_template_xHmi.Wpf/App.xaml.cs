@@ -12,7 +12,9 @@ using TcOpen.Inxton.Local.Security.Wpf;
 using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.TcoCore.Wpf;
 using Vortex.Presentation.Wpf;
-
+using Raven.Embedded;
+using System.IO;
+using System.Reflection;
 
 namespace x_template_xHmi.Wpf
 {
@@ -23,6 +25,15 @@ namespace x_template_xHmi.Wpf
     {
         public App()
         {
+            // Start embedded ravendb server
+            
+            EmbeddedServer.Instance.StartServer(new ServerOptions
+            {
+                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
+                AcceptEula = true,
+                ServerUrl = "http://127.0.0.1:8080",                
+            });
+
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
 
             var authenticationService = SecurityManager

@@ -26,6 +26,6 @@ Example
 |    Template id    |                                           Description                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------ |
 | mts-s-template    | Standard template for [MTS](https://www.mts.sk/en/) more in the readme of the template  `templates\mts-s-template` |
-| more comming soon | -                                                                                                |
+| more coming soon | -                                                                                                |
 
 

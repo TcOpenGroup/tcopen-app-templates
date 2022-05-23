@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <COMReference Include="TCatSysManagerLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>1</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>3c49d6c3-93dc-11d0-b162-00a0248c244b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+      <PackageReference Include="Cake.Frosting" Version="2.2.0" />
+      <PackageReference Include="envdte100" Version="17.2.32505.113" />
+	  <PackageReference Include="Cake.Frosting" Version="2.2.0" />
+	  <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Octokit" Version="0.51.0" />
+	  <PackageReference Include="Octokit.Extensions" Version="1.0.7" />	 
+	  <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+      <PackageReference Include="NuGet.CommandLine" Version="6.1.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+  </ItemGroup>
+</Project>
