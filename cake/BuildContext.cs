@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.IO.Compression;
 using TCatSysManagerLib;
+using Cake.Common.Tools.DotNet;
 
 namespace Build
 {
@@ -176,7 +177,29 @@ namespace Build
             .Concat(Directory.EnumerateDirectories(TemplateDirectory, "_meta", SearchOption.AllDirectories))
             .ToList().ForEach(dir => { Directory.Delete(dir, true); });
         }
-       
+
+        public void PublishCsProjAsArtifact(BuildContext context,
+                                           string framework,
+                                           string name,
+                                           string projectFile,
+                                           string outputFolder)
+        {
+
+            context.DotNetPublish(projectFile,
+                new Cake.Common.Tools.DotNet.Publish.DotNetPublishSettings()
+                {
+                    Configuration = "Release",
+                    Framework = framework,
+                    PublishSingleFile = true,
+                    SelfContained = false,
+                    PublishReadyToRun = true,
+                    Runtime = "win10-x64",
+                    OutputDirectory = outputFolder
+                });
+
+            context.ZipFolder(outputFolder, Path.GetFullPath(Path.Combine(context.ArtifactsFolder, name)));
+        }
+
         public BuildContext(ICakeContext context)
             : base(context)
         {

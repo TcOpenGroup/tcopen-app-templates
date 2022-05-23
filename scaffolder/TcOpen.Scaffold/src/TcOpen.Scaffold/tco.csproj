@@ -19,8 +19,5 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />   
     <PackageReference Include="Octokit" Version="0.51.0" />   
     <PackageReference Include="Semver" Version="2.1.0" />   
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
-  </ItemGroup>
+  </ItemGroup>  
 </Project>

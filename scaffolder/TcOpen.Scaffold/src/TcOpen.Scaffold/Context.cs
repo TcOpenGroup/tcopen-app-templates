@@ -45,33 +45,82 @@ namespace TcOpen.Scaffold
             DownloadBranchAndExtractBranch();            
             CopyTemplateFolder();
             ReplaceTemplateTags();
-
             Process.Start("explorer.exe", Path.Combine(CurrentDirectory, this.Options.ProjectName));
+            ExecuteFirstBuildScript();
+        }
+
+        private void ExecuteFirstBuildScript()
+        {
+            var firstBuildScriptPath = Path.Combine(CurrentDirectory, this.Options.ProjectName, "FirstBuild.ps1");
+            if (File.Exists(firstBuildScriptPath))
+            {
+                File.GetAttributes(firstBuildScriptPath);
+                string strCmdText = Path.Combine(firstBuildScriptPath);
+                var process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe";
+                process.StartInfo.Arguments = "\"&'" + strCmdText + "'\"";
+
+                process.Start();
+                string s = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                using (StreamWriter outfile = new StreamWriter("first_build.txt", true))
+                {
+                    outfile.Write(s);
+                }
+
+            }
         }
 
         private readonly string CurrentDirectory;
         
         private readonly Options Options;
-
+     
         public void DownloadBranchAndExtractBranch()
         {            
-            var zippedBranchFile = Path.Combine(CurrentDirectory, $"{Options.Branch}.zip");
+            var zippedBranchFile = Path.Combine(CurrentDirectory, $"{Options.Source}.zip");
 
-            using (var client = new WebClient())
+            try
             {
-                client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/heads/{Options.Branch}.zip", $"{zippedBranchFile}");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/tags/{Options.Source}.zip", $"{zippedBranchFile}");
+                }
+
+                System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
+                File.Delete(zippedBranchFile);
+                return;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Tag link for '{Options.Source}' does not exists. Trying branch link. ");                
             }
 
-            System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
-            File.Delete(zippedBranchFile);
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/heads/{Options.Source}.zip", $"{zippedBranchFile}");                    
+                }
+
+                System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
+                File.Delete(zippedBranchFile);
+                return;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Neither branch or tag link '{Options.Source}' found in the repository.");
+            }            
         }
 
         public void CopyTemplateFolder()
         {            
-            var sourceFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Branch}", "templates", Options.TemplateName, "t");
+            var sourceFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}", "templates", Options.TemplateName, "t");
             var destinationFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
             DirectoryCopy(sourceFolder, destinationFolder, true);
-            Directory.Delete(Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Branch}"), true);
+            Directory.Delete(Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}"), true);
         }
 
         public void ReplaceFileNames()

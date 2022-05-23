@@ -69,39 +69,20 @@ namespace Build.Scaffolder
 
     [TaskName("Create artifacts" + Const.BuildGroupName)]
     [IsDependentOn(typeof(BuildTask))]
-    public sealed class ArtifactTask : FrostingTask<BuildContext>
+    public sealed class CreateArtifactTask : FrostingTask<BuildContext>
     {
         public override void Run(BuildContext context)
         {
-            PublishArtifact(context, "net5.0-windows", "TcOpen.Scaffold.UI.zip",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish");
-            PublishArtifact(context, "net5.0", "TcOpen.Scaffold.Runner.zip", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\TcOpen.Scaffold.Runner.csproj", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\Publish");
+            context.PublishCsProjAsArtifact(context, "net5.0-windows", "TcOpen.Scaffold.UI.zip",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish");
+            context.PublishCsProjAsArtifact(context, "net5.0", "tco.cli.zip", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold\\tco.csproj", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold\\Publish");
+            //PublishArtifact(context, "net5.0", "TcOpen.Scaffold.Runner.zip", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\TcOpen.Scaffold.Runner.csproj", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.Runner\\Publish");
         }
 
-        private static void PublishArtifact(BuildContext context,
-                                            string framework,
-                                            string name, 
-                                            string projectFile, 
-                                            string outputFolder)
-        {
-            
-            context.DotNetPublish(projectFile,
-                new Cake.Common.Tools.DotNet.Publish.DotNetPublishSettings()
-                {
-                    Configuration = "Release",
-                    Framework = framework ,
-                    PublishSingleFile = true,
-                    SelfContained = false,
-                    PublishReadyToRun = true,  
-                    Runtime = "win10-x64",
-                    OutputDirectory = outputFolder
-                });
-
-            context.ZipFolder(outputFolder, Path.GetFullPath(Path.Combine(context.ArtifactsFolder, name)));
-        }
+       
     }
 
     [TaskName("Publish release" + Const.BuildGroupName)]
-    [IsDependentOn(typeof(ArtifactTask))]
+    [IsDependentOn(typeof(CreateArtifactTask))]
     public sealed class PublishReleaseTask : FrostingTask<BuildContext>
     {
         public override void Run(BuildContext context)

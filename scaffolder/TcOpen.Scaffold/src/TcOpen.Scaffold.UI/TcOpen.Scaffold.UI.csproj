@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcOpen.Scaffold.Updater\TcOpen.Scaffold.Runner.csproj" />
     <ProjectReference Include="..\TcOpen.Scaffold\tco.csproj" />
   </ItemGroup>
 
