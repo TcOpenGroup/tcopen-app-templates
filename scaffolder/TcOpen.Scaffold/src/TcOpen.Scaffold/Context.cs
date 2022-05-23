@@ -46,34 +46,8 @@ namespace TcOpen.Scaffold
             CopyTemplateFolder();
             ReplaceTemplateTags();
             Process.Start("explorer.exe", Path.Combine(CurrentDirectory, this.Options.ProjectName));
-            ExecuteFirstBuildScript();
         }
-
-        private void ExecuteFirstBuildScript()
-        {
-            var firstBuildScriptPath = Path.Combine(CurrentDirectory, this.Options.ProjectName, "FirstBuild.ps1");
-            if (File.Exists(firstBuildScriptPath))
-            {
-                File.GetAttributes(firstBuildScriptPath);
-                string strCmdText = Path.Combine(firstBuildScriptPath);
-                var process = new Process();
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe";
-                process.StartInfo.Arguments = "\"&'" + strCmdText + "'\"";
-
-                process.Start();
-                string s = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-
-                using (StreamWriter outfile = new StreamWriter("first_build.txt", true))
-                {
-                    outfile.Write(s);
-                }
-
-            }
-        }
-
+       
         private readonly string CurrentDirectory;
         
         private readonly Options Options;
