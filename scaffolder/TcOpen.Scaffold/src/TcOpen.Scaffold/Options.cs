@@ -4,24 +4,24 @@ using System.ComponentModel;
 namespace TcOpen.Scaffold
 {
     public class Options : INotifyPropertyChanged
-    {
-        string branch;
-        [Option('b', "branch", Default = "dev", HelpText = "Branch from which draw the scaffold.")]
-        public string Branch
+    {        
+        string source;
+        [Option('b', "source", Default = null, HelpText = "Branch from which draw the scaffold.")]
+        public string Source
         {
-            get => branch;
+            get => source;
             set
             {
-                if (branch == value)
+                if (source == value)
                 {
                     return;
                 }
 
-                branch = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Branch)));
+                source = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Source)));
             }
         }
-
+     
         string projectName;
         [Option('n', "project-name", Default = "MyProject", HelpText = "Project name.")]
         public string ProjectName

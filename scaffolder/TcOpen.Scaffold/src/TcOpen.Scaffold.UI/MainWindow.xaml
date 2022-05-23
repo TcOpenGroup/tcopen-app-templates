@@ -27,8 +27,8 @@
                 </Style>
             </StackPanel.Resources>
             <WrapPanel>
-                <TextBlock>Branch</TextBlock>
-                <TextBox Text="{Binding Options.Branch}"></TextBox>
+                <TextBlock>Source (tag or branch name)</TextBlock>
+                <TextBox Text="{Binding Options.Source}"></TextBox>
             </WrapPanel>
             <WrapPanel>
                 <TextBlock>Template name</TextBlock>

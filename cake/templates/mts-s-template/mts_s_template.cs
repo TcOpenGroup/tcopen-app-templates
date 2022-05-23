@@ -111,6 +111,8 @@ namespace Build.mts_s_template
         }
     }
 
+    
+
     [TaskName("Closing" + Const.BuildGroupName)]
     [IsDependentOn(typeof(TestTask))]
     [ContinueOnError]

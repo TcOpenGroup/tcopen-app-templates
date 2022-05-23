@@ -88,7 +88,7 @@ namespace x_template_xHmi.Wpf
                 ServerUrl = "http://127.0.0.1:8080",
             });
             
-            EmbeddedServer.Instance.OpenStudioInBrowser();
+           // EmbeddedServer.Instance.OpenStudioInBrowser();
         }
 
         private void SetUpRepositories()
