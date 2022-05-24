@@ -171,10 +171,6 @@
       <DefaultResolution>TcoInspectors, 0.6.0.835 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoInspectors</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="TcoIoBeckhoff">
-      <DefaultResolution>TcoIoBeckhoff, 0.5.0.834 (Vortex.Library)</DefaultResolution>
-      <Namespace>TcoIoBeckhoff</Namespace>
-    </PlaceholderReference>
     <PlaceholderReference Include="TcoPneumatics">
       <DefaultResolution>TcoPneumatics, 0.6.0.835 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
@@ -197,9 +193,6 @@
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoInspectors">
       <Resolution>TcoInspectors, 0.6.0.835 (Vortex.Library)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="TcoIoBeckhoff">
-      <Resolution>TcoIoBeckhoff, 0.5.0.834 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
       <Resolution>TcoPneumatics, 0.6.0.835 (Vortex.Library)</Resolution>
