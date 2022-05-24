@@ -59,6 +59,16 @@ namespace Build.mts_s_template
                 context.RestorePackages(projectFile);
             }
 
+            try
+            {
+                context.DotNetBuild(System.IO.Path.Combine(context.ProjectRootDirectory, 
+                                                           "/t/src/x_template_xPlcConnector/x_template_xPlcConnector.csproj"));
+            }
+            catch
+            {
+                //swallow;
+            }
+
         }
     }
 
