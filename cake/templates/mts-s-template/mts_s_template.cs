@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cake.Frosting;
+using Cake.Core.Diagnostics;
 
 namespace Build.mts_s_template
 {
@@ -61,8 +63,17 @@ namespace Build.mts_s_template
 
             try
             {
-                context.DotNetBuild(System.IO.Path.Combine(context.ProjectRootDirectory, 
-                                                           "/t/src/x_template_xPlcConnector/x_template_xPlcConnector.csproj"));
+                context.Log.Information("This build may fail. Serves to restrore IVC");
+
+                var settings = new Cake.Common.Tools.DotNet.MSBuild.DotNetMSBuildSettings();
+                settings.Properties.Add("SolutionDir", new List<string>() { new FileInfo(context.TemplateSolutions.FirstOrDefault()).DirectoryName + "\\" });
+                settings.Verbosity = DotNetVerbosity.Quiet;
+                
+                context.DotNetBuild(System.IO.Path.Combine(context.ProjectRootDirectory,
+                                                           "t\\src\\x_template_xPlcConnector\\x_template_xPlcConnector.csproj"),
+                                    new Cake.Common.Tools.DotNet.Build.DotNetBuildSettings() { MSBuildSettings = settings });
+
+
             }
             catch
             {
@@ -78,16 +89,11 @@ namespace Build.mts_s_template
     {
         // Tasks can be asynchronous
         public override void Run(BuildContext context)
-        {
-            var cupdater = context.TemplateProjects.Where(p => new FileInfo(p).Name == "cupdater.csproj").FirstOrDefault();
-            var settings = new Cake.Common.Tools.DotNet.MSBuild.DotNetMSBuildSettings();
-            settings.Properties.Add("SolutionDir", new List<string>() { new FileInfo(context.TemplateSolutions.FirstOrDefault()).DirectoryName + "\\" });
-            
+        {                       
             foreach (var solutionFile in context.TemplateSolutions)
             {
                 context.RunIvc(solutionFile);
             }
-
         }
     }
 
@@ -118,9 +124,7 @@ namespace Build.mts_s_template
             testRunner.Run(context.TemplateTestFiles.Select(p => new FilePath(p)), new Cake.Common.Tools.VSTest.VSTestSettings());
         }
     }
-
     
-
     [TaskName("Closing" + Const.BuildGroupName)]
     [IsDependentOn(typeof(TestTask))]
     [ContinueOnError]
