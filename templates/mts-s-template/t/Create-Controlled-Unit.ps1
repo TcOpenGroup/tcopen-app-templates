@@ -38,7 +38,7 @@ function Remove-Tc-Id
 
 function Add-ProcessData-Instance($name, $processDataDutPath)
 {
-    $processDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateNameProcessData := (Parent := THISSTRUCT);"
+    $processDataTemplate = "`n`t`t$CuTemplateName : $CuTemplate"+"NameProcessData := (Parent := THISSTRUCT);"
     $newProcessData = $processDataTemplate.Replace($CuTemplateName,$name)
     $startOfProcessDataRegion = (Get-Content $processDataDutPath | Select-String "END_STRUCT" ).LineNumber
     $processDataDUT = Get-Content $processDataDutPath
@@ -48,7 +48,7 @@ function Add-ProcessData-Instance($name, $processDataDutPath)
 
 function Add-TechnologyData-Instance($name, $processDataDutPath)
 {
-    $techDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateNameTechnologicalData := (Parent := THISSTRUCT);"
+    $techDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateName"+"TechnologicalData := (Parent := THISSTRUCT);"
     $newProcessData = $techDataTemplate.Replace($CuTemplateName,$name)
     $startOfProcessDataRegion = (Get-Content $processDataDutPath | Select-String "END_STRUCT" ).LineNumber
     $processDataDUT = Get-Content $processDataDutPath
