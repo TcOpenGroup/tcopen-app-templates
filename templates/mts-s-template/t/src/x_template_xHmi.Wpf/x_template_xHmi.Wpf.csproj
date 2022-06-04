@@ -27,12 +27,13 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.6.0-alpha.835" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.6.0-alpha.835" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.6.0-alpha.835" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.6.0-alpha.835" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.6.0-alpha.835" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.6.0-alpha.835" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.7.0-alpha.858" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.7.0-alpha.858" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
