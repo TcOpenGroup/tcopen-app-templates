@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.2.0.0">
+  <DUT Name="EC1_DFE7C435" Id="{9906eff9-1a38-4768-8cea-d48876d0ad8d}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: IODEVICETYPE_ETHERCATPROT'}
+{attribute addProperty BoxType "IODEVICETYPE_ETHERCATPROT"}
+{attribute addProperty Id "A1A1_A967F0EF23SyncUnitsSyncUnits_3DFA47ED27InputsInputs_A65FACA410OutputsOutputs_23C0ED1D6InfoDataInfoData_E68C61CD28"}
+{attribute addProperty CRC "3756508213"}
+{attribute addProperty Size "94"}
+TYPE EC1_DFE7C435 :
+STRUCT
+	{attribute addProperty Name "A1"}
+	{attribute addProperty PreviousPort "EC1 : Master"}
+	A1 : A1_A967F0EF;
+	{attribute addProperty Name "SyncUnits"}
+	SyncUnits : SyncUnits_3DFA47ED;
+	{attribute addProperty Name "Inputs"}
+	Inputs : Inputs_A65FACA4;
+	{attribute addProperty Name "Outputs"}
+	Outputs : Outputs_23C0ED1D;
+	{attribute addProperty Name "InfoData"}
+	InfoData : InfoData_E68C61CD;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

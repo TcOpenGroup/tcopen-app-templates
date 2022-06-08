@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.2.0.0">
+  <DUT Name="EtcSlaveBase_82538BE2" Id="{c17d8134-8acd-473b-88d8-c3039af4d15c}">
+    <Declaration><![CDATA[
+TYPE EtcSlaveBase_82538BE2 :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

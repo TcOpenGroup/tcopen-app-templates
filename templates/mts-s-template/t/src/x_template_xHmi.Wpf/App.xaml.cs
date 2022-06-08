@@ -16,6 +16,8 @@ using Raven.Embedded;
 using System.IO;
 using System.Reflection;
 using TcOpen.Inxton.Security;
+using System.Linq;
+using Vortex.Connector;
 
 namespace x_template_xHmi.Wpf
 {
@@ -73,6 +75,7 @@ namespace x_template_xHmi.Wpf
 
             // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser("default", "");
+               
         }
 
         private static void SetUpExternalAuthenticationDevice()
