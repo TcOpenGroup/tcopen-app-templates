@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -35,10 +35,12 @@
     <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.7.0-alpha.861" />
     <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.7.0-alpha.861" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
-  </ItemGroup>
   <!--PCKG-END-->
+	
+ <ItemGroup>
+		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
+ </ItemGroup>
+
 
 	<ItemGroup>
 	  <ApplicationDefinition Update="App.xaml">
