@@ -1,5 +1,5 @@
 
-$projects = Get-ChildItem .\x_tempalte_x -recurse "*.csproj" 
+$projects = Get-ChildItem .\t\ -recurse "*.csproj" 
 
 
 foreach($project in $projects)
