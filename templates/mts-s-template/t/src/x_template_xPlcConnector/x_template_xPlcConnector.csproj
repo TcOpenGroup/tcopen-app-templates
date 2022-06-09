@@ -22,14 +22,14 @@
   <!--PCKG-START-->
   <ItemGroup>
 	<PackageReference Include="Inxton.vortex.compiler.console" Version="1.15.9-alpha.703" />
-	<PackageReference Include="TcOpen.Inxton.App" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.TcoCoreConnector" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.TcoDataConnector" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.TcoElementsConnector" Version="0.7.0-alpha.861" />
-    <PackageReference Include="TcOpen.TcoInspectorsConnector" Version="0.7.0-alpha.861" />    
-    <PackageReference Include="TcOpen.TcoPneumaticsConnector" Version="0.7.0-alpha.861" />
+	<PackageReference Include="TcOpen.Inxton.App" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.TcoCoreConnector" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.TcoDataConnector" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.TcoElementsConnector" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.TcoInspectorsConnector" Version="0.7.0-alpha.863" />    
+    <PackageReference Include="TcOpen.TcoPneumaticsConnector" Version="0.7.0-alpha.863" />
   </ItemGroup>
   <!--PCKG-END-->  
   

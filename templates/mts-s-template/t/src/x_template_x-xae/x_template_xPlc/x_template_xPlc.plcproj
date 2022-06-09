@@ -234,23 +234,23 @@
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoCore">
-      <DefaultResolution>TcoCore, 0.7.0.861 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoCore, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoCore</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoData">
-      <DefaultResolution>TcoData, 0.7.0.861 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoData, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoData</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoElements">
-      <DefaultResolution>TcoElements, 0.7.0.861 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoElements, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoElements</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoInspectors">
-      <DefaultResolution>TcoInspectors, 0.7.0.861 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoInspectors, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoInspectors</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoPneumatics">
-      <DefaultResolution>TcoPneumatics, 0.7.0.861 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoPneumatics, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
     </PlaceholderReference>
   </ItemGroup>
@@ -261,19 +261,19 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="TcoCore">
-      <Resolution>TcoCore, 0.7.0.861 (Vortex.Library)</Resolution>
+      <Resolution>TcoCore, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoData">
-      <Resolution>TcoData, 0.7.0.861 (Vortex.Library)</Resolution>
+      <Resolution>TcoData, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoElements">
-      <Resolution>TcoElements, 0.7.0.861 (Vortex.Library)</Resolution>
+      <Resolution>TcoElements, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoInspectors">
-      <Resolution>TcoInspectors, 0.7.0.861 (Vortex.Library)</Resolution>
+      <Resolution>TcoInspectors, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
-      <Resolution>TcoPneumatics, 0.7.0.861 (Vortex.Library)</Resolution>
+      <Resolution>TcoPneumatics, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
