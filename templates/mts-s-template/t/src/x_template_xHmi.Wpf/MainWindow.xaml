@@ -7,17 +7,20 @@
     xmlns:mainview="clr-namespace:x_template_xHmi.Wpf.Views.MainView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vortex="http://vortex.mts/xaml"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    WindowStyle="ToolWindow"
     Width="800"
     Height="450"
     mc:Ignorable="d"
-    Title="MainWindow">
+    Title="x_tempalte_x">
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
-        <TabControl>
-            <TabItem>
-                <mainview:MainView />
+        <TabControl TabStripPlacement="Bottom">
+            <TabItem Header="Operator">
+                <mainview:MainView/>
             </TabItem>
         </TabControl>
     </Grid>

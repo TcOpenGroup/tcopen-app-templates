@@ -11,6 +11,7 @@
       "..\\TcOpen\\src\\TcOpen.Inxton\\src\\TcOpen.Inxton\\TcOpen.Inxton.csproj",
       "..\\TcOpen\\src\\TcoCore\\src\\TcoCore.Wpf\\TcOpen.Inxton.TcoCore.Wpf.csproj",
       "..\\TcOpen\\src\\TcoCore\\src\\TcoCoreConnector\\TcoCoreConnector.csproj",
+	"..\\TcOpen\\src\\TcoCore\\src\\XaeTcoCore\\XaeTcoCore.tsproj",
       "..\\TcOpen\\src\\TcoData\\src\\Data\\TcOpen.Inxton.Data.csproj",
       "..\\TcOpen\\src\\TcoData\\src\\Repository\\RavenDb\\TcOpen.Inxton.RavenDb\\TcOpen.Inxton.RavenDb.csproj",
       "..\\TcOpen\\src\\TcoData\\src\\TcoDataConnector\\TcoDataConnector.csproj",
