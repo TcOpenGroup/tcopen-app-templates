@@ -15,6 +15,9 @@ using Vortex.Presentation.Wpf;
 using Raven.Embedded;
 using System.IO;
 using System.Reflection;
+using TcOpen.Inxton.Security;
+using System.Linq;
+using Vortex.Connector;
 
 namespace x_template_xHmi.Wpf
 {
@@ -24,16 +27,11 @@ namespace x_template_xHmi.Wpf
     public partial class App : Application
     {
         public App()
-        {            
+        {
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
 
             StartRavenDBEmbeddedServer();
-
-            var authenticationService = SecurityManager
-                .Create(new RavenDbRepository<UserData>(new RavenDbRepositorySettings<UserData>(new string[] { Constants.CONNECTION_STRING_DB }, "Users", "", "")));
-
-           
-
+          
             // App setup
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
@@ -44,28 +42,52 @@ namespace x_template_xHmi.Wpf
                                         .Enrich.WithEnvironmentUserName()
                                         .Enrich.WithEnrichedProperties()))
                 .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
-                .SetSecurity(authenticationService)
+                .SetSecurity(CreateSecurityManageUsingRavenDb())
                 .SetEditValueChangeLogging(Entry.Plc.Connector)
                 .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
                 .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN }));
 
+            // Creates new 'default' user if the user repository is empty.
+
             if (SecurityManager.Manager.UserRepository.Count == 0)
             {
+                TcOpen.Inxton.TcoAppDomain.Current.Logger.Warning("No users are defined in the repository. " +
+                                  "\nCreating first user with default setting. " +
+                                  "\nMake sure you remove this user once you have set up user rights for your users.", new { });
+
                 SecurityManager.Manager.UserRepository.Create("default", new UserData("default", "", new string[] { "Administrator" }));
             }
 
-            
-
+            // Otherwise undocumented feature in official IVF, for details refer to internal documentation.
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
 
-            SetUpRepositories();
+            SetUpRepositoriesUsingRavenDb();
 
-            new Roles();
+            // Create user roles for this application.
+            Roles.Create();
 
-            x_template_xPlc.MAIN._technology._logger.StartLoggingMessages(TcoCore.eMessageCategory.Trace);
+            // Starts the retrieval loop from of the messages from the PLC
+            // If you have more TcOpen.Inxton application make sure you retrieve the messages only one of them.
+            x_template_xPlc.MAIN._technology._logger.StartLoggingMessages(TcoCore.eMessageCategory.Info);
+            
+            SetUpExternalAuthenticationDevice();
 
+
+            // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser("default", "");
+               
+        }
 
+        private static void SetUpExternalAuthenticationDevice()
+        {            
+            try
+            {
+                SecurityManager.Manager.Service.ExternalAuthorization = TcOpen.Inxton.Local.Security.Readers.ExternalTokenAuthorization.CreateComReader("COM3");
+            }
+            catch (Exception ex)
+            {
+                TcOpen.Inxton.TcoAppDomain.Current.Logger.Warning($"Authentication device was not properly initialized:'{ex.Message}'", ex);
+            }
         }
 
         private static void StartRavenDBEmbeddedServer()
@@ -91,7 +113,14 @@ namespace x_template_xHmi.Wpf
            // EmbeddedServer.Instance.OpenStudioInBrowser();
         }
 
-        private void SetUpRepositories()
+        private IAuthenticationService CreateSecurityManageUsingRavenDb()
+        {
+            return SecurityManager.Create(new RavenDbRepository<UserData>(
+                                          new RavenDbRepositorySettings<UserData>
+                                          (new string[] { Constants.CONNECTION_STRING_DB }, "Users", "", "")));
+        }
+
+        private void SetUpRepositoriesUsingRavenDb()
         {
             var ProcessDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ProcessSettings", "", "");
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processSettings, new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));

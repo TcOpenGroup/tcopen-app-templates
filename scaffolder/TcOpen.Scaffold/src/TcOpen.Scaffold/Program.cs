@@ -13,9 +13,10 @@ namespace TcOpen.Scaffold
             Parser.Default.ParseArguments<Options>(args)
                    .WithParsed(o =>
                    {
-                       o.Source = string.IsNullOrEmpty(o.Source) ? GitVersionInformation.SemVer : o.Source;
+                       o.BranchOrTag = string.IsNullOrEmpty(o.BranchOrTag) ? GitVersionInformation.SemVer : o.BranchOrTag;
+                       o.Release = string.IsNullOrEmpty(o.Release) ? GitVersionInformation.SemVer : o.Release;
                        var context = new Context(o);
-                       context.Execute();
+                       context.Execute(o);
                    });                   
         }
     }

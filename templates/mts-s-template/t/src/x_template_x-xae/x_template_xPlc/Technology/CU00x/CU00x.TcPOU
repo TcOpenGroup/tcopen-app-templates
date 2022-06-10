@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="CU00x" Id="{c8fb8f62-fa26-41d3-a5d2-3cc70d4e8555}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute addProperty ShortName "CU00x"}
 {attribute addProperty Name "Controlled unit x_tempalte_x"}
 FUNCTION_BLOCK CU00x EXTENDS CUBase
 VAR
-    _cuProcessDataDisplay       :  CU00xProcessData;
-    _cuTechnologicalDataDisplay :  CU00xTechnologicalData;
-    _components          		: CU00xComponents := (Parent := THIS^);
+    _cuProcessDataDisplay       :  CU00xProcessData := (Parent := THIS^);
+    _cuTechnologicalDataDisplay :  CU00xTechnologicalData := (Parent := THIS^);
+    _components          		:  CU00xComponents := (Parent := THIS^);
 	{attribute addProperty Name "<#MANUAL#>"}
     {attribute addProperty ToolTip "<#Start manual/Service mode#>"}	
     _manualTask : CU00xManualTask(THIS^);
@@ -210,7 +210,10 @@ METHOD Idle : BOOL
       <Declaration><![CDATA[METHOD InitializeComponents : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//_components.horizontalCylinder(inoAtHomePos:=IO.IN[0] , inoAtWorkPos:=IO.IN[1], inoToHomePos:=IO.OUT[0], inoToWorkPos:=IO.OUT[1] );
+        <ST><![CDATA[components.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
+							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
+							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
+							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
 ]]></ST>
       </Implementation>
     </Method>

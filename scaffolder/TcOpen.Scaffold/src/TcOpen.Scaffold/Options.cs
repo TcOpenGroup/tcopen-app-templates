@@ -5,20 +5,20 @@ namespace TcOpen.Scaffold
 {
     public class Options : INotifyPropertyChanged
     {        
-        string source;
-        [Option('b', "source", Default = null, HelpText = "Branch from which draw the scaffold.")]
-        public string Source
+        string branchOrTag;
+        [Option('b', "branch-tag", Default = null, HelpText = "Branch from which draw the scaffold.")]
+        public string BranchOrTag
         {
-            get => source;
+            get => branchOrTag;
             set
             {
-                if (source == value)
+                if (branchOrTag == value)
                 {
                     return;
                 }
 
-                source = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Source)));
+                branchOrTag = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BranchOrTag)));
             }
         }
      
@@ -73,6 +73,41 @@ namespace TcOpen.Scaffold
             }
         }
 
+        string release;
+        [Option('r', "release", Default = null, HelpText = "Release name.")]
+        public string Release
+        {
+            get => release;
+            set
+            {
+                if (release == value)
+                {
+                    return;
+                }
+
+                release = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Release)));
+            }
+        }
+
+
+        string source;
+        [Option('s', "source", Default = "release", HelpText = "Source release or repository")]
+        public string Source
+        {
+            get => source;
+            set
+            {
+                if (source == value)
+                {
+                    return;
+                }
+
+                source = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Source)));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
-    }
+    }    
 }

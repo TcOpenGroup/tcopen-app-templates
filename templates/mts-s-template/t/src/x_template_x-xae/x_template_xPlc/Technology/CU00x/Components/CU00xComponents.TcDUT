@@ -4,8 +4,8 @@
     <Declaration><![CDATA[TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
-//		{attribute addProperty Name "(A1)Horizontal Axis"}
-//      horizontalCylinder : TcoPneumatics.TcoCylinder(THISSTRUCT); 
+		{attribute addProperty Name "(A1)Horizontal Axis"}
+      	horizontalCylinder : TcoPneumatics.TcoCylinder(THISSTRUCT); 
     END_STRUCT
 END_TYPE
 ]]></Declaration>

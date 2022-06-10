@@ -1,0 +1,209 @@
+Build started...
+1>------ Build started: Project: x_template_xPlcConnector, Configuration: Debug Any CPU ------
+2>------ Build started: Project: x_template_xPlc, Configuration: Debug TwinCAT RT (x64) ------
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+------ Build started: Application: x_template_x_xae.x_template_xPlc -------
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+typify code ...
+1>x_template_xPlcConnector -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net48\x_template_xPlcConnector.dll
+generate code...
+1>x_template_xPlcConnector -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net5.0\x_template_xPlcConnector.dll
+generate global initializations ...
+generate code initialization ...
+generate relocations ...
+TcoDataExchange.FB_init(9) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+TcoDataTask.FB_init(8) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+Size of generated code: 338884 bytes
+Size of global data: 524217 bytes
+Total allocated memory size for code and data: 1265280 bytes
+Memory area 0 contains  Data, Input, Output, Memory, Code, Persistent Data and Nonsafe Data: size: 1644864 bytes, highest used address: 1265280, largest contiguous memory gap: 379584 bytes (23 %)
+Build complete -- 0 errors, 2 warnings : ready for download!
+Generate TMC information ...
+Time Elapsed: 00:00:00.0621405
+========== Finished ==========
+
+
+Import symbol information ...
+PLC.x_template_xPlc : message: generate boot information...
+3>------ Build started: Project: x_template_xHmi.Wpf, Configuration: Debug Any CPU ------
+4>------ Build started: Project: x_template_x-xae, Configuration: Debug TwinCAT RT (x64) ------
+3>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>Done building project "x_template_xHmi.Wpf_ipq0gpnl_wpftmp.csproj".
+3>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>x_template_xHmi.Wpf -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net5.0-windows\x_template_xHmi.Wpf.dll
+3>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>Done building project "x_template_xHmi.Wpf_vsppfnjy_wpftmp.csproj".
+3>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>x_template_xHmi.Wpf -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net48\x_template_xHmi.Wpf.exe
+3>Done building project "x_template_xHmi.Wpf.csproj".
+5>------ Build started: Project: x_template_xTests, Configuration: Debug Any CPU ------
+5>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\ControlledUnitTests.cs(373,13,373,16): warning CS0162: Unreachable code detected
+5>x_template_xTests -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net48\x_template_xTests.dll
+5>Done building project "x_template_xTests.csproj".
+5>c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\ControlledUnitTests.cs(373,13,373,16): warning CS0162: Unreachable code detected
+5>x_template_xTests -> c:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net5.0-windows\x_template_xTests.dll
+5>Done building project "x_template_xTests.csproj".
+========== Build: 5 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+
+Build started...
+1>------ Build started: Project: x_template_xPlcConnector, Configuration: Debug Any CPU ------
+2>------ Build started: Project: x_template_xPlc, Configuration: Debug TwinCAT RT (x64) ------
+------ Build started: Application: x_template_x_xae.x_template_xPlc -------
+typify code ...
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>x_template_xPlcConnector -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net48\x_template_xPlcConnector.dll
+TcoDataExchange.FB_init(9) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+TcoDataTask.FB_init(8) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+CU00x.InitializeComponents(3) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_1.Input'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_1' is no structured variable
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008' is no structured variable
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(3) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(4) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_2.Input'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_2' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(4) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(5) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_1.Output'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_1' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(5) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(6) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_2.Output'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_2' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(6) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+1>x_template_xPlcConnector -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net5.0\x_template_xPlcConnector.dll
+TcoCylinder.AbortMoveWork(31) : warning: Access to VAR_IN_OUT 'inoToWorkPos' declared in 'TcoCylinderBase' from external context 'AbortMoveWork'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveWork(31) : warning: Access to VAR_IN_OUT 'inoToWorkPos' declared in 'TcoCylinderBase' from external context 'AbortMoveWork'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveHome(31) : warning: Access to VAR_IN_OUT 'inoToHomePos' declared in 'TcoCylinderBase' from external context 'AbortMoveHome'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveHome(31) : warning: Access to VAR_IN_OUT 'inoToHomePos' declared in 'TcoCylinderBase' from external context 'AbortMoveHome'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderBase.FB_init(10) : warning: Method 'FB_init' already called implicitly [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderMoveTask.FB_init(9) : warning: Method 'FB_init' already called implicitly [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderMoveTask.OnAbort(10) : warning: Access to VAR_IN_OUT 'MoveToPositionSignal' declared in 'TcoCylinderMoveTask' from external context 'OnAbort'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+Compile complete -- 24 errors, 9 warnings
+Build complete -- 24 errors, 9 warnings : no download possible!
+WRN | 6/4/2022 6:21:41 PM 420 ms | 'TwinCAT XAE': Project 'x_template_xPlc' build for platform 'TwinCAT RT (x64)' failed.
+3>------ Build started: Project: x_template_x-xae, Configuration: Debug TwinCAT RT (x64) ------
+3>Error: The operation could not be completed 
+Time Elapsed: 00:00:00.0306805
+========== Finished ==========
+
+
+4>------ Build started: Project: x_template_xHmi.Wpf, Configuration: Debug Any CPU ------
+4>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+4>Done building project "x_template_xHmi.Wpf_3hdtlwlh_wpftmp.csproj".
+4>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+4>x_template_xHmi.Wpf -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net5.0-windows\x_template_xHmi.Wpf.dll
+4>Done building project "x_template_xHmi.Wpf.csproj".
+4>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+4>Done building project "x_template_xHmi.Wpf_lbfprjgw_wpftmp.csproj".
+4>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 1 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 2 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 3 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 4 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 5 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 6 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 7 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 8 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 9 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): warning MSB3026: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Beginning retry 10 in 1000ms. The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): error MSB3027: Could not copy "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". Exceeded retry count of 10. Failed. The file is locked by: "  (8748)"
+4>C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(4502,5): error MSB3021: Unable to copy file "obj\Debug\net48\x_template_xHmi.Wpf.exe" to "bin\Debug\net48\x_template_xHmi.Wpf.exe". The process cannot access the file 'bin\Debug\net48\x_template_xHmi.Wpf.exe' because it is being used by another process.
+4>Done building project "x_template_xHmi.Wpf.csproj" -- FAILED.
+5>------ Build started: Project: x_template_xTests, Configuration: Debug Any CPU ------
+5>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\ControlledUnitTests.cs(373,13,373,16): warning CS0162: Unreachable code detected
+5>x_template_xTests -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net48\x_template_xTests.dll
+5>Done building project "x_template_xTests.csproj".
+5>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\ControlledUnitTests.cs(373,13,373,16): warning CS0162: Unreachable code detected
+5>x_template_xTests -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net5.0-windows\x_template_xTests.dll
+5>Done building project "x_template_xTests.csproj".
+========== Build: 2 succeeded, 3 failed, 0 up-to-date, 0 skipped ==========
+
+Build started...
+1>------ Build started: Project: x_template_xPlcConnector, Configuration: Debug Any CPU ------
+2>------ Build started: Project: x_template_xPlc, Configuration: Debug TwinCAT RT (x64) ------
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>x_template_xPlcConnector -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net48\x_template_xPlcConnector.dll
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\vortex.compiler.console.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\GetMyHardwareId.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex
+1>Copy C:\Users\peto.kurhajec\.nuget\packages\inxton.vortex.compiler.console\1.15.9-alpha.703\build\..\tools\uvn.exe to C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\_Vortex\builder
+------ Build started: Application: x_template_x_xae.x_template_xPlc -------
+1>x_template_xPlcConnector -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xPlcConnector\bin\Debug\net5.0\x_template_xPlcConnector.dll
+typify code ...
+3>------ Build started: Project: x_template_xHmi.Wpf, Configuration: Debug Any CPU ------
+TcoDataExchange.FB_init(9) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+TcoDataTask.FB_init(8) : warning: Method 'FB_init' already called implicitly [tcodata, 0.7.0.858 (vortex.library)]
+CU00x.InitializeComponents(3) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Term_1_EK1100.Term_2_EL1008.Channel_1.Input'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Term_1_EK1100.Term_2_EL1008.Channel_1' is no structured variable
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Term_1_EK1100.Term_2_EL1008' is no structured variable
+CU00x.InitializeComponents(3) : error: 'GVL_iXlinker.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(3) : error: 'Term_1_EK1100' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(4) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_2.Input'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008.Channel_2' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_2_EL1008' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(4) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(4) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(5) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_1.Output'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_1' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(5) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(5) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+CU00x.InitializeComponents(6) : error: Cannot convert type 'Unknown type: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_2.Output'' to type 'REFERENCE TO BOOL'
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008.Channel_2' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100.Term_3_EL2008' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT.Term_1_EK1100' is no structured variable
+CU00x.InitializeComponents(6) : error: 'GVL_iXlinker.Device_1_EtherCAT' is no structured variable
+CU00x.InitializeComponents(6) : error: 'Device_1_EtherCAT' is no component of 'GVL_IXLINKER'
+TcoCylinder.AbortMoveWork(31) : warning: Access to VAR_IN_OUT 'inoToWorkPos' declared in 'TcoCylinderBase' from external context 'AbortMoveWork'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveWork(31) : warning: Access to VAR_IN_OUT 'inoToWorkPos' declared in 'TcoCylinderBase' from external context 'AbortMoveWork'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveHome(31) : warning: Access to VAR_IN_OUT 'inoToHomePos' declared in 'TcoCylinderBase' from external context 'AbortMoveHome'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinder.AbortMoveHome(31) : warning: Access to VAR_IN_OUT 'inoToHomePos' declared in 'TcoCylinderBase' from external context 'AbortMoveHome'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderBase.FB_init(10) : warning: Method 'FB_init' already called implicitly [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderMoveTask.FB_init(9) : warning: Method 'FB_init' already called implicitly [tcopneumatics, 0.7.0.858 (vortex.library)]
+TcoCylinderMoveTask.OnAbort(10) : warning: Access to VAR_IN_OUT 'MoveToPositionSignal' declared in 'TcoCylinderMoveTask' from external context 'OnAbort'. [tcopneumatics, 0.7.0.858 (vortex.library)]
+Compile complete -- 23 errors, 9 warnings
+Build complete -- 23 errors, 9 warnings : no download possible!
+WRN | 6/4/2022 6:22:58 PM 696 ms | 'TwinCAT XAE': Project 'x_template_xPlc' build for platform 'TwinCAT RT (x64)' failed.
+4>------ Build started: Project: x_template_x-xae, Configuration: Debug TwinCAT RT (x64) ------
+4>Error: The operation could not be completed 
+Time Elapsed: 00:00:00.0343286
+========== Finished ==========
+
+
+3>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>Done building project "x_template_xHmi.Wpf_gabbqwp4_wpftmp.csproj".
+3>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>x_template_xHmi.Wpf -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net5.0-windows\x_template_xHmi.Wpf.dll
+3>Done building project "x_template_xHmi.Wpf.csproj".
+3>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>Done building project "x_template_xHmi.Wpf_ahvr2o3t_wpftmp.csproj".
+3>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\Views\ControlledUnits\Base\ControlledUnitBase\Data\CUBaseDataView.xaml.cs(46,21,46,22): warning CS0414: The field 'CUBaseDataView.c' is assigned but its value is never used
+3>x_template_xHmi.Wpf -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\src\x_template_xHmi.Wpf\bin\Debug\net48\x_template_xHmi.Wpf.exe
+3>Done building project "x_template_xHmi.Wpf.csproj".
+5>------ Build started: Project: x_template_xTests, Configuration: Debug Any CPU ------
+5>C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\ControlledUnitTests.cs(373,13,373,16): warning CS0162: Unreachable code detected
+5>x_template_xTests -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net5.0-windows\x_template_xTests.dll
+5>x_template_xTests -> C:\MTS\Develop\gh\TcOpenGroup\tcopen-app-templates\templates\mts-s-template\t\tests\x_template_xTests\bin\Debug\net48\x_template_xTests.dll
+5>Done building project "x_template_xTests.csproj".
+========== Build: 3 succeeded, 2 failed, 0 up-to-date, 0 skipped ==========
+

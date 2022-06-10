@@ -5,7 +5,7 @@ namespace x_template_xHmi.Wpf
 {
     internal class Roles
     {
-        public Roles()
+        private Roles()
         {
             SecurityManager.Manager.GetOrCreateRole(new Role(process_settings_access, "Administrator"));
             SecurityManager.Manager.GetOrCreateRole(new Role(process_traceability_access, "Administrator"));
@@ -30,7 +30,13 @@ namespace x_template_xHmi.Wpf
         public const string sequencer_step = nameof(sequencer_step);       
         public const string technology_automat_all = nameof(technology_automat_all);
         public const string technology_ground_all = nameof(technology_ground_all);
-        
+
+        private static Roles _roles;
+
+        public static void Create()
+        {
+            _roles = new Roles();
+        }
         
     }
 }
