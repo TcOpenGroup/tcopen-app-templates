@@ -40,11 +40,27 @@ namespace TcOpen.Scaffold
             }
         }
              
-        public void Execute()
-        {                        
-            DownloadBranchAndExtractBranch();            
-            CopyTemplateFolder();
-            ReplaceTemplateTags();
+        public void Execute(Options options)
+        {
+            //DownloadReleaseTemplate();
+            //DownloadRepositorySource();            
+            //CopyTemplateFolder(DownloadReleaseTemplate());
+            // var projectFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
+
+            if(options.Source == "release")
+            { 
+                ReplaceTemplateTags(DownloadReleaseTemplate());
+            }
+            else if(options.Source == "repository")
+            {
+                CopyTemplateFolder(DownloadRepositorySource());
+                ReplaceTemplateTags(Path.Combine(CurrentDirectory, $"{Options.ProjectName}"));
+            }
+            else
+            {
+                throw new Exception("Unknown source '{options.Source}' set 'release' or 'repository'");
+            }
+
             Process.Start("explorer.exe", Path.Combine(CurrentDirectory, this.Options.ProjectName));
         }
        
@@ -52,55 +68,74 @@ namespace TcOpen.Scaffold
         
         private readonly Options Options;
      
-        public void DownloadBranchAndExtractBranch()
+        public string DownloadRepositorySource()
         {            
-            var zippedBranchFile = Path.Combine(CurrentDirectory, $"{Options.Source}.zip");
+            var zippedBranchFile = Path.Combine(CurrentDirectory, $"{Options.BranchOrTag}.zip");
+            var templateProjectFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.BranchOrTag}", "templates", Options.TemplateName, "t");
 
             try
             {
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/tags/{Options.Source}.zip", $"{zippedBranchFile}");
+                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/tags/{Options.BranchOrTag}.zip", $"{zippedBranchFile}");
                 }
 
                 System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
                 File.Delete(zippedBranchFile);
-                return;
+                return templateProjectFolder;
             }
             catch (Exception)
             {
-                Console.WriteLine($"Tag link for '{Options.Source}' does not exists. Trying branch link. ");                
+                Console.WriteLine($"Tag link for '{Options.BranchOrTag}' does not exists. Trying branch link. ");                
             }
 
             try
             {
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/heads/{Options.Source}.zip", $"{zippedBranchFile}");                    
+                    client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/heads/{Options.BranchOrTag}.zip", $"{zippedBranchFile}");                    
                 }
 
                 System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
                 File.Delete(zippedBranchFile);
-                return;
+                return templateProjectFolder;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Neither branch or tag link '{Options.Source}' found in the repository.");
-            }            
+                throw new Exception($"Neither branch or tag link '{Options.BranchOrTag}' found in the repository.");
+            }
+
+            
         }
 
-        public void CopyTemplateFolder()
+        public string DownloadReleaseTemplate()
         {            
-            var sourceFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}", "templates", Options.TemplateName, "t");
+            var zippedReleaseFile = Path.Combine(CurrentDirectory, $"{Options.Release}.zip");
+            var unpackFolder = Path.Combine(CurrentDirectory, Options.ProjectName);
+            //https://github.com/TcOpenGroup/tcopen-app-templates/releases/download/0.1.1-alpha.31/mts-s-template.zip
+
+            using (var client = new WebClient())
+            {
+                client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/releases/download/{Options.Release}/{Options.TemplateName}.zip", $"{zippedReleaseFile}");
+            }
+
+             System.IO.Compression.ZipFile.ExtractToDirectory(zippedReleaseFile, unpackFolder);
+             File.Delete(zippedReleaseFile);
+
+
+            return unpackFolder;
+        }
+
+        public void CopyTemplateFolder(string sourceFolder)
+        {            
+            //var sourceFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}", "templates", Options.TemplateName, "t");
             var destinationFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
             DirectoryCopy(sourceFolder, destinationFolder, true);
-            Directory.Delete(Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}"), true);
+            Directory.Delete(Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.BranchOrTag}"), true);
         }
 
-        public void ReplaceFileNames()
-        {
-            var projectFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
-
+        public void ReplaceFileNames(string projectFolder)
+        {            
             var files = Directory.EnumerateFiles(projectFolder, "*.*", SearchOption.AllDirectories).Select(p => new FileInfo(p));
 
             foreach (var file in files)
@@ -114,12 +149,10 @@ namespace TcOpen.Scaffold
             }
         }
 
-        public void ReplaceTemplateTags()
-        {
-            var projectFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
-
+        public void ReplaceTemplateTags(string projectFolder)
+        {            
             RenameDirectories(projectFolder);
-            ReplaceFileNames();
+            ReplaceFileNames(projectFolder);
 
             var files = Directory.EnumerateFiles(projectFolder, "*.*", SearchOption.AllDirectories);
 

@@ -18,26 +18,37 @@
         </Grid.RowDefinitions>
         <materialDesign:Card Margin="10">
             <StackPanel Margin="10">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
-                    <Setter Property="Width" Value="300"></Setter>
-                </Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <Setter Property="Width" Value="300"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <WrapPanel>
-                <TextBlock>Source (tag or branch name)</TextBlock>
-                <TextBox Text="{Binding Options.Source}"></TextBox>
-            </WrapPanel>
-            <WrapPanel>
-                <TextBlock>Template name</TextBlock>
-                <TextBox Text="{Binding Options.TemplateName}"></TextBox>
-            </WrapPanel>
-            <WrapPanel>
-                <TextBlock>Project name</TextBlock>
-                <TextBox Text="{Binding Options.ProjectName}"></TextBox>
-            </WrapPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                        <Setter Property="Width" Value="300"></Setter>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                        <Setter Property="Width" Value="300"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <WrapPanel>
+                    <TextBlock Text="Source"/>
+                    <ComboBox x:Name="comboBox" SelectedValue="{Binding Options.Source}" SelectedValuePath="Content">
+                        <ComboBoxItem>release</ComboBoxItem>
+                        <ComboBoxItem>repository</ComboBoxItem>
+                    </ComboBox>
+                </WrapPanel>
+                <WrapPanel Visibility="{Binding SelectedValue, ElementName=comboBox, Converter={local:VisibilityConverter}, ConverterParameter=release}">
+                    <TextBlock Text="Release name"/>
+                    <TextBox Text="{Binding Options.Release}"></TextBox>
+                </WrapPanel>
+                <WrapPanel Visibility="{Binding SelectedValue, ElementName=comboBox, Converter={local:VisibilityConverter}, ConverterParameter=repository}">
+                    <TextBlock Text="Tag or branch name"/>
+                    <TextBox Text="{Binding Options.BranchOrTag}"></TextBox>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock>Template name</TextBlock>
+                    <TextBox Text="{Binding Options.TemplateName}"></TextBox>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock>Project name</TextBlock>
+                    <TextBox Text="{Binding Options.ProjectName}"></TextBox>
+                </WrapPanel>
                 <WrapPanel>
                     <TextBlock>Output directory</TextBlock>
                     <TextBox Text="{Binding Options.OutputDirectory}"></TextBox>

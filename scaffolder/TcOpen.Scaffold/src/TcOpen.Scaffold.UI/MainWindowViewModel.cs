@@ -36,7 +36,7 @@ namespace TcOpen.Scaffold.UI
         {
             IsNotScaffoling = false;
             var context = new Context(this.Options);
-            await Task.Run(() => context.Execute());
+            await Task.Run(() => context.Execute(this.Options));
             IsNotScaffoling = true;
         }
         private void SelectOutputFolder()
@@ -51,7 +51,7 @@ namespace TcOpen.Scaffold.UI
                 }
             }
         }
-        public Options Options { get; set; } = new Options() { Source = GitVersionInformation.SemVer, ProjectName = "MyProject", TemplateName = "mts-s-template" };
+        public Options Options { get; set; } = new Options() { BranchOrTag = GitVersionInformation.SemVer, ProjectName = "MyProject", TemplateName = "mts-s-template" };
         public Prism.Commands.DelegateCommand ScaffoldCommand { get; }
         public Prism.Commands.DelegateCommand SelectOutputFolderCommand { get; }        
     }
