@@ -41,12 +41,7 @@ namespace TcOpen.Scaffold
         }
              
         public void Execute(Options options)
-        {
-            //DownloadReleaseTemplate();
-            //DownloadRepositorySource();            
-            //CopyTemplateFolder(DownloadReleaseTemplate());
-            // var projectFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
-
+        {            
             if(options.Source == "release")
             { 
                 ReplaceTemplateTags(DownloadReleaseTemplate());
@@ -73,12 +68,16 @@ namespace TcOpen.Scaffold
             var zippedBranchFile = Path.Combine(CurrentDirectory, $"{Options.BranchOrTag}.zip");
             var templateProjectFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.BranchOrTag}", "templates", Options.TemplateName, "t");
 
+            Console.WriteLine($"Downloading from repository '{Options.BranchOrTag}'...");
+
             try
-            {
+            {                
                 using (var client = new WebClient())
                 {
                     client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/tags/{Options.BranchOrTag}.zip", $"{zippedBranchFile}");
                 }
+
+                Console.WriteLine($"Unpacking '{zippedBranchFile}' to '{CurrentDirectory}'");
 
                 System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
                 File.Delete(zippedBranchFile);
@@ -96,6 +95,8 @@ namespace TcOpen.Scaffold
                     client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/archive/refs/heads/{Options.BranchOrTag}.zip", $"{zippedBranchFile}");                    
                 }
 
+                Console.WriteLine($"Unpacking '{zippedBranchFile}' to '{CurrentDirectory}'");
+
                 System.IO.Compression.ZipFile.ExtractToDirectory(zippedBranchFile, CurrentDirectory);
                 File.Delete(zippedBranchFile);
                 return templateProjectFolder;
@@ -109,26 +110,25 @@ namespace TcOpen.Scaffold
         }
 
         public string DownloadReleaseTemplate()
-        {            
+        {
+            Console.WriteLine($"Downloading from release '{Options.Release}'...");
             var zippedReleaseFile = Path.Combine(CurrentDirectory, $"{Options.Release}.zip");
             var unpackFolder = Path.Combine(CurrentDirectory, Options.ProjectName);
-            //https://github.com/TcOpenGroup/tcopen-app-templates/releases/download/0.1.1-alpha.31/mts-s-template.zip
-
+          
             using (var client = new WebClient())
             {
                 client.DownloadFile($"https://github.com/TcOpenGroup/tcopen-app-templates/releases/download/{Options.Release}/{Options.TemplateName}.zip", $"{zippedReleaseFile}");
             }
 
-             System.IO.Compression.ZipFile.ExtractToDirectory(zippedReleaseFile, unpackFolder);
+            Console.WriteLine($"Unpacking '{zippedReleaseFile}' to '{unpackFolder}'");
+            System.IO.Compression.ZipFile.ExtractToDirectory(zippedReleaseFile, unpackFolder);
              File.Delete(zippedReleaseFile);
-
 
             return unpackFolder;
         }
 
         public void CopyTemplateFolder(string sourceFolder)
-        {            
-            //var sourceFolder = Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.Source}", "templates", Options.TemplateName, "t");
+        {                        
             var destinationFolder = Path.Combine(CurrentDirectory, $"{Options.ProjectName}");
             DirectoryCopy(sourceFolder, destinationFolder, true);
             Directory.Delete(Path.Combine(CurrentDirectory, $"tcopen-app-templates-{Options.BranchOrTag}"), true);

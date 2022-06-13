@@ -51,7 +51,12 @@ namespace TcOpen.Scaffold.UI
                 }
             }
         }
-        public Options Options { get; set; } = new Options() { BranchOrTag = GitVersionInformation.SemVer, ProjectName = "MyProject", TemplateName = "mts-s-template" };
+        public Options Options { get; set; } = new Options() { 
+            BranchOrTag = GitVersionInformation.SemVer, 
+            Release = GitVersionInformation.SemVer,
+            ProjectName = "MyProject", 
+            TemplateName = "mts-s-template" };
+
         public Prism.Commands.DelegateCommand ScaffoldCommand { get; }
         public Prism.Commands.DelegateCommand SelectOutputFolderCommand { get; }        
     }

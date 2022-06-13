@@ -1,23 +1,20 @@
 using HmiProjectx_template_x.Wpf;
-using x_template_xPlc;
-using x_template_xPlcConnector;
+using Raven.Embedded;
 using Serilog;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using TcOpen.Inxton.Data;
 using TcOpen.Inxton.Local.Security;
 using TcOpen.Inxton.Local.Security.Wpf;
 using TcOpen.Inxton.RavenDb;
+using TcOpen.Inxton.Security;
 using TcOpen.Inxton.TcoCore.Wpf;
 using Vortex.Presentation.Wpf;
-using Raven.Embedded;
-using System.IO;
-using System.Reflection;
-using TcOpen.Inxton.Security;
-using System.Linq;
-using Vortex.Connector;
+using x_template_xPlc;
+using x_template_xPlcConnector;
 
 namespace x_template_xHmi.Wpf
 {
@@ -28,11 +25,14 @@ namespace x_template_xHmi.Wpf
     {
         public App()
         {
-            x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
+            StopIfRunning();
 
+            // This starts the twin connector operations
+            x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
+            
             StartRavenDBEmbeddedServer();
           
-            // App setup
+            // TcOpen app setup
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
                                         .WriteTo.Console()
@@ -75,7 +75,7 @@ namespace x_template_xHmi.Wpf
 
             // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser("default", "");
-               
+            
         }
 
         private static void SetUpExternalAuthenticationDevice()
@@ -90,6 +90,14 @@ namespace x_template_xHmi.Wpf
             }
         }
 
+        /// <summary>
+        /// Starts embedded instance of RavenDB server.
+        /// IMPORTANT! 
+        /// CHECK EULA BEFORE USING @ https://ravendb.org/terms
+        /// GET APPROPRIATE LICENCE https://ravendb.org/buy FREE COMUNITY EDITION IS ASLO AVAILABLE, BUT YOU NEED TO REGISTER.
+        /// STORAGE IS DIRECTED TO THE BIN FOLDER OF REDIRECT 
+        /// `DataDirectory` property in this method to persist tha data elsewhere.
+        /// </summary>
         private static void StartRavenDBEmbeddedServer()
         {
             // Start embedded RavenDB server
@@ -132,7 +140,12 @@ namespace x_template_xHmi.Wpf
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));            
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
         }
-        
+
+        /// <summary>
+        /// Initializes <see cref="ProcessDataManager"/>s repository for data exchange between PLC and storage (database).
+        /// </summary>
+        /// <param name="manager">Data manager</param>
+        /// <param name="repository">Repository</param>
         private static void IntializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
         {
             repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
@@ -141,6 +154,11 @@ namespace x_template_xHmi.Wpf
             processData.InitializeRemoteDataExchange(repository);
         }
 
+        /// <summary>
+        /// Initializes <see cref="TechnologicalDataManager"/>s repository for data exchange between PLC and storage (database).
+        /// </summary>
+        /// <param name="manager">Data manager</param>
+        /// <param name="repository">Repository</param>
         private static void IntializeTechnologyDataRepositoryWithDataExchange(TechnologicalDataManager manager, IRepository<PlainTechnologyData> repository)
         {
             repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
@@ -149,6 +167,9 @@ namespace x_template_xHmi.Wpf
             manager.InitializeRemoteDataExchange(repository);
         }
 
+        /// <summary>
+        /// Gets the twin connector for this application.
+        /// </summary>
         public static x_template_xPlcTwinController x_template_xPlc 
         {  
             get
@@ -157,6 +178,25 @@ namespace x_template_xHmi.Wpf
             }
         }
 
-        private static bool designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());
+        /// <summary>
+        /// Determines whether the application at design time. (true when at design, false at runtime)
+        /// </summary>
+        private static bool designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());   
+        
+        /// <summary>
+        /// Checks that no other instance of this program is running on this system.
+        /// </summary>
+        private void StopIfRunning()
+        {
+            var processes = System.Diagnostics.Process.GetProcessesByName(Assembly.GetEntryAssembly().GetName().Name);
+
+            if (processes.Count() > 1)
+            {
+                MessageBox.Show("This program is already running on this system. We cannot run another instance of this program.",
+                                "Checking for running processes", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                Application.Current.Shutdown(-1);
+            }
+        }
     }
 }
