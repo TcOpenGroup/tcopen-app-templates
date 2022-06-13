@@ -1,11 +1,12 @@
-# MTS standard application x_template_x
+# MTS standard application tempalte 
+# `mts-s-template`
 
 ## Foreword
 
 The TcOpen group if funded by [MTS](https://www.mts.sk) to develop this application for its own use. We are also making it freely available to the wider community for use or inspiration.
 
-The application x_template_x will therefore be developed primarily to meet the needs of MTS. We will of cource accept input from the community, but some limits may be imposed on any changes of this particular x_template_x.
-Howeever, TcOpen will develop different application x_template_xs that will be more open to change from the community.
+The application template will therefore be developed primarily to meet the needs of MTS. We will of course accept input from the community, but some limits may be imposed on any changes of this particular template.
+However, TcOpen will develop different application templates that will be more open to change from the community.
 
 ## Prerequisites
 
@@ -13,16 +14,17 @@ Howeever, TcOpen will develop different application x_template_xs that will be m
 
 Checkout general prerequisites for TcOpen framework [here](https://github.com/TcOpenGroup/TcOpen/blob/dev/README.md#prerequisites).
 
-### Template specific prerequisites
+### Template-specific prerequisites
 
-- This template uses RavenDB for storage, thus you will need to register and install an instance of RavenDB. Instructions [here](https://github.com/TcOpenGroup/TcOpen/tree/dev/src/TcoData/src/Repository/RavenDb#how-to-install-it).
+- This template uses RavenDB for storage, **embedded** into the application (for convenience), thus you will need [to register the installation](https://ravendb.net/buy). There is a community edition that you can use for free.
+- Embedded instance is good for testing and commissioning, however, in production you should use a non-embedded instance. Instructions [here](https://github.com/TcOpenGroup/TcOpen/tree/dev/src/TcoData/src/Repository/RavenDb#how-to-install-it).
 
 ## Overview
 
 This application aims to provide scaffolding for automated production/assembly machinery such as:
 
 - single assembly station.
-- group of standalone assembly stations with an ID system.
+- a group of standalone assembly stations with an ID system.
 - conveyor-based assembly and testing lines with an ID system.
 - carousel tables with an ID system.
 
@@ -41,7 +43,7 @@ The production environment is represented by a series of hierarchically organize
 
 The production flow is typically organized in sequences driven by a set of data called **Production settings**.
 
-- `Production settings`  is a structure that contains settings to instruct the production flow (inclusion/exclusion of actions, limit, required values, etc.) as well as placeholders for data that arise during the production (measurement values, detected states, data tags of included components, etc.). Production setting and traceability data have the same structure so that settings and traced data are collected in a single data set.
+- `Production settings`  is a structure that contains settings to instruct the production flow (inclusion/exclusion of actions, limits, required values, etc.) as well as placeholders for data that arise during the production (measurement values, detected states, data tags of included components, etc.). Production setting and traceability data have the same structure so that settings and traced data are collected in a single data set.
 
 ![](assets/process-data/prodution-setting-recipe-control.png)
 
@@ -103,7 +105,7 @@ Each station (controlled unit) has a header that contains a set of information:
 
 A special case occurs if **reset or ground position** is triggered on a station. When the station is reset while operations on a part are in progress (Operation Opened is a station ID) then the reset results in the entity being marked as failed. If the station is reset and operations are not in progress then the status of the entity is not modified.
 
-# Application x_tempalte_x architecture
+# Application template architecture
 
 The application's entry point is the `MAIN` program called cyclically from the PLC task. 
 `MAIN` declares the instance of the `Technology` type that is the context of the whole application. You should place all your code within the `Main` method of technology object (`_technology.Main()`) that will contextualize all your code.
@@ -151,7 +153,7 @@ Controlled units also contain two main structures:
 
 ## ProcessData
 
-This application x_tempalte_x provides a versatile model to allow for the extended control of the program flow from a manageable data set. Process data represent the set of information to follow and process during production. One way of thinking about the process data is as the recipe that, besides the instructive data, contains information that arises during the production process. Production data are filled into the data set during the production operations.
+This application template provides a versatile model to allow for the extended control of the program flow from a manageable data set. Process data represent the set of information to follow and process during production. One way of thinking about the process data is as the recipe that, besides the instructive data, contains information that arises during the production process. Production data are filled into the data set during the production operations.
 
 Typically, the process data are loaded at the beginning of the production into the first controlled unit (station). Then, an Id of the production entity is assigned and stored in the data repository. Each controlled unit (station) later retrieves the data for the given entity at the beginning of the process and returns the data (enriched by additional information about the production) to the repository at the end of the process.
 
@@ -163,9 +165,9 @@ Technological data contain a manageable set of data related to the technology us
 
 Process traceability is a PLC placeholder for accessing the production data repository. This object points to the same traceability repository as the `ProcessData` of any controlled unit.
 
-# Controlled unit x_tempalte_xs
-Controlled unit `CU00X` is a x_tempalte_x from which other controlled units can derive.
-`CU00X` folder contains a x_tempalte_x from which any controlled unit can be scaffolded. There is PowerShell script `Create-Controlled-Unit` located in the root of the solution directory for this purpose.
+# Controlled unit templates
+Controlled unit `CU00X` is a template from which other controlled units can derive.
+`CU00X` folder contains a template from which any controlled unit can be scaffolded. There is PowerShell script `Create-Controlled-Unit` located in the root of the solution directory for this purpose.
 
 ~~~
 .\Create-Controlled-Unit.ps1 NEWCU
