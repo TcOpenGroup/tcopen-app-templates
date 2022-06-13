@@ -12,7 +12,7 @@ This repository contains templates for TcOpen applications, for you to get start
 > **You may get a security warning about the executing file download from the internet. We will provide singed binaries later in the development process. If you have reason to distrust this binary, you can compile your version from the source of this repository.**
 
 
-![](assets\pics\scaffolder-ui.png)
+![](assets/pics/scaffolder-ui.png)
 
 
 You can use `CLI` version of the scaffolder. Download the `tco.cli.zip` asset from the latest release and run `tco.exe --help` to see the available options.
