@@ -66,11 +66,14 @@ END_IF
 	Updates this controlled unit's information for the UI.
 *)
 
+
 UpdateInfo();
 
 _cuProcessDataDisplay := ProcessDataManager.Data.CU00x;
 _cuTechnologicalDataDisplay := Technology.TechnologicalSettings.Data.CU00x;
 
+_settings.WarningCycleTime:= _cuTechnologicalDataDisplay.WarningCycleTime;
+_settings.ErrorCycleTime:= _cuTechnologicalDataDisplay.ErrorCycleTime;
 
 ]]></ST>
     </Implementation>

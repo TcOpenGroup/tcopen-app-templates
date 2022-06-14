@@ -132,18 +132,18 @@ namespace x_template_xPlc
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            //ControledUnitState state = (ControledUnitState)Enum.ToObject(typeof(ControledUnitState), value);
-            //switch (state)
-            //{
-            //    case ControledUnitState.None:
-            //        return Application.Current.Resources["MtsDarkGray"];
-            //    case ControledUnitState.HasWarning:
-            //        return Application.Current.Resources["Warning"];
-            //    case ControledUnitState.HasError:
-            //        return Application.Current.Resources["Error"];
-            //    default:
-            //        return Application.Current.Resources["MtsDarkGray"];
-            //}
+            var state = (eCUState)Enum.ToObject(typeof(eCUState), value);
+            switch (state)
+            {
+                case eCUState.None:
+                    return Application.Current.Resources["MtsDarkGray"];
+                case eCUState.HasWarning:
+                    return Application.Current.Resources["Warning"];
+                case eCUState.HasError:
+                    return Application.Current.Resources["Error"];
+                default:
+                    return Application.Current.Resources["MtsDarkGray"];
+            }
 
             return Application.Current.Resources["MtsDarkGray"];
 
@@ -165,18 +165,18 @@ namespace x_template_xPlc
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            //ControledUnitState state = (ControledUnitState)Enum.ToObject(typeof(ControledUnitState), value);
-            //switch (state)
-            //{
-            //    case ControledUnitState.None:
-            //        return new SolidColorBrush(Colors.Transparent);
-            //    case ControledUnitState.HasWarning:
-            //        return Application.Current.Resources["Warning"];
-            //    case ControledUnitState.HasError:
-            //        return Application.Current.Resources["Error"];
-            //    default:
-            //        return new SolidColorBrush(Colors.Transparent);
-            //}
+            var state = (eCUState)Enum.ToObject(typeof(eCUState), value);
+            switch (state)
+            {
+                case eCUState.None:
+                    return new SolidColorBrush(Colors.Transparent);
+                case eCUState.HasWarning:
+                    return Application.Current.Resources["Warning"];
+                case eCUState.HasError:
+                    return Application.Current.Resources["Error"];
+                default:
+                    return new SolidColorBrush(Colors.Transparent);
+            }
 
             return Application.Current.Resources["MtsDarkGray"];
 

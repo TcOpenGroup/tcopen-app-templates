@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="CUBaseSettings" Id="{9173d902-7cba-0c0b-1d10-4c6f12b76cb5}">
+    <Declaration><![CDATA[TYPE
+    CUBaseSettings EXTENDS TcoCore.TcoStruct :
+    STRUCT
+	    DeafultCycleTime : TIME;
+	    WarningCycleTime : TIME;
+	    ErrorCycleTime   : TIME;
+	    SaveEnergyTime   : TIME;
+		
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -6,12 +6,24 @@ VAR
 	{attribute addProperty Name "|[[1]AttributeName]|"}
 	{attribute addProperty ToolTip "|[[1]AttributeToolTip]|"}
     _task : TcoInnerTask(THIS^);
-    _o    : TcoCore.TcoSequencerObserver(THIS^);	 	
+    _o    : TcoCore.TcoSequencerObserver(THIS^);	 
+	_cycleTimeAnalitics:CycleTimeAnalitics;	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="TaskRelay" Id="{afc41ea2-70b7-46a4-8ba7-73e4b0574c74}" />
+    <Property Name="AverageCycleTime" Id="{698abc56-2f06-0ccb-2f4d-dca431ba9514}">
+      <Declaration><![CDATA[PROPERTY PUBLIC AverageCycleTime : REAL]]></Declaration>
+      <Get Name="Get" Id="{99b6ae0d-ed52-0d82-36a8-4c630a7735b6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AverageCycleTime:=_cycleTimeAnalitics.AverageNumerical;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="CompleteSequence" Id="{e660dda5-e822-0795-15da-43df1875907c}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -26,7 +38,17 @@ END_VAR]]></Declaration>
 METHOD PROTECTED FINAL CompleteSequence
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_CompleteSequence();]]></ST>
+        <ST><![CDATA[i_CompleteSequence();
+
+IF _cycleTimeAnalitics.HistoryKonstant = 0 THEN;
+	_cycleTimeAnalitics.HistoryKonstant:=10;
+END_IF;
+_cycleTimeAnalitics.LastTimerNumerical:=DWORD_TO_REAL( TIME_TO_DWORD(_LastCycleTime))/1000;
+IF _cycleTimeAnalitics.AverageNumerical =0 THEN
+	_cycleTimeAnalitics.AverageNumerical:=_cycleTimeAnalitics.LastTimerNumerical;
+END_IF
+_cycleTimeAnalitics.AverageNumerical:= (((_cycleTimeAnalitics.HistoryKonstant-1)*_cycleTimeAnalitics.AverageNumerical)+_cycleTimeAnalitics.LastTimerNumerical)/_cycleTimeAnalitics.HistoryKonstant;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteStep" Id="{16b3254b-2a28-0fb6-2f25-afa0bf333f87}">
@@ -265,7 +287,15 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);]]></ST>
+        <ST><![CDATA[Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);
+
+///  Clean loop time  
+IF _cycleTimeAnalitics.ResetAverage THEN
+	_cycleTimeAnalitics.Average:=0;
+	_cycleTimeAnalitics.AverageNumerical:=0;
+	_cycleTimeAnalitics.ResetAverage :=FALSE;
+END_IF
+_cycleTimeAnalitics.RunningTimerNumerical := DWORD_TO_REAL( TIME_TO_DWORD(_SequenceElapsedTime))/1000;]]></ST>
       </Implementation>
     </Method>
     <Method Name="StepCompleteWhen" Id="{bd441a6f-affd-05d6-027c-c88ec0339cbb}">

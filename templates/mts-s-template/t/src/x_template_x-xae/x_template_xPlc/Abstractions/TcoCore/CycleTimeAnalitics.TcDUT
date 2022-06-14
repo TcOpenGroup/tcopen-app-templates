@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="CycleTimeAnalitics" Id="{7e9e5f89-9940-087b-319a-fe3c57ab06a1}">
+    <Declaration><![CDATA[TYPE CycleTimeAnalitics :
+STRUCT
+	{attribute addProperty Name "<#Running clean loop time [s]#>"}
+	RunningTimerNumerical:REAL;
+	{attribute addProperty Name "<#Clean loop time [s]#>"}
+	LastTimerNumerical:REAL;
+	{attribute addProperty Name "<#Average clean loop time #>"}
+	Average:REAL;
+	{attribute addProperty Name "<#Average clean loop time [s]#>"}
+	AverageNumerical:REAL;
+	{attribute addProperty Name "<#Clean loop time history#>"}
+	HistoryKonstant:UINT:=10;	
+	{attribute addProperty Name "<#Clear cliean loop time#>"}
+	ResetAverage:BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -263,7 +263,7 @@ IF(_dataClose) THEN THIS^.DataEntityClose(5000); END_IF;
 IF(_dataFinalize) THEN THIS^.DataEntityFinalize(5500); END_IF;
 
 
-IF (Step(10000, TRUE, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
+IF (Step(10000, false, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
     //-------------------------------------
     StepCompleteWhen(_paralellTask.Task.Done);
     //-------------------------------------	

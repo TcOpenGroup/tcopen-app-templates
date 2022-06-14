@@ -32,6 +32,9 @@
     <Compile Include="Abstractions\CUBase\CUBaseStatusInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\CUBase\CUBaseSettings.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\CUComponentsBase.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +48,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\CUBase\Data\eCUMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\CUBase\Data\eCUState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\CUBase\Data\EntityHeader.TcDUT">
@@ -63,6 +69,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseGround.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\TcoCore\CycleTimeAnalitics.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\TcoCore\TcoInnerTask.TcPOU">
@@ -253,6 +262,10 @@
       <DefaultResolution>TcoPneumatics, 0.7.0.863 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcoUtilities">
+      <DefaultResolution>TcoUtilities, 0.7.0.863 (Vortex.Library)</DefaultResolution>
+      <Namespace>TcoUtilities</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="x_template_xPlc.tmc">
@@ -274,6 +287,9 @@
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
       <Resolution>TcoPneumatics, 0.7.0.863 (Vortex.Library)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="TcoUtilities">
+      <Resolution>TcoUtilities, 0.7.0.863 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>

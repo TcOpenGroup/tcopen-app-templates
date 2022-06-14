@@ -4,13 +4,16 @@
     <Declaration><![CDATA[TYPE
     CUBaseStatusInfo EXTENDS TcoCore.TcoStruct :
     STRUCT
-        Mode                   : eCUMode;
-        CurrentTaskDescription : STRING;
-        CurrentUid             : INT;
-        CurrentOperation       : STRING(255);
-        CurrentCycleTime       : TIME;
-        CurrentIsInStepMode    : BOOL;
-        CurrentCleanCycleTime  : TIME;
+     Mode                   : eCUMode;
+     CurrentTaskDescription : STRING;
+     CurrentUid             : INT;
+     CurrentOperation       : STRING(255);
+     CurrentCycleTime       : TIME;
+	 AverageCycleTime       : REAL;
+     CurrentIsInStepMode    : BOOL;
+     CurrentCleanCycleTime  : TIME;
+     State	                : eCUState;
+     InSavingEnergy           : BOOL;
     END_STRUCT
 END_TYPE
 ]]></Declaration>
