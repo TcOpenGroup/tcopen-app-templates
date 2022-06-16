@@ -17,5 +17,7 @@ jobs:
           path : '.'
           fetch-depth: 0
       - name: Run Psake
+	      env:
+	        gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}			
         run: >
-          .\templates\mts-s-template\build.ps1          
+          .\build.ps1    
