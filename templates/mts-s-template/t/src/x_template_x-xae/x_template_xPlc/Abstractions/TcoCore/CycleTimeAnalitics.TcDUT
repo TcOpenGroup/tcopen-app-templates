@@ -3,18 +3,18 @@
   <DUT Name="CycleTimeAnalitics" Id="{7e9e5f89-9940-087b-319a-fe3c57ab06a1}">
     <Declaration><![CDATA[TYPE CycleTimeAnalitics :
 STRUCT
-	{attribute addProperty Name "<#Running clean loop time [s]#>"}
-	RunningTimerNumerical:REAL;
-	{attribute addProperty Name "<#Clean loop time [s]#>"}
-	LastTimerNumerical:REAL;
-	{attribute addProperty Name "<#Average clean loop time #>"}
-	Average:REAL;
-	{attribute addProperty Name "<#Average clean loop time [s]#>"}
-	AverageNumerical:REAL;
-	{attribute addProperty Name "<#Clean loop time history#>"}
-	HistoryKonstant:UINT:=10;	
-	{attribute addProperty Name "<#Clear cliean loop time#>"}
-	ResetAverage:BOOL;
+
+	{attribute addProperty Name "<#Average cycle time #>"}
+	Average:TIME;
+	
+	{attribute addProperty Name "<#Average clean cycle time #>"}
+	AverageCleanCycle:TIME;
+	
+	{attribute addProperty Name "<#Average cycle time filter constant#>"}
+	FilterConstant:UINT:=10;	
+	
+
+	
 END_STRUCT
 END_TYPE
 ]]></Declaration>

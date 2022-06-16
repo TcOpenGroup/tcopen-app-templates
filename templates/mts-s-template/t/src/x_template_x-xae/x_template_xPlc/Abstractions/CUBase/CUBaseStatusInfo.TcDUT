@@ -9,11 +9,12 @@
      CurrentUid             : INT;
      CurrentOperation       : STRING(255);
      CurrentCycleTime       : TIME;
-	 AverageCycleTime       : REAL;
+	 AverageCycleTime       : TIME;
      CurrentIsInStepMode    : BOOL;
      CurrentCleanCycleTime  : TIME;
+	 AverageCleanCycleTime  : TIME;
      State	                : eCUState;
-     InSavingEnergy           : BOOL;
+     InSavingEnergy         : BOOL;
     END_STRUCT
 END_TYPE
 ]]></Declaration>

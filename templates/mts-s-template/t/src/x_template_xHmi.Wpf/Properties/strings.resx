@@ -305,10 +305,10 @@ MAIN SEQUENCE</value>
     <value>Time left to complete operations:</value>
   </data>
   <data name="ActualCycleTime" xml:space="preserve">
-    <value>Actual CT [s]</value>
+    <value>Actual CT </value>
   </data>
   <data name="AverageCycleTime" xml:space="preserve">
-    <value>Average CT [s]</value>
+    <value>Average CT</value>
   </data>
   <data name="StepModeOff" xml:space="preserve">
     <value>RELEASE STEP MODE</value>
@@ -333,5 +333,11 @@ MAIN SEQUENCE</value>
   </data>
   <data name="Modified" xml:space="preserve">
     <value>Modified</value>
+  </data>
+  <data name="ActualCleanCycleTime" xml:space="preserve">
+    <value>Actual Clean CT </value>
+  </data>
+  <data name="AverageCleanCycleTime" xml:space="preserve">
+    <value>Average Clean CT</value>
   </data>
 </root>

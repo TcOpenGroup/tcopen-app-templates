@@ -6,21 +6,36 @@ VAR
 	{attribute addProperty Name "|[[1]AttributeName]|"}
 	{attribute addProperty ToolTip "|[[1]AttributeToolTip]|"}
     _task : TcoInnerTask(THIS^);
-    _o    : TcoCore.TcoSequencerObserver(THIS^);	 
+    _o    : TcoCore.TcoSequencerObserver(THIS^);	
+	{attribute addProperty Name "|[[1]Cycle Time Analitics]|"} 
 	_cycleTimeAnalitics:CycleTimeAnalitics;	
+	_startCleanCycleTime: TIME;
+	_stopCleanCycleTime: TIME;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="CycleTimeAnalitics" Id="{86c02bf1-155c-0d73-2b05-d09e4bb07f43}" />
     <Folder Name="TaskRelay" Id="{afc41ea2-70b7-46a4-8ba7-73e4b0574c74}" />
-    <Property Name="AverageCycleTime" Id="{698abc56-2f06-0ccb-2f4d-dca431ba9514}">
-      <Declaration><![CDATA[PROPERTY PUBLIC AverageCycleTime : REAL]]></Declaration>
+    <Property Name="AverageCleanCycleTime" Id="{2856e096-2c70-0832-3dad-a64ad95dfd66}" FolderPath="CycleTimeAnalitics\">
+      <Declaration><![CDATA[PROPERTY PUBLIC AverageCleanCycleTime : TIME]]></Declaration>
+      <Get Name="Get" Id="{77b100c9-2a8f-0c53-036a-faa56cf15504}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AverageCleanCycleTime:=_cycleTimeAnalitics.AverageCleanCycle;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AverageCycleTime" Id="{698abc56-2f06-0ccb-2f4d-dca431ba9514}" FolderPath="CycleTimeAnalitics\">
+      <Declaration><![CDATA[PROPERTY PUBLIC AverageCycleTime : TIME]]></Declaration>
       <Get Name="Get" Id="{99b6ae0d-ed52-0d82-36a8-4c630a7735b6}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[AverageCycleTime:=_cycleTimeAnalitics.AverageNumerical;]]></ST>
+          <ST><![CDATA[AverageCycleTime:=_cycleTimeAnalitics.Average;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -40,14 +55,15 @@ METHOD PROTECTED FINAL CompleteSequence
       <Implementation>
         <ST><![CDATA[i_CompleteSequence();
 
-IF _cycleTimeAnalitics.HistoryKonstant = 0 THEN;
-	_cycleTimeAnalitics.HistoryKonstant:=10;
+IF _cycleTimeAnalitics.FilterConstant = 0 THEN;
+	_cycleTimeAnalitics.FilterConstant:=10;
 END_IF;
-_cycleTimeAnalitics.LastTimerNumerical:=DWORD_TO_REAL( TIME_TO_DWORD(_LastCycleTime))/1000;
-IF _cycleTimeAnalitics.AverageNumerical =0 THEN
-	_cycleTimeAnalitics.AverageNumerical:=_cycleTimeAnalitics.LastTimerNumerical;
+
+
+IF _cycleTimeAnalitics.Average = T#0S THEN
+	_cycleTimeAnalitics.Average:=_LastCycleTime;
 END_IF
-_cycleTimeAnalitics.AverageNumerical:= (((_cycleTimeAnalitics.HistoryKonstant-1)*_cycleTimeAnalitics.AverageNumerical)+_cycleTimeAnalitics.LastTimerNumerical)/_cycleTimeAnalitics.HistoryKonstant;
+_cycleTimeAnalitics.Average:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.Average)+_LastCycleTime)/_cycleTimeAnalitics.FilterConstant;
 ]]></ST>
       </Implementation>
     </Method>
@@ -67,6 +83,26 @@ METHOD PROTECTED FINAL CompleteStep : ITcoObjectRestorer
         <ST><![CDATA[CompleteStep := i_CompleteStep();]]></ST>
       </Implementation>
     </Method>
+    <Property Name="CycleTimeFilterConstant" Id="{449ef140-4a3a-0564-3fbc-8b2171d05f79}">
+      <Declaration><![CDATA[PROPERTY PUBLIC CycleTimeFilterConstant : UINT]]></Declaration>
+      <Get Name="Get" Id="{731e92ad-ac82-0f37-1645-b8772cd9bfb7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CycleTimeFilterConstant:=_cycleTimeAnalitics.FilterConstant;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b34f02a4-fb68-0e7e-294b-d849facfb8bd}">
+        <Declaration><![CDATA[PUBLIC 
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_cycleTimeAnalitics.FilterConstant:=CycleTimeFilterConstant;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Main" Id="{7c01205d-3a68-04f8-3158-3c7d48d004e6}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -209,6 +245,27 @@ END_VAR]]></Declaration>
         <ST><![CDATA[RequestStep := i_RequestStep(inRequestedStepID := inRequestedStepID);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ResetCycleTime" Id="{fcf27ed1-9cd7-0c2b-3a39-1e54bf3bc4ac}" FolderPath="CycleTimeAnalitics\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			This method resets the sequencer cycle time . 
+				Method is typically called before starting the sequence(e.g.in ground position task) .
+		</summary>		
+		<returns></returns>	
+	</docu>	
+~*)
+METHOD PUBLIC ResetCycleTime
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+_cycleTimeAnalitics.Average:=T#0S;
+_cycleTimeAnalitics.AverageCleanCycle:=T#0S;
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Restore" Id="{a3c44169-c865-41a7-b04d-fb6593fd4c0f}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -251,6 +308,26 @@ END_VAR]]></Declaration>
 END_IF;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="StartCleanCycleTime" Id="{1d853ffc-17de-0de5-037b-8f202c4d5f30}" FolderPath="CycleTimeAnalitics\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			This method s used to start the clean cycle time measurement . 
+				Method is typically called at the beggining of the sequence(e.g.in automat sequence) .
+		</summary>		
+		<returns></returns>	
+	</docu>	
+~*)
+
+METHOD PUBLIC StartCleanCycleTime
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_startCleanCycleTime:=_SequenceElapsedTime;
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Step" Id="{c3c5f2f3-742a-0ae5-3d6d-5a15b5bc9906}">
       <Declaration><![CDATA[METHOD PROTECTED Step : BOOL
 VAR_INPUT
@@ -289,13 +366,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);
 
-///  Clean loop time  
-IF _cycleTimeAnalitics.ResetAverage THEN
-	_cycleTimeAnalitics.Average:=0;
-	_cycleTimeAnalitics.AverageNumerical:=0;
-	_cycleTimeAnalitics.ResetAverage :=FALSE;
-END_IF
-_cycleTimeAnalitics.RunningTimerNumerical := DWORD_TO_REAL( TIME_TO_DWORD(_SequenceElapsedTime))/1000;]]></ST>
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="StepCompleteWhen" Id="{bd441a6f-affd-05d6-027c-c88ec0339cbb}">
@@ -321,6 +393,44 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[i_StepCompleteWhen(inCondition := inCondition);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopCleanCycleTime" Id="{c24139e5-8cd2-0fb9-0cad-ad76beab6e9f}" FolderPath="CycleTimeAnalitics\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			This method s used to stop the clean cycle time measurement . 
+				Method is typically called at the end of the sequence(e.g.in automat sequence )  .
+		</summary>		
+		<returns></returns>	
+	</docu>	
+~*)
+
+METHOD PUBLIC StopCleanCycleTime
+VAR_INPUT
+END_VAR
+
+VAR
+	cleanCycleTime: TIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_stopCleanCycleTime:=_SequenceElapsedTime;
+
+cleanCycleTime:=T#0S;
+IF _stopCleanCycleTime>_startCleanCycleTime THEN
+	cleanCycleTime:=_stopCleanCycleTime-_startCleanCycleTime;
+ END_IF;
+
+IF _cycleTimeAnalitics.FilterConstant = 0 THEN;
+	_cycleTimeAnalitics.FilterConstant:=10;
+END_IF;
+
+
+IF _cycleTimeAnalitics.Average = T#0S THEN
+	_cycleTimeAnalitics.Average:=_LastCycleTime;
+END_IF
+_cycleTimeAnalitics.AverageCleanCycle:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.AverageCleanCycle)+cleanCycleTime)/_cycleTimeAnalitics.FilterConstant;
 ]]></ST>
       </Implementation>
     </Method>

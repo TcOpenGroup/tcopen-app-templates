@@ -237,23 +237,14 @@
   <data name="___Rework_Count__" xml:space="preserve">
     <value>Rework Count</value>
   </data>
-  <data name="___Running_clean_loop_time__s___" xml:space="preserve">
-    <value>Running clean loop time [s]</value>
+  <data name="___Average_cycle_time___" xml:space="preserve">
+    <value>Average cycle time </value>
   </data>
-  <data name="___Clean_loop_time__s___" xml:space="preserve">
-    <value>Clean loop time [s]</value>
+  <data name="___Average_clean_cycle_time___" xml:space="preserve">
+    <value>Average clean cycle time </value>
   </data>
-  <data name="___Average_clean_loop_time___" xml:space="preserve">
-    <value>Average clean loop time </value>
-  </data>
-  <data name="___Average_clean_loop_time__s___" xml:space="preserve">
-    <value>Average clean loop time [s]</value>
-  </data>
-  <data name="___Clean_loop_time_history__" xml:space="preserve">
-    <value>Clean loop time history</value>
-  </data>
-  <data name="___Clear_cliean_loop_time__" xml:space="preserve">
-    <value>Clear cliean loop time</value>
+  <data name="___Average_cycle_time_filter_constant__" xml:space="preserve">
+    <value>Average cycle time filter constant</value>
   </data>
   <data name="___ID__" xml:space="preserve">
     <value>ID</value>
