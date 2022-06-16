@@ -1,23 +1,26 @@
 name: nightly
 
 on: 
-  workflow_dispatch :
-    branches :  
+  push:
+    branches : 
       - dev
-  schedule:
-    - cron: '0 0 * * *'
-
+  pull_request: 
+    paths:
+      - 'src/**'
+      - 'pipelines/**'
+      - '.github/**'
+  workflow_dispatch:
 jobs:
   build:
     runs-on: self-hosted
-    timeout-minutes: 90
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v2
         with :
           path : '.'
           fetch-depth: 0
-      - name: Run Psake
+      - name: Cake
         env:
-	  gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}			
+          gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}
         run: >
-          .\build.ps1    
+          .\build.ps1          
