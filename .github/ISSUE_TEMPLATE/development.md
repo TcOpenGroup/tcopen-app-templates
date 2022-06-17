@@ -1,8 +1,8 @@
 ---
 name: Development
 about: Suggestion for improvement in development process
-title: ''
-labels: development
+title: "[NEW-FEATURE]"
+labels: new-feature
 assignees: ''
 
 ---
