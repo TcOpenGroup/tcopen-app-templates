@@ -126,6 +126,38 @@ namespace x_template_xPlc
             return this;
         }
     }
+    public class ControledUnitStateToForegroundBrushConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            var state = (eCUState)Enum.ToObject(typeof(eCUState), value);
+            switch (state)
+            {
+                case eCUState.None:
+                    return Application.Current.Resources["OnSurface"];
+                case eCUState.HasWarning:
+                    return Application.Current.Resources["OnWarning"];
+                case eCUState.HasError:
+                    return Application.Current.Resources["OnError"];
+                default:
+                    return Application.Current.Resources["OnSurface"];
+            }
+
+            return Application.Current.Resources["OnSurface"];
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
+    }
 
     public class ControledUnitStateToBackgroundBrushConverter : MarkupExtension, IValueConverter
     {
@@ -136,16 +168,16 @@ namespace x_template_xPlc
             switch (state)
             {
                 case eCUState.None:
-                    return Application.Current.Resources["MtsDarkGray"];
+                    return Application.Current.Resources["Surface"];
                 case eCUState.HasWarning:
                     return Application.Current.Resources["Warning"];
                 case eCUState.HasError:
                     return Application.Current.Resources["Error"];
                 default:
-                    return Application.Current.Resources["MtsDarkGray"];
+                    return Application.Current.Resources["Surface"];
             }
 
-            return Application.Current.Resources["MtsDarkGray"];
+            return Application.Current.Resources["Surface"];
 
         }
 
@@ -192,39 +224,7 @@ namespace x_template_xPlc
             return this;
         }
     }
-    public class ControledUnitStateToForegroundBrushConverter : MarkupExtension, IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-
-            //ControledUnitState state = (ControledUnitState)Enum.ToObject(typeof(ControledUnitState), value);
-            //switch (state)
-            //{
-            //    case ControledUnitState.None:
-            //        return Application.Current.Resources["OnMtsDarkGray"];
-            //    case ControledUnitState.HasWarning:
-            //        return Application.Current.Resources["OnWarning"];
-            //    case ControledUnitState.HasError:
-            //        return Application.Current.Resources["OnError"];
-            //    default:
-            //        return Application.Current.Resources["OnMtsDarkGray"];
-            //}
-
-            return Application.Current.Resources["MtsDarkGray"];
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
-    }
-
+   
     public class SequencerStateToBackgroundBrushConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

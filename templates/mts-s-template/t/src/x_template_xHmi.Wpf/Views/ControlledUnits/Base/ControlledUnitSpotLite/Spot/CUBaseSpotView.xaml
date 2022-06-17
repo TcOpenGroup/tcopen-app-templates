@@ -224,7 +224,7 @@
                 </ScrollViewer>
 
                 <!--Cycle time analitics-->
-                <Expander Grid.Row="5" Background="{StaticResource Surface}">
+                <Expander Grid.Row="5" Background="{StaticResource Surface} ">
                     <Expander.Header>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -245,48 +245,50 @@
                            
                         </Grid>
                     </Expander.Header>
-                    <UniformGrid
-                        Grid.Row="5"
-                        HorizontalAlignment="Center"
-                        Columns="4"
-                        Rows="2">
+                    <ScrollViewer Background="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}" Grid.Row="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                         <UniformGrid
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            Columns="4"
+                            Rows="2">
 
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{x:Static p:strings.ActualCycleTime}" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{x:Static p:strings.AverageCycleTime}" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{x:Static p:strings.ActualCleanCycleTime}" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{x:Static p:strings.AverageCleanCycleTime}" />
 
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{Binding Component._statusInfo.CurrentCycleTime.Cyclic, StringFormat={}{0:hh\\:mm\\:ss\\:f}}" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{Binding   Component._statusInfo.AverageCycleTime.Cyclic, StringFormat={}{0:hh\\:mm\\:ss\\:f}}" />
 
 
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{Binding Component._statusInfo.CurrentCleanCycleTime.Cyclic, StringFormat={}{0:hh\\:mm\\:ss\\:f}}" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}"
+                            Foreground="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToForegroundBrushConverter}}"
                             Text="{Binding   Component._statusInfo.AverageCleanCycleTime.Cyclic, StringFormat={}{0:hh\\:mm\\:ss\\:f}}" />
                     </UniformGrid>
+                    </ScrollViewer>
                 </Expander>
               
             </Grid>

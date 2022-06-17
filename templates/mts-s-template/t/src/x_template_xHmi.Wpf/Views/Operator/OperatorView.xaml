@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
         <Canvas Grid.Row="1">
-            <mainplc:CUBaseSpotView MinHeight="200" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
+            <mainplc:CUBaseSpotView MinHeight="200" MaxWidth="500" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
             <mainplc:CUBaseSpotLiteView  Canvas.Top="300" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
 
         </Canvas>
