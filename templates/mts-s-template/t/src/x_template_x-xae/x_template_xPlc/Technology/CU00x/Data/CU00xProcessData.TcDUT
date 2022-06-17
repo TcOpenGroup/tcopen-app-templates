@@ -5,6 +5,9 @@
     CU00xProcessData EXTENDS CUProcessDataBase :
     STRUCT		
         BoltPresenceInspector : TcoInspectors.TcoDigitalInspector(THISSTRUCT);
+		BoltDimensionPresenceInspector : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
+		BoltDatacodePresenceInspector : TcoInspectors.TcoDataInspector(THISSTRUCT);				
+
     END_STRUCT
 END_TYPE
 ]]></Declaration>

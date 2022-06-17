@@ -99,7 +99,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID, TRUE, 'FINALIZE ENTITY DATA')) THEN
     //-------------------------------------		
-	StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Station.ProcessDataManager.Data.CU00x.Header).Done);				   		    				
+	
+	StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Station.ProcessDataManager.Data.CU00x.Header).Done );				   		    				
     //-------------------------------------
 END_IF]]></ST>
       </Implementation>
@@ -141,7 +142,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (Step(inStepID, TRUE, 'LOAD PROCESS SETTING')) THEN
+        <ST><![CDATA[IF (Step(inStepID, _dataLoadProcessSettings, 'LOAD PROCESS SETTING')) THEN
     //-------------------------------------
 	
 	THIS^._missingProcessSettingMessage.OnCondition(Station.Technology.ProcessSettings.Data._EntityId = '')
@@ -160,6 +161,7 @@ END_VAR
 			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
 			Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
 			CompleteStep();
+
 		END_IF;	
 	ELSE
 		IF(_dialog.Show()
@@ -200,6 +202,17 @@ METHOD PROTECTED Main : BOOL
 // Typically used in the first station of the technology to load process settings that will be used trough out the production
 IF(_dataLoadProcessSettings) THEN THIS^.DataLoadProcessSettings(100); END_IF;	
 
+(*
+
+		
+		This step we would like to star cycle time (e.g. we want to exclude loading data from clean cycle time )		
+*)
+IF (Step(150, TRUE, 'START MEASURE CT TRIGGER')) THEN
+//-------------------------------------    
+	StartCleanCycleTime();
+	StepCompleteWhen(TRUE);
+//-------------------------------------
+END_IF
 // Creates new data entity (new part/item) 
 // Typically used in the first station of the technology to create new document/record to be persited in the repository.
 // Sets the status of the entity to 'InProgress'
@@ -249,6 +262,19 @@ END_IF
 
 (*
 
+		
+		This step we would save cycle time value (e.g. we not include saving data into cycle time )
+		
+*)
+IF (Step(2150, TRUE, 'STOP MEASURE CT TRIGGER')) THEN
+//-------------------------------------    
+	StopCleanCycleTime();
+	StepCompleteWhen(TRUE);
+//-------------------------------------
+END_IF
+
+(*
+
 	CLOSING DATA OPERATIONS
 	Following methods provide process data manipulation for this controlled unit.
 	Comment or uncomment according to your need.
@@ -263,7 +289,7 @@ IF(_dataClose) THEN THIS^.DataEntityClose(5000); END_IF;
 IF(_dataFinalize) THEN THIS^.DataEntityFinalize(5500); END_IF;
 
 
-IF (Step(10000, TRUE, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
+IF (Step(10000, false, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
     //-------------------------------------
     StepCompleteWhen(_paralellTask.Task.Done);
     //-------------------------------------	

@@ -70,7 +70,16 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actual CT [s].
+        ///   Looks up a localized string similar to Actual Clean CT .
+        /// </summary>
+        public static string ActualCleanCycleTime {
+            get {
+                return ResourceManager.GetString("ActualCleanCycleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actual CT .
         /// </summary>
         public static string ActualCycleTime {
             get {
@@ -106,7 +115,16 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Average CT [s].
+        ///   Looks up a localized string similar to Average Clean CT.
+        /// </summary>
+        public static string AverageCleanCycleTime {
+            get {
+                return ResourceManager.GetString("AverageCleanCycleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average CT.
         /// </summary>
         public static string AverageCycleTime {
             get {

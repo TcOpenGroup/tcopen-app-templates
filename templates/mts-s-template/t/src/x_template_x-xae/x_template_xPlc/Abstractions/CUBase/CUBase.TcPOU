@@ -8,6 +8,9 @@ VAR
     _processData : ProcessDataManager(THIS^);
     _statusInfo  : CUBaseStatusInfo := (Parent := THIS^);
 	_operatorInfo : OperatorInfo := (Parent := THIS^);
+	_settings  : CUBaseSettings := (Parent := THIS^);
+	_toggle: TcoUtilities.TcoBlinker(THIS^);
+	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -257,10 +260,31 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF AutomatTask.Task.Busy THEN
+        <ST><![CDATA[_toggle(inOffTime:=T#500MS,inOnTime:=T#500MS);
+
+_statusInfo.State := eCUState.None;
+
+IF _statusInfo.CurrentCycleTime  >= _settings.WarningCycleTime
+	AND _statusInfo.CurrentCycleTime  < _settings.ErrorCycleTime THEN
+	_statusInfo.State:= eCUState.HasWarning;
+ELSIF _statusInfo.CurrentCycleTime   >= _settings.ErrorCycleTime THEN
+	_statusInfo.State := eCUState.HasError;
+END_IF; 
+
+
+IF _toggle.IsOff THEN
+	_statusInfo.State := eCUState.None;
+END_IF
+
+
+
+IF AutomatTask.Task.Busy THEN
     _statusInfo.Mode                   := eCUMode.AutomatMode;
     _statusInfo.CurrentTaskDescription := '<#AUTOMAT#>';
     _statusInfo.CurrentCycleTime       := AutomatTask._SequenceElapsedTime;
+	_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+	_statusInfo.AverageCycleTime	   := AutomatTask.AverageCycleTime;
+	_statusInfo.AverageCleanCycleTime  := AutomatTask.AverageCleanCycleTime;
     _statusInfo.CurrentUid             := AutomatTask.CurrentStep.ID;
     _statusInfo.CurrentOperation       := AutomatTask.CurrentStep.Description;
     _statusInfo.CurrentIsInStepMode    := AutomatTask._modeController._mode = eSequencerMode.StepMode;
@@ -268,12 +292,17 @@ ELSIF GroundTask.Task.Busy THEN
     _statusInfo.Mode := eCUMode.GroundMode;
 	_statusInfo.CurrentTaskDescription := '<#GROUND#>';
     _statusInfo.CurrentCycleTime       := GroundTask._SequenceElapsedTime;
+	 _statusInfo.CurrentCleanCycleTime := GroundTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+	_statusInfo.AverageCycleTime	   := GroundTask.AverageCycleTime;
+	_statusInfo.AverageCleanCycleTime  := GroundTask.AverageCleanCycleTime;
     _statusInfo.CurrentUid             := GroundTask.CurrentStep.ID;
     _statusInfo.CurrentOperation       := GroundTask.CurrentStep.Description;
     _statusInfo.CurrentIsInStepMode    := GroundTask._modeController._mode = eSequencerMode.StepMode;
 ELSIF THIS^.ManualTask.Busy THEN
     _statusInfo.Mode := eCUMode.ManualMode;
 	_statusInfo.CurrentTaskDescription := '<#MANUAL#>';
+	_statusInfo.State := eCUState.None;
+
 ELSIF THIS^.GroundTask.Task.Done THEN
 	_statusInfo.CurrentTaskDescription := '<#READY TO START#>';
 	_statusInfo.Mode := eCUMode.GroundModeDone;
@@ -281,6 +310,8 @@ ELSIF THIS^.GroundTask.Task.Done THEN
     _statusInfo.CurrentUid             := GroundTask.CurrentStep.ID;
     _statusInfo.CurrentOperation       := GroundTask.CurrentStep.Description;
     _statusInfo.CurrentIsInStepMode    := GroundTask._modeController._mode = eSequencerMode.StepMode;
+	_statusInfo.State := eCUState.None;
+
 ELSE
     _statusInfo.Mode := eCUMode.NoMode;	
 	_statusInfo.CurrentTaskDescription := '<#IDLE#>';
@@ -288,7 +319,9 @@ ELSE
     _statusInfo.CurrentUid             := 0;
     _statusInfo.CurrentOperation       := '';
     _statusInfo.CurrentIsInStepMode    := FALSE;
+	_statusInfo.State := eCUState.None;
 END_IF
+
 ]]></ST>
       </Implementation>
     </Method>

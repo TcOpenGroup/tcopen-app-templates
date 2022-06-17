@@ -305,10 +305,10 @@ HLAVNÁ SEKVENCIA</value>
     <value>Čas potrebný na dokončenie operácií:</value>
   </data>
   <data name="ActualCycleTime" xml:space="preserve">
-    <value>Skutočný CT [s]</value>
+    <value>Skutočný CT</value>
   </data>
   <data name="AverageCycleTime" xml:space="preserve">
-    <value>Priemerný CT [s]</value>
+    <value>Priemerný CT</value>
   </data>
   <data name="StepModeOff" xml:space="preserve">
     <value>REŽIM UVOĽŇOVACIEHO KROKU</value>
@@ -333,5 +333,11 @@ HLAVNÁ SEKVENCIA</value>
   </data>
   <data name="Modified" xml:space="preserve">
     <value>Upravené</value>
+  </data>
+  <data name="ActualCleanCycleTime" xml:space="preserve">
+    <value>Skutočný čistý CT </value>
+  </data>
+  <data name="AverageCleanCycleTime" xml:space="preserve">
+    <value>Average skutočný čisty CT</value>
   </data>
 </root>

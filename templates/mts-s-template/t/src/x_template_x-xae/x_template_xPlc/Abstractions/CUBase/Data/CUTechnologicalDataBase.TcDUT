@@ -5,6 +5,30 @@
 {attribute clr [Group(Layout.Scroll)]}
 TYPE CUTechnologicalDataBase EXTENDS TcoCore.TcoStruct :
 STRUCT
+	{attribute wpf [Container(Layout.Stack,"General")]}
+	{attribute wpf [Group(Layout.GroupBox)]}
+	{attribute addProperty Name "<#Cycle time#> - <#Nominal#>"}
+	IdealCycleTime   : TIME;
+	
+	{attribute addProperty Name "<#Cycle time#> - <#Warning#>"}
+	WarningCycleTime : TIME;
+    
+	{attribute addProperty Name "<#Cycle time#> - <#Error#>"}
+	ErrorCycleTime   : TIME;
+
+	
+	{attribute addProperty Name "<#Step time#> - <#Warning#>"}
+	WarningStepAlarmTime : TIME;
+    
+	{attribute addProperty Name "<#Step time#> - <#Error#>"}
+	ErrorStepAlarmTime   : TIME;
+	
+	{attribute addProperty Name "<#Energy saving mode - Inactivity time#> "}
+	TimeToEntryEnergySavingMode : TIME;
+	
+	{attribute addProperty Name "<#Consecutive Error count#> "}
+	ConsecutiveErrorCount   : UINT;
+	
 	
 END_STRUCT
 END_TYPE

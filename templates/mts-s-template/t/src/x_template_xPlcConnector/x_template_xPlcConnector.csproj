@@ -30,6 +30,7 @@
     <PackageReference Include="TcOpen.TcoElementsConnector" Version="0.7.0-alpha.863" />
     <PackageReference Include="TcOpen.TcoInspectorsConnector" Version="0.7.0-alpha.863" />    
     <PackageReference Include="TcOpen.TcoPneumaticsConnector" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.TcoUtilitiesConnector" Version="0.7.0-alpha.863" />
   </ItemGroup>
   <!--PCKG-END-->  
   

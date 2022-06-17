@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="CycleTimeAnalitics" Id="{7e9e5f89-9940-087b-319a-fe3c57ab06a1}">
+    <Declaration><![CDATA[TYPE CycleTimeAnalitics :
+STRUCT
+
+	{attribute addProperty Name "<#Average cycle time #>"}
+	Average:TIME;
+	
+	{attribute addProperty Name "<#Average clean cycle time #>"}
+	AverageCleanCycle:TIME;
+	
+	{attribute addProperty Name "<#Average cycle time filter constant#>"}
+	FilterConstant:UINT:=10;	
+	
+
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

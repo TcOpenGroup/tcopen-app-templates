@@ -174,6 +174,24 @@
   <data name="___Operator__" xml:space="preserve">
     <value>Operator</value>
   </data>
+  <data name="___Nominal__" xml:space="preserve">
+    <value>Nominal</value>
+  </data>
+  <data name="___Warning__" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="___Error__" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="___Step_time__" xml:space="preserve">
+    <value>Step time</value>
+  </data>
+  <data name="___Energy_saving_mode___Inactivity_time__" xml:space="preserve">
+    <value>Energy saving mode - Inactivity time</value>
+  </data>
+  <data name="___Consecutive_Error_count__" xml:space="preserve">
+    <value>Consecutive Error count</value>
+  </data>
   <data name="___Entity_header__" xml:space="preserve">
     <value>Entity header</value>
   </data>
@@ -218,6 +236,15 @@
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
     <value>Rework Count</value>
+  </data>
+  <data name="___Average_cycle_time___" xml:space="preserve">
+    <value>Average cycle time </value>
+  </data>
+  <data name="___Average_clean_cycle_time___" xml:space="preserve">
+    <value>Average clean cycle time </value>
+  </data>
+  <data name="___Average_cycle_time_filter_constant__" xml:space="preserve">
+    <value>Average cycle time filter constant</value>
   </data>
   <data name="___ID__" xml:space="preserve">
     <value>ID</value>
