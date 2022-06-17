@@ -224,7 +224,7 @@
                 </ScrollViewer>
 
                 <!--Cycle time analitics-->
-                <Expander Grid.Row="5" Background="{StaticResource Surface} ">
+                <Expander Grid.Row="5" Background="{StaticResource Surface}">
                     <Expander.Header>
                         <Grid>
                             <Grid.RowDefinitions>
