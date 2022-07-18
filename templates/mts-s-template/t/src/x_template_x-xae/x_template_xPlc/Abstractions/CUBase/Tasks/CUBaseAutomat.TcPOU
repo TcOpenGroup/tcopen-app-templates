@@ -8,5 +8,217 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="DataOperations" Id="{edf08b17-d837-0916-3b82-58653463e4f4}" />
+    <Method Name="DataEntityClose" Id="{a965833c-1ef6-025a-113f-9e8e9e5a762c}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Stores the data from this controlled unit into the repository. In addition modifies entity header and controlled unit header.									
+		</summary>
+	</docu>
+~*)
+METHOD DataEntityClose
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The unique step id definition.
+		</summary>			
+	</docu>	
+	~*)
+	inStepID : INT;
+	(*~
+	<docu>
+		<summary>
+			If input enum is set to InvokeAndWaitDone  operation will  wait until task reaches the ```Done``` state .
+			If input enum is set to InvokeOnly results return True when  task reaches the ```Busy``` state . Later is recomended (neccessary) to check  task  ```Done``` state  , check  task  status.
+		</summary>			
+	</docu>	
+	~*)
+	InvokeAction: eDataEntityInvokeType;
+END_VAR
+VAR_IN_OUT
+	Header : CuHeader; 
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID,TRUE, 'CLOSE ENTITY DATA')) THEN
+    //-------------------------------------		
+	CASE InvokeAction OF
+		eDataEntityInvokeType.InvokeAndWaitDone: 
+				StepCompleteWhen(THIS^.Station.EntityFlowCloseForOperations(Header).Done);
+		eDataEntityInvokeType.InvokeOnly: 
+				StepCompleteWhen(THIS^.Station.EntityFlowCloseForOperations(Header).Busy);	
+	END_CASE;			   		    				
+    //-------------------------------------
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DataEntityCreateNew" Id="{578edfb1-f7ad-0177-16dd-4b737155d078}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Creates new record in the repository with given EntityId and populates with the current controlled units data.
+			In addition modifies entity header and controlled unit header.									
+		</summary>
+	</docu>
+~*)
+METHOD DataEntityCreateNew
+VAR_INPUT	
+	inStepID : INT;
+	EntityId : STRING(255);
+END_VAR
+
+VAR_IN_OUT
+	Header: CuHeader;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, TRUE, 'CREATE NEW ENTITY DATA')) THEN
+    //-------------------------------------		
+	StepCompleteWhen(THIS^.Station.EntityFlowCreateNew(EntityId, Header).Done);				   		    				
+    //-------------------------------------
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DataEntityDiscard" Id="{c4eb83a5-3a8b-087d-0081-05e9301586d8}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[METHOD DataEntityDiscard
+VAR_INPUT	
+	inStepID : INT;
+	EntityId : STRING(255);
+END_VAR
+VAR_IN_OUT
+	Header: CuHeader;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, TRUE, 'DISCARD ENTITY DATA')) THEN
+    //-------------------------------------		
+	StepCompleteWhen(THIS^.Station.EntityFlowDiscard(EntityId, Header).Done);				   		    				
+    //-------------------------------------
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DataEntityFinalize" Id="{7ed02d1a-956c-0318-0f3a-a0fbfbe45243}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Stores data of this controlled unit into the repository.
+			In addition modifies entity header and controlled unit header.
+			Finalize will set the comprehensive result from InProgress to Passed. 
+			If the comprehensive result is Failed the finalizing will not modify the result.									
+		</summary>
+	</docu>
+~*)
+METHOD DataEntityFinalize : BOOL
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The unique step id definition.
+		</summary>			
+	</docu>	
+	~*)
+	inStepID : INT;
+	(*~
+	<docu>
+		<summary>
+			If input enum is set to InvokeAndWaitDone  operation will  wait until task reaches the ```Done``` state .
+			If input enum is set to InvokeOnly results return True when  task reaches the ```Busy``` state . This option is used when we need to reduce cycle time. Later is recomended (neccessary) to check  task  ```Done``` state  , check  task  status.
+		</summary>			
+	</docu>	
+	~*)
+	InvokeAction: eDataEntityInvokeType;
+END_VAR
+VAR_IN_OUT
+	Header: CuHeader;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID,TRUE, 'FINALIZE ENTITY DATA')) THEN
+    //-------------------------------------		
+		CASE InvokeAction OF
+		eDataEntityInvokeType.InvokeAndWaitDone: 
+				StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Done);
+		eDataEntityInvokeType.InvokeOnly: 
+				StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Busy);	
+	END_CASE;			   		    				
+	StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Done );				   		    				
+    //-------------------------------------
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DataEntityOpen" Id="{2a26fc17-3ba9-0135-1e70-03550eba748a}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Retrieves the data with given EntityId from the repository. In addition modifies entity header and controlled unit header.									
+		</summary>
+	</docu>
+~*)
+METHOD DataEntityOpen
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The unique step id definition.
+		</summary>			
+	</docu>	
+	~*)
+	inStepID : INT;
+	(*~
+	<docu>
+		<summary>
+			The definition of jump sptep.Usage of this jump step is when entity does not belong to the Controled unit.
+		</summary>			
+	</docu>	
+	~*)
+	inReqStepId: INT;
+	inEntityId : STRING(255);
+END_VAR
+VAR_IN_OUT
+	CuHeader: CuHeader;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, TRUE, 'OPEN ENTITY DATA')) THEN
+    //-------------------------------------		
+    IF THIS^.Station.EntityFlowOpenForOperations(inEntityId, CuHeader).Done THEN
+        IF THIS^.Station.ProcessDataManager.Data.EntityHeader.IsEmpty THEN
+            RequestStep(inReqStepId);
+        ELSIF EntityDoesBelong() THEN
+            CompleteStep();
+        ELSE
+            RequestStep(inReqStepId);
+        END_IF
+    END_IF;
+    //-------------------------------------
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EntityDoesBelong" Id="{b1bd5eea-f0ce-0a33-33aa-0ab8cd908959}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[METHOD EntityDoesBelong : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[EntityDoesBelong:=THIS^.Station.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.Station.CuId;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Station" Id="{eaca3fe7-35ad-0454-21e6-545016e503be}">
+      <Declaration><![CDATA[PROPERTY Station : REFERENCE TO CU00x]]></Declaration>
+      <Get Name="Get" Id="{ade5c0ee-01dd-065a-2c38-d3659e28429b}">
+        <Declaration><![CDATA[VAR
+    _station : POINTER TO CU00x;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF __QUERYPOINTER(Parent, _station) THEN // Check if _Parent is Station001
+    Station REF= _station^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
   </POU>
 </TcPlcObject>

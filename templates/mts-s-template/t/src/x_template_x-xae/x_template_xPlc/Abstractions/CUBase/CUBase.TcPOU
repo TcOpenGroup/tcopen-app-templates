@@ -16,6 +16,7 @@ END_VAR]]></Declaration>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="ProcessData" Id="{1a8aa84b-31e4-41aa-b103-fbb20e0c7128}">
+      <Folder Name="CrudTaskState" Id="{3cbcef83-2f8f-092f-1642-2d5bb3f25f3f}" />
       <Folder Name="DataFlaging" Id="{aed3d7b3-4fd1-0c13-2eed-417fc6b5b252}" />
       <Folder Name="ExternalData" Id="{8389998d-539c-07b7-2bed-035331c1a0d8}" />
     </Folder>
@@ -27,6 +28,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="CreateEntityTask" Id="{8d9f994a-39cb-072a-20b7-6e45f0e751c3}" FolderPath="ProcessData\CrudTaskState\">
+      <Declaration><![CDATA[PROPERTY  CreateEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{25505615-9457-08c9-0598-a426211f4721}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CreateEntityTask := _processData._createTask;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -48,6 +60,17 @@ END_VAR
           <ST><![CDATA[_cuId := CuId;]]></ST>
         </Implementation>
       </Set>
+    </Property>
+    <Property Name="DeleteEntityTask" Id="{904e79cf-1b7d-0b16-004d-f7a93864b5a8}" FolderPath="ProcessData\CrudTaskState\">
+      <Declaration><![CDATA[PROPERTY  DeleteEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{3aaafc1d-63ff-0db7-27cf-f78743af539c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DeleteEntityTask := _processData._deleteTask;]]></ST>
+        </Implementation>
+      </Get>
     </Property>
     <Method Name="EntityFlowCloseForOperations" Id="{8bf49847-55ad-09e2-18b7-e269b9aac41c}" FolderPath="ProcessData\ExternalData\">
       <Declaration><![CDATA[METHOD EntityFlowCloseForOperations : TcoCore.ITcoTaskStatus
@@ -115,6 +138,17 @@ END_VAR
 THIS^.FlagOpenEntity(Identifier, Header);]]></ST>
       </Implementation>
     </Method>
+    <Property Name="ExistEntityTask" Id="{97b85c56-ca7a-0f33-3276-6bd0c596f8b5}" FolderPath="ProcessData\CrudTaskState\">
+      <Declaration><![CDATA[PROPERTY  ExistEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{0af78185-edfb-0a12-0373-dc5b82f7228b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ExistEntityTask := _processData._idExistsTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="FlagCloseEntity" Id="{f071be0b-9fd5-042e-3314-968c40af4466}" FolderPath="ProcessData\DataFlaging\">
       <Declaration><![CDATA[METHOD PRIVATE FlagCloseEntity : BOOL
 VAR_IN_OUT
@@ -150,7 +184,9 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[THIS^.ProcessDataManager.Data.EntityHeader.Results.Result := TcoInspectors.eOverallResult.InProgress;
+THIS^.ProcessDataManager.Data._EntityId := Identifier;
+THIS^.ProcessDataManager.Data.EntityHeader.WasReset := FALSE;
 	 ]]></ST>
       </Implementation>
     </Method>
@@ -193,17 +229,14 @@ END_VAR
       <Implementation>
         <ST><![CDATA[Header.Operator := _operatorInfo.UserName;
 Header.OperationsStarted := Context.RealTimeClock.NowLocal();
-THIS^.ProcessDataManager.Data.EntityHeader.LastStation := THIS^.CuId;
-THIS^.ProcessDataManager.Data.EntityHeader.NextStation := Header.NextOnPassed;
 THIS^.ProcessDataManager.Data.EntityHeader.Results.Result := TcoInspectors.eOverallResult.InProgress;
 THIS^.ProcessDataManager.Data._EntityId := Identifier;
 THIS^.ProcessDataManager.Data.EntityHeader.OpenOn := THIS^.CuId;
 THIS^.ProcessDataManager.Data.EntityHeader.WasReset := FALSE;
-Header.Operator := _operatorInfo.UserName;
 
-Header.Operator := _operatorInfo.UserName;
-Header.OperationsStarted := Context.RealTimeClock.NowLocal();
-THIS^.ProcessDataManager.Data.EntityHeader.OpenOn := THIS^.CuId;]]></ST>
+
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="FlagThrowAwayEntity" Id="{ab780eac-b9e9-0133-03b0-8c9a606ed51c}" FolderPath="ProcessData\DataFlaging\">
@@ -251,6 +284,28 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[ProcessDataManager REF= _processData;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReadEntityTask" Id="{e052507d-c99d-0b49-2b30-e3a644be24d4}" FolderPath="ProcessData\CrudTaskState\">
+      <Declaration><![CDATA[PROPERTY  ReadEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{77518d1e-59e8-0173-1e59-63b515f69430}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadEntityTask := _processData._readTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="UpdateEntityTask" Id="{05c804c9-7f4b-0e37-2ebf-2fe6f3b9eb66}" FolderPath="ProcessData\CrudTaskState\">
+      <Declaration><![CDATA[PROPERTY  UpdateEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{efded1af-2b8a-0cbf-039b-3695e9082143}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[UpdateEntityTask := _processData._updateTask;]]></ST>
         </Implementation>
       </Get>
     </Property>

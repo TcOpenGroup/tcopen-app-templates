@@ -22,7 +22,7 @@ using Vortex.Presentation.Wpf;
 namespace x_template_xPlc
 {
     /// <summary>
-    /// Interaction logic for fbPneumaticPistonManualView.xaml
+    /// Interaction logic for CUBaseSpotView.xaml
     /// </summary>
     public partial class CUBaseSpotView : UserControl
     {

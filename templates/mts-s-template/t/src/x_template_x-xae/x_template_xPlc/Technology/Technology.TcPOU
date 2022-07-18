@@ -6,6 +6,8 @@ VAR
     _processSettings     : ProcessDataManager(THIS^);  			//a.k.a receipe
     _technologySettings  : TechnologicalDataManager(THIS^);		//a.k.a machine settings
     _processTraceability : ProcessDataManager(THIS^);			//the same structure as process setting but filled with actual production data (measurements, inspection results, etc)
+	
+	_notificationPanel      : NotificationPanel(THIS^);				//provide technology state signals to side baner in visualisation
     {attribute addProperty Name "<#AUTOMAT ALL#>"}
     _automatAllTask : TcoCore.TcoTask(THIS^);					// Commmand-like taks to execute automation mode on whole technology. Handled in controlled units.
     {attribute addProperty Name "<#GROUND ALL#>"}
@@ -83,7 +85,15 @@ END_VAR
 		</summary>
 	</docu>
 ~*)
-METHOD PROTECTED Main]]></Declaration>
+METHOD PROTECTED Main
+VAR
+	_notificationSourceSignals: NotificationPanelInfo;
+	safetyCircuitOk: BOOL;
+	_eStopActive: BOOL;
+	_keysAto: BOOL;
+	_closed: BOOL;
+	_locked: BOOL;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[(*
 	Context settings 
@@ -97,6 +107,43 @@ THIS^.RtcSynchronize(TRUE,
 // Messenger logger settings
 _settings.Messaging.MessageDigestMethod := eMessageDigestMethod.CRC32;
 _settings.Messaging.MessengerLoggingMethod := eMessengerLogMethod.OnEventRisen;
+
+
+//notification panel
+ Context.Environment.Messaging.Suspend();
+			
+_closed:=TRUE;
+//_closed   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsClosed 
+//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsClosed;
+
+ _locked:=TRUE;
+//_locked   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsLocked 
+//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsLocked;
+			
+_keysAto  := TRUE;
+_eStopActive:=0;
+
+
+_notificationSourceSignals.ControlVoltage   := TRUE;//Components.ControlVoltage.Signal.Signal 
+_notificationSourceSignals.AirPressure      := TRUE;//Components.AirPressureOk.Signal.Signal, 
+_notificationSourceSignals.AutomatAllowed   := _keysAto; 
+_notificationSourceSignals.EmergencyStop    := _eStopActive > 0; 
+_notificationSourceSignals.SafetyDoorOk     :=safetyCircuitOk;	
+_notificationSourceSignals.LightCurtain     := TRUE; 	// not used
+_notificationSourceSignals.DoorClosed       := _closed; 
+_notificationSourceSignals.DoorLocked       := _locked; 
+_notificationSourceSignals.ProcessDataOk    := _processSettings._data._EntityId <> '';
+_notificationSourceSignals.TechnologyDataOk := _technologySettings._data._EntityId <> '';  
+	
+_notificationPanel(inBlinkPeriod:=T#500MS , inSignalSource:=_notificationSourceSignals );
+			
+ Context.Environment.Messaging.Resume();
 
 (*
 	

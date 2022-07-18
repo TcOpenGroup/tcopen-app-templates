@@ -22,6 +22,8 @@ TYPE
         _Modified : DT;
         {attribute addProperty Name "<#Entity header#>"}
         EntityHeader : EntityHeader     := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		 {attribute clr [Container(Layout.Stack)]}
         CU00x : CU00xProcessData := (Parent := THISSTRUCT);
     END_STRUCT
 END_TYPE

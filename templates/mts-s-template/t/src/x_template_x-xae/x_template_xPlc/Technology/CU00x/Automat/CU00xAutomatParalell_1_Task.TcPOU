@@ -30,7 +30,7 @@ END_IF
 
 IF (Step(10000, TRUE, 'PARALELL TASK DONE')) THEN
     //-------------------------------------
-    _task.DoneWhen(TRUE);
+    _task.DoneWhen(TRUE );
     //-------------------------------------	
 END_IF
 
