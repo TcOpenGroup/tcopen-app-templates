@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="NotificationPanelInfo" Id="{6aebd4b4-8546-04a0-0f59-abb40b1bfcab}">
+    <Declaration><![CDATA[TYPE NotificationPanelInfo :
+STRUCT
+	{attribute addProperty Name "<#Control voltage#>"}
+	ControlVoltage : BOOL;
+	{attribute addProperty Name "<#Air pressure#>"}
+	AirPressure : BOOL;
+	{attribute addProperty Name "<#Autmatic mode allowed#>"}
+	AutomatAllowed : BOOL;
+	{attribute addProperty Name "<#Emergency stop#>"}
+  	EmergencyStop : BOOL; 
+	{attribute addProperty Name "<#Safety doors OK#>"}
+  	SafetyDoorOk : BOOL;    
+	{attribute addProperty Name "<#Doors closed#>"}
+  	DoorClosed : BOOL;  
+	{attribute addProperty Name "<#Doors locked#>"}
+	DoorLocked : BOOL;
+	{attribute addProperty Name "<#Light curtain#>"}
+  	LightCurtain : BOOL;
+	{attribute addProperty Name "<#Process data#>"}
+  	ProcessDataOk : BOOL;
+	{attribute addProperty Name "<#Technology data#>"}
+  	TechnologyDataOk : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

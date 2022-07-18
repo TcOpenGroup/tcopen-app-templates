@@ -117,178 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="___AUTOMAT__" xml:space="preserve">
-    <value>AUTOMAT</value>
-  </data>
-  <data name="___GROUND__" xml:space="preserve">
-    <value>GROUND</value>
-  </data>
-  <data name="___MANUAL__" xml:space="preserve">
-    <value>MANUAL</value>
-  </data>
-  <data name="___READY_TO_START__" xml:space="preserve">
-    <value>READY TO START</value>
-  </data>
-  <data name="___IDLE__" xml:space="preserve">
-    <value>IDLE</value>
-  </data>
-  <data name="___Heart_beat__" xml:space="preserve">
-    <value>Heart beat</value>
-  </data>
-  <data name="___Process_data_not_selected__" xml:space="preserve">
-    <value>Process data not selected</value>
-  </data>
-  <data name="___Would_you_like_to_load_default_settings___" xml:space="preserve">
-    <value>Would you like to load default settings?</value>
-  </data>
-  <data name="___Start_manual_Service_mode__" xml:space="preserve">
-    <value>Start manual/Service mode</value>
-  </data>
-  <data name="___Brings_the_device_into_basic_position___" xml:space="preserve">
-    <value>Brings the device into basic position.</value>
-  </data>
-  <data name="___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence___" xml:space="preserve">
-    <value>Starts automatic sequence. Before start you need to perform grounding sequence.</value>
-  </data>
-  <data name="___AUTOMAT_ALL__" xml:space="preserve">
-    <value>AUTOMAT ALL</value>
-  </data>
-  <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>GROUND ALL</value>
-  </data>
-  <data name="___Next_on_Passed__" xml:space="preserve">
-    <value>Next on Passed</value>
-  </data>
-  <data name="___Next_on_Failed__" xml:space="preserve">
-    <value>Next on Failed</value>
-  </data>
-  <data name="___Cycle_time__" xml:space="preserve">
-    <value>Cycle time</value>
-  </data>
-  <data name="___Clean_loop_time__" xml:space="preserve">
-    <value>Clean loop time</value>
-  </data>
-  <data name="___Operation_started__" xml:space="preserve">
-    <value>Operation started</value>
-  </data>
-  <data name="___Operation_ended__" xml:space="preserve">
-    <value>Operation ended</value>
-  </data>
-  <data name="___Operator__" xml:space="preserve">
-    <value>Operator</value>
-  </data>
-  <data name="___Nominal__" xml:space="preserve">
-    <value>Nominal</value>
-  </data>
-  <data name="___Warning__" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-  <data name="___Error__" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="___Step_time__" xml:space="preserve">
-    <value>Step time</value>
-  </data>
-  <data name="___Energy_saving_mode___Inactivity_time__" xml:space="preserve">
-    <value>Energy saving mode - Inactivity time</value>
-  </data>
-  <data name="___Consecutive_Error_count__" xml:space="preserve">
-    <value>Consecutive Error count</value>
-  </data>
-  <data name="___Entity_header__" xml:space="preserve">
-    <value>Entity header</value>
-  </data>
-  <data name="___Recipe__" xml:space="preserve">
-    <value>Recipe</value>
-  </data>
-  <data name="___Recipe_created__" xml:space="preserve">
-    <value>Recipe created</value>
-  </data>
-  <data name="___Recipe_modified__" xml:space="preserve">
-    <value>Recipe modified</value>
-  </data>
-  <data name="___Carrier__" xml:space="preserve">
-    <value>Carrier</value>
-  </data>
-  <data name="___Reset__" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="___Master__" xml:space="preserve">
-    <value>Master</value>
-  </data>
-  <data name="___Empty__" xml:space="preserve">
-    <value>Empty</value>
-  </data>
-  <data name="___Last_station__" xml:space="preserve">
-    <value>Last station</value>
-  </data>
-  <data name="___Next_station__" xml:space="preserve">
-    <value>Next station</value>
-  </data>
-  <data name="___Operations_opened__" xml:space="preserve">
-    <value>Operations opened</value>
-  </data>
-  <data name="___Results__" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="___Reworked__" xml:space="preserve">
-    <value>Reworked</value>
-  </data>
-  <data name="___Last_Rework_Name__" xml:space="preserve">
-    <value>Last Rework Name</value>
-  </data>
-  <data name="___Rework_Count__" xml:space="preserve">
-    <value>Rework Count</value>
-  </data>
-  <data name="___Control_voltage__" xml:space="preserve">
-    <value>Control voltage</value>
-  </data>
-  <data name="___Air_pressure__" xml:space="preserve">
+  <data name="AirPressure" xml:space="preserve">
     <value>Air pressure</value>
   </data>
-  <data name="___Autmatic_mode_allowed__" xml:space="preserve">
-    <value>Autmatic mode allowed</value>
+  <data name="AutomaticMode" xml:space="preserve">
+    <value>Automatic mode</value>
   </data>
-  <data name="___Emergency_stop__" xml:space="preserve">
-    <value>Emergency stop</value>
+  <data name="ControlVoltage" xml:space="preserve">
+    <value>Control voltage</value>
   </data>
-  <data name="___Safety_doors_OK__" xml:space="preserve">
-    <value>Safety doors OK</value>
-  </data>
-  <data name="___Doors_closed__" xml:space="preserve">
+  <data name="DoorClosed" xml:space="preserve">
     <value>Doors closed</value>
   </data>
-  <data name="___Doors_locked__" xml:space="preserve">
+  <data name="DoorLocked" xml:space="preserve">
     <value>Doors locked</value>
   </data>
-  <data name="___Light_curtain__" xml:space="preserve">
+  <data name="EmergencyStop" xml:space="preserve">
+    <value>Emergency stop</value>
+  </data>
+  <data name="HeartBeat" xml:space="preserve">
+    <value>Heart beat</value>
+  </data>
+  <data name="LightCurtain" xml:space="preserve">
     <value>Light curtain</value>
   </data>
-  <data name="___Process_data__" xml:space="preserve">
+  <data name="Manipulator" xml:space="preserve">
+    <value>Manipulator</value>
+  </data>
+  <data name="ProcessData" xml:space="preserve">
     <value>Process data</value>
   </data>
-  <data name="___Technology_data__" xml:space="preserve">
+  <data name="SafetyDoorOk" xml:space="preserve">
+    <value>Safety doors</value>
+  </data>
+  <data name="TechnologyData" xml:space="preserve">
     <value>Technology data</value>
-  </data>
-  <data name="___Average_cycle_time___" xml:space="preserve">
-    <value>Average cycle time </value>
-  </data>
-  <data name="___Average_clean_cycle_time___" xml:space="preserve">
-    <value>Average clean cycle time </value>
-  </data>
-  <data name="___Average_cycle_time_filter_constant__" xml:space="preserve">
-    <value>Average cycle time filter constant</value>
-  </data>
-  <data name="___ID__" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="___Created__" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="___Modified__" xml:space="preserve">
-    <value>Modified</value>
-  </data>
-  <data name="___CU00x__" xml:space="preserve">
-    <value>CU00x</value>
   </data>
 </root>

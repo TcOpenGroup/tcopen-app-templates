@@ -27,13 +27,13 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.7.0-alpha.863" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.7.0-alpha.863" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.8.0-alpha.10" />
   </ItemGroup>
   <!--PCKG-END-->
 	
@@ -48,6 +48,11 @@
 	  </ApplicationDefinition>
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="Properties\NotificationPanel.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>NotificationPanel.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Properties\strings.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -55,6 +60,10 @@
 		</Compile>
 	</ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\NotificationPanel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotificationPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>

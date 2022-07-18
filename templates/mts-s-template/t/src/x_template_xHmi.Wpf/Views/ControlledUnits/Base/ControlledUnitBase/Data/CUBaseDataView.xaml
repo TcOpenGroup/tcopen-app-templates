@@ -11,7 +11,7 @@
             <TabItem Header="{Binding AttributeName}" DataContext="{Binding Component}">
                 <vortex:RenderableContentControl DataContext="{Binding _cuProcessDataDisplay}" PresentationType="ShadowDisplaySlim-ShadowDisplay"></vortex:RenderableContentControl>
             </TabItem>
-            <TabItem Header="Entity data">
+            <TabItem Header="Full data">
                 <vortex:RenderableContentControl DataContext="{Binding OnlineData}" PresentationType="ShadowDisplaySlim-ShadowDisplay"></vortex:RenderableContentControl>
             </TabItem>
         </TabControl>

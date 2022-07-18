@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="NotificationPanel" Id="{2928ab2f-ea83-0435-171c-b9c0980f8160}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK NotificationPanel EXTENDS TcoObject
+VAR_INPUT
+	(*~
+		<docu>
+			<summary>
+				Time duration for toggle signal.
+			</summary>
+		</docu>
+	~*)
+	inBlinkPeriod:TIME;
+		(*~
+		<docu>
+			<summary>
+				Source inputs for signalisation.
+			</summary>
+		</docu>
+	~*)
+	inSignalSource:NotificationPanelInfo;
+	
+END_VAR
+VAR
+	{attribute addProperty Name "<#Heart beat#>"}
+  	_heartBeat : BOOL;
+	
+    {attribute clr [RenderIgnore()]}
+	_badgeValue : INT;
+
+	{attribute clr [RenderIgnore()]}
+    _toggle: TcoUtilities.TcoBlinker(THIS^);
+
+	_notificationPanelSignals: NotificationPanelInfo;
+END_VAR
+	
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_toggle(inOffTime:=inBlinkPeriod,inOnTime:=inBlinkPeriod);
+_heartBeat := _toggle.IsOn;
+_notificationPanelSignals:=inSignalSource;
+
+_badgeValue := 0;
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.ControlVoltage);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.AirPressure);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.AutomatAllowed);
+_badgeValue:=_badgeValue + BOOL_TO_INT(_notificationPanelSignals.EmergencyStop);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.SafetyDoorOk);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.DoorClosed);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.Doorlocked);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.LightCurtain);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.ProcessDataOk);
+_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.TechnologyDataOk);
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

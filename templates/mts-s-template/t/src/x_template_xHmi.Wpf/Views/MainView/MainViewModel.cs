@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcOpen.Inxton.Local.Security.Wpf;
 using Vortex.Presentation.Wpf;
+using x_template_xPlc;
 
 namespace x_template_xHmi.Wpf.Views.MainView
 {
@@ -31,5 +32,6 @@ namespace x_template_xHmi.Wpf.Views.MainView
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
         }
+        public x_template_xPlcTwinController x_template_xPlc { get { return App.x_template_xPlc; } }
     }
 }
