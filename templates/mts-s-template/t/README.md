@@ -146,7 +146,7 @@ The technology can contain multiple controlled units. The controlled unit has di
 Controlled units also contain two main structures:
 
 - **Components** encapsulates components (drives, sensors, pneumatical cylinders, etc.)
-- [**ProcessData**](#processdata) is a PLC's working copy of its receipe and tracebility data combined, that is kept in a repository ([TcoData](https://docs.tcopengroup.org/articles/TcOpenFramework/TcoData/Introduction.html)).
+- [**ProcessData**](#processdata) is a PLC's working copy of its recipe and traceability data combined, that is kept in a repository ([TcoData](https://docs.tcopengroup.org/articles/TcOpenFramework/TcoData/Introduction.html)).
 
 ![TechnologyOverview](assets/technology_overview.png)
 
@@ -203,3 +203,153 @@ _NEWCU();  <------ NEWLY ADDED
 
 //----------------------------------------------------
 ~~~
+
+# Data handling #
+
+The usage of methods for  handling `ProcessData` are described on picture below. Controlled unit in template has a basic scheme for data handling. On first controlled unit is necessary load a `LoadProcessSettings`(Recipe). This method is usually used on first at Cu001(start of process) or can be called on each controlled unit. 
+
+If there is a Process traceability and  PLC is placeholder for accessing the production data repository, then is necessary call `DataEntityCreateNew` with specified `_entityId`. The method  `EntityDataOpen` load data from repository and check flow in header. If entity belongs to controlled unit sequence can start (operation start time stamp, user info, etc are populated in header). This method is usually called on each stations at beginning of the sequence. 
+
+`DataEntityClose` is typically used after all operation on the technology are completed (operation end time stamp, user info, flow to next and etc are populated in header).
+
+![DataHandlingOverviewScheme](assets/datahandlingflow.png)
+
+
+## LoadProcessSettings ##
+ 
+ Typically used in the first station of the technology to load process settings that will be used trough out the production
+~~~
+				   
+	IF(Station.Technology.ProcessSettings.Data._EntityId <> '' AND NOT THIS^._missingProcessSettingMessage.Pinned) THEN
+		IF(Station.Technology.ProcessSettings.Read(Station.Technology.ProcessSettings.Data._EntityId).Done) THEN
+			Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
+			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
+			Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
+			CompleteStep();
+
+		END_IF;	
+	ELSE
+		IF(_dialog.Show()
+	       .WithCaption('<#Process data not selected#>')
+		   .WithText('<#Would you like to load default settings?#>')
+		   .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
+		   
+		   	Station.Technology.ProcessSettings.Data._EntityId := 'default';
+		END_IF; 
+
+			
+	END_IF		    				
+~~~
+
+## DataEntityCreateNew ##
+ Creates new data entity (new part/item). Typically used in the first station of the technology to create new document/record to be persisted in the repository.Sets the status of the entity to `InProgress`
+
+~~~
+THIS^.DataEntityCreateNew(200, Station.ProcessDataManager.Data._EntityId, Header := Station.ProcessDataManager.Data.CU00x.Header); END_IF;
+~~~
+
+## EntityDataOpen ##
+Populates the information in the data header of this controlled unit (operation start time stamp, user info, etc) Typically used prior to starting operation within a controlled unit.
+~~~
+THIS^.DataEntityOpen(300,30000, Station.ProcessDataManager.Data._EntityId,Station.ProcessDataManager.Data.CU00x.Header)
+~~~
+
+## DataEntityClose ##
+
+Populates the information in the data header of this controlled unit (operations end time stamp, user info, etc). Typically used after all steps within the controlled unit are completed.
+
+The status of the entity is still **'InProgress'**
+
+~~~
+IF(_dataClose) THEN THIS^.DataEntityClose(5000, eDataEntityInvokeType.InvokeAndWaitDone ,Station.ProcessDataManager.Data.CU00x.Header); END_IF;
+~~~
+
+
+## DataEntityFinalize ##
+ Same as `DataCloseEntity` populates the information in the data header of this controlled unit (operations end time stamp, user info, etc)
+ Typically used after all operation on the technology are completed (end of the process).
+ 
+
+Sets the status of the entity to **Passed**
+
+~~~
+THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDataManager.Data.CU00x.Header);
+~~~
+
+**Note!**
+- If input enum parameter in methods `DataCloseEntity` and `DataCloseFinalize`  is set to **InvokeAndWaitDone**  operation will  wait until task reaches the ```Done``` state .
+
+ - If input enum is set to **InvokeOnly** results return True when  task reaches the ```Busy``` state .This option is used when we need to reduce cycle time. Later is recommended (necessary) to check  task  ```Done``` state  , check  task  status. 
+
+    ~~~
+    //save data
+    THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDataManager.Data.CU00x.Header);
+
+
+    //some steps (robots, cylinder to home positions...)
+
+    //later check if saving data process is done
+    IF (Step(20000,TRUE , 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
+        //-------------------------------------
+
+            StepCompleteWhen(Station.UpdateEntityTask.Done );
+        
+        //-------------------------------------	
+    END_IF
+    ~~~
+
+
+ # Notification panel #   
+
+Use of this visual component is provide to a brief overview of `Technology`.  Essential signals in Technology such a **Control Voltage, Air pressure, Safety....** are displayed on this panel on *Main Screen*. 
+
+![NotificationPanel](assets/NotificationPanel.png)
+
+![NotificationPanelOpened](assets/NotificationPanelOpen.png)
+
+Component is populated from plc   and  provide simple diagnostic if technology is ready for operation. 
+
+~~~
+//notification panel
+//messanging is suspensded 
+ Context.Environment.Messaging.Suspend();
+			
+_closed:=TRUE;
+//_closed   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsClosed 
+//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsClosed  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsClosed;
+
+ _locked:=TRUE;
+//_locked   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsLocked 
+//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsLocked  
+//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsLocked;
+			
+_keysAto  := TRUE;
+_eStopActive:=0;
+
+
+_notificationSourceSignals.ControlVoltage   := TRUE;//Components.ControlVoltage.Signal.Signal 
+_notificationSourceSignals.AirPressure      := TRUE;//Components.AirPressureOk.Signal.Signal, 
+_notificationSourceSignals.AutomatAllowed   := _keysAto; 
+_notificationSourceSignals.EmergencyStop    := _eStopActive > 0; 
+_notificationSourceSignals.SafetyDoorOk     :=safetyCircuitOk;	
+_notificationSourceSignals.LightCurtain     := TRUE; 	// not used
+_notificationSourceSignals.DoorClosed       := _closed; 
+_notificationSourceSignals.DoorLocked       := _locked; 
+_notificationSourceSignals.ProcessDataOk    := _processSettings._data._EntityId <> '';
+_notificationSourceSignals.TechnologyDataOk := _technologySettings._data._EntityId <> '';  
+	
+_notificationPanel(inBlinkPeriod:=T#500MS , inSignalSource:=_notificationSourceSignals );
+			
+ Context.Environment.Messaging.Resume();
+
+~~~
+**Note!**
+It is possible to use like a **sub module diagnostic** (only one Cu, group of Cu or whole Technology)
+
