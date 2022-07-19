@@ -305,9 +305,9 @@ THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDa
 
 Use of this visual component is provide to a brief overview of `Technology`.  Essential signals in Technology such a **Control Voltage, Air pressure, Safety....** are displayed on this panel on *Main Screen*. 
 
-![NotificationPanel](assets/notificationPanel.png)
+![NotificationPanel](assets/NotificationPanel.png)
 
-![NotificationPanelOpened](assets/notificationPanelOpen.png)
+![NotificationPanelOpened](assets/NotificationPanelOpen.png)
 
 Component is populated from plc   and  provide simple diagnostic if technology is ready for operation. 
 
