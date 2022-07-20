@@ -74,6 +74,8 @@ _cuTechnologicalDataDisplay := Technology.TechnologicalSettings.Data.CU00x;
 
 _settings.WarningCycleTime:= _cuTechnologicalDataDisplay.WarningCycleTime;
 _settings.ErrorCycleTime:= _cuTechnologicalDataDisplay.ErrorCycleTime;
+_settings.NoAllowedAnyRecurringFailure:= _cuTechnologicalDataDisplay.AnyRecurringFailure;
+_settings.NoAllowedSameRecurringFailure:= _cuTechnologicalDataDisplay.SameRecurringFailure;
 
 ]]></ST>
     </Implementation>
@@ -213,7 +215,9 @@ METHOD Idle : BOOL
       <Declaration><![CDATA[METHOD InitializeComponents : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[components.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
+        <ST><![CDATA[
+
+components.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
 							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
 							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
