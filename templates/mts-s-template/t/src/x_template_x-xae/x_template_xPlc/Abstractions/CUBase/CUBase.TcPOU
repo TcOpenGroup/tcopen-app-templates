@@ -10,6 +10,7 @@ VAR
 	_operatorInfo : OperatorInfo := (Parent := THIS^);
 	_settings  : CUBaseSettings := (Parent := THIS^);
 	_toggle: TcoUtilities.TcoBlinker(THIS^);
+	_recurringFails:CuBaseRecurringFailures:=(Parent:=THIS^);
 	
 END_VAR]]></Declaration>
     <Implementation>
@@ -20,6 +21,7 @@ END_VAR]]></Declaration>
       <Folder Name="DataFlaging" Id="{aed3d7b3-4fd1-0c13-2eed-417fc6b5b252}" />
       <Folder Name="ExternalData" Id="{8389998d-539c-07b7-2bed-035331c1a0d8}" />
     </Folder>
+    <Folder Name="RecurringFailures" Id="{aea7587e-0f13-0992-2127-c34de6e860fe}" />
     <Property Name="AutomatTask" Id="{9a1989f3-7511-4b12-80ce-78bb1add06c6}">
       <Declaration><![CDATA[PROPERTY ABSTRACT AutomatTask : REFERENCE TO CUBaseAutomat]]></Declaration>
       <Get Name="Get" Id="{86426d31-47b7-4512-bf28-f740d21d447d}">
@@ -298,6 +300,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="RecurringFails" Id="{c6ba4858-160c-006e-34fa-84af07e0038f}" FolderPath="RecurringFailures\">
+      <Declaration><![CDATA[PROPERTY RecurringFails : REFERENCE TO CuBaseRecurringFailures]]></Declaration>
+      <Get Name="Get" Id="{95d834e8-2609-0f13-155a-8ef6c95bef05}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RecurringFails REF= _recurringFails;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="UpdateEntityTask" Id="{05c804c9-7f4b-0e37-2ebf-2fe6f3b9eb66}" FolderPath="ProcessData\CrudTaskState\">
       <Declaration><![CDATA[PROPERTY  UpdateEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
       <Get Name="Get" Id="{efded1af-2b8a-0cbf-039b-3695e9082143}">
@@ -347,7 +360,7 @@ ELSIF GroundTask.Task.Busy THEN
     _statusInfo.Mode := eCUMode.GroundMode;
 	_statusInfo.CurrentTaskDescription := '<#GROUND#>';
     _statusInfo.CurrentCycleTime       := GroundTask._SequenceElapsedTime;
-	 _statusInfo.CurrentCleanCycleTime := GroundTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+	_statusInfo.CurrentCleanCycleTime := GroundTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
 	_statusInfo.AverageCycleTime	   := GroundTask.AverageCycleTime;
 	_statusInfo.AverageCleanCycleTime  := GroundTask.AverageCleanCycleTime;
     _statusInfo.CurrentUid             := GroundTask.CurrentStep.ID;

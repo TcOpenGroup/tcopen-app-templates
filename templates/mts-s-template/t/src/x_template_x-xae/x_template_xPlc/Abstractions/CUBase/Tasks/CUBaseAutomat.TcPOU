@@ -3,11 +3,14 @@
   <POU Name="CUBaseAutomat" Id="{f34497ee-0ea8-4948-9690-a8151302d35b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT CUBaseAutomat EXTENDS TcoTaskedSequencer
 VAR
+	_dialog : TcoCore.TcoDialog(THIS^);
+	_recurringFailReachedMessage : TcoCore.TcoMessenger(THIS^);	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="ConsecutiveFailures" Id="{c3dd5496-e25f-034d-3f6e-b4ffa5b188df}" />
     <Folder Name="DataOperations" Id="{edf08b17-d837-0916-3b82-58653463e4f4}" />
     <Method Name="DataEntityClose" Id="{a965833c-1ef6-025a-113f-9e8e9e5a762c}" FolderPath="DataOperations\">
       <Declaration><![CDATA[(*~
@@ -204,6 +207,175 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[EntityDoesBelong:=THIS^.Station.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.Station.CuId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MonitorAnyRecurringFailure" Id="{e0debd7d-76ba-040d-3b8f-a31d168a71a0}" FolderPath="ConsecutiveFailures\">
+      <Declaration><![CDATA[METHOD MonitorAnyRecurringFailure
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The unique step id definition.
+		</summary>			
+	</docu>	
+	~*)
+	inStepID : INT;
+	(*~
+	<docu>
+		<summary>
+			The step enable condition.
+		</summary>			
+	</docu>	
+	~*)
+	inEnableStep :BOOL;
+	inResult : TcoComprehensiveResult;
+END_VAR
+
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID,inEnableStep, 'MONITOR ANY RECURRING FAILURE IN SEQUENCE')) THEN
+    //-------------------------------------		
+	
+	IF(inResult.Result<>eOverallResult.Failed ) THEN
+		THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
+		THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
+	
+	
+	ELSE
+		//collect any recurring fails
+		IF NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN 
+			THIS^.Station.RecurringFails.AnyRecurringFails.Counter := THIS^.Station.RecurringFails.AnyRecurringFails.Counter +1;
+		END_IF
+		THIS^.Station.RecurringFails.AnyRecurringFails.Reached:=THIS^.Station.RecurringFails.AnyRecurringFails.Counter>THIS^.Station._settings.NoAllowedAnyRecurringFailure;
+		
+
+		
+	
+
+		
+		THIS^._recurringFailReachedMessage.OnCondition(THIS^.Station.RecurringFails.AnyRecurringFails.Reached)
+									   .Build()
+									   .Append('Any recurring failure in sequence has been reached!')
+									   .Append(inResult.ErrorCodes)
+  									   .Append(' : ')
+									   .Append(inResult.Failures)		
+									   .As()				   
+									   .AsError();
+									   
+		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached);			
+						   
+									   
+		IF THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN
+			
+				
+			IF(_dialog.Show()
+			   .WithCaption('<#Any recurring failure in sequence has been reached! #>')
+			   .WithText('<#Would you like to acknovledge recurring failure flag?#>')
+			   .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
+			   
+					THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
+					THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
+					THIS^.CompleteStep();
+			END_IF; 
+		END_IF;
+	END_IF;
+	
+
+	
+	
+	
+ 		    				
+    //-------------------------------------
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MonitorSameRecurringFailure" Id="{37b40ebe-4b68-0404-1c7a-ac927368e921}" FolderPath="ConsecutiveFailures\">
+      <Declaration><![CDATA[METHOD MonitorSameRecurringFailure
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The unique step id definition.
+		</summary>			
+	</docu>	
+	~*)
+	inStepID : INT;
+		(*~
+	<docu>
+		<summary>
+			The step enable condition.
+		</summary>			
+	</docu>	
+	~*)
+	inEnableStep :BOOL;
+	inResult : TcoComprehensiveResult;
+END_VAR
+
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID,inEnableStep, 'MONITOR SAME RECURRING FAILURE IN SEQUENCE')) THEN
+    //-------------------------------------		
+	
+	IF(inResult.Result<>eOverallResult.Failed ) THEN
+		THIS^.Station.RecurringFails.SameRecurringFails.Counter:=0;
+		THIS^.Station.RecurringFails.SameRecurringFails.Reached :=FALSE;
+
+	ELSE
+	
+		//collect same recurring
+		IF NOT THIS^.Station.RecurringFails.SameRecurringFails.Reached THEN 
+			IF THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes = inResult.ErrorCodes THEN
+				THIS^.Station.RecurringFails.SameRecurringFails.Counter := THIS^.Station.RecurringFails.SameRecurringFails.Counter +1;
+			ELSE
+				THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
+				THIS^.Station.RecurringFails.SameRecurringFails.Counter := THIS^.Station.RecurringFails.SameRecurringFails.Counter +1;
+			END_IF;
+		END_IF;
+		
+		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>THIS^.Station._settings.NoAllowedSameRecurringFailure;
+
+			
+		THIS^._recurringFailReachedMessage.OnCondition(THIS^.Station.RecurringFails.SameRecurringFails.Reached)
+									   .Build()
+									   .Append('Same recurring failure in sequence has been reached!')
+									   .Append(inResult.ErrorCodes)
+  									   .Append(' : ')
+									   .Append(inResult.Failures)									   									   
+									   .As()				   
+									   .AsError();
+		
+		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.SameRecurringFails.Reached);
+	
+
+									   
+		IF THIS^.Station.RecurringFails.SameRecurringFails.Reached THEN
+			IF(_dialog.Show()
+			   .WithCaption('<#Same recurring failure in sequence has been reached! #>')
+			   .WithText('<#Would you like to acknowledge recurring falure flag?#>')
+			   .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
+			   
+					THIS^.Station.RecurringFails.SameRecurringFails.Counter:=0;
+					THIS^.Station.RecurringFails.SameRecurringFails.Reached :=FALSE;
+					THIS^.CompleteStep();
+			END_IF; 
+		END_IF
+	END_IF;
+	
+
+	
+	
+	
+ 		    				
+    //-------------------------------------
+END_IF
+
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Station" Id="{eaca3fe7-35ad-0454-21e6-545016e503be}">

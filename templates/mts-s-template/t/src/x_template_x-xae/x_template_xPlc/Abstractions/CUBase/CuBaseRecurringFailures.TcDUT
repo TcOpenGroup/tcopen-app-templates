@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="CuBaseRecurringFailures" Id="{9c9d3c5b-f8e2-04ee-0d59-7c39ee743c2d}">
+    <Declaration><![CDATA[TYPE CuBaseRecurringFailures EXTENDS TcoCore.TcoStruct : 
+	STRUCT
+   		AnyRecurringFails : CuBaseRecurringFail;
+    	SameRecurringFails : CuBaseRecurringFail;
+	END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

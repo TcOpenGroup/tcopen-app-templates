@@ -26,6 +26,12 @@
     <PreserveCompiledLibComments>false</PreserveCompiledLibComments>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\CUBase\CuBaseRecurringFail.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\CUBase\CuBaseRecurringFailures.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\CUBase.TcPOU">
       <SubType>Code</SubType>
     </Compile>

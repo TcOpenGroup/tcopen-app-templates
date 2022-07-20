@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="CuBaseRecurringFail" Id="{8ab05726-cba0-0d91-3c67-9c8300ca4e23}">
+    <Declaration><![CDATA[TYPE CuBaseRecurringFail :
+STRUCT
+	Reached:BOOL;
+	Result:TcoComprehensiveResult;
+	Counter:UINT;
+	
+	
+	
+	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

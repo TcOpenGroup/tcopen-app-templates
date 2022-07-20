@@ -132,6 +132,18 @@
   <data name="___IDLE__" xml:space="preserve">
     <value>IDLE</value>
   </data>
+  <data name="___Any_recurring_failure_in_sequence_has_been_reached____" xml:space="preserve">
+    <value>Any recurring failure in sequence has been reached! </value>
+  </data>
+  <data name="___Would_you_like_to_acknovledge_recurring_failure_flag___" xml:space="preserve">
+    <value>Would you like to acknovledge recurring failure flag?</value>
+  </data>
+  <data name="___Same_recurring_failure_in_sequence_has_been_reached____" xml:space="preserve">
+    <value>Same recurring failure in sequence has been reached! </value>
+  </data>
+  <data name="___Would_you_like_to_acknovledge_recurring_falure_flag___" xml:space="preserve">
+    <value>Would you like to acknovledge recurring falure flag?</value>
+  </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
   </data>
@@ -192,8 +204,11 @@
   <data name="___Energy_saving_mode___Inactivity_time__" xml:space="preserve">
     <value>Energy saving mode - Inactivity time</value>
   </data>
-  <data name="___Consecutive_Error_count__" xml:space="preserve">
-    <value>Consecutive Error count</value>
+  <data name="___No_of_allowed_any_recurring_failures_in_seqence__" xml:space="preserve">
+    <value>No of allowed any recurring failures in seqence</value>
+  </data>
+  <data name="___No_of_allowed_same_recurring_failures_in_seqence__" xml:space="preserve">
+    <value>No of allowed same recurring failures in seqence</value>
   </data>
   <data name="___Entity_header__" xml:space="preserve">
     <value>Entity header</value>

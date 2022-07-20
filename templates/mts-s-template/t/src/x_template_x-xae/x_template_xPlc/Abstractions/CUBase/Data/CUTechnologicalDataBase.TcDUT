@@ -26,8 +26,11 @@ STRUCT
 	{attribute addProperty Name "<#Energy saving mode - Inactivity time#> "}
 	TimeToEntryEnergySavingMode : TIME;
 	
-	{attribute addProperty Name "<#Consecutive Error count#> "}
-	ConsecutiveErrorCount   : UINT;
+	{attribute addProperty Name "<#No of allowed any recurring failures in seqence#> "}
+	AnyRecurringFailure   : UINT;
+	
+	{attribute addProperty Name "<#No of allowed same recurring failures in seqence#> "}
+	SameRecurringFailure   : UINT;
 	
 	
 END_STRUCT

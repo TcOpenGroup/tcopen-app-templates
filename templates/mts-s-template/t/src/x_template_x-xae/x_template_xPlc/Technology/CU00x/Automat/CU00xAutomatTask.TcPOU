@@ -3,7 +3,7 @@
   <POU Name="CU00xAutomatTask" Id="{7d4ccf14-fbfb-4c7b-8fab-cda3fabc0370}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK CU00xAutomatTask EXTENDS CUBaseAutomat IMPLEMENTS ICUTask
 VAR
-	_dialog : TcoCore.TcoDialog(THIS^);
+
 	_missingProcessSettingMessage : TcoCore.TcoMessenger(THIS^);	
 	_paralellTask : CU00xAutomatParalell_1_Task(THIS^, TcoCore.eRestoreMode.None);
 	
@@ -92,11 +92,11 @@ METHOD PROTECTED Main : BOOL
 	Following methods provide process data manipulation for this controlled unit.
 	Remove `IF` statement and comment or uncomment according to your need.
 *)
-
-
 // Loads process settings. 
 // Typically used in the first station of the technology to load process settings that will be used trough out the production
-IF(_dataLoadProcessSettings) THEN THIS^.DataLoadProcessSettings(100); END_IF;	
+IF (_dataLoadProcessSettings) THEN
+    THIS^.DataLoadProcessSettings(100);
+END_IF;
 
 (*
 
@@ -104,19 +104,27 @@ IF(_dataLoadProcessSettings) THEN THIS^.DataLoadProcessSettings(100); END_IF;
 		This step we would like to star cycle time (e.g. we want to exclude loading data from clean cycle time )		
 *)
 IF (Step(150, TRUE, 'START MEASURE CT TRIGGER')) THEN
-//-------------------------------------    
-	StartCleanCycleTime();
-	StepCompleteWhen(TRUE);
-//-------------------------------------
+    //-------------------------------------    
+    StartCleanCycleTime();
+    StepCompleteWhen(TRUE);
+    //-------------------------------------
 END_IF
+
 // Creates new data entity (new part/item) 
 // Typically used in the first station of the technology to create new document/record to be persited in the repository.
 // Sets the status of the entity to 'InProgress'
-IF(_dataCreateNew) THEN THIS^.DataEntityCreateNew(200, Station.ProcessDataManager.Data._EntityId, Header := Station.ProcessDataManager.Data.CU00x.Header); END_IF;
+IF (_dataCreateNew) THEN
+    THIS^.DataEntityCreateNew(200, Station.ProcessDataManager.Data._EntityId, Header := Station.ProcessDataManager.Data.CU00x.Header);
+END_IF;
 
 // Populates the information in the data header of this controlled unit (operation start time stamp, user info, etc)
 // Typically used prior to starting operation within a controlled unit.
-IF(_dataOpen) THEN THIS^.DataEntityOpen(300,30000, Station.ProcessDataManager.Data._EntityId,Station.ProcessDataManager.Data.CU00x.Header); END_IF;
+IF (_dataOpen) THEN
+    THIS^.DataEntityOpen(300,
+        30000,
+        Station.ProcessDataManager.Data._EntityId,
+        Station.ProcessDataManager.Data.CU00x.Header);
+END_IF;
 
 (*
 
@@ -124,22 +132,18 @@ IF(_dataOpen) THEN THIS^.DataEntityOpen(300,30000, Station.ProcessDataManager.Da
 		Here we would place steps to perfom the operations of this controlled unit.
 
 *)
-
-
 IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------    
-	Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector
-					.WithCoordinator(THIS^)
-					.Inspect(TRUE)
-					.UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
-					.OnFail()
-					.CarryOn();	
+    Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
+        .Inspect(false)
+        .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
+        .OnFail().CarryOn();
     //-------------------------------------
 END_IF
 
 IF (Step(2000, true, 'START PARALELL TASK')) THEN
     //-------------------------------------    
-		StepCompleteWhen(_paralellTask.Task.Invoke().Busy);
+    StepCompleteWhen(_paralellTask.Task.Invoke().Busy);
     //-------------------------------------
 END_IF
 
@@ -149,7 +153,6 @@ END_IF
 		This step and the following steps should bring the controlled unit in a state from which 
 		the sequence can be safely restarted from the beginning of the this sequencer. 		
 *)
-
 IF (Step(RESTORE_STEP_ID, TRUE, 'FIRST RESTORE STEP')) THEN
     //-------------------------------------
     StepCompleteWhen(_continueRestore);
@@ -163,10 +166,10 @@ END_IF
 		
 *)
 IF (Step(2150, TRUE, 'STOP MEASURE CT TRIGGER')) THEN
-//-------------------------------------    
-	StopCleanCycleTime();
-	StepCompleteWhen(TRUE);
-//-------------------------------------
+    //-------------------------------------    
+    StopCleanCycleTime();
+    StepCompleteWhen(TRUE);
+    //-------------------------------------
 END_IF
 
 (*
@@ -175,39 +178,45 @@ END_IF
 	Following methods provide process data manipulation for this controlled unit.
 	Comment or uncomment according to your need.
 *)
-
 // Populates the information in the data header of this controlled unit (operations end time stamp, user info, etc)
 // Typically used after all steps within the controlled unit are completed.
-IF(_dataClose) THEN THIS^.DataEntityClose(5000, eDataEntityInvokeType.InvokeAndWaitDone ,Station.ProcessDataManager.Data.CU00x.Header); END_IF;
+IF (_dataClose) THEN
+    THIS^.DataEntityClose(5000, eDataEntityInvokeType.InvokeAndWaitDone, Station.ProcessDataManager.Data.CU00x.Header);
+END_IF;
 
 // Populates the information in the data header of this controlled unit (operations end time stamp, user info, etc)
 // Typically used after all operation on the technology are completed.
 // Input parameter eDataEntityInvokeType.InvokeOnly is used for speed up cycle(TRUE)
-
-IF(_dataFinalize) THEN THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDataManager.Data.CU00x.Header); END_IF;
-
+IF (_dataFinalize) THEN
+    THIS^.DataEntityFinalize(5500, eDataEntityInvokeType.InvokeOnly, Station.ProcessDataManager.Data.CU00x.Header);
+END_IF;
 
 IF (Step(10000, TRUE, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
     //-------------------------------------
-    StepCompleteWhen(_paralellTask.Task.Done );
-	IF _paralellTask.Task.Done THEN
-		_paralellTask.Restore();
-	END_IF
+    StepCompleteWhen(_paralellTask.Task.Done);
+
+    IF _paralellTask.Task.Done THEN
+        _paralellTask.Restore();
+    END_IF
     //-------------------------------------	
 END_IF
 
-IF (Step(20000,TRUE , 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
+IF (Step(20000, TRUE, 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
     //-------------------------------------
-
-    	StepCompleteWhen(Station.UpdateEntityTask.Done );
-	
+    StepCompleteWhen(Station.UpdateEntityTask.Done);
     //-------------------------------------	
 END_IF
+
+THIS^.MonitorAnyRecurringFailure(22000,THIS^.Station._settings.NoAllowedAnyRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
+THIS^.MonitorSameRecurringFailure(22100,THIS^.Station._settings.NoAllowedSameRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
+
 
 
 IF (Step(30000, TRUE, 'LAST STEP')) THEN
     //-------------------------------------
-    IF(_loop) THEN CompleteSequence(); END_IF;
+    IF (_loop) THEN
+        CompleteSequence();
+    END_IF;
     //-------------------------------------	
 END_IF
 
