@@ -207,7 +207,13 @@ IF (Step(20000, TRUE, 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
     //-------------------------------------	
 END_IF
 
-THIS^.MonitorAnyRecurringFailure(22000,THIS^.Station._settings.NoAllowedAnyRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
+
+//monitor if conseccutive failures occur during automatic cycle. System monitor two basic types like are arbitrary failure in seqence, or  same(equal) failure in sequence
+//if Number of allowed recurring failure is 0 , monitoring is inactive.
+//Recurring failures are based on ErrorCodes in TcoComprehensiveResult.
+//If error code in Same recurring failure is empty string ,monitorig of failure is not performed.
+//Error code in Arbitrary Recuring failure is irelevant.    
+THIS^.MonitorArbitrarilyRecurringFailure(22000,THIS^.Station._settings.NoAllowedArbitrarilyRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
 THIS^.MonitorSameRecurringFailure(22100,THIS^.Station._settings.NoAllowedSameRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
 
 
