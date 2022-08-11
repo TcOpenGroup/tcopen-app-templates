@@ -1,0 +1,96 @@
+.nav {
+   overflow: hidden;
+}
+
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row {
+    height: 3.5rem;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.oi {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item {
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.nav-item:first-of-type,
+.nav-item:last-of-type {
+    padding: 0;
+}
+
+    .nav-item ::deep a {
+        color: #d7d7d7;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0;
+        line-height: 3rem;
+        text-transform: uppercase;
+        padding: 2rem 1rem;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .nav-item ::deep a.active {
+            background-color: rgba(245,54,17,1);
+            color: white;
+        }
+
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,99,69,1);
+            color: white;
+        }
+
+/***********************Expandable nav link***********************/
+.expandable > ::deep a:after {
+    content: "\276F";
+    margin-left: auto;
+}
+
+.menuCollapseActive > ::deep a:after {
+    transform: rotate(90deg);
+}
+
+.expandable ul {
+    visibility: hidden;
+    background-color: rgba(255,255,255,0.15);
+    height: 0;
+}
+
+.menuCollapseActive ul {
+    visibility: visible;
+    height: auto;
+}
+/****************************************************************/
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+
+    .top-row {
+        justify-content: center;
+    }
+}

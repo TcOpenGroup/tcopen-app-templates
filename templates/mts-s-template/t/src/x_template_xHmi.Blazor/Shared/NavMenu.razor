@@ -1,0 +1,80 @@
+﻿<div class="top-row pl-4 navbar">
+    <a class="navbar-brand" href="" style="text-transform: uppercase">Technology</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="security">
+                <span class="oi oi-plus" aria-hidden="true"></span> Security
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="operator">
+                <span class="oi oi-plus" aria-hidden="true"></span> Operator
+            </NavLink>
+        </li>
+        <li class="nav-item @expandedData expandable">
+            <NavLink class="nav-link" @onclick='() => expandedData = expandedData == "" ? "menuCollapseActive" : ""'>
+                <span class="oi oi-plus" aria-hidden="true"></span> Data
+            </NavLink>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="data/process_settings">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Process settings
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="data/tech_data">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Tech. data
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="data/production_data">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Production data
+                    </NavLink>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="users">
+                <span class="oi oi-plus" aria-hidden="true"></span> Users
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private string expandedData = "";
+
+    [Inject]
+    private NavigationManager MyNavigationManager { get; set; }
+
+    // add "menuCollapseActive" to expandable by url by checking if it contains /data/
+    protected override void OnInitialized()
+    {
+        if (MyNavigationManager.Uri.ToString().IndexOf("/data/") != -1)
+        {
+            expandedData = "menuCollapseActive";
+        }
+    }
+
+    //*************************************//
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
