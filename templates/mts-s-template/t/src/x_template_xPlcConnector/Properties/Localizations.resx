@@ -132,17 +132,17 @@
   <data name="___IDLE__" xml:space="preserve">
     <value>IDLE</value>
   </data>
-  <data name="___Any_recurring_failure_in_sequence_has_been_reached____" xml:space="preserve">
-    <value>Any recurring failure in sequence has been reached! </value>
+  <data name="____Consecutive_failure__The_number_of_arbitrarily_recurring_failure_count_has_been_reached___" xml:space="preserve">
+    <value>(Consecutive failure) The number of arbitrarily recurring failure count has been reached!</value>
   </data>
-  <data name="___Would_you_like_to_acknovledge_recurring_failure_flag___" xml:space="preserve">
-    <value>Would you like to acknovledge recurring failure flag?</value>
+  <data name="___Please_acknowledge_recurring_failure___" xml:space="preserve">
+    <value>Please acknowledge recurring failure!</value>
   </data>
-  <data name="___Same_recurring_failure_in_sequence_has_been_reached____" xml:space="preserve">
-    <value>Same recurring failure in sequence has been reached! </value>
+  <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached____" xml:space="preserve">
+    <value>(Consecutive failure) The number of same recurring failure count has been reached! </value>
   </data>
-  <data name="___Would_you_like_to_acknovledge_recurring_falure_flag___" xml:space="preserve">
-    <value>Would you like to acknovledge recurring falure flag?</value>
+  <data name="___Please_acknowledge_recurring_failure____" xml:space="preserve">
+    <value>Please acknowledge recurring failure! </value>
   </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
@@ -204,8 +204,8 @@
   <data name="___Energy_saving_mode___Inactivity_time__" xml:space="preserve">
     <value>Energy saving mode - Inactivity time</value>
   </data>
-  <data name="___No_of_allowed_any_recurring_failures_in_seqence__" xml:space="preserve">
-    <value>No of allowed any recurring failures in seqence</value>
+  <data name="___No_of_allowed_arbitrarily_recurring_failures_in_seqence__" xml:space="preserve">
+    <value>No of allowed arbitrarily recurring failures in seqence</value>
   </data>
   <data name="___No_of_allowed_same_recurring_failures_in_seqence__" xml:space="preserve">
     <value>No of allowed same recurring failures in seqence</value>

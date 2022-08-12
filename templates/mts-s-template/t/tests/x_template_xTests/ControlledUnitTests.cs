@@ -64,7 +64,26 @@ namespace x_template_xTests
             //var b = Entry.Plc.MAIN._technology._cu00x._groundTask._task._enabled.Cyclic && Entry.Plc.MAIN._technology._cu00x._groundTask._task._isServiceable.Cyclic;
             //var c = Entry.Plc.MAIN._technology._cu00x._manualTask._enabled.Cyclic && Entry.Plc.MAIN._technology._cu00x._manualTask._isServiceable.Cyclic;
 
-           
+
+
+            var TechnologicalSettningsRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { @"http://localhost:8080" }, "TechnologySettings", "", "");
+            var TechnologicalSettingsRepository = new RavenDbRepository<PlainTechnologyData>(TechnologicalSettningsRepoSettings);
+            TechnologicalSettingsRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
+            TechnologicalSettingsRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
+            Entry.Plc.MAIN._technology._technologySettings.InitializeRepository(TechnologicalSettingsRepository);
+
+            if (!TechnologicalSettingsRepository.Queryable.Where(p => p._EntityId == "default").Any())
+            {
+                TechnologicalSettingsRepository.Create("default", new PlainTechnologyData()
+                {
+                    CU00x = new PlainCU00xTechnologicalData()
+                    {
+
+                        ArbitrarilyRecurringFailure = 5,
+                        SameRecurringFailure = 3
+                    }
+                });
+            }
         }
 
         [SetUp]
@@ -77,6 +96,7 @@ namespace x_template_xTests
             Entry.Plc.MAIN._technology._cu00x._automatTask._dataFinalize.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._continueRestore.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._loop.Synchron = false;
+            Entry.Plc.MAIN._technology._cu00x._automatTask._inspectionResult.Synchron = true;
         }
 
         [Test]
@@ -244,7 +264,7 @@ namespace x_template_xTests
 
             Assert.AreEqual(rec._EntityId, cuData.EntityHeader.Recipe.Synchron);
             Assert.AreEqual(TcoInspectors.eOverallResult.InProgress, (TcoInspectors.eOverallResult)cuData.EntityHeader.Results.Result.Synchron);
-            Assert.AreEqual(rec.CU00x.Header.NextOnPassed, cuData.EntityHeader.NextStation.Synchron);
+            Assert.AreEqual(cu._cuId.Synchron, cuData.EntityHeader.NextStation.Synchron);
             Assert.AreEqual(TcoInspectors.eOverallResult.InProgress, (TcoInspectors.eOverallResult)cuData.EntityHeader.Results.Result.Synchron);
             Assert.AreEqual(x_template_xPlc.eStations.CU00x, (x_template_xPlc.eStations)cuData.EntityHeader.OpenOn.Synchron);
             Assert.AreEqual(false, cuData.EntityHeader.WasReset.Synchron);
@@ -260,6 +280,8 @@ namespace x_template_xTests
             var cu = Entry.Plc.MAIN._technology._cu00x;
             var automat = cu._automatTask;
             var cuData = cu._processData._data;
+
+            rec.CU00x.BoltPresenceInspector._data.RequiredStatus = false;
 
             automat._dataLoadProcessSettings.Synchron = true;
             automat._dataCreateNew.Synchron = true;
@@ -406,5 +428,263 @@ namespace x_template_xTests
             Assert.AreEqual(rec._Modified.ToString().Substring(0, 19), cuData.EntityHeader.RecipeLastModified.Synchron.ToString().Substring(0, 19));
 #endif
         }
+
+
+        [Test]
+        [Repeat(3)]
+        public void run_automat_mode_monitor_recurring_fails_off_entity_ok()
+        {
+            var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
+            //no monitor if are equal zero
+            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.SameRecurringFailure = 0;
+
+            recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
+            var rec = Entry.Plc.MAIN._technology._processSettings.GetRepository<PlainProcessData>().Read("default");
+
+            var data = Entry.Plc.MAIN._technology._processSettings._data;
+            data._EntityId.Synchron = "default";
+            var cu = Entry.Plc.MAIN._technology._cu00x;
+            var automat = cu._automatTask;
+            var cuData = cu._processData._data;
+
+
+            automat._dataLoadProcessSettings.Synchron = true;
+            automat._dataCreateNew.Synchron = true;
+            automat._dataOpen.Synchron = true;
+            automat._continueRestore.Synchron = true;
+
+            cu._manualTask.Execute(); // Reset other tasks
+
+            while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
+
+            cu._groundTask._task.Execute();
+
+            while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
+
+            while ((eTaskState)cu._automatTask._task._taskState.Synchron != eTaskState.Busy) cu._automatTask._task.Execute();
+
+            while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
+
+            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+
+        }
+
+        [Test]
+        [Repeat(3)]
+        public void run_automat_mode_monitor_recurring_fails_off_entity_nok()
+        {
+
+            var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
+            //no monitor if are equal zero
+            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.SameRecurringFailure = 0;
+
+            recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
+
+
+            var rec = Entry.Plc.MAIN._technology._processSettings.GetRepository<PlainProcessData>().Read("default");
+            var data = Entry.Plc.MAIN._technology._processSettings._data;
+            data._EntityId.Synchron = "default";
+            var cu = Entry.Plc.MAIN._technology._cu00x;
+            var automat = cu._automatTask;
+            var cuData = cu._processData._data;
+
+            automat._dataLoadProcessSettings.Synchron = true;
+            automat._dataCreateNew.Synchron = true;
+            automat._dataOpen.Synchron = true;
+            automat._continueRestore.Synchron = true;
+            automat._inspectionResult.Synchron = false;
+
+            cu._manualTask.Execute(); // Reset other tasks
+
+            while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
+
+            cu._groundTask._task.Execute();
+
+            while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
+
+            while ((eTaskState)cu._automatTask._task._taskState.Synchron != eTaskState.Busy) cu._automatTask._task.Execute();
+
+            while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
+
+            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+
+        }
+
+        [Test]
+        [Repeat(3)]
+        public void run_automat_mode_monitor_recurring_fails_on_entity_ok()
+        {
+            var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
+            //no monitor if are equal zero
+            recTech.CU00x.ArbitrarilyRecurringFailure = 3;
+            recTech.CU00x.SameRecurringFailure = 3;
+
+            recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
+
+            var rec = Entry.Plc.MAIN._technology._processSettings.GetRepository<PlainProcessData>().Read("default");
+
+            var data = Entry.Plc.MAIN._technology._processSettings._data;
+            data._EntityId.Synchron = "default";
+            var cu = Entry.Plc.MAIN._technology._cu00x;
+            var automat = cu._automatTask;
+            var cuData = cu._processData._data;
+
+
+            automat._dataLoadProcessSettings.Synchron = true;
+            automat._dataCreateNew.Synchron = true;
+            automat._dataOpen.Synchron = true;
+            automat._continueRestore.Synchron = true;
+
+
+
+            cu._manualTask.Execute(); // Reset other tasks
+
+            while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
+
+            cu._groundTask._task.Execute();
+
+            while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
+
+            while ((eTaskState)cu._automatTask._task._taskState.Synchron != eTaskState.Busy) cu._automatTask._task.Execute();
+
+            while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
+
+            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(5)]
+        public void run_automat_mode_monitor_arbitrary_recurring_fails_on(int noOfFails)
+        {
+            var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
+            //no monitor if are equal zero
+            recTech.CU00x.ArbitrarilyRecurringFailure =(ushort)noOfFails;
+            recTech.CU00x.SameRecurringFailure = 0;
+
+            recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
+
+            var rec = Entry.Plc.MAIN._technology._processSettings.GetRepository<PlainProcessData>().Read("default");
+
+            var data = Entry.Plc.MAIN._technology._processSettings._data;
+            data._EntityId.Synchron = "default";
+            var cu = Entry.Plc.MAIN._technology._cu00x;
+            var automat = cu._automatTask;
+            var cuData = cu._processData._data;
+
+
+            automat._dataLoadProcessSettings.Synchron = true;
+            automat._dataCreateNew.Synchron = true;
+            automat._dataOpen.Synchron = true;
+            automat._continueRestore.Synchron = true;
+            automat._inspectionResult.Synchron = false;
+
+            cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron = false;
+            cu._recurringFails.ArbitrarilyRecurringFails.Counter.Synchron = 0;
+            cu._recurringFails.SameRecurringFails.Reached.Synchron = false;
+            cu._recurringFails.SameRecurringFails.Counter.Synchron = 0;
+
+            foreach (var item in Enumerable.Range(1,noOfFails))
+            {
+                cu._manualTask.Execute();  //Reset other tasks
+
+                while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
+
+                cu._groundTask._task.Execute();
+
+                while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
+
+                while ((eTaskState)cu._automatTask._task._taskState.Synchron != eTaskState.Busy) cu._automatTask._task.Execute();
+
+                if (item < noOfFails)
+                {
+                    while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
+                    Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+                }
+                else
+                {
+                    while (cu._automatTask._currentStep.ID.Synchron != 22000) ;
+                  
+                }
+                  
+            }
+            Assert.AreEqual(true, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+        
+        }
+
+
+
+
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(5)]
+        public void run_automat_mode_monitor_same_recurring_fails_on(int noOfFails)
+        {
+            var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
+            //no monitor if are equal zero
+            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.SameRecurringFailure = (ushort)noOfFails;
+
+            recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
+
+            var rec = Entry.Plc.MAIN._technology._processSettings.GetRepository<PlainProcessData>().Read("default");
+
+            var data = Entry.Plc.MAIN._technology._processSettings._data;
+            data._EntityId.Synchron = "default";
+            var cu = Entry.Plc.MAIN._technology._cu00x;
+            var automat = cu._automatTask;
+            var cuData = cu._processData._data;
+
+
+            automat._dataLoadProcessSettings.Synchron = true;
+            automat._dataCreateNew.Synchron = true;
+            automat._dataOpen.Synchron = true;
+            automat._continueRestore.Synchron = true;
+            automat._inspectionResult.Synchron = false;
+
+            cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron = false;
+            cu._recurringFails.ArbitrarilyRecurringFails.Counter.Synchron = 0;
+            cu._recurringFails.SameRecurringFails.Reached.Synchron = false;
+            cu._recurringFails.SameRecurringFails.Counter.Synchron = 0;
+
+            foreach (var item in Enumerable.Range(1, noOfFails))
+            {
+                cu._manualTask.Execute();  //Reset other tasks
+
+                while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
+
+                cu._groundTask._task.Execute();
+
+                while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
+
+                while ((eTaskState)cu._automatTask._task._taskState.Synchron != eTaskState.Busy) cu._automatTask._task.Execute();
+
+                if (item < noOfFails)
+                {
+                    while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
+                    Assert.AreEqual(false, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+                }
+                else
+                {
+                    while (cu._automatTask._currentStep.ID.Synchron != 22100) ;
+
+                }
+
+            }
+            Assert.AreEqual(true, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+
+        }
+
+
+
     }
 }

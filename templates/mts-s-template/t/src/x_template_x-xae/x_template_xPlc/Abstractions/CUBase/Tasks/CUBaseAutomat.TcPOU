@@ -241,12 +241,13 @@ END_VAR
 	IF(inResult.Result<>eOverallResult.Failed ) THEN
 		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter:=0;
 		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached :=FALSE;
+		This^.CompleteStep();
 	ELSE
 		//collect any recurring fails
 		IF NOT THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached THEN 
 			THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter := THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter +1;
 		END_IF
-		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached:=THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter>THIS^.Station._settings.NoAllowedArbitrarilyRecurringFailure;
+		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached:=THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter>=THIS^.Station._settings.NoAllowedArbitrarilyRecurringFailure;
 		
 
 		
@@ -324,7 +325,7 @@ END_VAR
 	IF(inResult.Result<>eOverallResult.Failed ) THEN
 		THIS^.Station.RecurringFails.SameRecurringFails.Counter:=0;
 		THIS^.Station.RecurringFails.SameRecurringFails.Reached :=FALSE;
-
+		THIS^.CompleteStep();
 	ELSE
 	
 		//collect same recurring
@@ -337,7 +338,7 @@ END_VAR
 			END_IF;
 		END_IF;
 		
-		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>THIS^.Station._settings.NoAllowedSameRecurringFailure;
+		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>=THIS^.Station._settings.NoAllowedSameRecurringFailure;
 
 			
 		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.SameRecurringFails.Reached)

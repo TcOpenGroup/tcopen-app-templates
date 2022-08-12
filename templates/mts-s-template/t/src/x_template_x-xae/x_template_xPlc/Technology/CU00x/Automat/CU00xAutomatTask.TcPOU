@@ -17,6 +17,8 @@ VAR
 	_dataFinalize : BOOL;
 	_continueRestore : BOOL;
 	_loop : BOOL;	
+	_inspectionResult:BOOL;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -27,7 +29,7 @@ END_VAR
       <Declaration><![CDATA[(*~
 	<docu>
 		<summary>
-			Loads process settings from the current process receipe into this controlled unit.
+			Loads technology settings from the current technology set into this controlled unit.
 			The `StationProcessDataManager.Data` is populated by data from process settings.						
 		</summary>
 	</docu>
@@ -55,7 +57,6 @@ END_VAR
 			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
 			Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
 			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
-			Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
 			CompleteStep();
 
 		END_IF;	
@@ -114,6 +115,13 @@ END_IF
 // Typically used in the first station of the technology to create new document/record to be persited in the repository.
 // Sets the status of the entity to 'InProgress'
 IF (_dataCreateNew) THEN
+	IF (Step(160, TRUE, 'CREATE ENTIY ID')) THEN
+		//-------------------------------------    
+		Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
+	
+		StepCompleteWhen(Station.ProcessDataManager.Data._EntityId<>'');
+		//-------------------------------------
+	END_IF
     THIS^.DataEntityCreateNew(200, Station.ProcessDataManager.Data._EntityId, Header := Station.ProcessDataManager.Data.CU00x.Header);
 END_IF;
 
@@ -135,7 +143,7 @@ END_IF;
 IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------    
     Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
-        .Inspect(false)
+        .Inspect(_inspectionResult)
         .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
         .OnFail().CarryOn();
     //-------------------------------------
@@ -201,7 +209,7 @@ IF (Step(10000, TRUE, 'WAIT FOR PARALELL TASK TO FINISH')) THEN
     //-------------------------------------	
 END_IF
 
-IF (Step(20000, TRUE, 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
+IF (Step(20000, _dataClose, 'WAIT FOR IF DATA FINALIZE IS DONE')) THEN
     //-------------------------------------
     StepCompleteWhen(Station.UpdateEntityTask.Done);
     //-------------------------------------	

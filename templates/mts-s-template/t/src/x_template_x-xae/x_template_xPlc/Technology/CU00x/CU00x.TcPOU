@@ -74,7 +74,7 @@ _cuTechnologicalDataDisplay := Technology.TechnologicalSettings.Data.CU00x;
 
 _settings.WarningCycleTime:= _cuTechnologicalDataDisplay.WarningCycleTime;
 _settings.ErrorCycleTime:= _cuTechnologicalDataDisplay.ErrorCycleTime;
-_settings.NoAllowedArbitrarilyRecurringFailure:= _cuTechnologicalDataDisplay.AnyRecurringFailure;
+_settings.NoAllowedArbitrarilyRecurringFailure:= _cuTechnologicalDataDisplay.ArbitrarilyRecurringFailure;
 _settings.NoAllowedSameRecurringFailure:= _cuTechnologicalDataDisplay.SameRecurringFailure;
 
 ]]></ST>
