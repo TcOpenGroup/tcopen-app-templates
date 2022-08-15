@@ -18,6 +18,7 @@ VAR
 	_continueRestore : BOOL;
 	_loop : BOOL;	
 	_inspectionResult:BOOL;
+	_inspectionDimensionResult:REAL;
 	
 END_VAR
 ]]></Declaration>
@@ -144,6 +145,15 @@ IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------    
     Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
         .Inspect(_inspectionResult)
+        .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
+        .OnFail().CarryOn();
+    //-------------------------------------
+END_IF
+
+IF (Step(1100, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
+    //-------------------------------------    
+    Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.WithCoordinator(THIS^)
+        .Inspect(_inspectionDimensionResult)
         .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
         .OnFail().CarryOn();
     //-------------------------------------

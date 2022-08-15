@@ -332,10 +332,8 @@ END_VAR
 		IF NOT THIS^.Station.RecurringFails.SameRecurringFails.Reached THEN 
 			IF THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes = inResult.ErrorCodes AND inResult.ErrorCodes <>';' THEN //if error code not defined ignore
 				THIS^.Station.RecurringFails.SameRecurringFails.Counter := THIS^.Station.RecurringFails.SameRecurringFails.Counter +1;
-			ELSIF inResult.ErrorCodes <>';'  THEN //if error code not defined ignore
-				THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
-				THIS^.Station.RecurringFails.SameRecurringFails.Counter := THIS^.Station.RecurringFails.SameRecurringFails.Counter +1;
 			END_IF;
+			THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
 		END_IF;
 		
 		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>=THIS^.Station._settings.NoAllowedSameRecurringFailure;
