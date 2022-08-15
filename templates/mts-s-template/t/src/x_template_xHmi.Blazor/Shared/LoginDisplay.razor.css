@@ -1,0 +1,21 @@
+﻿.dropup .dropdown-toggle::after {
+    content: "\25b2";
+    border: none;
+    vertical-align: middle;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+@media (min-width: 768px) {
+    .dropup .dropdown-toggle::after {
+        transform: rotate(90deg);
+    }
+
+    .dropup .dropdown-menu {
+        top: auto;
+        bottom: 0;
+        left: 100%;
+    }
+}

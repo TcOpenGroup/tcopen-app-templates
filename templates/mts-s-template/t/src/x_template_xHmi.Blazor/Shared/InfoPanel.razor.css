@@ -1,0 +1,35 @@
+﻿.info-panel {
+    margin-top: 1rem;
+    color: white;
+    background-color: rgba(32,67,166,1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80%;
+}
+
+.icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.icons li {
+
+}
+
+.icons a {
+    display: block;
+    color: white;
+    background-color: rgba(196,217,63,1);
+    border: 0.3rem solid white;
+    border-radius: 10%;
+}
+
+    .icons a.red {
+        background-color: rgba(202,47,20,1);
+    }
