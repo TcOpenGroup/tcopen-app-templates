@@ -8,66 +8,107 @@
     flex: 1;
 }
 
+.main .content {
+    margin-bottom: 1.5rem; /* height of .hide-sidebar-left */
+}
+
+/***********************sidebar left***********************/
+
 .sidebar-left {
-    background-color: antiquewhite;
+    background-color: #f7f7f7;
     max-height: fit-content;
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     position: fixed;
     bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     z-index: 12;
 }
 
+.hide-sidebar-left {
+    position: absolute;
+    left: 50%;
+    height: 1.5rem;
+    width: 4rem;
+    margin-top: -1.5rem; /* height */
+    margin-left: -2rem; /* half of width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+    .hide-sidebar-left:after {
+        content: "\276F";
+        transform: rotate(90deg);
+    }
+
+.sidebar-left.hidden {
+    height: 0;
+} 
+
+    .hidden .hide-sidebar-left:after {
+        transform: rotate(-90deg);
+    }
+
+/******************************************************/
+
 .sidebar-right {
     background-color: rgba(32,67,166,1);
+    position: sticky;
+    top: 0;
 }
 
-.top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
-}
-
-    .top-row ::deep a, .top-row .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-    }
-
-    .top-row a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+/*MQ*/
 
 @media (min-width: 768px) {
     .page {
         flex-direction: row;
     }
 
+    /*********sidebar left*********/
+
     .sidebar-left {
         position: sticky;
         top: 0;
         width: fit-content;
         max-height: 100vh;
-        flex-direction: column;
     }
+
+    .hide-sidebar-left {
+        left: 100%;
+        top: 50%;
+        height: 4rem;
+        width: 1.5rem;
+        margin-top: -2rem; /* half of height */
+        margin-left: 0;
+    }
+
+        .hide-sidebar-left:after {
+            transform: rotate(180deg);
+        }
+
+    .sidebar-left.hidden {
+        height: auto;
+    }
+
+        .sidebar-left.hidden ::deep .info-panel,
+        .sidebar-left.hidden ::deep .login {
+            display: none;
+        }
+
+        .hidden .hide-sidebar-left:after {
+            transform: rotate(0deg);
+        }
+
+
+    /*****************************/
 
     .sidebar-right {
         min-height: 100vh;
         max-height: fit-content;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
     }
 
     .main > div {

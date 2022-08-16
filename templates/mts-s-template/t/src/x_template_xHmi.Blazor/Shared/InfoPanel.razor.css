@@ -1,11 +1,12 @@
 ﻿.info-panel {
-    margin-top: 1rem;
+    width: 90%;
+    padding: 1vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: white;
     background-color: rgba(32,67,166,1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80%;
+    overflow-x: auto;
 }
 
 .icons {
@@ -14,22 +15,60 @@
     margin: 0;
     display: flex;
     flex: 1;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
 }
 
 .icons li {
-
+    padding: 0 0.5vw;
 }
 
 .icons a {
     display: block;
     color: white;
     background-color: rgba(196,217,63,1);
-    border: 0.3rem solid white;
+    border: 0.1rem solid white;
     border-radius: 10%;
+    padding: 0.55rem;
+    font-size: 1rem;
+    height: fit-content;
 }
 
     .icons a.red {
         background-color: rgba(202,47,20,1);
     }
+
+.info-panel p {
+    display: none;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .info-panel {
+        height: 90%;
+        width: auto;
+        padding: 1vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .info-panel, .icons {
+        flex-direction: column;
+    }
+
+    .icons li {
+        padding: 0.5vh 0;
+    }
+
+    .icons a {
+        font-size: 1.2rem;
+        border: 0.2rem solid white;
+    }
+
+    .info-panel p {
+        display: block;
+    }
+
+}
+
+/***************************************/

@@ -8,10 +8,22 @@
 
 .top-row {
     height: 3.5rem;
-    background-color: #f7f7f7;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
 }
+
+    .top-row a, .top-row .btn-link {
+        white-space: nowrap;
+    }
+
+    .top-row a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 .navbar-brand {
     font-size: 1.1rem;
