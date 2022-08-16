@@ -107,8 +107,8 @@
     /*****************************/
 
     .sidebar-right {
-        min-height: 100vh;
-        max-height: fit-content;
+        max-height: 100vh;
+        overflow: auto;
     }
 
     .main > div {
