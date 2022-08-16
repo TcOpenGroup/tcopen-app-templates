@@ -231,8 +231,8 @@ END_IF
 //Recurring failures are based on ErrorCodes in TcoComprehensiveResult.
 //If error code in Same recurring failure is empty string ,monitorig of failure is not performed.
 //Error code in Arbitrary Recuring failure is irelevant.    
-THIS^.MonitorArbitrarilyRecurringFailure(22000,THIS^.Station._settings.NoAllowedArbitrarilyRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
-THIS^.MonitorSameRecurringFailure(22100,THIS^.Station._settings.NoAllowedSameRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
+THIS^.MonitorAnyRecurringFailure(22000,THIS^.Station._settings.AnyRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
+THIS^.MonitorSameRecurringFailure(22100,THIS^.Station._settings.SameRecurringFailure>0 , Station.ProcessDataManager.Data.EntityHeader.Results);
 
 
 

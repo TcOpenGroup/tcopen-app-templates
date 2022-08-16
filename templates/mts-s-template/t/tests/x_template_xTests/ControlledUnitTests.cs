@@ -91,7 +91,7 @@ namespace x_template_xTests
                     CU00x = new PlainCU00xTechnologicalData()
                     {
 
-                        ArbitrarilyRecurringFailure = 5,
+                        AnyRecurringFailure = 5,
                         SameRecurringFailure = 3
                     }
                 });
@@ -110,8 +110,8 @@ namespace x_template_xTests
             Entry.Plc.MAIN._technology._cu00x._automatTask._loop.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._inspectionResult.Synchron = true;
             Entry.Plc.MAIN._technology._cu00x._automatTask._inspectionDimensionResult.Synchron = 50;
-            Entry.Plc.MAIN._technology._cu00x._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron = false;
-            Entry.Plc.MAIN._technology._cu00x._recurringFails.ArbitrarilyRecurringFails.Counter.Synchron = 0;
+            Entry.Plc.MAIN._technology._cu00x._recurringFails.AnyRecurringFails.Reached.Synchron = false;
+            Entry.Plc.MAIN._technology._cu00x._recurringFails.AnyRecurringFails.Counter.Synchron = 0;
             Entry.Plc.MAIN._technology._cu00x._recurringFails.SameRecurringFails.Reached.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._recurringFails.SameRecurringFails.Counter.Synchron = 0;
         }
@@ -448,12 +448,14 @@ namespace x_template_xTests
 
 
         [Test]
+        [Timeout(timeOut)]
+
         [Repeat(3)]
         public void run_automat_mode_monitor_recurring_fails_off_entity_ok()
         {
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.AnyRecurringFailure = 0;
             recTech.CU00x.SameRecurringFailure = 0;
 
 
@@ -485,19 +487,21 @@ namespace x_template_xTests
 
             while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
 
-            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
-            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+            Assert.AreEqual(false, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.AnyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
 
         }
 
         [Test]
+        [Timeout(timeOut)]
+
         [Repeat(3)]
         public void run_automat_mode_monitor_recurring_fails_off_entity_nok()
         {
 
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.AnyRecurringFailure = 0;
             recTech.CU00x.SameRecurringFailure = 0;
 
             recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
@@ -529,18 +533,20 @@ namespace x_template_xTests
 
             while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
 
-            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
-            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+            Assert.AreEqual(false, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.AnyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
 
         }
 
         [Test]
+        [Timeout(timeOut)]
+
         [Repeat(3)]
         public void run_automat_mode_monitor_recurring_fails_on_entity_ok()
         {
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = 3;
+            recTech.CU00x.AnyRecurringFailure = 3;
             recTech.CU00x.SameRecurringFailure = 3;
 
             recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
@@ -572,20 +578,21 @@ namespace x_template_xTests
 
             while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
 
-            Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
-            Assert.AreEqual(cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
+            Assert.AreEqual(false, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(cu._recurringFails.AnyRecurringFails.Reached.Synchron, cu._recurringFails.SameRecurringFails.Reached.Synchron);
 
         }
 
         [Test]
-        [TestCase(1)]
+        [Timeout(timeOut)]
+
         [TestCase(3)]
         [TestCase(5)]
-        public void run_automat_mode_monitor_arbitrarily_recurring_fails_on(int noOfFails)
+        public void run_automat_mode_monitor_any_recurring_fails_on(int noOfFails)
         {
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = (ushort)noOfFails;
+            recTech.CU00x.AnyRecurringFailure = (ushort)noOfFails;
             recTech.CU00x.SameRecurringFailure = 0;
 
             recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
@@ -623,7 +630,7 @@ namespace x_template_xTests
                 if (item < noOfFails)
                 {
                     while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
-                    Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+                    Assert.AreEqual(false, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
                 }
                 else
                 {
@@ -632,7 +639,7 @@ namespace x_template_xTests
                 }
 
             }
-            Assert.AreEqual(true, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(true, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
 
         }
 
@@ -641,15 +648,15 @@ namespace x_template_xTests
 
 
         [Test]
+        [Timeout(timeOut)]
 
- 
         [TestCase(3)]
         [TestCase(5)]
         public void run_automat_mode_monitor_same_recurring_fails_on_two_instections(int noOfFails)
         {
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = 0;
+            recTech.CU00x.AnyRecurringFailure = 0;
             recTech.CU00x.SameRecurringFailure = (ushort)noOfFails;
 
             recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
@@ -700,15 +707,15 @@ namespace x_template_xTests
         }
 
         [Test]
-
+        [Timeout(timeOut)]
 
         [TestCase(3)]
         [TestCase(5)]
-        public void run_automat_mode_monitor_arbitrarily_recurring_fails_on_two_inspections(int noOfFails)
+        public void run_automat_mode_monitor_any_recurring_fails_on_two_inspections(int noOfFails)
         {
             var recTech = Entry.Plc.MAIN._technology._technologySettings.GetRepository<PlainTechnologyData>().Read("default");
             //no monitor if are equal zero
-            recTech.CU00x.ArbitrarilyRecurringFailure = (ushort)noOfFails; ;
+            recTech.CU00x.AnyRecurringFailure = (ushort)noOfFails; ;
             recTech.CU00x.SameRecurringFailure = 0;
 
             recTech.CopyPlainToCyclic(Entry.Plc.MAIN._technology._technologySettings._data);
@@ -754,7 +761,7 @@ namespace x_template_xTests
                 if (item < noOfFails)
                 {
                     while (cu._automatTask._currentStep.ID.Synchron != 30000) ;
-                    Assert.AreEqual(false, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+                    Assert.AreEqual(false, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
                 }
                 else
                 {
@@ -763,7 +770,7 @@ namespace x_template_xTests
                 }
 
             }
-            Assert.AreEqual(true, cu._recurringFails.ArbitrarilyRecurringFails.Reached.Synchron);
+            Assert.AreEqual(true, cu._recurringFails.AnyRecurringFails.Reached.Synchron);
 
 
         }

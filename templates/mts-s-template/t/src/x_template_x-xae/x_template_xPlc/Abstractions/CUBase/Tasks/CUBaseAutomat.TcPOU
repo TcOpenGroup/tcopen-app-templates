@@ -209,8 +209,8 @@ END_VAR
         <ST><![CDATA[EntityDoesBelong:=THIS^.Station.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.Station.CuId;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="MonitorArbitrarilyRecurringFailure" Id="{e0debd7d-76ba-040d-3b8f-a31d168a71a0}" FolderPath="ConsecutiveFailures\">
-      <Declaration><![CDATA[METHOD MonitorArbitrarilyRecurringFailure
+    <Method Name="MonitorAnyRecurringFailure" Id="{e0debd7d-76ba-040d-3b8f-a31d168a71a0}" FolderPath="ConsecutiveFailures\">
+      <Declaration><![CDATA[METHOD MonitorAnyRecurringFailure
 VAR_INPUT
 	(*~
 	<docu>
@@ -235,28 +235,28 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (Step(inStepID,inEnableStep, 'MONITOR ARBITRARILY RECURRING FAILURE IN SEQUENCE')) THEN
+        <ST><![CDATA[IF (Step(inStepID,inEnableStep, 'MONITOR ANY RECURRING FAILURE IN SEQUENCE')) THEN
     //-------------------------------------		
 	
 	IF(inResult.Result<>eOverallResult.Failed ) THEN
-		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter:=0;
-		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached :=FALSE;
+		THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
+		THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
 		This^.CompleteStep();
 	ELSE
 		//collect any recurring fails
-		IF NOT THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached THEN 
-			THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter := THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter +1;
+		IF NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN 
+			THIS^.Station.RecurringFails.AnyRecurringFails.Counter := THIS^.Station.RecurringFails.AnyRecurringFails.Counter +1;
 		END_IF
-		THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached:=THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter>=THIS^.Station._settings.NoAllowedArbitrarilyRecurringFailure;
+		THIS^.Station.RecurringFails.AnyRecurringFails.Reached:=THIS^.Station.RecurringFails.AnyRecurringFails.Counter>=THIS^.Station._settings.AnyRecurringFailure;
 		
 
 		
 	
 
 		
-		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached)
+		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.AnyRecurringFails.Reached)
 									   .Build()
-									   .Append('(Consecutive failure) The number of arbitrarily recurring failure count has been reached!')
+									   .Append('(Consecutive failure) The number of any recurring failure count has been reached!')
 									   .Append(' Failure code: ')
 									   .Append(inResult.ErrorCodes)
   									   .Append(' ')
@@ -264,19 +264,19 @@ END_VAR
 									   .As()				   
 									   .AsError();
 									   
-		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached);			
+		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached);			
 						   
 									   
-		IF THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached THEN
+		IF THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN
 			
 				
 			IF(_dialog.Show()
-			   .WithCaption('<#(Consecutive failure) The number of arbitrarily recurring failure count has been reached!#>')
+			   .WithCaption('<#(Consecutive failure) The number of any recurring failure count has been reached!#>')
 			   .WithText('<#Please acknowledge recurring failure!#>')
 			   .WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN
 			   
-					THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Counter:=0;
-					THIS^.Station.RecurringFails.ArbitrarilyRecurringFails.Reached :=FALSE;
+					THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
+					THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
 					THIS^.CompleteStep();
 			END_IF; 
 		END_IF;
@@ -336,7 +336,7 @@ END_VAR
 			THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
 		END_IF;
 		
-		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>=THIS^.Station._settings.NoAllowedSameRecurringFailure;
+		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>=THIS^.Station._settings.SameRecurringFailure;
 
 			
 		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.SameRecurringFails.Reached)

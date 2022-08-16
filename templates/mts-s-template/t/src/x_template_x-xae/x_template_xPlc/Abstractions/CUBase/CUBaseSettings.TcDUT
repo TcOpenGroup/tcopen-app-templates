@@ -6,8 +6,8 @@
     WarningCycleTime : TIME;
     ErrorCycleTime : TIME;
     SaveEnergyTime : TIME;
-    NoAllowedArbitrarilyRecurringFailure : UINT;
-    NoAllowedSameRecurringFailure : UINT;
+    AnyRecurringFailure : UINT;
+    SameRecurringFailure : UINT;
 END_STRUCT
 END_TYPE]]></Declaration>
   </DUT>

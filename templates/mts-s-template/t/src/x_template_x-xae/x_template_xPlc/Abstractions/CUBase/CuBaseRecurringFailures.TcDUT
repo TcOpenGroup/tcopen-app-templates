@@ -3,7 +3,7 @@
   <DUT Name="CuBaseRecurringFailures" Id="{9c9d3c5b-f8e2-04ee-0d59-7c39ee743c2d}">
     <Declaration><![CDATA[TYPE CuBaseRecurringFailures EXTENDS TcoCore.TcoStruct : 
 	STRUCT
-   		ArbitrarilyRecurringFails : CuBaseRecurringFail;
+   		AnyRecurringFails : CuBaseRecurringFail;
     	SameRecurringFails : CuBaseRecurringFail;
 	END_STRUCT
 END_TYPE]]></Declaration>
