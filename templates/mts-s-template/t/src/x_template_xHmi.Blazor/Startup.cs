@@ -20,6 +20,7 @@ using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.TcoCore.Blazor.Extensions;
 using Vortex.Presentation.Blazor.Services;
 using x_template_xHmi.Blazor.Security;
+using x_template_xPlc;
 using x_template_xPlcConnector;
 
 namespace x_template_xHmi.Blazor
@@ -56,6 +57,8 @@ namespace x_template_xHmi.Blazor
             Roles.Create(roleGroupManager);
             services.AddVortexBlazorSecurity(userRepo, groupRepo, roleGroupManager);
             services.AddTcoCoreExtensions();
+
+            SetUpRepositoriesUsingRavenDb();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +91,6 @@ namespace x_template_xHmi.Blazor
            
         }
 
-
         private static async void StartRavenDBEmbeddedServer()
         {
             // Start embedded RavenDB server
@@ -115,6 +117,35 @@ namespace x_template_xHmi.Blazor
            // await EmbeddedServer.Instance.RestartServerAsync();
             // Uri url = await EmbeddedServer.Instance.GetServerUriAsync();
             //EmbeddedServer.Instance.OpenStudioInBrowser();
+        }
+
+        private void SetUpRepositoriesUsingRavenDb()
+        {
+            var ProcessDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ProcessSettings", "", "");
+            IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._processSettings, new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+
+            var TechnologicalDataRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { Constants.CONNECTION_STRING_DB }, "TechnologySettings", "", "");
+            IntializeTechnologyDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._technologySettings, new RavenDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
+
+            var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "Traceability", "", "");
+            IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));
+            IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
+        }
+
+        private static void IntializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
+            processData.InitializeRepository(repository);
+            processData.InitializeRemoteDataExchange(repository);
+        }
+
+        private static void IntializeTechnologyDataRepositoryWithDataExchange(TechnologicalDataManager manager, IRepository<PlainTechnologyData> repository)
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
+            manager.InitializeRepository(repository);
+            manager.InitializeRemoteDataExchange(repository);
         }
     }
 
