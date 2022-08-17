@@ -1,7 +1,3 @@
-.nav {
-   overflow: hidden;
-}
-
 .navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -49,15 +45,15 @@
 
     .nav-item ::deep a {
         color: #d7d7d7;
-        height: 3rem;
         display: flex;
         align-items: center;
         border-radius: 0;
         line-height: 3rem;
         text-transform: uppercase;
-        padding: 2rem 1rem;
+        padding: 0.5rem 0.5rem;
         cursor: pointer;
         user-select: none;
+        overflow: hidden;
     }
 
         .nav-item ::deep a.active {
@@ -81,9 +77,10 @@
 }
 
 .expandable ul {
-    visibility: hidden;
     background-color: rgba(255,255,255,0.15);
+    visibility: hidden;
     height: 0;
+    overflow: hidden;
 }
 
 .menuCollapseActive ul {
@@ -92,14 +89,19 @@
 }
 /****************************************************************/
 
+.login {
+    margin-top: auto;
+}
+
 @media (min-width: 768px) {
     .navbar-toggler {
         display: none;
     }
 
-    .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
+    .menu {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
     }
 
     .top-row {
