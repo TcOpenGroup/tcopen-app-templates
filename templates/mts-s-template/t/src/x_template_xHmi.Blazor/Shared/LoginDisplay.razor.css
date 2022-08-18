@@ -44,16 +44,6 @@ a, button {
         background-color: #8b8b8b;
     }
 
-/*.dropup .dropdown-toggle::after {
-    content: "\25b2";
-    border: none;
-    vertical-align: middle;
-}
-
-.navbar-nav .dropdown-menu {
-    position: absolute;
-}*/
-
 @media (min-width: 768px) {
     .expandable {
         display: flex;
@@ -63,14 +53,4 @@ a, button {
         .expandable.expanded > a:after {
             transform: rotate(-90deg);
         }
-
-/*    .dropup .dropdown-toggle::after {
-        transform: rotate(90deg);
-    }
-
-    .dropup .dropdown-menu {
-        top: auto;
-        bottom: 0;
-        left: 100%;
-    }*/
 }

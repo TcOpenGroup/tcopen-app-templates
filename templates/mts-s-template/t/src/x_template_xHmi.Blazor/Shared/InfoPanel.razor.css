@@ -33,6 +33,16 @@
         background-color: rgba(202,47,20,1);
     }
 
+    .icons li.blue {
+        background-color: rgba(32, 67, 166, 1);
+        color: rgba(229, 78, 49, 1);
+        animation: heart-beat 1.5s step-start infinite;
+    }
+
+    @keyframes heart-beat {
+        50% {color: rgba(0, 0, 0, 0);}
+    }
+
     .icons svg {
         height: 1.5rem;
         width: 1.5rem;
