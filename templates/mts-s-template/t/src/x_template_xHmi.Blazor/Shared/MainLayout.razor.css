@@ -111,6 +111,7 @@
 
     .sidebar-right {
         height: 100vh;
+        max-height: fit-content;
         max-width: 15rem;
         overflow: visible;
     }

@@ -36,7 +36,7 @@
     .icons li.blue {
         background-color: rgba(32, 67, 166, 1);
         color: rgba(229, 78, 49, 1);
-        animation: heart-beat 1.5s step-start infinite;
+        animation: heart-beat 2s step-start infinite;
     }
 
     @keyframes heart-beat {
