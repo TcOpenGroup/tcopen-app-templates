@@ -1,0 +1,61 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<button class="station @btnColor hover-cyan @stateBorder">@Context.AttributeShortName</button>
+
+@code {
+    [Parameter]
+    public x_template_xPlc.CU00x Context { get; set; }
+
+    private string btnColor = "idle-colors";
+    private string stateBorder = "noState-border";
+
+    protected override void OnInitialized()
+    {
+        ChangeModeColor();
+        Context._statusInfo.Mode.Subscribe(ChangeModeColorWatch);
+
+        Context._statusInfo.State.Subscribe(ChangeStateBorder);
+    }
+
+    private void ChangeModeColorWatch(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
+    {
+        ChangeModeColor();
+    }
+
+    private void ChangeModeColor()
+    {
+        switch (Context._statusInfo.Mode.Cyclic)
+        {
+            case (short)eCUMode.NoMode:
+                btnColor = "idle-colors";
+                break;
+            case (short)eCUMode.GroundMode:
+                btnColor = "ground-colors";
+                break;
+            case (short)eCUMode.GroundModeDone:
+                btnColor = "groundDone-colors";
+                break;
+            case (short)eCUMode.AutomatMode:
+                btnColor = "automat-colors";
+                break;
+            case (short)eCUMode.ManualMode:
+                btnColor = "manual-colors";
+                break;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ChangeStateBorder(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
+    {
+        switch (Context._statusInfo.State.Cyclic)
+        {
+            case (short)eCUState.None:
+                stateBorder = "noState-border";
+                break;
+            case (short)eCUState.HasError:
+                stateBorder = "hasError-border";
+                break;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+}

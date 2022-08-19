@@ -1,5 +1,17 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    --mts-yellow: rgba(255, 217, 23, 1);
+    --mts-red: rgba(202,47,20,1);
+    --mts-green: rgba(32, 160, 36, 1);
+    --mts-lightgreen: rgba(196,217,63,1);
+    --mts-blue: rgba(32,67,166,1);
+    --mts-lightblue: rgba(33, 149, 242, 1);
+    --mts-cyan: rgba(141, 230, 243, 1);
+    --mts-orange: rgba(245, 54, 17, 1);
+    --mts-grey: rgba(52, 55, 63, 1);
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -29,6 +41,59 @@ a, .btn-link {
 .validation-message {
     color: red;
 }
+
+/*****************Operator view*********************/
+
+.station {
+    display: block;
+    border: 3px solid transparent;
+}
+
+.manual-colors {
+    background-color: var(--mts-yellow);
+    color: black;
+}
+
+.automat-colors {
+    background-color: var(--mts-green);
+    color: white;
+}
+
+.ground-colors {
+    background-color: var(--mts-lightblue);
+    color: white;
+}
+
+.groundDone-colors {
+    background-color: var(--mts-blue);
+    color: white;
+}
+
+.idle-colors {
+    background-color: var(--mts-grey);
+    color: white;
+}
+
+.hover-cyan:hover {
+    border-color: var(--mts-cyan);
+}
+
+.noState-border {
+    border-color: transparent;
+}
+
+    .noState-border .state-background {
+        background-color: initial;
+    }
+
+.hasError-border {
+    border-color: var(--mts-orange);
+}
+    .hasError-border .state-background {
+        background-color: var(--mts-orange);
+    }
+
+/********************************************/
 
 #blazor-error-ui {
     background: lightyellow;

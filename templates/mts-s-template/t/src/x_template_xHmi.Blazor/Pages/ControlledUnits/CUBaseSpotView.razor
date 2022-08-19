@@ -1,0 +1,28 @@
+﻿@inherits RenderableComponentBase
+
+<div>
+    Context._statusInfo.State.Cyclic: @Context._statusInfo.State.Cyclic
+    Context._statusInfo.Mode.Cyclic @Context._statusInfo.Mode.Cyclic
+    Context._statusInfo.CurrentIsInStepMode.Cyclic: @Context._statusInfo.CurrentIsInStepMode.Synchron
+    @Context.AttributeShortName
+
+    @Context._statusInfo.CurrentCleanCycleTime.Cyclic
+</div>
+
+<button>
+    <div>
+        <p>@Context.AttributeShortName</p>
+        <p>@Context._statusInfo.CurrentTaskDescription.Cyclic</p>
+    </div>
+    <p>@Context._statusInfo.CurrentOperation.Cyclic</p>
+</button>
+
+@code {
+    [Parameter]
+    public x_template_xPlc.CU00x Context { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UpdateValuesOnChange(Context._statusInfo);
+    }
+}
