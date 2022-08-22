@@ -1,28 +1,76 @@
 ﻿@inherits RenderableComponentBase
 
-<div>
-    Context._statusInfo.State.Cyclic: @Context._statusInfo.State.Cyclic
-    Context._statusInfo.Mode.Cyclic @Context._statusInfo.Mode.Cyclic
-    Context._statusInfo.CurrentIsInStepMode.Cyclic: @Context._statusInfo.CurrentIsInStepMode.Synchron
-    @Context.AttributeShortName
-
-    @Context._statusInfo.CurrentCleanCycleTime.Cyclic
-</div>
-
-<button>
-    <div>
-        <p>@Context.AttributeShortName</p>
+<button class="station hover-cyan @stateBorder">
+    <div class="info @btnColor">
+        <p class="station-shortname">@Context.AttributeShortName</p>
         <p>@Context._statusInfo.CurrentTaskDescription.Cyclic</p>
     </div>
     <p>@Context._statusInfo.CurrentOperation.Cyclic</p>
+    <p>@Context._statusInfo.HumanReadable</p>
+    <div class="cycle-times">
+        <p>Current CT<span>@Context._statusInfo.CurrentCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Average CT<span>@Context._statusInfo.AverageCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Current Clean CT<span>@Context._statusInfo.CurrentCleanCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Average Clean CT<span>@Context._statusInfo.AverageCleanCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+    </div>
 </button>
 
 @code {
     [Parameter]
     public x_template_xPlc.CU00x Context { get; set; }
 
+    private string btnColor = "idle-colors";
+    private string stateBorder = "noState-border";
+
     protected override void OnInitialized()
     {
         UpdateValuesOnChange(Context._statusInfo);
+
+        ChangeModeColor();
+        Context._statusInfo.Mode.Subscribe(ChangeModeColorWatch);
+
+        Context._statusInfo.State.Subscribe(ChangeStateBorder);
+    }
+
+    private void ChangeModeColorWatch(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
+    {
+        ChangeModeColor();
+    }
+
+    private void ChangeModeColor()
+    {
+        switch (Context._statusInfo.Mode.Cyclic)
+        {
+            case (short)eCUMode.NoMode:
+                btnColor = "idle-colors";
+                break;
+            case (short)eCUMode.GroundMode:
+                btnColor = "ground-colors";
+                break;
+            case (short)eCUMode.GroundModeDone:
+                btnColor = "groundDone-colors";
+                break;
+            case (short)eCUMode.AutomatMode:
+                btnColor = "automat-colors";
+                break;
+            case (short)eCUMode.ManualMode:
+                btnColor = "manual-colors";
+                break;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ChangeStateBorder(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
+    {
+        switch (Context._statusInfo.State.Cyclic)
+        {
+            case (short)eCUState.None:
+                stateBorder = "noState-border";
+                break;
+            case (short)eCUState.HasError:
+                stateBorder = "hasError-border";
+                break;
+        }
+        InvokeAsync(StateHasChanged);
     }
 }

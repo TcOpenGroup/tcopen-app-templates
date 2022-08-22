@@ -1,2 +1,23 @@
-﻿body {
+﻿button {
+    width: 450px;
+    padding: 0;
+    overflow: auto;
+}
+
+.station-shortname {
+    font-weight: 900;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.cycle-times {
+    display: flex;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.cycle-times p{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0.5rem;
 }
