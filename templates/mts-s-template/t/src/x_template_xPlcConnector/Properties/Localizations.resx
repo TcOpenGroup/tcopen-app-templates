@@ -132,6 +132,18 @@
   <data name="___IDLE__" xml:space="preserve">
     <value>IDLE</value>
   </data>
+  <data name="____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reached___" xml:space="preserve">
+    <value>(Consecutive failure) The number of any recurring failure count has been reached!</value>
+  </data>
+  <data name="___Please_acknowledge_recurring_failure___" xml:space="preserve">
+    <value>Please acknowledge recurring failure!</value>
+  </data>
+  <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached____" xml:space="preserve">
+    <value>(Consecutive failure) The number of same recurring failure count has been reached! </value>
+  </data>
+  <data name="___Please_acknowledge_recurring_failure____" xml:space="preserve">
+    <value>Please acknowledge recurring failure! </value>
+  </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
   </data>
@@ -192,8 +204,11 @@
   <data name="___Energy_saving_mode___Inactivity_time__" xml:space="preserve">
     <value>Energy saving mode - Inactivity time</value>
   </data>
-  <data name="___Consecutive_Error_count__" xml:space="preserve">
-    <value>Consecutive Error count</value>
+  <data name="___Max_allowed_number_of_any_recurring_failures__consecutive___" xml:space="preserve">
+    <value>Max allowed number of any recurring failures (consecutive)</value>
+  </data>
+  <data name="___Max_allowed_number_of_same_recurring_failures__consecutive___" xml:space="preserve">
+    <value>Max allowed number of same recurring failures (consecutive)</value>
   </data>
   <data name="___Entity_header__" xml:space="preserve">
     <value>Entity header</value>

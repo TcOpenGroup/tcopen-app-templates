@@ -23,7 +23,7 @@ THIS^.ModeController.Mode := ParentSequence.ModeController.Mode;
 
 IF (Step(1000, TRUE, 'PARALELL STEP')) THEN
     //-------------------------------------    
-		StepCompleteWhen(CurrentStep.Duration >= T#3S);	
+		StepCompleteWhen(CurrentStep.Duration >= T#300mS);	
     //-------------------------------------
 END_IF
 
