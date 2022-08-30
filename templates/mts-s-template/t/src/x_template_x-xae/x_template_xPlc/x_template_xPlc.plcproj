@@ -137,6 +137,9 @@
     <Compile Include="Technology\CU00x\Data\CU00xProcessData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\Data\ReworkDataManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Technology\Data\TechnologicalDataManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>

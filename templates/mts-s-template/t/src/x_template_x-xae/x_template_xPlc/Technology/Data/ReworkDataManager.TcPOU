@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ReworkDataManager" Id="{33b8f65c-34d7-4c88-b956-688f52621eeb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReworkDataManager EXTENDS TcoData.TcoDataExchange
+VAR
+    _data : ProcessData := (Parent := THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Property Name="Data" Id="{98dcb715-feb5-4b56-9716-8495e81bdcc6}">
+      <Declaration><![CDATA[PROPERTY Data : REFERENCE TO ProcessData]]></Declaration>
+      <Get Name="Get" Id="{d372e65c-de3e-4aa8-b127-fd7616f5fc4b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Data REF= _data;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\vortex.framework.data.merge\scr\Vortex.Framework.DataMerge\Vortex.Framework.Data.Merge.csproj" />
+    <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
+  </ItemGroup>
+
+</Project>

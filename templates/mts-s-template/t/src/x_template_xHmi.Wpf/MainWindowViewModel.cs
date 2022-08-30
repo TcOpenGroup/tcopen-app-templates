@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcoCore;
 
+
 namespace x_template_xHmi.Wpf
 {
     public class MainWindowViewModel
