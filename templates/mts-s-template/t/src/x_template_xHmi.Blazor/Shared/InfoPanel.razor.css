@@ -9,6 +9,12 @@
     overflow-x: auto;
 }
 
+.info-panel .badge {
+    background-color: var(--mts-red);
+    font-size: 1rem;
+    display: none;
+}
+
 .icons {
     list-style: none;
     padding: 0;
@@ -16,13 +22,13 @@
     display: flex;
     flex: 1;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
     .icons li {
         display: block;
         color: white;
-        background-color: rgba(196,217,63,1);
+        background-color: var(--mts-lightgreen);
         border: 0.1rem solid white;
         border-radius: 10%;
         padding: 0.45rem;
@@ -30,23 +36,24 @@
     }
 
     .icons li.red {
-        background-color: rgba(202,47,20,1);
+        background-color: var(--mts-red);
     }
 
-    .icons li.blue {
+    .icons li.heart-beat {
         background-color: rgba(32, 67, 166, 1);
-        color: rgba(229, 78, 49, 1);
-        animation: heart-beat 2s step-start infinite;
+        /*color: #ffe54e31; <- from wpf*/
+        color: var(--mts-orange);
     }
 
-    @keyframes heart-beat {
-        50% {color: rgba(0, 0, 0, 0);}
+    .icons li.heart-beat.secondary {
+        /*color: #ff2043a6; <- from wpf*/
+        color: rgba(255, 255, 255, 0);
     }
 
-    .icons svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
+.icons svg {
+    height: 1.5rem;
+    width: 1.5rem;
+}
 
 .info-panel p {
     display: none;
@@ -60,6 +67,10 @@
         padding: 1vh;
         overflow-y: auto;
         overflow-x: hidden;
+    }
+
+    .info-panel .badge {
+        display: block;
     }
 
     .info-panel, .icons {
