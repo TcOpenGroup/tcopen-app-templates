@@ -1,8 +1,0 @@
-{
-  "solution": {
-    "path": "..\\..\\inxton.mono.sln",
-    "projects": [      
-      "vortex.framework\\vortex.framework.data.merge\\scr\\Vortex.Framework.DataMerge\\Vortex.Framework.Data.Merge.csproj"      
-    ]
-  }
-}

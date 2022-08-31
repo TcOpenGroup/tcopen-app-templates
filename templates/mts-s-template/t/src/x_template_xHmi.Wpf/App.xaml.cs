@@ -13,6 +13,7 @@ using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.Security;
 using TcOpen.Inxton.TcoCore.Wpf;
 using Vortex.Presentation.Wpf;
+using x_template_DataMerge.Rework;
 using x_template_xPlc;
 using x_template_xPlcConnector;
 
@@ -62,6 +63,9 @@ namespace x_template_xHmi.Wpf
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
 
             SetUpRepositoriesUsingRavenDb();
+
+
+          
 
             // Create user roles for this application.
             Roles.Create();
@@ -136,9 +140,15 @@ namespace x_template_xHmi.Wpf
             var TechnologicalDataRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { Constants.CONNECTION_STRING_DB }, "TechnologySettings", "", "");
             IntializeTechnologyDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._technologySettings, new RavenDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
 
+            var ReworklDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ReworkSettings", "", "");
+            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings));
+
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "Traceability", "", "");
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));            
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
+
+            Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
+
         }
 
         /// <summary>
@@ -153,6 +163,8 @@ namespace x_template_xHmi.Wpf
             processData.InitializeRepository(repository);
             processData.InitializeRemoteDataExchange(repository);
         }
+
+
 
         /// <summary>
         /// Initializes <see cref="TechnologicalDataManager"/>s repository for data exchange between PLC and storage (database).
@@ -177,6 +189,8 @@ namespace x_template_xHmi.Wpf
                 return designTime ? Entry.PlcDesign : Entry.Plc;                
             }
         }
+
+        public static ReworkModel Rework { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Technology EXTENDS TcoCore.TcoContext
 VAR	
     _processSettings     : ProcessDataManager(THIS^);  			//a.k.a receipe
-	_reworkSettings     : ReworkDataManager(THIS^);  			//a.k.a receipe for rework
+	_reworkSettings     : ProcessDataManager(THIS^);  			//a.k.a receipe for rework
     _technologySettings  : TechnologicalDataManager(THIS^);		//a.k.a machine settings
     _processTraceability : ProcessDataManager(THIS^);			//the same structure as process setting but filled with actual production data (measurements, inspection results, etc)
 	
@@ -192,7 +192,7 @@ END_VAR
       </Get>
     </Property>
     <Property Name="ReworkSettings" Id="{528fd7af-46d1-4d39-bd6c-409cd291d5e4}">
-      <Declaration><![CDATA[PROPERTY ReworkSettings : REFERENCE TO ReworkDataManager]]></Declaration>
+      <Declaration><![CDATA[PROPERTY ReworkSettings : REFERENCE TO ProcessDataManager]]></Declaration>
       <Get Name="Get" Id="{06451fe5-80c7-49ba-aaf0-64ccfb487bca}">
         <Declaration><![CDATA[VAR
 END_VAR

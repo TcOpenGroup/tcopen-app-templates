@@ -15,7 +15,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
 	  <ProjectReference Include="..\..\..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
-	  <ProjectReference Include="..\..\scr\Vortex.Framework.DataMerge\Vortex.Framework.Data.Merge.csproj" />
+	  <ProjectReference Include="..\..\scr\TcoDataMerge\TcoDataMerge.csproj" />
 	</ItemGroup>
 
 </Project>

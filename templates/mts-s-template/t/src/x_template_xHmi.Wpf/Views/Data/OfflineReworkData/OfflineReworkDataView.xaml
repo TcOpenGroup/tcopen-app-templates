@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="x_template_xHmi.Wpf.Views.Data.OfflineReworkData.OfflineReworkDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vortex="http://vortex.mts/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vortexs="http://vortex.security.mts/xaml" xmlns:offlinereworkdata="clr-namespace:x_template_xHmi.Wpf.Views.Data.OfflineReworkData"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900"
+             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <vortex:RenderContentConverter x:Key="RenderContentConverter"/>
+        <offlinereworkdata:MultiParamConverter x:Key="MultiParamConverter" />
+
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <offlinereworkdata:OfflineReworkDataViewModel></offlinereworkdata:OfflineReworkDataViewModel>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition MinWidth="300"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+            <vortex:RenderableContentControl x:Name="TargetData" DataContext="{Binding TargetData}" PresentationType="Display">
+                <vortex:RenderableContentControl.RootContainer>
+                    <Grid></Grid>
+                </vortex:RenderableContentControl.RootContainer>
+            </vortex:RenderableContentControl>
+      
+
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="1">
+
+            <ComboBox
+               x:Name="SourceData"
+                Grid.Column="1"
+                Margin="10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                ItemsSource="{Binding ReworkModel.Reworks , Mode=OneWay}"    
+                DisplayMemberPath="_EntityId"
+                MinHeight="40">
+
+            </ComboBox>
+            <Label x:Name="source" HorizontalAlignment="Center" FontSize="20" IsEnabled="False" Content="{Binding ElementName=SourceData, Path=Text}"></Label>
+            <materialDesign:PackIcon HorizontalAlignment="Center" Kind="ArrowBottomBold" Width="100" Height="100"/>
+            <Label x:Name="target" HorizontalAlignment="Center" FontSize="20" IsEnabled="False" Content="{Binding ElementName=TargetData, Path=DataContext._data._EntityId.Shadow}"></Label>
+            <vortexs:PermissionBox Grid.Row="1" Permissions="Administrator|Quality" SecurityMode="Disabled">
+
+                <Button  Command="{Binding MergeCommmand}"  Content="Reworkuj kus">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource MultiParamConverter}">
+                            <Binding Path="Content" ElementName="source"/>
+                            <Binding Path="Content" ElementName="target"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </vortexs:PermissionBox>
+        </StackPanel>
+    </Grid>
+    
+    
+</UserControl>

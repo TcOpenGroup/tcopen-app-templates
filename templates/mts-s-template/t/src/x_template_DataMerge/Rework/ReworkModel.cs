@@ -58,64 +58,64 @@ namespace x_template_DataMerge.Rework
 
 
 
-        //public async Task<bool> ReworkEntityAsync(string sourceId, string targetId)
-        //{
+        public async Task<bool> ReworkEntityAsync(string sourceId, string targetId)
+        {
 
 
-        //    var retVal = false;
-        //    var progress = 0;
+            var retVal = false;
+            var progress = 0;
 
-        //    try
-        //    {
-        //        var target = merger.TargetRepository.Read(targetId);
-        //        var source = merger.SourceRepository.Read(sourceId);
-
-
-        //        if (source.EntityHeader.NextStation > target.EntityHeader.LastStation)
-        //        {
-        //            MessageBox.Show("Nevhodny rework. Nieje mozne reworkovat kus na danu stanicu!", "Pozor!");
-        //            return false;
-        //        }
-        //        else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.Passed;
-        //        {
-        //            MessageBox.Show("Neje mozne revorkovat OK kus!", "Pozor!");
-        //            return false;
-        //        }
-        //        else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.InProgress))
-        //        {
-        //            MessageBox.Show("Neje mozne revorkovat ktory je v procese a nema priznak NOK kus!", "Pozor!");
-        //            return false;
-        //        }
+            try
+            {
+                var target = merger.TargetRepository.Read(targetId);
+                var source = merger.SourceRepository.Read(sourceId);
 
 
-        //        merger.Merge(sourceId, targetId, Exclude, Include, ReqProperty);
+                if (source.EntityHeader.NextStation > target.EntityHeader.LastStation)
+                {
+                    MessageBox.Show("Nevhodny rework. Nieje mozne reworkovat kus na danu stanicu!", "Pozor!");
+                    return false;
+                }
+                else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.Passed)
+                {
+                    MessageBox.Show("Neje mozne revorkovat OK kus!", "Pozor!");
+                    return false;
+                }
+                else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.InProgress)
+                {
+                    MessageBox.Show("Neje mozne revorkovat ktory je v procese a nema priznak NOK kus!", "Pozor!");
+                    return false;
+                }
 
 
-        //        merger.Target.EntityHeader.WasReset = false;
-        //        merger.Target.EntityHeader.Results.Failures = string.Empty;
-        //        merger.Target.EntityHeader.Results.Result = (short)TcoInspectors.eOverallResult.InProgress
-        //        merger.Target.EntityHeader.NextStation = merger.Source.EntityHeader.NextStation;
-        //        merger.Target.EntityHeader.WasReworked = true;
-        //        merger.Target.EntityHeader.ReworkCount += 1;
-        //        merger.Target.EntityHeader.LastReworkName = merger.Source._EntityId;
-
-        //        merger.TargetRepository.Update(targetId, merger.Target);
-        //        progress++;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-
-        //    MessageBox.Show("Reorkovanie kusu prebehlo uspesne", "Info!");
-        //    retVal = true;
+                merger.Merge(sourceId, targetId, Exclude, Include, ReqProperty);
 
 
-        //    return retVal;
+                merger.Target.EntityHeader.WasReset = false;
+                merger.Target.EntityHeader.Results.Failures = string.Empty;
+                merger.Target.EntityHeader.Results.Result = (short)TcoInspectors.eOverallResult.InProgress;
+                merger.Target.EntityHeader.NextStation = merger.Source.EntityHeader.NextStation;
+                merger.Target.EntityHeader.WasReworked = true;
+                merger.Target.EntityHeader.ReworkCount += 1;
+                merger.Target.EntityHeader.LastReworkName = merger.Source._EntityId;
+
+                merger.TargetRepository.Update(targetId, merger.Target);
+                progress++;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            MessageBox.Show("Reorkovanie kusu prebehlo uspesne", "Info!");
+            retVal = true;
 
 
-        //}
+            return retVal;
+
+
+        }
 
         public IQueryable<PlainProcessData> Reworks
         {

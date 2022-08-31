@@ -121,17 +121,12 @@ namespace x_template_xTests
         public void run_manual_mode()
         {
 
-            SetupTest();
+   
             var cu = Entry.Plc.MAIN._technology._cu00x;
             cu._manualTask.Execute();
             System.Threading.Thread.Sleep(1000);
             Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._groundTask._task._taskState.Synchron);
             Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._automatTask._task._taskState.Synchron);
-        }
-
-        private void SetupTest()
-        {
-            throw new NotImplementedException();
         }
 
         [Test]
