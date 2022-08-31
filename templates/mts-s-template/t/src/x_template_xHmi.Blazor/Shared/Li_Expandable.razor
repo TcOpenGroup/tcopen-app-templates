@@ -1,0 +1,43 @@
+﻿<li class="nav-item @expanded expandable">
+    <NavLink class="nav-link" @onclick='() => expanded = expanded == "" ? "menuCollapseActive" : ""'>
+        <span class="oi oi-plus" aria-hidden="true"></span> @Main
+    </NavLink>
+    <ul class="nav flex-column">
+        @foreach(var link in Sublinks.Split(separators, StringSplitOptions.None))
+        {
+            <li class="nav-item">
+                <NavLink class="nav-link" href="@GetLink(link)">
+                    <span class="oi oi-plus" aria-hidden="true"></span> @link
+                </NavLink>
+            </li>
+        }
+    </ul>
+</li>
+
+@code {
+    [Inject]
+    private NavigationManager MyNavigationManager { get; set; }
+
+    [Parameter]
+    public string Main { get; set; } = null;
+    [Parameter]
+    public string Sublinks { get; set; } = null;
+    private string[] separators = { ", ", "," };
+
+    private string expanded = "";
+
+
+    // set value ".menuCollapseActive" to expanded by checking url wether it contains Main string
+    protected override void OnInitialized()
+    {
+        if (MyNavigationManager.Uri.ToString().IndexOf($"/{Main.ToLower()}/") != -1)
+        {
+            expanded = "menuCollapseActive";
+        }
+    }
+
+    private string GetLink(string link)
+    {
+        return $"{Main.ToLower()}/{link.ToLower().Replace(' ', '_')}";
+    }
+}

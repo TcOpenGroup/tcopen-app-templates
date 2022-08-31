@@ -66,29 +66,6 @@
             color: white;
         }
 
-/***********************Expandable nav link***********************/
-.expandable > ::deep a:after {
-    content: "\276F";
-    margin-left: auto;
-}
-
-.menuCollapseActive > ::deep a:after {
-    transform: rotate(90deg);
-}
-
-.expandable ul {
-    background-color: rgba(255,255,255,0.15);
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-}
-
-.menuCollapseActive ul {
-    visibility: visible;
-    height: auto;
-}
-/****************************************************************/
-
 .login {
     margin-top: auto;
 }

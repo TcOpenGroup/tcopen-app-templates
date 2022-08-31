@@ -1,0 +1,60 @@
+﻿.oi {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item {
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+    .nav-item:first-of-type,
+    .nav-item:last-of-type {
+        padding: 0;
+    }
+
+    .nav-item ::deep a {
+        color: #d7d7d7;
+        display: flex;
+        align-items: center;
+        border-radius: 0;
+        line-height: 3rem;
+        text-transform: uppercase;
+        padding: 0.5rem 0.5rem;
+        cursor: pointer;
+        user-select: none;
+        overflow: hidden;
+    }
+
+        .nav-item ::deep a.active {
+            background-color: rgba(245,54,17,1);
+            color: white;
+        }
+
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,99,69,1);
+            color: white;
+        }
+
+.expandable > ::deep a:after {
+    content: "\276F";
+    margin-left: auto;
+}
+
+.menuCollapseActive > ::deep a:after {
+    transform: rotate(90deg);
+}
+
+.expandable ul {
+    background-color: rgba(255,255,255,0.15);
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+.menuCollapseActive ul {
+    visibility: visible;
+    height: auto;
+}
