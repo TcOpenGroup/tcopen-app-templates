@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TcOpen.Inxton.Data;
 using TcOpen.Inxton.Data.Merge;
+using x_template_DataMerge.Properties;
 using x_template_xPlc;
 
 namespace x_template_DataMerge.Rework
@@ -62,6 +65,7 @@ namespace x_template_DataMerge.Rework
         {
 
 
+    
             var retVal = false;
             var progress = 0;
 
@@ -73,17 +77,17 @@ namespace x_template_DataMerge.Rework
 
                 if (source.EntityHeader.NextStation > target.EntityHeader.LastStation)
                 {
-                    MessageBox.Show("Nevhodny rework. Nieje mozne reworkovat kus na danu stanicu!", "Pozor!");
+                    MessageBox.Show(Resources.ResourceManager.GetString("IncorectReworkJumpForward"));
                     return false;
                 }
                 else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.Passed)
                 {
-                    MessageBox.Show("Neje mozne revorkovat OK kus!", "Pozor!");
+                    MessageBox.Show(Resources.ResourceManager.GetString("IncorrectReworkPassed"));
                     return false;
                 }
                 else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.InProgress)
                 {
-                    MessageBox.Show("Neje mozne revorkovat ktory je v procese a nema priznak NOK kus!", "Pozor!");
+                    MessageBox.Show(Resources.ResourceManager.GetString("IncorectReworkInProgress"));
                     return false;
                 }
 
@@ -108,7 +112,7 @@ namespace x_template_DataMerge.Rework
                 throw ex;
             }
 
-            MessageBox.Show("Reorkovanie kusu prebehlo uspesne", "Info!");
+            MessageBox.Show(Resources.ResourceManager.GetString("ReworkSuccesfull"));
             retVal = true;
 
 

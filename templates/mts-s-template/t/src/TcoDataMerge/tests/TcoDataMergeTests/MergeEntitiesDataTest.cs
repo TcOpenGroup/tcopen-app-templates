@@ -115,7 +115,7 @@ namespace TcoDataMergeTests
 
             }
 
-            private void SetupEntities(out TestData testDataSource, out TestData testDataTarget)
+            private void CreateEntities(out TestData testDataSource, out TestData testDataTarget)
             {
                 testDataSource = new TestData() { _recordId = default(dynamic), _Created = new DateTime(1904522374), _EntityId = "TestValue1447482512", _Modified = new DateTime(1997083921) };
                 repositorySource.Create(testDataSource._EntityId, testDataSource);
@@ -127,7 +127,7 @@ namespace TcoDataMergeTests
 
 
             [Test]
-            public void CompareIfReqPropertyNotInList()
+            public void compare_req_prop_not_in_list()
             {
 
 
@@ -137,13 +137,13 @@ namespace TcoDataMergeTests
                 reqProperties = PropertyHelper.GetPropertiesNames(new PlainTcoAnalogueInspectorData(), p => p.IsByPassed, p => p.IsExcluded, p => p.RequiredMin, p => p.RequiredMax, p => p.NumberOfAllowedRetries);
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
                 var random = new Random();
-                testDataTarget.customChecker1.DetectedStatus = (float)random.NextDouble();
-                testDataTarget.customChecker2.DetectedStatus = (float)random.NextDouble();
+                testDataTarget.customChecker1.DetectedStatus = (float)random.NextDouble()+1; //plus one means - avoid to zero
+                testDataTarget.customChecker2.DetectedStatus = (float)random.NextDouble()+1;
                 testDataTarget.customChecker3.DetectedStatus = true;
                 testDataTarget.customChecker4.DetectedStatus = true;
 
@@ -162,8 +162,8 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         , reqTypes
                         , reqProperties
-                        , Exclusion
-                        , Inclusion
+                        , ExclusionNotUsed
+                        , InclusionNotUsed
                         );
 
                 merge.Merge(testDataSource._EntityId, testDataTarget._EntityId);
@@ -182,7 +182,7 @@ namespace TcoDataMergeTests
             }
 
             [Test]
-            public void CompareIfReqPropertyIsInList()
+            public void compare_if_req_prop_is_in_list()
             {
 
                 reqTypes.Clear();
@@ -193,7 +193,7 @@ namespace TcoDataMergeTests
 
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
@@ -219,8 +219,8 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         , reqTypes
                         , reqProperties
-                        , Exclusion
-                        , Inclusion
+                        , ExclusionNotUsed
+                        , InclusionNotUsed
                         );
 
                 merge.Merge(testDataSource._EntityId, testDataTarget._EntityId);
@@ -241,11 +241,9 @@ namespace TcoDataMergeTests
 
 
             [Test]
-            public void CompareIfReqPropertyIsInListWithExclusion()
+            public void compare_req_prop_is_in_list_with_exclusion_result_zero()
             {
-                // Arrange  
-                //SetupRepositories();
-
+    
                 reqTypes.Add(typeof(PlainTcoAnalogueInspectorData));
                 reqTypes.Add(typeof(PlainTcoDigitalInspectorData));
 
@@ -255,7 +253,7 @@ namespace TcoDataMergeTests
 
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
@@ -284,8 +282,8 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         , reqTypes
                         , reqProperties
-                        , ExclusionTest
-                        , Inclusion
+                        , ExclusionActiveIfResultIsZero
+                        , InclusionNotUsed
                         );
 
                 merge.Merge(testDataSource._EntityId, testDataTarget._EntityId);
@@ -311,7 +309,7 @@ namespace TcoDataMergeTests
             }
 
             [Test]
-            public void CompareIfReqPropertyIsInListWithInclusion()
+            public void compare_req_prop_additional_req_prop_via_inclusion_excluson_result_zero()
             {
                 // Arrange  
                 //SetupRepositories();
@@ -324,11 +322,10 @@ namespace TcoDataMergeTests
 
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
-                var random = new Random();
                 testDataTarget.customChecker1.IsByPassed = !testDataSource.customChecker1.IsByPassed;
                 testDataTarget.customChecker2.IsByPassed = !testDataSource.customChecker2.IsByPassed;
                 testDataTarget.customChecker3.IsByPassed = !testDataSource.customChecker3.IsByPassed;
@@ -353,8 +350,8 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         , reqTypes
                         , reqProperties
-                        , ExclusionInclusionTest
-                        , InclusionTest
+                        , ExclusionAdditionalReqTypeResultNotEqualZero
+                        , InclusionAdditionalReqType
                         );
 
                 merge.Merge(testDataSource._EntityId, testDataTarget._EntityId);
@@ -370,16 +367,16 @@ namespace TcoDataMergeTests
                 Assert.AreEqual(testDataSource.customChecker2.IsByPassed, mergedTarget.customChecker2.IsByPassed);
                 Assert.AreEqual(testDataSource.customChecker2.NumberOfAllowedRetries, mergedTarget.customChecker2.NumberOfAllowedRetries);
 
-                Assert.AreEqual(testDataSource.customChecker3.IsByPassed, mergedTarget.customChecker3.IsByPassed);
-                Assert.AreEqual(testDataSource.customChecker3.NumberOfAllowedRetries, mergedTarget.customChecker3.NumberOfAllowedRetries);
+                Assert.AreNotEqual(testDataSource.customChecker3.IsByPassed, mergedTarget.customChecker3.IsByPassed);
+                Assert.AreNotEqual(testDataSource.customChecker3.NumberOfAllowedRetries, mergedTarget.customChecker3.NumberOfAllowedRetries);
 
-                Assert.AreEqual(testDataSource.customChecker4.IsByPassed, mergedTarget.customChecker4.IsByPassed);
-                Assert.AreEqual(testDataSource.customChecker4.NumberOfAllowedRetries, mergedTarget.customChecker4.NumberOfAllowedRetries);
+                Assert.AreNotEqual(testDataSource.customChecker4.IsByPassed, mergedTarget.customChecker4.IsByPassed);
+                Assert.AreNotEqual(testDataSource.customChecker4.NumberOfAllowedRetries, mergedTarget.customChecker4.NumberOfAllowedRetries);
 
 
             }
             [Test]
-            public void CompareIfReqPropertyIsInListWithInclusionDiffCtor()
+            public void compare_no_req_type_no_prop_no_inclusion_no_exclusion()
             {
                 // Arrange  
                 //SetupRepositories();
@@ -391,7 +388,7 @@ namespace TcoDataMergeTests
 
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
@@ -443,16 +440,10 @@ namespace TcoDataMergeTests
             }
 
             [Test]
-            public void CompareWithInclusionAndExclusionFromOutside()
+            public void compare_inclusion_exclusion_from_outside()
             {
-                // Arrange  
-                //SetupRepositories();
-
-
-
-
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
@@ -463,7 +454,7 @@ namespace TcoDataMergeTests
                 testDataTarget.customChecker4.IsByPassed = !testDataSource.customChecker4.IsByPassed;
 
                 testDataTarget.customChecker1.Result = (short)TcoInspectors.eInspectorResult.Excluded;
-                testDataTarget.customChecker2.Result = (short)TcoInspectors.eInspectorResult.Excluded;
+                testDataTarget.customChecker2.Result = (short)TcoInspectors.eInspectorResult.NoAction;
                 testDataTarget.customChecker3.Result = (short)TcoInspectors.eInspectorResult.NoAction;
                 testDataTarget.customChecker4.Result = (short)TcoInspectors.eInspectorResult.NoAction;
 
@@ -481,11 +472,11 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         , new List<Type>()
                         , new List<string>()
-                        , ExclusionTest
-                        , Inclusion
+                        , ExclusionNotUsed
+                        , InclusionNotUsed
                         );
 
-                merge.Merge(testDataSource._EntityId, testDataTarget._EntityId, ExcludeFromOutsideTest, IncludeFromOutsideTest, ReqPropertyFromOutisde);
+                merge.Merge(testDataSource._EntityId, testDataTarget._EntityId, ExcludeFromOutside, IncludeFromOutside, ReqPropertyFromOutisde);
 
                 var mergedTarget = repositoryTarget.Read(testDataTarget._EntityId);
 
@@ -495,8 +486,8 @@ namespace TcoDataMergeTests
                 Assert.AreEqual(testDataSource.customChecker1.IsByPassed, mergedTarget.customChecker1.IsByPassed);
                 Assert.AreEqual(testDataSource.customChecker1.NumberOfAllowedRetries, mergedTarget.customChecker1.NumberOfAllowedRetries);
 
-                Assert.AreEqual(testDataSource.customChecker2.IsByPassed, mergedTarget.customChecker2.IsByPassed);
-                Assert.AreEqual(testDataSource.customChecker2.NumberOfAllowedRetries, mergedTarget.customChecker2.NumberOfAllowedRetries);
+                Assert.AreNotEqual(testDataSource.customChecker2.IsByPassed, mergedTarget.customChecker2.IsByPassed);
+                Assert.AreNotEqual(testDataSource.customChecker2.NumberOfAllowedRetries, mergedTarget.customChecker2.NumberOfAllowedRetries);
 
                 Assert.AreNotEqual(testDataSource.customChecker3.IsByPassed, mergedTarget.customChecker3.IsByPassed);
                 Assert.AreNotEqual(testDataSource.customChecker3.NumberOfAllowedRetries, mergedTarget.customChecker3.NumberOfAllowedRetries);
@@ -509,7 +500,7 @@ namespace TcoDataMergeTests
 
 
             [Test]
-            public void CompareWithInclusionAndExclusionFromOutsideDiffCtor()
+            public void compare_inclusion_exclusion_from_outside_diff_ctor()
             {
                 // Arrange  
                 //SetupRepositories();
@@ -518,7 +509,7 @@ namespace TcoDataMergeTests
 
 
                 TestData testDataSource, testDataTarget;
-                SetupEntities(out testDataSource, out testDataTarget);
+                CreateEntities(out testDataSource, out testDataTarget);
 
                 SetupSourceEntity(testDataSource);
 
@@ -529,7 +520,7 @@ namespace TcoDataMergeTests
                 testDataTarget.customChecker4.IsByPassed = !testDataSource.customChecker4.IsByPassed;
 
                 testDataTarget.customChecker1.Result = (short)TcoInspectors.eInspectorResult.Excluded;
-                testDataTarget.customChecker2.Result = (short)TcoInspectors.eInspectorResult.Excluded;
+                testDataTarget.customChecker2.Result = (short)TcoInspectors.eInspectorResult.NoAction;
                 testDataTarget.customChecker3.Result = (short)TcoInspectors.eInspectorResult.NoAction;
                 testDataTarget.customChecker4.Result = (short)TcoInspectors.eInspectorResult.NoAction;
 
@@ -547,7 +538,7 @@ namespace TcoDataMergeTests
                         , repositoryTarget
                         );
 
-                merge.Merge(testDataSource._EntityId, testDataTarget._EntityId, ExcludeFromOutsideTest, IncludeFromOutsideTest, ReqPropertyFromOutisde);
+                merge.Merge(testDataSource._EntityId, testDataTarget._EntityId, ExcludeFromOutside, IncludeFromOutside, ReqPropertyFromOutisde);
 
                 var mergedTarget = repositoryTarget.Read(testDataTarget._EntityId);
 
@@ -557,8 +548,8 @@ namespace TcoDataMergeTests
                 Assert.AreEqual(testDataSource.customChecker1.IsByPassed, mergedTarget.customChecker1.IsByPassed);
                 Assert.AreEqual(testDataSource.customChecker1.NumberOfAllowedRetries, mergedTarget.customChecker1.NumberOfAllowedRetries);
 
-                Assert.AreEqual(testDataSource.customChecker2.IsByPassed, mergedTarget.customChecker2.IsByPassed);
-                Assert.AreEqual(testDataSource.customChecker2.NumberOfAllowedRetries, mergedTarget.customChecker2.NumberOfAllowedRetries);
+                Assert.AreNotEqual(testDataSource.customChecker2.IsByPassed, mergedTarget.customChecker2.IsByPassed);
+                Assert.AreNotEqual(testDataSource.customChecker2.NumberOfAllowedRetries, mergedTarget.customChecker2.NumberOfAllowedRetries);
 
                 Assert.AreNotEqual(testDataSource.customChecker3.IsByPassed, mergedTarget.customChecker3.IsByPassed);
                 Assert.AreNotEqual(testDataSource.customChecker3.NumberOfAllowedRetries, mergedTarget.customChecker3.NumberOfAllowedRetries);
@@ -588,13 +579,13 @@ namespace TcoDataMergeTests
                 return new List<string>();
             }
 
-            private bool ExcludeFromOutsideTest(object obj)
+            private bool ExcludeFromOutside(object obj)
             {
 
                 return false;
             }
 
-            private bool IncludeFromOutsideTest(object obj)
+            private bool IncludeFromOutside(object obj)
             {
                 switch (obj)
                 {
@@ -612,7 +603,7 @@ namespace TcoDataMergeTests
             }
 
 
-            private bool ExclusionTest(object obj)
+            private bool ExclusionActiveIfResultIsZero(object obj)
             {
                 switch (obj)
                 {
@@ -628,13 +619,13 @@ namespace TcoDataMergeTests
                 return false;
             }
 
-            private bool ExclusionInclusionTest(object obj)
+            private bool ExclusionAdditionalReqTypeResultNotEqualZero(object obj)
             {
                 switch (obj)
                 {
 
                     case PlainTcoDigitalInspectorData c:
-                        return c.Result != 0; // not change settings for checkers whitch are not checked yet
+                        return c.Result == 0; // not change settings for checkers whitch are not checked yet
                     default:
                         break;
                 }
@@ -642,7 +633,7 @@ namespace TcoDataMergeTests
                 return false;
             }
 
-            private bool InclusionTest(object obj)
+            private bool InclusionAdditionalReqType(object obj)
             {
                 switch (obj)
                 {
@@ -658,7 +649,7 @@ namespace TcoDataMergeTests
 
                 return false;
             }
-            private bool Inclusion(object obj)
+            private bool InclusionNotUsed(object obj)
             {
                 //switch (obj)
                 //{
@@ -678,7 +669,7 @@ namespace TcoDataMergeTests
                 return false;
             }
 
-            private bool Exclusion(object obj)
+            private bool ExclusionNotUsed(object obj)
             {
                 switch (obj)
                 {
