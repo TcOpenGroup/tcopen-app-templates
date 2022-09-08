@@ -120,6 +120,8 @@ namespace x_template_xTests
         [Timeout(timeOut)]
         public void run_manual_mode()
         {
+
+   
             var cu = Entry.Plc.MAIN._technology._cu00x;
             cu._manualTask.Execute();
             System.Threading.Thread.Sleep(1000);

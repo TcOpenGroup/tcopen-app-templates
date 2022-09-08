@@ -25,6 +25,7 @@ namespace x_template_xTests
         public void OneTimeSetUp()
         {
             var a = x_template_xApp.Get;
+
         }
 
         [Test]

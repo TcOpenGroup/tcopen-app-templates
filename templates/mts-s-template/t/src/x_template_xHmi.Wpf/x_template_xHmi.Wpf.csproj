@@ -38,6 +38,7 @@
   <!--PCKG-END-->
 	
  <ItemGroup>
+		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
  </ItemGroup>
 
@@ -71,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ControlledUnits\Base\ControlledUnitSpotLite\Spot\CUBaseSpotLiteView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Data\ReworkSettings\ReworkSettingsView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>

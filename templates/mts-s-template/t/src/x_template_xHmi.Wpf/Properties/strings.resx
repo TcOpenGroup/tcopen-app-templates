@@ -340,4 +340,7 @@ MAIN SEQUENCE</value>
   <data name="AverageCleanCycleTime" xml:space="preserve">
     <value>Average Clean CT</value>
   </data>
+  <data name="ReworkEntity" xml:space="preserve">
+    <value>Rework entity</value>
+  </data>
 </root>
