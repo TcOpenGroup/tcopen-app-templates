@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using TcOpen.Inxton.Data;
 using TcOpen.Inxton.Data.Merge;
-using x_template_DataMerge.Properties;
+using x_template_xDataMerge.Properties;
 using x_template_xPlc;
 
-namespace x_template_DataMerge.Rework
+namespace x_template_xDataMerge.Rework
 {
     public class ReworkModel
     {
@@ -166,7 +166,7 @@ namespace x_template_DataMerge.Rework
             {
                 // here is definitions of  all types and condition witch are relevat to change by rework (source)
                 case TcoInspectors.PlainTcoInspectorData c:
-                    return  c.Result != (short)TcoInspectors.eOverallResult.NoAction;
+                    return c is TcoInspectors.PlainTcoAnalogueInspectorData;
                 case PlainCuHeader c:
                     return c is PlainCuHeader;
                         //&& (c.NextOnPassed != 0

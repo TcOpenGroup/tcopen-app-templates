@@ -12,7 +12,7 @@
         <local:ReworkSettingsViewModel></local:ReworkSettingsViewModel>
     </UserControl.DataContext>
     <Grid>
-        <vortexs:PermissionBox Grid.Row="1" Permissions="process_settings_access" SecurityMode="Disabled">
+        <vortexs:PermissionBox Grid.Row="1" Permissions="rework_settings_access" SecurityMode="Disabled">
             <vortex:TcoDataExchangeView DataContext="{Binding Data}" x:Name="fu">
                 <vortex:TcoDataExchangeView.DataListColumns>
                     <DataGridTextColumn Binding="{Binding _Created, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Created}"/>

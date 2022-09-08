@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 using TcOpen.Inxton.Input;
-using x_template_DataMerge.Rework;
+using x_template_xDataMerge.Rework;
 using x_template_xHmi.Wpf;
 using x_template_xPlc;
 

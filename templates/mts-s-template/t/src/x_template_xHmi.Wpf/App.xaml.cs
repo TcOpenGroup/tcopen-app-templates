@@ -13,7 +13,7 @@ using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.Security;
 using TcOpen.Inxton.TcoCore.Wpf;
 using Vortex.Presentation.Wpf;
-using x_template_DataMerge.Rework;
+using x_template_xDataMerge.Rework;
 using x_template_xPlc;
 using x_template_xPlcConnector;
 

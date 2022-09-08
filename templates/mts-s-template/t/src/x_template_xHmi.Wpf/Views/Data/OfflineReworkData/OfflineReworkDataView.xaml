@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
              xmlns:vortex="http://vortex.mts/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vortexs="http://vortex.security.mts/xaml" xmlns:offlinereworkdata="clr-namespace:x_template_xHmi.Wpf.Views.Data.OfflineReworkData"
              mc:Ignorable="d" 
@@ -46,9 +47,9 @@
             <Label x:Name="source" HorizontalAlignment="Center" FontSize="20" IsEnabled="False" Content="{Binding ElementName=SourceData, Path=Text}"></Label>
             <materialDesign:PackIcon HorizontalAlignment="Center" Kind="ArrowBottomBold" Width="100" Height="100"/>
             <Label x:Name="target" HorizontalAlignment="Center" FontSize="20" IsEnabled="False" Content="{Binding ElementName=TargetData, Path=DataContext._data._EntityId.Shadow}"></Label>
-            <vortexs:PermissionBox Grid.Row="1" Permissions="Administrator|Quality" SecurityMode="Disabled">
+            <vortexs:PermissionBox Grid.Row="1" Permissions="rework_settings_access" SecurityMode="Disabled">
 
-                <Button  Command="{Binding MergeCommmand}"  Content="Reworkuj kus">
+                <Button  Command="{Binding MergeCommmand}"  Content="{x:Static p:strings.ReworkEntity}">
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource MultiParamConverter}">
                             <Binding Path="Content" ElementName="source"/>

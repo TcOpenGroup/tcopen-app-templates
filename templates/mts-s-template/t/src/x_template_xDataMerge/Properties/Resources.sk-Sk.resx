@@ -126,6 +126,9 @@
   <data name="IncorrectReworkPassed" xml:space="preserve">
     <value>Neje mozne revorkovat OK kus!</value>
   </data>
+  <data name="ReworkPiece" xml:space="preserve">
+    <value>Reworkuj kus</value>
+  </data>
   <data name="ReworkSuccessfully" xml:space="preserve">
     <value>Kus bol úspešne revorkovaný.</value>
   </data>

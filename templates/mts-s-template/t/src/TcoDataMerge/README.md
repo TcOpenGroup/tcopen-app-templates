@@ -1,12 +1,12 @@
-# Vortex.Framework.Data.Merge #
+# TcoDataMerge #
 
 ## Introduction ##
 
-`Vortex.Framework.Data.Merge` is a package to provide merging identical objects (entities).There are two way how to merging data, first is one to one entity and second is
+`TcoDataMerge` is a package to provide merging identical objects (entities).There are two way how to merging data, first is one to one entity and second is
  one to many entities. 
 
 ## MergeEntitiesData class ###
-Data for merging are stored in any repository that implements `Vortex.Framework.Abstractions.Data.IRepository` interface `MergeEntitiesData<T>` is generic class where T is type of data in collection stored in repository. T object must implemented `Vortex.Framework.Abstractions.Data.IBrowsableDataObject`, `Vortex.Connector.IPlain`
+Data for merging are stored in any repository that implements `TcOpen.Inxton.Data.IRepository` interface `MergeEntitiesData<T>` is generic class where T is type of data in collection stored in repository. T object must implemented `TcOpen.Inxton.Data.IBrowsableDataObject`, `Vortex.Connector.IPlain`
 
 ## Implemnetation Example 1 ##
 First you must declare an instance of the class
@@ -34,18 +34,23 @@ where
      repositorySource = new MongoDbRepository<TestData>(new MongoDbRepositorySettings<TestData>(connectionString, databaseName, "SourceData"));
             repositoryTarget = new MongoDbRepository<TestData>(new MongoDbRepositorySettings<TestData>(connectionString, databaseName, "TargetData"));
     ```
+    or for RavenDbRepository
+    ```csharp
+     repositorySource = new RavenDbRepository<TestData>(new RavenDbRepositorySettings<TestData>(new string[] { @"http://localhost:8080" }, "SourceData", "", ""));
+    ```
  -  reqTypes - here you can define list of types witch you want to change in `T` object
  ```csharp
     List<Type> reqTypes = new List<Type>();
 
-    reqTypes.Add(typeof(CustomLogicCheckerData));
-    reqTypes.Add(typeof(CustomAnalogCheckerData));
+    reqTypes.Add(typeof(PlainTcoAnalogueInspectorData));
+    reqTypes.Add(typeof(PlainTcodigitalInspectorData));
  ```
  -  reqProperties - here you can define list of properties witch you want to change in types defined above
+    ReqProperties is a colection of string and can be populated like a string items or we can use a static method `PropertyHelper.GetPropertiesNames()`. This method help populate collection without mistakes, We are sure about this required properties are in required  type
  ```csharp
     List<string> reqProperties = new List<string>();
 
-   reqProperties = PropertyHelper.GetPropertiesNames(c, p => p.IsByPassed, p => p.IsExcluded, p => p.Minimum, p => p.Maximum, p => p.NumberOfAllowedRetries);
+   reqProperties = PropertyHelper.GetPropertiesNames(new PlainTcoAnalogueInspectorData(), p => p.IsByPassed, p => p.IsExcluded, p => p.Minimum, p => p.Maximum, p => p.NumberOfAllowedRetries);
  ```
  *You can use a method PropertyHelper.GetPropertiesNames to search properties of object includet to merging*
 
@@ -57,8 +62,8 @@ where
             switch (obj)
             {
                 // here is definitions of  all types and condition witch are relevat not to merge 
-                case IPlainstCheckerData c:
-                    return c.Result != (short)enumCheckResult.NoAction;
+                case TcoInspectors.PlainTcoInspectorData c:
+                    return c is TcoInspectors.PlainTcoAnalogueInspectorData;
              
                 default:
                     break;
@@ -74,12 +79,10 @@ where
         {
             switch (obj)
             {
-                // here is definitions of  all types and condition witch are relevat to merge 
-                case IPlainstCheckerData c:
-                    return return c is IPlainstCheckerData;
-             
-                default:
-                    break;
+                case TcoInspectors.PlainTcoInspectorData c:
+                    return  c.Result != (short)TcoInspectors.eOverallResult.NoAction;
+                case PlainCuHeader c:
+                    return c is PlainCuHeader;
             }
 
             return false;
@@ -134,24 +137,24 @@ Call a method with this parameters , all rules for merging are defined  below (s
 ```csharp
    private IEnumerable<string> ReqProperty(object obj)
         {
-            var retVal = new List<string>();
+             var retVal = new List<string>();
             switch (obj)
             {
                 // here you define  properties witch are relevant for reqired types to change by rework 
-                case PlainstAnalogueCheckerData c:
-                    return PropertyHelper.GetPropertiesNames(c, p => p.IsByPassed, p => p.IsExcluded, p => p.Minimum, p => p.Maximum, p => p.NumberOfAllowedRetries);
-                case PlainstLogicCheckerData c:
-                    return PropertyHelper.GetPropertiesNames(c, p => p.IsByPassed, p => p.IsExcluded, p => p.NumberOfAllowedRetries);
-                case PlainstDataCheckerData c:
-                    return PropertyHelper.GetPropertiesNames(c, p => p.IsByPassed, p => p.IsExcluded, p => p.NumberOfAllowedRetries);
-                case PlainstTimeCheckerData c:
-                    return PropertyHelper.GetPropertiesNames(c, p => p.IsByPassed, p => p.IsExcluded, p => p.NumberOfAllowedRetries);
-                case PlainstCu_Header c:
-                    return PropertyHelper.GetPropertiesNames(c, p => p.NextOnFailed,p=>p.NextOnPassed);
-                
+                case TcoInspectors.PlainTcoDigitalInspectorData c:
+                    return PropertyHelper.GetPropertiesNames(c,  p => p.RetryAttemptsCount ,p =>p.IsByPassed,p => p.IsExcluded);
+                case TcoInspectors.PlainTcoAnalogueInspectorData c:
+                    return PropertyHelper.GetPropertiesNames(c,  p => p.RetryAttemptsCount, p => p.IsByPassed, p => p.IsExcluded);
+                case TcoInspectors.PlainTcoDataInspectorData c:
+                    return PropertyHelper.GetPropertiesNames(c, p => p.RetryAttemptsCount, p => p.IsByPassed, p => p.IsExcluded);
+                case PlainCuHeader c:
+                    return PropertyHelper.GetPropertiesNames(c, p => p.NextOnPassed, p => p.NextOnFailed);
+
                 default:
                     break;
             }
+
+            return new List<string>();
 
             return new List<string>();
         }

@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IncorectReworkInProgress" xml:space="preserve">
-    <value>Incorrect rework. It is not possible to rework a piece which already is in process!</value>
+    <value>Incorrect rework. It is not possible to rework a entity which already is in process!</value>
   </data>
   <data name="IncorectReworkJumpForward" xml:space="preserve">
-    <value>Incorrect rework. It is not possible to rework piece for given station (Jump in process)</value>
+    <value>Incorrect rework. It is not possible to rework entitiy for given station (Jump in process)</value>
   </data>
   <data name="IncorrectReworkPassed" xml:space="preserve">
     <value>Incorrect rework. It is not possible to rework an OK piece!</value>
+  </data>
+  <data name="ReworkPiece" xml:space="preserve">
+    <value>Rework entity</value>
   </data>
   <data name="ReworkSuccessfully" xml:space="preserve">
     <value>Piece was reworked successfully</value>

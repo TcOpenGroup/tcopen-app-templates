@@ -38,7 +38,7 @@
   <!--PCKG-END-->
 	
  <ItemGroup>
-		<ProjectReference Include="..\x_template_DataMerge\x_template_DataMerge.csproj" />
+		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
  </ItemGroup>
 

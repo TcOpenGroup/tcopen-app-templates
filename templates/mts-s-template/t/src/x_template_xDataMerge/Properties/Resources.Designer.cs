@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace x_template_DataMerge.Properties {
+namespace x_template_xDataMerge.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace x_template_DataMerge.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("x_template_DataMerge.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("x_template_xDataMerge.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace x_template_DataMerge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incorrect rework. It is not possible to rework a piece which already is in process!.
+        ///   Looks up a localized string similar to Incorrect rework. It is not possible to rework a entity which already is in process!.
         /// </summary>
         public static string IncorectReworkInProgress {
             get {
@@ -70,7 +70,7 @@ namespace x_template_DataMerge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incorrect rework. It is not possible to rework piece for given station (Jump in process).
+        ///   Looks up a localized string similar to Incorrect rework. It is not possible to rework entitiy for given station (Jump in process).
         /// </summary>
         public static string IncorectReworkJumpForward {
             get {
@@ -84,6 +84,15 @@ namespace x_template_DataMerge.Properties {
         public static string IncorrectReworkPassed {
             get {
                 return ResourceManager.GetString("IncorrectReworkPassed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rework entity.
+        /// </summary>
+        public static string ReworkPiece {
+            get {
+                return ResourceManager.GetString("ReworkPiece", resourceCulture);
             }
         }
         

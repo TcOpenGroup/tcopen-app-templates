@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Inxton.Vortex.Framework.Abstractions" Version="1.15.9-alpha.719" />
     <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.8.0-alpha.10" />
     <PackageReference Include="TcOpen.Inxton.Data" Version="0.8.0-alpha.10" />    
   </ItemGroup>

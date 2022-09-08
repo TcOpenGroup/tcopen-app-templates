@@ -340,4 +340,7 @@ HLAVNÁ SEKVENCIA</value>
   <data name="AverageCleanCycleTime" xml:space="preserve">
     <value>Average skutočný čisty CT</value>
   </data>
+  <data name="ReworkEntity" xml:space="preserve">
+    <value>Reworkuj kus</value>
+  </data>
 </root>
