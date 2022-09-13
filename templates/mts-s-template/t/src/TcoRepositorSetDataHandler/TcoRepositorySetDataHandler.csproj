@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.8.0-alpha.10" />
+
+  </ItemGroup>
+
+</Project>

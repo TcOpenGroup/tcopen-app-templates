@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -40,6 +40,8 @@
  <ItemGroup>
 		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
+		<ProjectReference Include="..\x_template_xProductionPlaner\x_template_xProductionPlaner.csproj" />
+	
  </ItemGroup>
 
 
