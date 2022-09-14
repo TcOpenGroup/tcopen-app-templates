@@ -8,6 +8,8 @@ namespace x_template_xProductionPlaner.Generic
 {
     public class EntitySet<T> : IBrowsableDataObject, INotifyPropertyChanged
     {
+        private IList<T> items = new List<T>();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChange(string propertyName)
@@ -18,8 +20,14 @@ namespace x_template_xProductionPlaner.Generic
         /// <summary>
         /// Gets instructions of this set.
         /// </summary>
-        public List<T> Items { get; set; } = new List<T>();
-
+        public IList<T> Items
+        {
+            get => items; set
+            {
+                items = value;
+                NotifyPropertyChange(nameof(Items));
+            }
+        }
         public void AddRecord(T item)
         {
             Items.Add(item);

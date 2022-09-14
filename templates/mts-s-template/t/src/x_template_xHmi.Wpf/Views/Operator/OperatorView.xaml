@@ -17,25 +17,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         
         <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
-        <TabControl Grid.Row="1">
-            <TabItem>
-                <Canvas >
+        <UniformGrid Grid.Row="1" Columns="2">
+                <Canvas  >
 
                     <mainplc:CUBaseSpotView MinHeight="200" MaxWidth="500" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
                     <mainplc:CUBaseSpotLiteView  Canvas.Top="300" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
 
                 </Canvas>
-            </TabItem>
-            <TabItem Header="Production Plan">
-                <view:ProductionPlanView DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
-            </TabItem>
-        </TabControl>
-
-
+         
+      
+                <view:ProductionPlanView Grid.Row="2" DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
+        </UniformGrid>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
             <vortexs:PermissionBox Grid.Row="1" Permissions="Administrator|technology_can_start_automat_all" SecurityMode="Disabled">
                 <vortex:TcoTaskView DataContext="{Binding x_template_xPlc.MAIN._technology._automatAllTask, Mode=OneWay}"/>

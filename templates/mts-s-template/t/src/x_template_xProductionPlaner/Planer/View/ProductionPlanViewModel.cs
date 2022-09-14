@@ -16,12 +16,13 @@ namespace x_template_xProductionPlaner.Planer.View
             Controller = controller;
 
             UpdateCommand = new RelayCommand(a => UpdateList());
-            SaveCommand = new RelayCommand(a => Save());
+            SaveCommand = new RelayCommand(a => Controller.SaveDataSet(Controller.ConfigName));
             ReinitCommand = new RelayCommand(a => ReinitValues());
             DeleteAllCommand = new RelayCommand(a => DeleteAll());
             DeleteCommand = new RelayCommand(a => Delete());
-            //UpCommand = new RelayCommand(a => Up());
-            //DownCommand = new RelayCommand(a => Down());
+            RefreshRecipeSourceCommand = new RelayCommand(a => Controller.RefreshSourceRecipeList());
+            UpCommand = new RelayCommand(a => Up());
+            DownCommand = new RelayCommand(a => Down());
 
             Load();
         }
@@ -48,14 +49,10 @@ namespace x_template_xProductionPlaner.Planer.View
             Console.WriteLine(result);
         }
 
-        private void Save()
-        {
-            Controller.SaveItemsSet(Controller.ConfigName);
-        }
 
         private void Load()
         {
-            Controller.LoadItemsSet(Controller.ConfigName);
+            Controller.LoadDataSet(Controller.ConfigName);
         }
 
         /// <summary>
@@ -85,28 +82,34 @@ namespace x_template_xProductionPlaner.Planer.View
             }
             set => _selectedItem = value; }
 
-        //private void Up()
-        //{
-        //    var currentIndex =(Controller.CurrentProductionSet.Items).IndexOf(SelectedItem);
+        private void Up()
+        {
+            var currentIndex = Controller.CurrentProductionSet.Items.IndexOf(SelectedItem);
 
-        //    if (currentIndex > 0)
-        //    {
-        //        int upIndex = currentIndex - 1;
-        //        //move the items
-        //       Controller.CurrentProductionSet.Items.Move(upIndex, currentIndex);
-        //    }
-        //}
-        //private void Down()
-        //{
-        //    var currentIndex = Controller.CurrentProductionSet.Items.IndexOf(SelectedItem);
+            if (currentIndex > 0)
+            {
+                int upIndex = currentIndex - 1;
+                //move the items
+                var oc = new ObservableCollection<ProductionItem>(Controller.CurrentProductionSet.Items);
 
-        //    if (currentIndex + 1 < Controller.CurrentProductionSet.Items.Count)
-        //    {
-        //        int downIndex = currentIndex + 1;
-        //        //move the items
-        //        Controller.CurrentProductionSet.Items.Move(downIndex, currentIndex);
-        //    }
-        //}
+                oc.Move(upIndex, currentIndex);
+                Controller.CurrentProductionSet.Items = oc;
+            }
+        }
+        private void Down()
+        {
+            var currentIndex = Controller.CurrentProductionSet.Items.IndexOf(SelectedItem);
+
+            if (currentIndex + 1 < Controller.CurrentProductionSet.Items.Count)
+            {
+                int downIndex = currentIndex + 1;
+                //move the items
+                var oc = new ObservableCollection<ProductionItem>(Controller.CurrentProductionSet.Items);
+
+                oc.Move(downIndex, currentIndex);
+                Controller.CurrentProductionSet.Items = oc;
+            }
+        }
 
 
         /// <summary>
@@ -133,6 +136,11 @@ namespace x_template_xProductionPlaner.Planer.View
         /// delete single item in collection command
         /// </summary>
         public RelayCommand DeleteCommand { get; private set; }
+        /// <summary>
+        /// update collection of recipes 
+        /// </summary>
+        public RelayCommand RefreshRecipeSourceCommand { get; private set; }
+
         /// <summary>
         /// Change position(priority) of item in collection - direction up
         /// </summary>

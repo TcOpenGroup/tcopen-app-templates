@@ -3,7 +3,7 @@ using x_template_xProductionPlaner.Generic.Handler;
 
 namespace x_template_xProductionPlaner.Planer
 {
-    public class ProductionItem : IItemsCollection
+    public class ProductionItem : INotifyPropertyChanged, IItemsCollection
     {
         private string key;
 
@@ -12,11 +12,7 @@ namespace x_template_xProductionPlaner.Planer
         /// </summary>
         public string Key
         {
-            get
-            {
-                return key;
-            }
-
+            get => key;
             set
             {
                 if (key == value)
@@ -25,7 +21,7 @@ namespace x_template_xProductionPlaner.Planer
                 }
 
                 key = value;
-            
+                NotifyPropertyChange(nameof(Key));
             }
         }
 
@@ -45,7 +41,7 @@ namespace x_template_xProductionPlaner.Planer
                 }
 
                 reqCount = value;
-              
+                NotifyPropertyChange(nameof(RequiredCount));
             }
         }
 
@@ -64,6 +60,7 @@ namespace x_template_xProductionPlaner.Planer
                 }
 
                 actualCount = value;
+                NotifyPropertyChange(nameof(ActualCount));
             }
         }
 
@@ -84,18 +81,25 @@ namespace x_template_xProductionPlaner.Planer
                 }
 
                 description = value;
-                
+                NotifyPropertyChange(nameof(Description));
             }
         }
 
         /// <summary>
         /// Step HMI message
         /// </summary>
-        public EnumItemStatus Status { get => _status; set { _status = value;  } }
+        public EnumItemStatus Status { get => _status; set { _status = value; NotifyPropertyChange(nameof(Status)); } }
 
 
 
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChange(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
 

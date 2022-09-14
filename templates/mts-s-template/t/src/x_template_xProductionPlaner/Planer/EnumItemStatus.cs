@@ -2,10 +2,13 @@
 {
     public enum EnumItemStatus
     {
-        Required = 0,
-        Active = 10,
-        Done = 20,
-        Deleted = 30,
-        Empty = 40
+        None = 0,
+        Required = 10,
+        Active = 20,
+        Done = 30,
+        Deleted = 40,
+        Skiped = 50,
+        AllCompleted =100
+
     }
 }

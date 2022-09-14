@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:enum="clr-namespace:x_template_xProductionPlaner.Planer"
+        xmlns:p="clr-namespace:x_template_xProductionPlaner.Properties"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:local="clr-namespace:x_template_xProductionPlaner.Planer.View" 
              mc:Ignorable="d"
@@ -38,22 +39,21 @@
 
             </Grid.ColumnDefinitions>
             <UniformGrid Grid.ColumnSpan="2" >
-                <TextBlock Text="AKTUALNA REFERENCIA"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.ActualRecipe}"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentItem.Key ,Mode=OneWay}"></TextBlock>
-                <TextBlock Text="POŽADOVANY POČET"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.RequiredCount}"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentItem.RequiredCount ,Mode=OneWay}"></TextBlock>
-                <TextBlock Text="AKTUALNY POČET"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.ActualCount}"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentItem.ActualCount ,Mode=OneWay}"></TextBlock>
-                <TextBlock Text="POPIS"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.Description}"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentItem.Description ,Mode=OneWay}"></TextBlock>
-                <TextBlock Text="STATUS"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.Status}"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentItem.Status ,Mode=OneWay}"></TextBlock>
 
             </UniformGrid>
 
             <DataGrid 
                     AllowDrop="True"
-         
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     CanUserAddRows="true"
@@ -63,7 +63,7 @@
                     HorizontalScrollBarVisibility="Auto"
                     IsReadOnly="false" Margin="5" VerticalAlignment="Top">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Recipe">
+                    <DataGridTemplateColumn Header="{x:Static p:Resources.ActualRecipe}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Key}" />
@@ -71,7 +71,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox  Style="{x:Null}"
+                                <ComboBox Style="{StaticResource MaterialDesignDataGridComboBox}"
                                     MaxHeight="50"
                                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.RecipeCollection}"
                                  SelectedValue="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -79,12 +79,12 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    
-                    
-                    <DataGridTextColumn Header="Pozadovany pocet" Binding="{Binding RequiredCount }"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Aktualny pocet" Binding="{Binding ActualCount }"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Popis" Binding="{Binding Description }"></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Status">
+
+
+                    <DataGridTextColumn Header="{x:Static p:Resources.RequiredCount}" Binding="{Binding RequiredCount }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.ActualCount}" Binding="{Binding ActualCount }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.Description}" Binding="{Binding Description }"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="{x:Static p:Resources.Status}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Status}" />
@@ -105,8 +105,8 @@
             </DataGrid>
 
             <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
-                <Button Margin="5" Command="{Binding UpCommand}" Content="HORE" />
-                <Button Margin="5" Command="{Binding DownCommand}" Content="DOLE" />
+                <Button Margin="5" Command="{Binding UpCommand}" Content="{x:Static p:Resources.Up}" />
+                <Button Margin="5" Command="{Binding DownCommand}" Content="{x:Static p:Resources.Down}" />
             </StackPanel>
 
         </Grid>
@@ -116,10 +116,12 @@
 
 
 
-            <Button Margin="5" Command="{Binding  SaveCommand}" Content="ULOZIT"  />
-            <Button Margin="5" Command="{Binding  DeleteCommand}" Content="VYMAZAT"  />
-            <Button Margin="5" Command="{Binding DeleteAllCommand}" Content="VYMAZAT VSETKO" />
-            <Button Margin="5" Command="{Binding  ReinitCommand}" Content="ZNULOVAT"  />
+            <Button Margin="5" Command="{Binding  SaveCommand}" Content="{x:Static p:Resources.Save}"  />
+            <Button Margin="5" Command="{Binding  DeleteCommand}" Content="{x:Static p:Resources.Delete}"  />
+            <Button Margin="5" Command="{Binding DeleteAllCommand}" Content="{x:Static p:Resources.DeleteAll}" />
+            <Button Margin="5" Command="{Binding  ReinitCommand}" Content="{x:Static p:Resources.InitializeCounters}"  />
+            <Button Margin="5" Command="{Binding  RefreshRecipeSourceCommand}" Content="{x:Static p:Resources.RefreshRecipeList}"  />
+
         </StackPanel>
   
 

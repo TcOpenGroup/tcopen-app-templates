@@ -1,7 +1,8 @@
 ﻿
 namespace TcoRepositorySetDataHandler.Handler
 {
-    public interface IItemsCollection
+    public interface IDataSetItems
+
     {
         string Key { get; set; }
         string Description { get; set; }

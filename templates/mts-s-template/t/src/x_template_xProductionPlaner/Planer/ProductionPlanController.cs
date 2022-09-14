@@ -68,7 +68,7 @@ namespace x_template_xProductionPlaner.Planer
         }
 
 
-        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.Empty };
+        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.None };
         private bool productonPlanCompleted;
 
         /// <summary>
@@ -94,47 +94,54 @@ namespace x_template_xProductionPlaner.Planer
 
             }
             itm = CurrentItem;
-            ProductonPlanCompleted = CurrentItem.Status == EnumItemStatus.Empty;
-            SaveItemsSet(ConfigName);
+            ProductonPlanCompleted = CurrentItem.Status == EnumItemStatus.AllCompleted;
+            SaveDataSet(ConfigName);
 
 
         }
-
+        /// <summary>
+        /// Set all current counters to 0 (clear counters)
+        /// </summary>
         public void Reinit()
         {
             CurrentProductionSet.Items.ToList().ForEach(p => p.ActualCount = 0);
+            
 
         }
 
+        public void RefreshSourceRecipeList()
+        {
+            var items = RepositorySource.Queryable.Select(p => p._EntityId).ToList();
+            RecipeCollection = new ObservableCollection<string>(items);
+        }
         /// <summary>
         /// Loads items set from the repository to this controller.
         /// </summary>
-        /// <param name="itemsId">Instrucion set id.</param>
-        public void LoadItemsSet(string itemsId)
+        /// <param name="setid">set id.</param>
+        public void LoadDataSet(string setid)
         {
-            var result = DataHandler.Repository.Queryable.FirstOrDefault(p => p._EntityId == itemsId);
+            var result = DataHandler.Repository.Queryable.FirstOrDefault(p => p._EntityId == setid);
 
             if (result == null)
             {
-                DataHandler.Create(itemsId, CurrentProductionSet);
+                DataHandler.Create(setid, CurrentProductionSet);
             }
 
-            CurrentProductionSet = DataHandler.Read(itemsId);
+            CurrentProductionSet = DataHandler.Read(setid);
         }
 
         /// <summary>
         /// Saves items set from this controller to the repository.
         /// </summary>
-        /// <param name="itemsId">Instrucion set id.</param>
-        public void SaveItemsSet(string itemsId)
+        /// <param name="setId">Instrucion set id.</param>
+        public void SaveDataSet(string setId)
         {
-            var result = DataHandler.Repository.Queryable.FirstOrDefault(p => p._EntityId == itemsId);
-
-            if (result == null)
+          
+            if (! DataHandler.Repository.Queryable.Where(p => p._EntityId == setId).Any())
             {
-                DataHandler.Create(itemsId, CurrentProductionSet);
+                DataHandler.Create(setId, CurrentProductionSet);
             }
-            DataHandler.Update(itemsId, CurrentProductionSet);
+            DataHandler.Update(setId, CurrentProductionSet);
 
 
         }
@@ -147,7 +154,7 @@ namespace x_template_xProductionPlaner.Planer
         }
 
 
-        public ObservableCollection<string> RecipeCollection { get; }
+        public ObservableCollection<string> RecipeCollection { get; private set; }
 
     }
 }
