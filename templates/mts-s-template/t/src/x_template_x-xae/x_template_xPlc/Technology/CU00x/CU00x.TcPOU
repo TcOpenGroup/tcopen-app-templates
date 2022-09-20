@@ -16,7 +16,9 @@ VAR
     _groundTask : CU00xGroundTask(THIS^, TcoCore.eRestoreMode.None);
     {attribute addProperty Name "<#AUTOMAT#>"}
     {attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
-    _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);       	
+    _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
+  	
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -36,6 +38,8 @@ THIS^.InitializeComponents();
 *)
 
 _processData();
+_productionPlaner();
+
 
 (*
 	
@@ -265,6 +269,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[ManualTask REF= _manualTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ProductionPlanerTask" Id="{a0863d93-88ac-4bb2-8f44-a9a36a89fe47}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ProductionPlanerTask : REFERENCE TO ProductionPlaner]]></Declaration>
+      <Get Name="Get" Id="{003a8d5c-b77b-4cd7-a636-878470fa47e3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ProductionPlanerTask REF= _productionPlaner;]]></ST>
         </Implementation>
       </Get>
     </Property>

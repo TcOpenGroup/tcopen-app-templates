@@ -10,16 +10,17 @@
     <PackageReference Include="NUnit" Version="3.13.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
-    <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
-    <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.TcoDataConnector" Version="0.8.0-alpha.10" />
+     <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\TcoRepositorySetDataHandler.csproj" />
+      <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.8.0-alpha.10" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
+    <ProjectReference Include="..\..\..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
+    <ProjectReference Include="..\..\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
 
 
+  </ItemGroup>
 
 </Project>
-

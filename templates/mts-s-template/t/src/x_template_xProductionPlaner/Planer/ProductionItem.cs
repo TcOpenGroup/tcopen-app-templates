@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
-using x_template_xProductionPlaner.Generic.Handler;
+using TcoRepositoryDataSetHandler.Handler;
 
 namespace x_template_xProductionPlaner.Planer
 {
-    public class ProductionItem : INotifyPropertyChanged, IItemsCollection
+    public class ProductionItem : INotifyPropertyChanged, IDataSetItems
     {
         private string key;
 

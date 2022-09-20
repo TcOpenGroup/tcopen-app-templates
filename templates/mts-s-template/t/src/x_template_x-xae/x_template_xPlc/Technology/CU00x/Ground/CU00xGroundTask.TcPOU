@@ -53,6 +53,7 @@ IF (Step(200, TRUE, 'STOPPING OTHER MODES')) THEN
 	//---------------------------------------------------
 	
 	Station.AutomatTask.ResetCycleTime();
+	Station.ProductionPlanerTask.Restore();
 	
 	
     StepCompleteWhen(THIS^._currentStep.Duration > T#250MS);

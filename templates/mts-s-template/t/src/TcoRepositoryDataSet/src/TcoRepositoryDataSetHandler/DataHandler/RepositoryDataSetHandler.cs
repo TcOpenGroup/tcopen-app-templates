@@ -1,18 +1,14 @@
-﻿
-using System;
-using TcOpen.Inxton.Data;
-using x_template_xProductionPlaner.Generic;
-using x_template_xProductionPlaner.Planer;
+﻿using TcOpen.Inxton.Data;
 
-namespace x_template_xProductionPlaner.Data.Handler
+namespace TcoRepositoryDataSetHandler.Handler
 {
-    public class RepositorySetDataHandler<T>
+    public class RepositoryDataSetHandler<T>
     {
         /// <summary>
         /// Creates new instance of <see cref="RepositorySetDataHandler"/>
         /// </summary>
         /// <param name="repository"></param>
-        private RepositorySetDataHandler(IRepository<EntitySet<T>> repository)
+        private RepositoryDataSetHandler(IRepository<EntitySet<T>> repository)
         {
             Repository = repository;
         }
@@ -21,9 +17,9 @@ namespace x_template_xProductionPlaner.Data.Handler
         /// </summary>
         /// <param name="repository">Instructions repository</param>
         /// <returns>New instnace of <see cref="RepositorySetDataHandler"/></returns>
-        public static RepositorySetDataHandler<T> CreateSet(IRepository<EntitySet<T>> repository)
+        public static RepositoryDataSetHandler<T> CreateSet(IRepository<EntitySet<T>> repository)
         {
-            return new RepositorySetDataHandler<T>(repository);
+            return new RepositoryDataSetHandler<T>(repository);
         }
 
         /// <summary>

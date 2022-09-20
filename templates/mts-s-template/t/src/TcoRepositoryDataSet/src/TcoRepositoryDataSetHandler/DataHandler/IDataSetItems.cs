@@ -1,5 +1,5 @@
 ﻿
-namespace TcoRepositorySetDataHandler.Handler
+namespace TcoRepositoryDataSetHandler.Handler
 {
     public interface IDataSetItems
 

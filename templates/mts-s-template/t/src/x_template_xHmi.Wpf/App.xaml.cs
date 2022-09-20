@@ -12,12 +12,12 @@ using TcOpen.Inxton.Local.Security.Wpf;
 using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.Security;
 using TcOpen.Inxton.TcoCore.Wpf;
+using TcoRepositoryDataSetHandler;
+using TcoRepositoryDataSetHandler.Handler;
 using Vortex.Presentation.Wpf;
 using x_template_xDataMerge.Rework;
 using x_template_xPlc;
 using x_template_xPlcConnector;
-using x_template_xProductionPlaner.Data.Handler;
-using x_template_xProductionPlaner.Generic;
 using x_template_xProductionPlaner.Planer;
 
 namespace x_template_xHmi.Wpf
@@ -153,13 +153,25 @@ namespace x_template_xHmi.Wpf
             Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
 
             //Production planer
-            //var _repositoryProcessSet = new RavenDbRepositorySettings<ProductionItem>();
-           
-            
-            var _productionPlanHandler = RepositorySetDataHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "ProductionPlan", "", "")));
+  
+                      
+            var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "ProductionPlan", "", "")));
 
 
-            ProductonPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlaner", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+            ProductionPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlaner", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+
+
+
+            Action prodPlan = () => GetProductionPlan(x_template_xPlc.MAIN._technology._cu00x._productionPlaner);
+            x_template_xPlc.MAIN._technology._cu00x._productionPlaner.InitializeExclusively(prodPlan);
+        }
+
+        private void GetProductionPlan(ProductionPlaner productionPlaner)
+        {
+             ProductionItem item;
+            ProductionPlaner.RefreshItems(out item);
+            productionPlaner._requiredProcessSettings.Synchron = item.Key;
+            productionPlaner._productonPlanCompleted.Synchron = ProductionPlaner.ProductionPlanCompleted;
 
 
         }
@@ -204,7 +216,7 @@ namespace x_template_xHmi.Wpf
         }
 
         public static ReworkModel Rework { get; private set; }
-        public static ProductionPlanController ProductonPlaner { get; private set; }
+        public static ProductionPlanController ProductionPlaner { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

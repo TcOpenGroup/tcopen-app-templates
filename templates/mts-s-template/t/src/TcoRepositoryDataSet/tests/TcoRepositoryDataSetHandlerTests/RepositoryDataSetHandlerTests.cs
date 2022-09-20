@@ -4,21 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using TcOpen.Inxton.RavenDb;
-using TcoRepositorySetDataHandler;
-using TcoRepositorySetDataHandler.Handler;
+
 using System.Collections.Generic;
 using System;
+using TcoRepositoryDataSetHandler;
+using TcoRepositoryDataSetHandler.Handler;
 
 namespace TcoRepositorySetDataHandlerTests
 {
-    public class TcoRepositorySetDataHandlerTests
+    public class RepositoryDataSetHandlerTests
     {
-        public RepositorySetDataHandler<ProductionItem> _productionPlanHandler { get; private set; }
+        public RepositoryDataSetHandler<ProductionItem> _productionPlanHandler { get; private set; }
 
         [SetUp]
         public void Setup()
         {
-            _productionPlanHandler = RepositorySetDataHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>
+            _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>
             (new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { "http://127.0.0.1:8080" }, "ProductionPlanTest", "", "")));
             _productionPlanHandler.Repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
             _productionPlanHandler.Repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
@@ -183,7 +184,7 @@ namespace TcoRepositorySetDataHandlerTests
             Assert.AreEqual(1, collectionUpdated.Count);
         }
     }
-    public class ProductionItem : IItemsCollection
+    public class ProductionItem : IDataSetItems
     {
         private string key;
 

@@ -11,6 +11,7 @@ VAR
 	_settings  : CUBaseSettings := (Parent := THIS^);
 	_toggle: TcoUtilities.TcoBlinker(THIS^);
 	_recurringFails:CuBaseRecurringFailures:=(Parent:=THIS^);
+	_productionPlaner:ProductionPlaner(THIS^);
 	
 END_VAR]]></Declaration>
     <Implementation>

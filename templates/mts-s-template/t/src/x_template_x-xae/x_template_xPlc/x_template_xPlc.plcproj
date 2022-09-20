@@ -74,6 +74,9 @@
     <Compile Include="Abstractions\CUBase\OperatorInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\CUBase\RemoteTasks\ProductionPlaner.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseAutomat.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -223,6 +226,7 @@
     <Folder Include="Abstractions" />
     <Folder Include="Abstractions\CUBase" />
     <Folder Include="Abstractions\CUBase\Data" />
+    <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />

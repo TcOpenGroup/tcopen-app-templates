@@ -6,7 +6,6 @@
         Required = 10,
         Active = 20,
         Done = 30,
-        Deleted = 40,
         Skiped = 50,
         AllCompleted =100
 

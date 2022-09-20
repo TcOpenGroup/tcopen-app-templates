@@ -3,14 +3,14 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using TcOpen.Inxton.Data;
 using x_template_xPlc;
-using x_template_xProductionPlaner.Generic;
-using x_template_xProductionPlaner.Data.Handler;
+using TcoRepositoryDataSetHandler;
+using TcoRepositoryDataSetHandler.Handler;
 
 namespace x_template_xProductionPlaner.Planer
 {
     public class ProductionPlanController : INotifyPropertyChanged
     {
-        public ProductionPlanController(RepositorySetDataHandler<ProductionItem> productionSetData, string configName, IRepository<PlainProcessData> repositorySource)
+        public ProductionPlanController(RepositoryDataSetHandler<ProductionItem> productionSetData, string configName, IRepository<PlainProcessData> repositorySource)
         {
             DataHandler = productionSetData;
             ConfigName = configName;
@@ -48,35 +48,36 @@ namespace x_template_xProductionPlaner.Planer
         /// <summary>
         /// Gets production of this 
         /// </summary>
-        protected RepositorySetDataHandler<ProductionItem> DataHandler { get; }
+        protected RepositoryDataSetHandler<ProductionItem> DataHandler { get; }
         public string ConfigName { get; set; }
         public IRepository<PlainProcessData> RepositorySource { get; private set; }
 
-        public bool ProductonPlanCompleted
+        public bool ProductionPlanCompleted
         {
-            get => productonPlanCompleted;
+            get => productionPlanCompleted;
             set
             {
-                if (productonPlanCompleted == value)
+                if (productionPlanCompleted == value)
                 {
                     return;
                 }
 
-                productonPlanCompleted = value;
-                OnPropertyChanged(nameof(ProductonPlanCompleted));
+                productionPlanCompleted = value;
+                OnPropertyChanged(nameof(ProductionPlanCompleted));
             }
         }
 
 
-        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.None };
-        private bool productonPlanCompleted;
+        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.AllCompleted };
+        private bool productionPlanCompleted;
 
         /// <summary>
         /// When overriden performs update of <see cref="CurrentItem"/>.
         /// </summary>
         public void RefreshItems(out ProductionItem itm)
         {
-            var item = CurrentProductionSet.Items.Where(p => p.Status == EnumItemStatus.Required || p.Status == EnumItemStatus.Active).FirstOrDefault();
+            var item = CurrentProductionSet.Items.Where(p => p.Status == EnumItemStatus.Required 
+                                                        || p.Status == EnumItemStatus.Active).FirstOrDefault();
 
             if (item != null)
             {
@@ -94,7 +95,7 @@ namespace x_template_xProductionPlaner.Planer
 
             }
             itm = CurrentItem;
-            ProductonPlanCompleted = CurrentItem.Status == EnumItemStatus.AllCompleted;
+            ProductionPlanCompleted = CurrentItem.Status == EnumItemStatus.AllCompleted;
             SaveDataSet(ConfigName);
 
 

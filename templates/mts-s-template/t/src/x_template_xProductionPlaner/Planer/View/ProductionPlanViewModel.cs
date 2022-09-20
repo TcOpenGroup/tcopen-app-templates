@@ -2,12 +2,10 @@
 using System;
 using System.Collections.ObjectModel;
 using TcOpen.Inxton.Input;
-using Vortex.Presentation;
-using x_template_xProductionPlaner.Planer;
 
 namespace x_template_xProductionPlaner.Planer.View
 {
-    public class ProductionPlanViewModel //: BindableBase
+    public class ProductionPlanViewModel 
     {
         private ProductionItem _selectedItem;
 

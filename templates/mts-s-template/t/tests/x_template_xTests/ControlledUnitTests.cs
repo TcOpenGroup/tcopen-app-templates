@@ -101,6 +101,7 @@ namespace x_template_xTests
         [SetUp]
         public void SetUp()
         {
+            Entry.Plc.MAIN._technology._cu00x._automatTask._dataLoadProcessSettingsThroghPlaner.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._dataLoadProcessSettings.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._dataCreateNew.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._dataOpen.Synchron = false;

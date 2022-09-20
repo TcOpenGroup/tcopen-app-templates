@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ProductionPlaner" Id="{8e167958-6b6e-4b49-a6ec-53d5acd89358}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC ProductionPlaner EXTENDS TcoCore.TcoRemoteTask
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_productonPlanCompleted: BOOL;
+	_requiredProcessSettings: STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[super^();]]></ST>
+    </Implementation>
+    <Property Name="ProductionPlanCompleted" Id="{2b0a59d7-c9ae-4b8b-b474-b91a4ce77769}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ProductionPlanCompleted : bool]]></Declaration>
+      <Get Name="Get" Id="{52a1820b-f039-4cce-b8e5-65a5c21fe408}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ProductionPlanCompleted:=_productonPlanCompleted;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RequiredProcessSettingsId" Id="{cca1091f-75a0-427f-8ffb-c2ac68f7dabe}">
+      <Declaration><![CDATA[PROPERTY RequiredProcessSettingsId : string]]></Declaration>
+      <Get Name="Get" Id="{0875d524-7597-4c79-84e1-47a84b2def08}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RequiredProcessSettingsId:=_requiredProcessSettings;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{3fbf695e-6100-468e-8bd4-f042b4c127b6}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.
+			<para>
+				See also <see cref="PlcDocu.TcoCore.TcoTask.AutoRestorable()"/>
+			</para>
+		</summary>			
+	</docu>	
+~*)
+METHOD Restore : ITcoRestorable]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.Restore();
+_productonPlanCompleted:=FALSE;
+_requiredProcessSettings:='';]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

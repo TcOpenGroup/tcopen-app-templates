@@ -26,7 +26,7 @@ namespace x_template_xHmi.Wpf.Views.Operator
             x_template_xPlc.MAIN._technology._automatAllTask.Roles = Roles.technology_automat_all;
             x_template_xPlc.MAIN._technology._groundAllTask.Roles = Roles.technology_ground_all;
 
-            ProductionPlanViewModel = new ProductionPlanViewModel(App.ProductonPlaner);
+            ProductionPlanViewModel = new ProductionPlanViewModel(App.ProductionPlaner);
         }
 
         public x_template_xPlcTwinController x_template_xPlc { get { return App.x_template_xPlc; } }

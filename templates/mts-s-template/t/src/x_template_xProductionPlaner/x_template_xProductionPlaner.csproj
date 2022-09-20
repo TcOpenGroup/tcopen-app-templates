@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 
