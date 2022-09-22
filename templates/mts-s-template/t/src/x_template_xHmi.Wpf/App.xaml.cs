@@ -158,7 +158,7 @@ namespace x_template_xHmi.Wpf
             var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "ProductionPlan", "", "")));
 
 
-            ProductionPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlaner", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+            ProductionPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlanerTest", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
 
 
 
@@ -168,10 +168,13 @@ namespace x_template_xHmi.Wpf
 
         private void GetProductionPlan(ProductionPlaner productionPlaner)
         {
-             ProductionItem item;
+            ProductionItem item;
+
             ProductionPlaner.RefreshItems(out item);
             productionPlaner._requiredProcessSettings.Synchron = item.Key;
             productionPlaner._productonPlanCompleted.Synchron = ProductionPlaner.ProductionPlanCompleted;
+            productionPlaner._productionPlanIsEmpty.Synchron = ProductionPlaner.ProductionPlanEmpty;
+
 
 
         }

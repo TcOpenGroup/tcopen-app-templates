@@ -8,6 +8,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	_productonPlanCompleted: BOOL;
+	_productionPlanIsEmpty: BOOL;
 	_requiredProcessSettings: STRING;
 END_VAR
 ]]></Declaration>
@@ -22,6 +23,18 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[ProductionPlanCompleted:=_productonPlanCompleted;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ProductionPlanIsEmpty" Id="{fabb3d56-595f-45a4-a452-c9ee378a14c5}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ProductionPlanIsEmpty : bool]]></Declaration>
+      <Get Name="Get" Id="{b532c513-17bd-48a3-97ed-ee0f5c9ebffc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ProductionPlanIsEmpty:=_productionPlanIsEmpty;
 ]]></ST>
         </Implementation>
       </Get>
@@ -53,6 +66,7 @@ METHOD Restore : ITcoRestorable]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Restore();
 _productonPlanCompleted:=FALSE;
+_productionPlanIsEmpty:=FALSE;
 _requiredProcessSettings:='';]]></ST>
       </Implementation>
     </Method>

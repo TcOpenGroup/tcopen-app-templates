@@ -66,19 +66,37 @@ namespace x_template_xProductionPlaner.Planer
                 OnPropertyChanged(nameof(ProductionPlanCompleted));
             }
         }
+        public bool ProductionPlanEmpty
+        {
+            get => productionPlanEmpty;
+            set
+            {
+                if (productionPlanEmpty == value)
+                {
+                    return;
+                }
+
+                productionPlanEmpty = value;
+                OnPropertyChanged(nameof(ProductionPlanEmpty));
+            }
+        }
 
 
-        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.AllCompleted };
+        private readonly ProductionItem AllCompetedItem = new ProductionItem() { Status = EnumItemStatus.AllCompleted };
+        private readonly ProductionItem EmptyItem = new ProductionItem() { Status = EnumItemStatus.None };
         private bool productionPlanCompleted;
+        private bool productionPlanEmpty;
 
         /// <summary>
         /// When overriden performs update of <see cref="CurrentItem"/>.
         /// </summary>
         public void RefreshItems(out ProductionItem itm)
         {
+            LoadDataSet(ConfigName);
+
             var item = CurrentProductionSet.Items.Where(p => p.Status == EnumItemStatus.Required 
                                                         || p.Status == EnumItemStatus.Active).FirstOrDefault();
-
+         
             if (item != null)
             {
                 CurrentItem = item;
@@ -89,15 +107,15 @@ namespace x_template_xProductionPlaner.Planer
                 else if (CurrentItem.ActualCount >= CurrentItem.RequiredCount)
                     CurrentItem.Status = EnumItemStatus.Done;
             }
-            else
-            {
-                CurrentItem = EmptyItem;
+            else if (CurrentProductionSet.Items.Count() == 0) CurrentItem = EmptyItem;
+            else if (CurrentProductionSet.Items.Count() > 0) CurrentItem = AllCompetedItem;
 
-            }
             itm = CurrentItem;
             ProductionPlanCompleted = CurrentItem.Status == EnumItemStatus.AllCompleted;
-            SaveDataSet(ConfigName);
+            ProductionPlanEmpty = CurrentItem.Status == EnumItemStatus.None && CurrentProductionSet.Items.Count() == 0;
 
+            SaveDataSet(ConfigName);
+            OnPropertyChanged(nameof(CurrentProductionSet));
 
         }
         /// <summary>
