@@ -512,6 +512,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rework entity.
+        /// </summary>
+        public static string ReworkEntity {
+            get {
+                return ResourceManager.GetString("ReworkEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to REWORK OFFLINE DATA.
         /// </summary>
         public static string ReworkOfflineData {

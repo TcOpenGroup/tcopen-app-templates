@@ -10,6 +10,7 @@ STRUCT
 	{attribute addProperty Name "<#Cycle time#> - <#Nominal#>"}
 	IdealCycleTime   : TIME;
 	
+	
 	{attribute addProperty Name "<#Cycle time#> - <#Warning#>"}
 	WarningCycleTime : TIME;
     
@@ -26,8 +27,29 @@ STRUCT
 	{attribute addProperty Name "<#Energy saving mode - Inactivity time#> "}
 	TimeToEntryEnergySavingMode : TIME;
 	
-	{attribute addProperty Name "<#Consecutive Error count#> "}
-	ConsecutiveErrorCount   : UINT;
+	
+	
+	(*~
+	<docu>
+		<summary>
+			The maximum allowed number of the any (arbitrary) recuring (consecutive)  failures.
+		</summary>			
+	</docu>	
+	~*)
+	{attribute addProperty Name "<#Max allowed number of any recurring failures (consecutive)#> "}
+	AnyRecurringFailure   : UINT;
+	
+	
+
+	(*~
+	<docu>
+		<summary>
+			The maximum allowed number of the same (identical) recuring (consecutive) failures. 
+		</summary>			
+	</docu>	
+	~*)
+	{attribute addProperty Name "<#Max allowed number of same recurring failures (consecutive)#> "}
+	SameRecurringFailure   : UINT;
 	
 	
 END_STRUCT
