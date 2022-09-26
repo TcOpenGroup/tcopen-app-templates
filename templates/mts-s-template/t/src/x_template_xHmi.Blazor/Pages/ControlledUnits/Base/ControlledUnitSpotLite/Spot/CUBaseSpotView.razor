@@ -1,24 +1,55 @@
-﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+﻿@namespace x_template_xPlc
+@inherits RenderableViewModelComponentBase<CUBaseSpotViewModel>
+@inject NavigationManager _navigationManager
+@using TcoCore
 
-<button class="station @btnColor hover-cyan @stateBorder">@Context.AttributeShortName</button>
+<button class="station hover-cyan @stateBorder"
+        @onclick="() => NavigateToStationDetail() ">
+    <div class="info @btnColor">
+        <p class="station-shortname">@Context.AttributeShortName</p>
+        <p>@Context._statusInfo.CurrentTaskDescription.Cyclic</p>
+    </div>
+    <p>@Context._statusInfo.CurrentOperation.Cyclic</p>
+    <p>@Context._statusInfo.HumanReadable</p>
+    <div class="cycle-times">
+        <p>Current CT<span>@Context._statusInfo.CurrentCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Average CT<span>@Context._statusInfo.AverageCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Current Clean CT<span>@Context._statusInfo.CurrentCleanCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+        <p>Average Clean CT<span>@Context._statusInfo.AverageCleanCycleTime.Cyclic.ToString(@"hh\:mm\:ss\:ff")</span></p>
+    </div>
+</button>
+
 
 @code {
     [Parameter]
-    public x_template_xPlc.CU00x Context { get; set; }
+    public CUBase Context { get; set; }
+    [Parameter]
+    public string CUName { get; set; }
 
+    private bool _showDetail { get; set; }
     private string btnColor = "idle-colors";
     private string stateBorder = "noState-border";
 
     protected override void OnInitialized()
     {
+        if (Context == null)
+        {
+            this.Context = ViewModel.Component;
+        }
+        UpdateValuesOnChange(Context._statusInfo);
+
         ChangeModeColor();
         Context._statusInfo.Mode.Subscribe(ChangeModeColorWatch);
 
         Context._statusInfo.State.Subscribe(ChangeStateBorder);
     }
-
+    private void NavigateToStationDetail()
+    {
+        _navigationManager.NavigateTo($"/operator/{Context.AttributeShortName}");
+    }
     private void ChangeModeColorWatch(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
     {
+
         ChangeModeColor();
     }
 

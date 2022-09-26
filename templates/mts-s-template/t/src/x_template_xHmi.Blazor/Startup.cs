@@ -27,8 +27,6 @@ namespace x_template_xHmi.Blazor
 {
     public class Startup
     {
-        private BlazorRoleGroupManager roleGroupManager;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -55,7 +53,7 @@ namespace x_template_xHmi.Blazor
 
             var roleGroupManager = new BlazorRoleGroupManager(groupRepo);
             Roles.Create(roleGroupManager);
-            services.AddVortexBlazorSecurity(userRepo, groupRepo, roleGroupManager);
+            services.AddVortexBlazorSecurity(userRepo,roleGroupManager);
             services.AddTcoCoreExtensions();
 
             SetUpRepositoriesUsingRavenDb();

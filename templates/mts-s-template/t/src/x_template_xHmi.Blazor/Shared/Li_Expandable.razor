@@ -1,5 +1,5 @@
 ﻿<li class="nav-item @expanded expandable">
-    <NavLink class="nav-link" @onclick='() => expanded = expanded == "" ? "menuCollapseActive" : ""'>
+    <NavLink class="nav-link"  @onclick='() => expand()'>
         <span class="oi oi-plus" aria-hidden="true"></span> @Main
     </NavLink>
     <ul class="nav flex-column">
@@ -26,6 +26,11 @@
 
     private string expanded = "";
 
+
+    private void expand()
+    { 
+        expanded = expanded == "" ? "menuCollapseActive" : "";
+    }
 
     // set value ".menuCollapseActive" to expanded by checking url wether it contains Main string
     protected override void OnInitialized()

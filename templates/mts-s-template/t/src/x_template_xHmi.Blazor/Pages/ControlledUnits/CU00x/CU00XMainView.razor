@@ -1,0 +1,13 @@
+﻿@page "/operator/cu00x"
+<h1>CU00X</h1>
+
+
+<CUBaseControlView Vortex="ControlUnit"></CUBaseControlView>
+
+
+
+@code {
+    [Parameter]
+    public CU00x ControlUnit { get; set; } = Entry.Plc.MAIN._technology._cu00x;
+
+}

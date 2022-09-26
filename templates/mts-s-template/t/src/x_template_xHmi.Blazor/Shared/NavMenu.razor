@@ -12,19 +12,21 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
+        @*<Li_Expandable Main="Operator" Sublinks="Operator, CU00x" />*@
         <li class="nav-item">
             <NavLink class="nav-link" href="operator">
                 <span class="oi oi-plus" aria-hidden="true"></span> Operator
             </NavLink>
         </li>
-
+        <Li_Expandable Main="Data" Sublinks="Process settings, Production data, Tech data" />
         <li class="nav-item">
             <NavLink class="nav-link" href="users">
                 <span class="oi oi-plus" aria-hidden="true"></span> Users
             </NavLink>
         </li>
 
-        <Li_Expandable Main="Data" Sublinks="Process settings, Production data, Tech data"/>
+
+
     </ul>
 
 
@@ -44,4 +46,9 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
 }

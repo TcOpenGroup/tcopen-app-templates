@@ -1,11 +1,13 @@
 ﻿@page "/operator"
-@using x_template_xHmi.Blazor.Pages.ControlledUnits
 
-<CUBaseSpotView Context="Entry.Plc.MAIN._technology._cu00x" />
-<CUBaseSpotLiteView Context="Entry.Plc.MAIN._technology._cu00x" />
+<h1>Operator</h1>
+<RenderableContentControl Context="@Entry.Plc.MAIN._technology._processSettings" Presentation="SimpleSelector"></RenderableContentControl>
 
-<RenderableContentControl Context="Entry.Plc.MAIN._technology._groundAllTask"></RenderableContentControl>
-<RenderableContentControl Context="Entry.Plc.MAIN._technology._automatAllTask"></RenderableContentControl>
+<CUBaseSpotView Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._cu00x" />
+<CUBaseSpotLiteView Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._cu00x" />
+
+<RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._groundAllTask"></RenderableContentControl>
+<RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._automatAllTask"></RenderableContentControl>
 
 @code {
 

@@ -5,9 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="RavenDB.Embedded" Version="5.4.1" />
-    <PackageReference Include="TcOpen.Group.Blazor" Version="0.8.2-alpha.17" />
+    <PackageReference Include="TcOpen.Group.Blazor" Version="0.9.0-alpha.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="Pages\ControlledUnits\Base\ControlledUnitBase\Diagnostics\" />
+    <Folder Include="Pages\ControlledUnits\Base\ControlledUnitBase\Overview\" />
   </ItemGroup>
 
 </Project>

@@ -2,10 +2,7 @@
 
 <h3>Users</h3>
 
-<button class="btn btn-primary my-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Example</button>
-<div class="collapse my-3" id="collapseExample">
-    <ExampleView @ref="@exampleView"></ExampleView>
-</div>
+
 
 <AuthorizeView Roles="Administrator">
     <Authorized>
@@ -18,5 +15,5 @@
 
 @code {
     private SecurityManagementView securityManagementView { get; set; }
-    private ExampleView exampleView { get; set; }
+   
 }

@@ -30,8 +30,8 @@
 .hide-sidebar-left {
     position: absolute;
     left: 50%;
-    height: 1.5rem;
-    width: 4rem;
+    height: 1.0rem;
+    width: 2rem;
     margin-top: -1.5rem; /* height */
     margin-left: -2rem; /* half of width */
     display: flex;

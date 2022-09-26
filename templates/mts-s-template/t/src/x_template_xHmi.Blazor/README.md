@@ -30,3 +30,4 @@
 ### Important note:
 
 After clicking on link `Process settings` the redirection uri will look like this: `/data/process_settings`. The main link is represented (in the uri) in lowercase and every sublink is in lowercase and `" "` in its name is replaced by `"_"`.
+Make sure dotned 6.0.7 + sdk is installed for correct running of ravenDB!
