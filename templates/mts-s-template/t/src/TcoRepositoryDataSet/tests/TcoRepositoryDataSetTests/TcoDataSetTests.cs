@@ -13,7 +13,7 @@ using x_template_xProductionPlaner.Planer;
 
 namespace TcoRepositorySetDataHandlerTests
 {
-    public class RepositoryDataSetHandlerTests
+    public class TcoDataSetTests
     {
         public RepositoryDataSetHandler<ProductionItem> _productionPlanHandler { get; private set; }
 
