@@ -153,6 +153,15 @@
   <data name="___Would_you_like_to_load_default_settings___" xml:space="preserve">
     <value>Would you like to load default settings?</value>
   </data>
+  <data name="___Production_planer__" xml:space="preserve">
+    <value>Production planer</value>
+  </data>
+  <data name="___Production_planer_is_empty____" xml:space="preserve">
+    <value>Production planer is empty! </value>
+  </data>
+  <data name="___Production_planer_completed_required_plan____" xml:space="preserve">
+    <value>Production planer completed required plan! </value>
+  </data>
   <data name="___Start_manual_Service_mode__" xml:space="preserve">
     <value>Start manual/Service mode</value>
   </data>

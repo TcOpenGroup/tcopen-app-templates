@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:x_template_xHmi.Wpf.Views.Operator"
     xmlns:mainplc="clr-namespace:x_template_xPlc"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml"
+    xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml" xmlns:view="clr-namespace:x_template_xProductionPlaner.Planer.View;assembly=x_template_xProductionPlaner"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800">
@@ -17,16 +17,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
-        <Canvas Grid.Row="1">
-            <mainplc:CUBaseSpotView MinHeight="200" MaxWidth="500" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
-            <mainplc:CUBaseSpotLiteView  Canvas.Top="300" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
 
-        </Canvas>
         
-        
+        <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
+        <UniformGrid Grid.Row="1" Columns="2">
+                <Canvas  >
+
+                    <mainplc:CUBaseSpotView MinHeight="200" MaxWidth="500" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
+                    <mainplc:CUBaseSpotLiteView  Canvas.Top="300" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
+
+                </Canvas>
+         
+      
+                <view:ProductionPlanView Grid.Row="2" DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
+        </UniformGrid>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
             <vortexs:PermissionBox Grid.Row="1" Permissions="Administrator|technology_can_start_automat_all" SecurityMode="Disabled">
                 <vortex:TcoTaskView DataContext="{Binding x_template_xPlc.MAIN._technology._automatAllTask, Mode=OneWay}"/>

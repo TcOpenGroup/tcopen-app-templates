@@ -11,6 +11,7 @@ END_VAR
 
 VAR
 	_dataLoadProcessSettings : BOOL;
+	_dataLoadProcessSettingsByPlaner : BOOL;
 	_dataCreateNew : BOOL;
 	_dataOpen : BOOL;
 	_dataClose : BOOL;
@@ -26,6 +27,7 @@ END_VAR
       <ST><![CDATA[Run();]]></ST>
     </Implementation>
     <Folder Name="DataOperations" Id="{d77a8e00-2872-034f-1865-d779c1d38e60}" />
+    <Folder Name="ProductionPlaner" Id="{691cdfd9-0331-4efc-8523-78110e4374bd}" />
     <Method Name="DataLoadProcessSettings" Id="{31612bac-ea85-0141-34e0-d7b2a3994f8e}" FolderPath="DataOperations\">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -76,6 +78,65 @@ END_VAR
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="DataLoadProcessSettingsByPlaner" Id="{f5f22eb7-e786-437d-afaa-0333a64e6105}" FolderPath="ProductionPlaner\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Loads process settings from the current process set into this controlled unit.
+			The `StationProcessDataManager.Data` is populated by data from process settings.						
+		</summary>
+	</docu>
+~*)
+METHOD DataLoadProcessSettingsByPlaner : BOOL
+VAR_INPUT
+	inStepID : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, _dataLoadProcessSettingsByPlaner, 'LOAD PROCESS SETTING BY THE PRODUCTION PLANER')) THEN
+    //-------------------------------------
+
+
+								   
+	 IF Station.ProductionPlanerTask.Invoke().Done	AND_THEN(Station.ProductionPlanerTask.RequiredProcessSettingsId <> '') THEN
+		
+		IF NOT Station.ProductionPlanerTask.ProductionPlanCompleted and_then (Station.Technology.ProcessSettings.Read(Station.ProductionPlanerTask.RequiredProcessSettingsId).Done)
+			 THEN
+			Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
+			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
+			CompleteStep();
+			Station.ProductionPlanerTask.Restore();
+		END_IF;
+	ELSIF  Station.ProductionPlanerTask.ProductionPlanIsEmpty THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Production planer#>')
+		   .WithText('<#Production planer is empty! #>')
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+	
+	ELSIF  Station.ProductionPlanerTask.ProductionPlanCompleted THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Production planer#>')
+		   .WithText('<#Production planer completed required plan! #>')
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+
+			
+	END_IF		    				
+    //-------------------------------------
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Main" Id="{65c64653-c354-4e9f-878f-19a4b135c641}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -98,6 +159,13 @@ METHOD PROTECTED Main : BOOL
 // Typically used in the first station of the technology to load process settings that will be used trough out the production
 IF (_dataLoadProcessSettings) THEN
     THIS^.DataLoadProcessSettings(100);
+END_IF;
+
+// Loads process settings via produciton planer. 
+// Typically used in the first station of the technology to load process settings that will be used trough out the production 
+// .......
+IF (_dataLoadProcessSettingsByPlaner) THEN
+    THIS^.DataLoadProcessSettingsByPlaner(110);
 END_IF;
 
 (*
