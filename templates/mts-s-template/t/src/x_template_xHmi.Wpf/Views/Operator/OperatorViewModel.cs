@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using x_template_xProductionPlaner.Planer.View;
+using x_template_xInstructor;
 
 namespace x_template_xHmi.Wpf.Views.Operator
 {
@@ -27,10 +28,12 @@ namespace x_template_xHmi.Wpf.Views.Operator
             x_template_xPlc.MAIN._technology._groundAllTask.Roles = Roles.technology_ground_all;
 
             ProductionPlanViewModel = new ProductionPlanViewModel(App.ProductionPlaner);
+            InstructorViewModel = new InstructorViewModel(App.CuxInstructor);
         }
 
         public x_template_xPlcTwinController x_template_xPlc { get { return App.x_template_xPlc; } }
 
         public ProductionPlanViewModel ProductionPlanViewModel { get; private set; }
+        public InstructorViewModel InstructorViewModel { get; private set; }
     }
 }
