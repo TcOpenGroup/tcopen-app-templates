@@ -47,10 +47,10 @@ namespace x_template_xPlc
         private void UpdateDataTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             var isInSight = false;
-            CUBaseControlViewModel context = null;
+            CUBaseViewModel context = null;
             TcOpen.Inxton.TcoAppDomain.Current.Dispatcher.Invoke(() =>
             {
-                context = this.DataContext as CUBaseControlViewModel;
+                context = this.DataContext as CUBaseViewModel;
                 isInSight = UIElementAccessibilityHelper.IsInSight<Grid>(this.Element, this);                
             });
 

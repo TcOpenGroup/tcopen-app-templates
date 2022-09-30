@@ -35,7 +35,9 @@
                 </Canvas>
             </TabItem>
             <TabItem Header="SINGLE STATION">
-                <mainplc:CUBaseSpotView MinHeight="200"  DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
+                <!--<mainplc:CUBaseSpotView MinHeight="200"  DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>-->
+                <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Spot"></vortex:RenderableContentControl>
+
             </TabItem>
             <TabItem Header="SINGLE STATION WITH PLANER">
                 <UniformGrid  Rows="2">
@@ -46,10 +48,24 @@
             </TabItem>
             <TabItem Header="SINGLE STATION WITH INSTRUCTOR">
                 <UniformGrid  Rows="2">
-                    <!--<mainplc:CUBaseSpotView MinHeight="200"  DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>-->
-                    <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x._automatTask ,Mode=OneWay}" PresentationType="Base"></vortex:RenderableContentControl>
-
+                    <ScrollViewer>
+                  
+                    <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Tasks"></vortex:RenderableContentControl>
+                    </ScrollViewer>
                     <x_template_xinstructor:InstructorView Grid.Row="2" DataContext="{Binding InstructorViewModel}"></x_template_xinstructor:InstructorView>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="SINGLE STATION WITH  INSTRUCTORS">
+                <UniformGrid  Rows="2">
+                    <ScrollViewer>
+
+                        <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Tasks"></vortex:RenderableContentControl>
+                    </ScrollViewer>
+                    <UniformGrid  Columns="2">
+                        <x_template_xinstructor:InstructorView  DataContext="{Binding InstructorViewModel}"></x_template_xinstructor:InstructorView>
+                        <x_template_xinstructor:InstructorView  DataContext="{Binding InstructorParalellViewModel}"></x_template_xinstructor:InstructorView>
+                    </UniformGrid>
                 </UniformGrid>
 
             </TabItem>

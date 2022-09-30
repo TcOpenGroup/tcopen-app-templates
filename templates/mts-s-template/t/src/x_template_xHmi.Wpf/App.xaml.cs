@@ -174,8 +174,9 @@ namespace x_template_xHmi.Wpf
             var _instructionPlanHandler= RepositoryDataSetHandler<InstructionItem>.CreateSet(new RavenDbRepository<EntitySet<InstructionItem>>(new RavenDbRepositorySettings<EntitySet<InstructionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Instructions", "", "")));
          
             CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
+            CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
 
-           
+
         }
 
         private void GetProductionPlan(ProductionPlaner productionPlaner)
@@ -233,6 +234,7 @@ namespace x_template_xHmi.Wpf
         public static ReworkModel Rework { get; private set; }
         public static ProductionPlanController ProductionPlaner { get; private set; }
         public static InstructorController CuxInstructor { get; private set; }
+        public static InstructorController CuxParalellInstructor { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

@@ -29,11 +29,14 @@ namespace x_template_xHmi.Wpf.Views.Operator
 
             ProductionPlanViewModel = new ProductionPlanViewModel(App.ProductionPlaner);
             InstructorViewModel = new InstructorViewModel(App.CuxInstructor);
+            InstructorParalellViewModel = new InstructorViewModel(App.CuxParalellInstructor);
+
         }
 
         public x_template_xPlcTwinController x_template_xPlc { get { return App.x_template_xPlc; } }
 
         public ProductionPlanViewModel ProductionPlanViewModel { get; private set; }
         public InstructorViewModel InstructorViewModel { get; private set; }
+        public InstructorViewModel InstructorParalellViewModel { get; private set; }
     }
 }
