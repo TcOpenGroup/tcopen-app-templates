@@ -10,6 +10,8 @@ namespace x_template_xHmi.Wpf
             SecurityManager.Manager.GetOrCreateRole(new Role(process_settings_access, "Administrator"));
             SecurityManager.Manager.GetOrCreateRole(new Role(rework_settings_access, "Administrator"));
             SecurityManager.Manager.GetOrCreateRole(new Role(process_traceability_access, "Administrator"));
+            SecurityManager.Manager.GetOrCreateRole(new Role(instructor_access, "Administrator"));
+
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_settings_access, "Maintenance"));
             SecurityManager.Manager.GetOrCreateRole(new Role(ground_position_start, "Operator"));
             SecurityManager.Manager.GetOrCreateRole(new Role(automat_start, "Operator"));            
@@ -19,7 +21,7 @@ namespace x_template_xHmi.Wpf
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_ground_all, "Maintenance"));
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_automat_all, "Maintenance"));                        
         }
-
+        public const string instructor_access = nameof(instructor_access);
         public const string process_settings_access = nameof(process_settings_access);
         public const string rework_settings_access = nameof(rework_settings_access);
         public const string process_traceability_access = nameof(process_traceability_access);

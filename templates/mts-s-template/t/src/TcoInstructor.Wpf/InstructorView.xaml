@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition  />
             </Grid.RowDefinitions>
-            <TextBlock HorizontalAlignment="Center" Text="{Binding Controller.CurrentInstruction.Description}"></TextBlock>
+            <TextBlock HorizontalAlignment="Center" FontSize="25" Text="{Binding Controller.CurrentInstruction.Description}"></TextBlock>
             <Image Grid.Row="1" Source="{Binding Controller.CurrentInstruction.ContentSource}"></Image>
           </Grid>
 

@@ -14,7 +14,30 @@
     <d:UserControl.DataContext>
         <local:CUBaseControlViewModel />
     </d:UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="iconContainer" TargetType="Border">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderBrush" Value="{StaticResource OnSecondary}" />
+            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="CornerRadius" Value="3" />
+        </Style>
+        <Style x:Key="icon" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition MaxHeight="250"></RowDefinition>
@@ -116,6 +139,19 @@
                         Foreground="{Binding Component._statusInfo.Mode.Cyclic, Converter={local:SelectorStateToForegroundBrushConverter}}"
                         Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                         Text="{Binding Component._statusInfo.CurrentTaskDescription.Cyclic}" />
+                    <StackPanel
+                            Grid.Column="2"
+                            Margin="2"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical"
+                            Visibility="{Binding Component._statusInfo.CurrentIsInStepMode.Cyclic, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                        <materialDesign:PackIcon
+                                Foreground="{StaticResource OnSecondary}"
+                                Kind="ShoePrint"
+                                Style="{StaticResource icon}" />
+                    </StackPanel>
                     <!-- Task command buttons -->
                     <ItemsControl
                         Grid.Row="0"

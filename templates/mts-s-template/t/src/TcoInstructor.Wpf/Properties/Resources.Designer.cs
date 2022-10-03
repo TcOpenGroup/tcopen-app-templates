@@ -79,6 +79,15 @@ namespace x_template_xInstructor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string Down {
+            get {
+                return ResourceManager.GetString("Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IMAGE LOCATION.
         /// </summary>
         public static string IMAGELOCATION {
@@ -142,7 +151,16 @@ namespace x_template_xInstructor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE.
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string Up {
+            get {
+                return ResourceManager.GetString("Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REFRESH STEPS.
         /// </summary>
         public static string UPDATE {
             get {

@@ -147,4 +147,10 @@
   <data name="IMAGELOCATIONBROWSE" xml:space="preserve">
     <value>PREHĽADÁVAŤ CESTU K SÚBORU</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>DOLE</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>HORE</value>
+  </data>
 </root>

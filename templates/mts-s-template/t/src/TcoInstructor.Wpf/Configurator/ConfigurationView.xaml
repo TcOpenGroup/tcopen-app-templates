@@ -20,8 +20,14 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
         <DataGrid                    
                     Grid.Row="0"
+                    AllowDrop="True"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     CanUserDeleteRows="False"
@@ -48,8 +54,16 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Status}" IsReadOnly="True" Header="{x:Static properties:Resources.INSTRUCTION}" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
+            <Button Margin="5" Command="{Binding UpCommand}" Content="{x:Static properties:Resources.Up}" />
+            <Button Margin="5" Command="{Binding DownCommand}" Content="{x:Static properties:Resources.Down}" />
+        </StackPanel>
+
+     
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
           
           

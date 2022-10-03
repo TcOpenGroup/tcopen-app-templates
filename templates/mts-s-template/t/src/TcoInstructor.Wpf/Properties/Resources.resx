@@ -139,12 +139,18 @@
     <value>SAVE</value>
   </data>
   <data name="UPDATE" xml:space="preserve">
-    <value>UPDATE</value>
+    <value>REFRESH STEPS</value>
   </data>
   <data name="REMOVE" xml:space="preserve">
     <value>REMOVE</value>
   </data>
   <data name="IMAGELOCATIONBROWSE" xml:space="preserve">
     <value>IMAGE LOCATION BROWSE</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
 </root>
