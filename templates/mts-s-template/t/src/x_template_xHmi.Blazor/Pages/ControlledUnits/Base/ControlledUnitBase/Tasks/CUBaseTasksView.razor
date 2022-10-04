@@ -28,9 +28,15 @@
        
     </div>
     <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h5 class="card-title">@ViewModel.Component._statusInfo.CurrentTaskDescription.Cyclic</h5>
+       
+        <RenderableContentControl Context="(IVortexElement)ViewModel.TaskControls.First()" Presentation="Base"></RenderableContentControl>
+        There is double inheritance, so it won't work!
+        @foreach (var task in ViewModel.TaskControls)
+        {
+            <RenderableContentControl Context="(IVortexElement)task" Presentation="TaskCommand"></RenderableContentControl>
+        }
+        
     </div>
 </div>
 

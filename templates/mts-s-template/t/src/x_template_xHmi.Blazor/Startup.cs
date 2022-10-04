@@ -51,7 +51,7 @@ namespace x_template_xHmi.Blazor
                                           new RavenDbRepositorySettings<GroupData>
                                           (new string[] { Constants.CONNECTION_STRING_DB }, "GroupsBlazor", "", ""));
 
-            var roleGroupManager = new BlazorRoleGroupManager(groupRepo);
+            var roleGroupManager = new RoleGroupManager(groupRepo);
             Roles.Create(roleGroupManager);
             services.AddVortexBlazorSecurity(userRepo,roleGroupManager);
             services.AddTcoCoreExtensions();

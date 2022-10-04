@@ -14,21 +14,21 @@
         <CUBaseTasksView Vortex="ViewModel.Component"></CUBaseTasksView>
     </TabPage>
     <TabPage Text="Data">
-        @*<RenderableContentControl Context="ViewModel._cu" Presentation="Service-Manual"></RenderableContentControl>*@
+        @*<a Context="ViewModel._cu" Presentation="Service-Manual"></RendearableContentControl>*@
     </TabPage>
     <TabPage Text="Components">
         <CUBaseComponentsView Vortex="ViewModel.Components"></CUBaseComponentsView>
     </TabPage>
     <TabPage Text="Diagnostics">
-        @*<RenderableContentControl Context="ViewModel.Component" Presentation="Diagnostics"></RenderableContentControl>*@
+        <RenderableContentControl Context="ViewModel.Component" Presentation="Diagnostics"></RenderableContentControl>
     </TabPage>
 </TabControl>
 
 
 @code {
 
-        [Parameter]
-        public CUBase Vortex { get; set; }
+    [Parameter]
+    public CUBase Vortex { get; set; }
 
 
     protected override void OnInitialized()

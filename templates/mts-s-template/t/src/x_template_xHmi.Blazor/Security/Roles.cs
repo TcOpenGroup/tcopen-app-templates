@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TcOpen.Inxton.Local.Security;
 using TcOpen.Inxton.Local.Security.Blazor;
 using TcOpen.Inxton.Security;
 
@@ -9,7 +10,7 @@ namespace x_template_xHmi.Blazor.Security
 {
     internal class Roles
     {
-        private static BlazorRoleGroupManager _roleGroupManager { get; set; }
+        private static RoleGroupManager _roleGroupManager { get; set; }
         private static Roles _roles;
 
         public const string process_settings_access = nameof(process_settings_access);
@@ -39,7 +40,7 @@ namespace x_template_xHmi.Blazor.Security
             _roleGroupManager.CreateRole(new Role(technology_ground_all));
         }
 
-        public static void Create(BlazorRoleGroupManager roleGroupManager)
+        public static void Create(RoleGroupManager roleGroupManager)
         {
             _roleGroupManager = roleGroupManager;
             _roles = new Roles();
