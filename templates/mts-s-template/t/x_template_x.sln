@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "x_template_xProductionPlane
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoRepositoryDataSetHandler", "src\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj", "{A14AF1BC-0CF9-4467-8DB3-9F379671F9CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoDataSetHandlerTests", "src\TcoRepositoryDataSet\tests\TcoDataSetTests\TcoDataSetHandlerTests.csproj", "{BA7A158C-FDA2-4E8B-B04B-351CE0C3DC96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoDataSetTests", "src\TcoRepositoryDataSet\tests\TcoDataSetTests\TcoDataSetTests.csproj", "{BA7A158C-FDA2-4E8B-B04B-351CE0C3DC96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Inxton.Instructor", "src\TcoInstructor\TcOpen.Inxton.Instructor.csproj", "{E34D0292-A2F7-4EDE-8E38-4F94A1C1DDC5}"
 EndProject
