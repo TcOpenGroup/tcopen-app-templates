@@ -1,5 +1,9 @@
-﻿<h3>CUBaseDataView</h3>
+﻿@namespace x_template_xPlc
+@inherits RenderableViewModelComponentBase<CUBaseViewModel>
+
+<RenderableContentControl Context="OnlineData" Presentation="ShadowDisplaySlim-ShadowDisplay"></RenderableContentControl>
 
 @code {
-
+    [Parameter]
+    public ProcessData OnlineData { get; set; }
 }
