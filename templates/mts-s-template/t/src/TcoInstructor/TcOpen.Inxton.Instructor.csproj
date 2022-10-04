@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
+    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.8.0-alpha.10" />
+
+  </ItemGroup>
+
+</Project>

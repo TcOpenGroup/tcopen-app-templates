@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using TcOpen.Inxton.Data;
+using TcOpen.Inxton.Instructor;
 using TcOpen.Inxton.Local.Security;
 using TcOpen.Inxton.Local.Security.Wpf;
 using TcOpen.Inxton.RavenDb;
@@ -16,6 +17,7 @@ using TcoRepositoryDataSetHandler;
 using TcoRepositoryDataSetHandler.Handler;
 using Vortex.Presentation.Wpf;
 using x_template_xDataMerge.Rework;
+using x_template_xInstructor.TcoSequencer;
 using x_template_xPlc;
 using x_template_xPlcConnector;
 using x_template_xProductionPlaner.Planer;
@@ -67,8 +69,8 @@ namespace x_template_xHmi.Wpf
 
             SetUpRepositoriesUsingRavenDb();
 
-
           
+
 
             // Create user roles for this application.
             Roles.Create();
@@ -164,6 +166,17 @@ namespace x_template_xHmi.Wpf
 
             Action prodPlan = () => GetProductionPlan(x_template_xPlc.MAIN._technology._cu00x._productionPlaner);
             x_template_xPlc.MAIN._technology._cu00x._productionPlaner.InitializeExclusively(prodPlan);
+
+
+
+           
+
+            var _instructionPlanHandler= RepositoryDataSetHandler<InstructionItem>.CreateSet(new RavenDbRepository<EntitySet<InstructionItem>>(new RavenDbRepositorySettings<EntitySet<InstructionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Instructions", "", "")));
+         
+            CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
+            CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
+
+
         }
 
         private void GetProductionPlan(ProductionPlaner productionPlaner)
@@ -220,6 +233,8 @@ namespace x_template_xHmi.Wpf
 
         public static ReworkModel Rework { get; private set; }
         public static ProductionPlanController ProductionPlaner { get; private set; }
+        public static InstructorController CuxInstructor { get; private set; }
+        public static InstructorController CuxParalellInstructor { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

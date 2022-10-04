@@ -38,6 +38,8 @@
   <!--PCKG-END-->
 	
  <ItemGroup>
+		<ProjectReference Include="..\TcoInstructor.Wpf\x_template_xInstructor.csproj" />
+		<ProjectReference Include="..\TcoInstructor\TcOpen.Inxton.Instructor.csproj" />
 		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
 		<ProjectReference Include="..\x_template_xProductionPlaner\x_template_xProductionPlaner.csproj" />

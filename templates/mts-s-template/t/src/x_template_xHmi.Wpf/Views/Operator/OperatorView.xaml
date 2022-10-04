@@ -6,7 +6,9 @@
     xmlns:local="clr-namespace:x_template_xHmi.Wpf.Views.Operator"
     xmlns:mainplc="clr-namespace:x_template_xPlc"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml" xmlns:view="clr-namespace:x_template_xProductionPlaner.Planer.View;assembly=x_template_xProductionPlaner"
+    xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml" 
+    xmlns:view="clr-namespace:x_template_xProductionPlaner.Planer.View;assembly=x_template_xProductionPlaner" 
+     xmlns:x_template_xinstructor="clr-namespace:x_template_xInstructor;assembly=x_template_xInstructor"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800">
@@ -23,17 +25,63 @@
 
         
         <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
-        <UniformGrid Grid.Row="1" Columns="2">
-                <Canvas  >
+        <TabControl Grid.Row="1">
+            <TabItem Header="LAYOUT">
+                <Canvas>
 
                     <mainplc:CUBaseSpotView MinHeight="200" MaxWidth="500" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
                     <mainplc:CUBaseSpotLiteView  Canvas.Top="300" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
 
                 </Canvas>
+            </TabItem>
+            <TabItem Header="SINGLE STATION">
+                <!--<mainplc:CUBaseSpotView MinHeight="200"  DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>-->
+                <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Spot"></vortex:RenderableContentControl>
+
+            </TabItem>
+            <TabItem Header="SINGLE STATION WITH PLANER">
+                <UniformGrid  Rows="2">
+                    <mainplc:CUBaseSpotView MinHeight="200" DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x, Mode=OneWay}"/>
+                <view:ProductionPlanView Grid.Row="2" DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="SINGLE STATION WITH INSTRUCTOR">
+                <UniformGrid  Rows="2">
+                    <ScrollViewer>
+                  
+                    <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Tasks"></vortex:RenderableContentControl>
+                    </ScrollViewer>
+                    <vortexs:PermissionBox  Grid.Row="2"  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+                        <x_template_xinstructor:InstructorView DataContext="{Binding InstructorViewModel}"></x_template_xinstructor:InstructorView>
+                    </vortexs:PermissionBox>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="SINGLE STATION WITH  INSTRUCTORS">
+                <UniformGrid  Rows="2">
+                    <ScrollViewer>
+                        <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+                            <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._cu00x ,Mode=OneWay}" PresentationType="Tasks"></vortex:RenderableContentControl>
+                        </vortexs:PermissionBox>
+                    </ScrollViewer>
+                    <UniformGrid  Columns="2">
+                        <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+
+                            <x_template_xinstructor:InstructorView DataContext="{Binding InstructorViewModel}"></x_template_xinstructor:InstructorView>
+                        </vortexs:PermissionBox>
+                        <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+                            <x_template_xinstructor:InstructorView DataContext="{Binding InstructorParalellViewModel}"></x_template_xinstructor:InstructorView>
+                        </vortexs:PermissionBox>
+                    </UniformGrid>
+                </UniformGrid>
+
+            </TabItem>
+        </TabControl>
+     
+          
          
       
-                <view:ProductionPlanView Grid.Row="2" DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
-        </UniformGrid>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
             <vortexs:PermissionBox Grid.Row="1" Permissions="Administrator|technology_can_start_automat_all" SecurityMode="Disabled">
                 <vortex:TcoTaskView DataContext="{Binding x_template_xPlc.MAIN._technology._automatAllTask, Mode=OneWay}"/>
