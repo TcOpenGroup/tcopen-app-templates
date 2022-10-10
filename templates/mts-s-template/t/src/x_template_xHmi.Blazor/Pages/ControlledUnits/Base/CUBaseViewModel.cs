@@ -37,7 +37,7 @@ namespace x_template_xPlc
             {
                 if (Component != null && Component.GetChildren() != null)
                 {
-                    _taskControls = Component.GetChildren<ITcoTasked>();
+                    _taskControls = Component.GetChildren<ITcoTasked>().ToList();
                 }
 
                 return _taskControls;
@@ -58,36 +58,39 @@ namespace x_template_xPlc
             //this.Title = (string)symbolOrName.Convert(Component, typeof(string), null, System.Globalization.CultureInfo.InvariantCulture);
 
 
-            //var automatTask = Component.GetType().GetProperty("_automatTask")?.GetValue(Component) as TcoTaskedSequencer;
-            //if (automatTask != null)
-            //{
-            //    automatTask._task.ExecuteDialog = () =>
-            //    {
-            //        //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.AutomatWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
-            //    };
-            //}
+            var automatTask = Component.GetType().GetProperty("_automatTask")?.GetValue(Component) as TcoTaskedSequencer;
+            if (automatTask != null)
+            {
+                automatTask._task.ExecuteDialog = () =>
+                {
+                    return true;
+                    //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.AutomatWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                };
+            }
 
-            //var groundTask = Component.GetType().GetProperty("_groundTask")?.GetValue(Component) as TcoTaskedSequencer;
-            //if (groundTask != null)
-            //{
-            //    groundTask._task.ExecuteDialog = () =>
-            //    {
-            //        //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.GroundWarning, "Ground", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
-            //    };
-            //}
+            var groundTask = Component.GetType().GetProperty("_groundTask")?.GetValue(Component) as TcoTaskedSequencer;
+            if (groundTask != null)
+            {
+                groundTask._task.ExecuteDialog = () =>
+                {
+                    return true;
+                    //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.GroundWarning, "Ground", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                };
+            }
 
-            //var manualTask = Component.GetType().GetProperty("_manualTask")?.GetValue(Component) as TcoTaskedService;
-            //if (manualTask != null)
-            //{
-            //    manualTask.ExecuteDialog = () =>
-            //    {
-            //        //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.ManualWarning, "Manual", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
-            //    };
-            //}
+            var manualTask = Component.GetType().GetProperty("_manualTask")?.GetValue(Component) as TcoTaskedService;
+            if (manualTask != null)
+            {
+                manualTask.ExecuteDialog = () =>
+                {
+                    return true;
+                    //return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.ManualWarning, "Manual", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                };
+            }
 
         }
 
-        public override object Model { get => Component; set { Component = (CUBase)value; this.Update(); } }
+        public override object Model { get => Component; set { Component = (CUBase)value; } }
 
         public TcOpen.Inxton.Input.RelayCommand OpenDetailsCommand { get; }
     }
