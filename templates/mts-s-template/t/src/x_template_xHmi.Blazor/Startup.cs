@@ -19,6 +19,7 @@ using TcOpen.Inxton.Local.Security.Blazor.Services;
 using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.TcoCore.Blazor.Extensions;
 using Vortex.Presentation.Blazor.Services;
+using x_template_xDataMerge.Rework;
 using x_template_xHmi.Blazor.Security;
 using x_template_xPlc;
 using x_template_xPlcConnector;
@@ -125,10 +126,17 @@ namespace x_template_xHmi.Blazor
             var TechnologicalDataRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { Constants.CONNECTION_STRING_DB }, "TechnologySettings", "", "");
             IntializeTechnologyDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._technologySettings, new RavenDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
 
+            var ReworklDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ReworkSettings", "", "");
+            IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings));
+
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "Traceability", "", "");
             IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));
             IntializeProcessDataRepositoryWithDataExchange(Entry.Plc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
+
+            Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
         }
+
+        public static ReworkModel Rework { get; private set; }
 
         private static void IntializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
         {

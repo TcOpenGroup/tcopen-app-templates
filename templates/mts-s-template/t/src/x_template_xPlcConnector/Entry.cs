@@ -12,6 +12,7 @@ namespace x_template_xPlcConnector
             = new x_template_xPlc.x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(AmsId, 851, true));
 
         private static x_template_xPlc.x_template_xPlcTwinController _plcDesign;
+
         public static x_template_xPlc.x_template_xPlcTwinController PlcDesign
         {
             get
