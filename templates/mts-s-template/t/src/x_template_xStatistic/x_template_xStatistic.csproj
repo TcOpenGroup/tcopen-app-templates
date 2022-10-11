@@ -3,12 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <AssemblyName>x_template_xInstructor</AssemblyName>
-    <RootNamespace>x_template_xInstructor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcoInstructor\TcoInstructor.csproj" />
+    <ProjectReference Include="..\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 
@@ -25,9 +23,5 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Resources.sk-SK.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
-
 </Project>

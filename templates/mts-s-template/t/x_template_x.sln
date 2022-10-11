@@ -26,9 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoRepositoryDataSetHandler
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoDataSetTests", "src\TcoRepositoryDataSet\tests\TcoDataSetTests\TcoDataSetTests.csproj", "{BA7A158C-FDA2-4E8B-B04B-351CE0C3DC96}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcOpen.Inxton.Instructor", "src\TcoInstructor\TcOpen.Inxton.Instructor.csproj", "{E34D0292-A2F7-4EDE-8E38-4F94A1C1DDC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcoInstructor", "src\TcoInstructor\TcoInstructor.csproj", "{E34D0292-A2F7-4EDE-8E38-4F94A1C1DDC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "x_template_xInstructor", "src\TcoInstructor.Wpf\x_template_xInstructor.csproj", "{512196EB-A7D1-4D10-8823-8E700139DD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "x_template_xStatistic", "src\x_template_xStatistic\x_template_xStatistic.csproj", "{EAF91802-35D6-4318-80B8-381DBC0EC08D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -302,6 +304,26 @@ Global
 		{1F826822-78EF-46D2-B0C2-A803A090596D}.Release|TwinCAT RT (x64).Build.0 = Release|TwinCAT RT (x64)
 		{1F826822-78EF-46D2-B0C2-A803A090596D}.Release|TwinCAT RT (x86).ActiveCfg = Release|TwinCAT RT (x86)
 		{1F826822-78EF-46D2-B0C2-A803A090596D}.Release|TwinCAT RT (x86).Build.0 = Release|TwinCAT RT (x86)
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT CE7 (ARMV7).ActiveCfg = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT CE7 (ARMV7).Build.0 = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT OS (ARMT2).ActiveCfg = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT OS (ARMT2).Build.0 = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT RT (x64).ActiveCfg = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT RT (x64).Build.0 = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT RT (x86).ActiveCfg = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Debug|TwinCAT RT (x86).Build.0 = Debug|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT CE7 (ARMV7).ActiveCfg = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT CE7 (ARMV7).Build.0 = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT OS (ARMT2).ActiveCfg = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT OS (ARMT2).Build.0 = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT RT (x64).ActiveCfg = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT RT (x64).Build.0 = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT RT (x86).ActiveCfg = Release|Any CPU
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D}.Release|TwinCAT RT (x86).Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,6 +341,7 @@ Global
 		{BA7A158C-FDA2-4E8B-B04B-351CE0C3DC96} = {980FB031-6B76-47A9-85D6-E19EF518113B}
 		{E34D0292-A2F7-4EDE-8E38-4F94A1C1DDC5} = {CB550EAF-4D12-40B0-AA72-1DAB87A8F4BA}
 		{512196EB-A7D1-4D10-8823-8E700139DD8F} = {CB550EAF-4D12-40B0-AA72-1DAB87A8F4BA}
+		{EAF91802-35D6-4318-80B8-381DBC0EC08D} = {CB550EAF-4D12-40B0-AA72-1DAB87A8F4BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27BB64DF-7A1F-4117-9DEC-1E8E67C9C36C}

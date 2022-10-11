@@ -5,11 +5,18 @@ using TcOpen.Inxton.Data;
 
 namespace TcoRepositoryDataSetHandler
 {
-    public class EntitySet<T> : IBrowsableDataObject, INotifyPropertyChanged
+    public  class EntitySet<T> : IBrowsableDataObject, INotifyPropertyChanged  where T : class, new()
     {
-        private IList<T> items = new List<T>();
+        private IList<T> items ;
+        private T item; 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public EntitySet()
+        {
+            items = new List<T>();
+            item = new T();
+        }
 
         protected void NotifyPropertyChange(string propertyName)
         {
@@ -17,7 +24,18 @@ namespace TcoRepositoryDataSetHandler
         }
 
         /// <summary>
-        /// Gets instructions of this set.
+        /// Gets list of items of this set.
+        /// </summary>
+        public T Item
+        {
+            get => item; set
+            {
+                item = value;
+                NotifyPropertyChange(nameof(Item));
+            }
+        }
+        /// <summary>
+        /// Gets list of items of this set.
         /// </summary>
         public IList<T> Items
         {
@@ -43,6 +61,6 @@ namespace TcoRepositoryDataSetHandler
         public DateTime _Created { get; set; }
         public string _EntityId { get; set; }
         public DateTime _Modified { get; set; }
-
+      
     }
 }
