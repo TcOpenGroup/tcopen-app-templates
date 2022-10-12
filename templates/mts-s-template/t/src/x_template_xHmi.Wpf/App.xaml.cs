@@ -160,7 +160,7 @@ namespace x_template_xHmi.Wpf
 
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "Traceability", "", "");
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));            
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
+            IntializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability),CuxStatistic);
 
             Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
 
@@ -209,6 +209,18 @@ namespace x_template_xHmi.Wpf
         }
 
 
+
+        /// Initializes <see cref="ProcessDataManager"/>s repository for data exchange between PLC and storage (database).
+        /// </summary>
+        /// <param name="manager">Data manager</param>
+        /// <param name="repository">Repository</param>
+        private static void IntializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; CuxStatistic.Count(data); };
+            processData.InitializeRepository(repository);
+            processData.InitializeRemoteDataExchange(repository);
+        }
 
         /// <summary>
         /// Initializes <see cref="TechnologicalDataManager"/>s repository for data exchange between PLC and storage (database).

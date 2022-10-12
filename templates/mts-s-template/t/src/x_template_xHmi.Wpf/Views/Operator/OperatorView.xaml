@@ -78,7 +78,23 @@
 
             </TabItem>
 
-            <TabItem Header="STATISTICS">
+            <TabItem Header="STATISTICS CUSTOMIZED">
+                <UniformGrid>
+                    <view1:ErrorsDataView DataContext="{Binding StatisticViewModel}"></view1:ErrorsDataView>
+                    <view1:RecipesDataView DataContext="{Binding StatisticViewModel}"></view1:RecipesDataView>
+                    <view1:CarriersDataView DataContext="{Binding StatisticViewModel}"></view1:CarriersDataView>
+                    <view1:ReworksDataView DataContext="{Binding StatisticViewModel}"></view1:ReworksDataView>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="PRODUCTION TREND">
+                <UniformGrid>
+                    <view1:TrendDataView DataContext="{Binding StatisticViewModel}"></view1:TrendDataView>
+                 
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="STATISTICS ADMIN">
   
                         <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
 
@@ -87,6 +103,7 @@
                  
 
             </TabItem>
+            
         </TabControl>
      
           

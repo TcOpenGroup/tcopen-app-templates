@@ -192,6 +192,9 @@
   <data name="Shift" xml:space="preserve">
     <value>SHIFT</value>
   </data>
+  <data name="SplitErrorCounter" xml:space="preserve">
+    <value>SPLIT ERROR COUNTERS</value>
+  </data>
   <data name="ThreeShiftCounter" xml:space="preserve">
     <value>THREE SHHIFT A DAY</value>
   </data>

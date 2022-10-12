@@ -14,6 +14,7 @@ namespace x_template_xStatistic.Statistics
         private const string FirstShift = "01";
         private const string SecondShift = "02";
         private const string Format = "00";
+        private const string UndefinedError = "UNDEFINED";
 
         public StatisticsDataController(string setId,
                                        RepositoryDataSetHandler<StatisticsDataItem> dataHandler,
@@ -232,6 +233,7 @@ namespace x_template_xStatistic.Statistics
 
         public void Count(PlainProcessData data)
         {
+            
             CurrentDataSet = this.DataHandler.Read(setId);
             var header = data.EntityHeader;
             var isFailed = header.Results.Result == 30;
@@ -249,21 +251,23 @@ namespace x_template_xStatistic.Statistics
 
 
                 // error type count
-                var anyFailure = StatisticsData.ErrorCounter.Any(p => p.Id == data.EntityHeader.Results.Failures);
-
-                if (anyFailure)
+                if (Config.SplitMultipleErrors)
                 {
-                    var count = StatisticsData.ErrorCounter.FirstOrDefault(p => p.Id == data.EntityHeader.Results.Failures).Counter;
-                    if (isFailed)
+                    foreach (var item in data.EntityHeader.Results.Failures.Split(';'))
                     {
-                        count++;
+                        if (item != string.Empty)
+                        {
+                            CountErrorType(isFailed, item);
 
+                        }
                     }
-                    StatisticsData.ErrorCounter.FirstOrDefault(c => c.Id == data.EntityHeader.Results.Failures).Counter = count;
-                   
                 }
                 else
-                    StatisticsData.ErrorCounter.Add(new KeyValueSimple() { Id = data.EntityHeader.Results.Failures, Counter = 1 });
+                {
+                    CountErrorType(isFailed, data.EntityHeader.Results.Failures);
+                }
+
+
 
                 // rework counter
                 if (header.WasReworked)
@@ -434,6 +438,30 @@ namespace x_template_xStatistic.Statistics
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StatisticsData"));
           
             this.DataHandler.Update(setId, this.CurrentDataSet);
+        }
+
+        private void CountErrorType(bool isFailed, string item)
+        {
+            var itm = item;
+            if (itm == string.Empty)
+            {
+                itm = UndefinedError;
+            }
+            var anyFailure = StatisticsData.ErrorCounter.Any(p => p.Id == itm);
+
+            if (anyFailure)
+            {
+                var count = StatisticsData.ErrorCounter.FirstOrDefault(p => p.Id == itm).Counter;
+                if (isFailed)
+                {
+                    count++;
+
+                }
+                StatisticsData.ErrorCounter.FirstOrDefault(c => c.Id == itm).Counter = count;
+
+            }
+            else
+                StatisticsData.ErrorCounter.Add(new KeyValueSimple() { Id = itm, Counter = 1 });
         }
 
         public void NotifyUpdate()

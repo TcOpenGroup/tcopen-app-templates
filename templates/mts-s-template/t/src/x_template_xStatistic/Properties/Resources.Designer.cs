@@ -286,6 +286,15 @@ namespace x_template_xStatistic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SPLIT ERROR COUNTERS.
+        /// </summary>
+        public static string SplitErrorCounter {
+            get {
+                return ResourceManager.GetString("SplitErrorCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to THREE SHHIFT A DAY.
         /// </summary>
         public static string ThreeShiftCounter {

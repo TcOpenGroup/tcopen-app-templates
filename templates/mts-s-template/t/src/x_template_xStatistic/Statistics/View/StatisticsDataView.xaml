@@ -39,7 +39,7 @@
                             <Setter Property="CanUserSortColumns" Value="True"></Setter>
                             <Setter Property="IsReadOnly" Value="False"></Setter>
                             <Setter Property="VerticalAlignment" Value="Top"></Setter>
-                            <Setter Property="Height" Value="200"></Setter>
+                            <Setter Property="MaxHeight" Value="300"></Setter>
                         </Style>
 
                         </ItemsControl.Resources>
@@ -308,11 +308,14 @@
 
 
                     <GroupBox Header="{x:Static strings:Resources.RequiredHourProduction}">
-                        <TextBox IsEnabled="True" Text="{Binding Controller.Config.ProductionTrendTarget, Mode=TwoWay}">
-                    </TextBox>
-                </GroupBox>
-                    
-                <Button   HorizontalAlignment="Center" Margin="5" Command="{Binding SaveSettingsCommand}" Content="Save"  />
+                        <TextBox IsEnabled="True" Text="{Binding Controller.Config.ProductionTrendTarget, Mode=TwoWay}"></TextBox>
+                    </GroupBox>
+
+                    <GroupBox Header="{x:Static strings:Resources.SplitErrorCounter}">
+                        <CheckBox IsEnabled="True" IsChecked="{Binding Controller.Config.SplitMultipleErrors, Mode=TwoWay}"></CheckBox>
+                    </GroupBox>
+
+                    <Button   HorizontalAlignment="Center" Margin="5" Command="{Binding SaveSettingsCommand}" Content="Save"  />
 
             </ItemsControl>
             </ScrollViewer>

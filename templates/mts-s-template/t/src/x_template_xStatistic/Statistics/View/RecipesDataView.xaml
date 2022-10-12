@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="x_template_xStatistic.Statistics.View.RecipesDataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:x_template_xStatistic.Statistics.View"
+        xmlns:strings="clr-namespace:x_template_xStatistic.Properties"
+        mc:Ignorable="d"
+        d:DesignHeight="450" d:DesignWidth="800">
+    <d:UserControl.DataContext>
+        <local:StatisticsDataViewModel></local:StatisticsDataViewModel>
+    </d:UserControl.DataContext>
+
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="GroupBox" >
+           
+            </Style>
+
+            <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+                <Setter Property="Margin" Value="5,5,5,0"></Setter>
+                <Setter Property="AutoGenerateColumns" Value="False"></Setter>
+                <Setter Property="CanUserAddRows" Value="False"></Setter>
+                <Setter Property="CanUserDeleteRows" Value="False"></Setter>
+                <Setter Property="CanUserSortColumns" Value="True"></Setter>
+                <Setter Property="IsReadOnly" Value="True"></Setter>
+                <Setter Property="VerticalAlignment" Value="Top"></Setter>
+   
+            </Style>
+        </Grid.Resources>
+
+        <GroupBox  Header="{x:Static strings:Resources.TypeCounter}">
+
+            <DataGrid
+                            ItemsSource="{Binding Controller.StatisticsData.RecipeCounter}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="{x:Static strings:Resources.Type}" />
+                    <DataGridTextColumn Binding="{Binding Counter.Passed}" Header="{x:Static strings:Resources.Passed}" />
+                    <DataGridTextColumn Binding="{Binding Counter.Failed}" Header="{x:Static strings:Resources.Failed}" />
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </GroupBox>
+        <Button Grid.Row="1" HorizontalAlignment="Center" Command="{Binding ClearRecipeCounterCommand}" Content="{x:Static strings:Resources.ClearCounter}" />
+
+    </Grid>
+
+
+
+</UserControl>

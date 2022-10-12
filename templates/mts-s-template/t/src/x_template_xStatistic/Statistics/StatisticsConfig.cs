@@ -4,13 +4,14 @@ using System.ComponentModel;
 
 namespace x_template_xStatistic.Statistics
 {
-    public class StatisticsConfig : INotifyPropertyChanged
+    public class StatisticsConfig 
     {
         private double productionTrendTarget;
         private List<AssignHourToShift> setShiftAndHours;
         private List<KeyValueCounter> threeShiftPerDay;
         private List<KeyValueCounter> twoShiftPerDay;
         private List<KeyValueSimple> productionTrend;
+        private bool splitMultipleErrors;
 
         public StatisticsConfig()
         {
@@ -27,7 +28,15 @@ namespace x_template_xStatistic.Statistics
             get => productionTrendTarget; set
             {
                 productionTrendTarget = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProductionTrendTarget)));
+                
+            }
+        }
+        public bool SplitMultipleErrors
+        {
+            get => splitMultipleErrors; set
+            {
+                splitMultipleErrors = value;
+                
             }
         }
 
@@ -47,7 +56,6 @@ namespace x_template_xStatistic.Statistics
                 }
 
                 setShiftAndHours = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SetShiftAndHours)));
             }
         }
 
@@ -66,7 +74,6 @@ namespace x_template_xStatistic.Statistics
                 }
 
                 threeShiftPerDay = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ThreeShiftPerDayCounter)));
             }
         }
 
@@ -84,7 +91,6 @@ namespace x_template_xStatistic.Statistics
                 }
 
                 twoShiftPerDay = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TwoShiftPerDayCounter)));
             }
         }
 
@@ -103,7 +109,6 @@ namespace x_template_xStatistic.Statistics
                 }
 
                 productionTrend = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProductionTrend)));
             }
         }
 

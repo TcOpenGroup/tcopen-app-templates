@@ -53,7 +53,7 @@ namespace x_template_xStatistic.Statistics.View
             Controller.Count(new PlainProcessData()
             {
                 _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "ABCD", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 5 ,CHYBA 6" }, Carrier = "5432548457984" }
+                EntityHeader = new PlainEntityHeader() { Recipe = "ABCD", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 5 ;CHYBA 6" }, Carrier = "5432548457984" }
             });
 
             Controller.Count(new PlainProcessData()
@@ -64,7 +64,7 @@ namespace x_template_xStatistic.Statistics.View
             Controller.Count(new PlainProcessData()
             {
                 _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XYZ", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 20, Failures = "" }, IsMaster = false }
+                EntityHeader = new PlainEntityHeader() { Recipe = "XYZ", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 4;Chyba 7" }, IsMaster = false }
             }); ;
             Controller.Count(new PlainProcessData()
             {
