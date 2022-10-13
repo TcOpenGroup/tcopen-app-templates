@@ -77,17 +77,14 @@ namespace x_template_xDataMerge.Rework
 
                 if (source.EntityHeader.NextStation > target.EntityHeader.LastStation)
                 {
-                    MessageBox.Show(Resources.ResourceManager.GetString("IncorectReworkJumpForward"));
                     return false;
                 }
                 else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.Passed)
                 {
-                    MessageBox.Show(Resources.ResourceManager.GetString("IncorrectReworkPassed"));
                     return false;
                 }
                 else if (target.EntityHeader.Results.Result == (short)TcoInspectors.eOverallResult.InProgress)
                 {
-                    MessageBox.Show(Resources.ResourceManager.GetString("IncorectReworkInProgress"));
                     return false;
                 }
 
@@ -112,7 +109,6 @@ namespace x_template_xDataMerge.Rework
                 throw ex;
             }
 
-            MessageBox.Show(Resources.ResourceManager.GetString("ReworkSuccesfull"));
             retVal = true;
 
 
