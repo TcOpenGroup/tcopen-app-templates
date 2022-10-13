@@ -237,7 +237,7 @@ namespace x_template_xStatistic.Statistics
             CurrentDataSet = this.DataHandler.Read(setId);
             var header = data.EntityHeader;
             var isFailed = header.Results.Result == 30;
-            var isNormalProduction = !header.IsEmpty || !header.IsMaster;
+            var isNormalProduction = !header.IsEmpty && !header.IsMaster ;
 
             if (isNormalProduction)
             {
@@ -248,26 +248,28 @@ namespace x_template_xStatistic.Statistics
                 { _Modified = data._Modified, Counter = isFailed ? new CounterItem() { Failed = 1 } : new CounterItem() { Passed = 1 } });
                 //clear old samples
                 StatisticsData.ProductionStack.RemoveAll(x => (DateTime.Now - x._Modified).TotalDays > 1);
-
-
+               
                 // error type count
-                if (Config.SplitMultipleErrors)
+                if (isFailed)
                 {
-                    foreach (var item in data.EntityHeader.Results.Failures.Split(';'))
+                    
+                    if (Config.SplitMultipleErrors)
                     {
-                        if (item != string.Empty)
+                        foreach (var item in data.EntityHeader.Results.Failures.Split(';'))
                         {
-                            CountErrorType(isFailed, item);
+                            if (item != string.Empty)
+                            {
+                                CountErrorType( item);
 
+                            }
                         }
                     }
-                }
-                else
-                {
-                    CountErrorType(isFailed, data.EntityHeader.Results.Failures);
-                }
+                    else
+                    {
+                        CountErrorType(data.EntityHeader.Results.Failures);
+                    }
 
-
+                }
 
                 // rework counter
                 if (header.WasReworked)
@@ -440,7 +442,7 @@ namespace x_template_xStatistic.Statistics
             this.DataHandler.Update(setId, this.CurrentDataSet);
         }
 
-        private void CountErrorType(bool isFailed, string item)
+        private void CountErrorType( string item)
         {
             var itm = item;
             if (itm == string.Empty)
@@ -452,11 +454,9 @@ namespace x_template_xStatistic.Statistics
             if (anyFailure)
             {
                 var count = StatisticsData.ErrorCounter.FirstOrDefault(p => p.Id == itm).Counter;
-                if (isFailed)
-                {
-                    count++;
+            
+                count++;
 
-                }
                 StatisticsData.ErrorCounter.FirstOrDefault(c => c.Id == itm).Counter = count;
 
             }

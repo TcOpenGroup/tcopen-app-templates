@@ -242,7 +242,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Id}" IsReadOnly="True" Header="Id" />
                                 <DataGridTextColumn Binding="{Binding AttributeName}" IsReadOnly="False" Header="Hour description" />
-                                <DataGridComboBoxColumn SelectedValueBinding="{Binding ThreeShiftDayId,Mode=TwoWay}" Header="{x:Static strings:Resources.TwoShiftCounter}">
+                                <DataGridComboBoxColumn SelectedValueBinding="{Binding ThreeShiftDayId,Mode=TwoWay}" Header="{x:Static strings:Resources.ThreeShiftCounter}">
                                     <DataGridComboBoxColumn.ElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <Setter Property="ItemsSource" Value="{StaticResource threeShiftXamlArray}" />
