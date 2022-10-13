@@ -29,14 +29,31 @@
     </div>
     <div class="card-body">
         <h5 class="card-title">@ViewModel.Component._statusInfo.CurrentTaskDescription.Cyclic</h5>
-       
-        <RenderableContentControl Context="(IVortexElement)ViewModel.TaskControls.First()" Presentation="Base"></RenderableContentControl>
-        There is double inheritance, so it won't work!
-        @foreach (var task in ViewModel.TaskControls)
+
+        @try
         {
-            <RenderableContentControl Context="(IVortexElement)task" Presentation="TaskCommand"></RenderableContentControl>
+              <RenderableContentControl Context="(IVortexElement)ViewModel.TaskControls.First()" Presentation="Base"></RenderableContentControl>
+                //There is double inheritance, so it won't work!
+                @foreach (var task in ViewModel.TaskControls.Skip(1))
+                {
+                    <RenderableContentControl Context="(IVortexElement)task" Presentation="TaskCommand"></RenderableContentControl>
+                }
+                @*<RenderableContentControl Context="Entry.Plc.MAIN._technology._cu00x._automatTask" Presentation="Base"></RenderableContentControl>*@
+
+
+                <p>---------------------------------</p>
+
+                @foreach (var task in ViewModel.TaskControls.Skip(1))
+                {
+                    <RenderableContentControl Context="(IVortexElement)task" Presentation="Sequence-Components"></RenderableContentControl>
+                }
         }
-        
+        catch  
+        {
+
+            //swallow
+        }
+      
     </div>
 </div>
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TcoCore;
+using Vortex.Connector;
 using Vortex.Presentation;
 
 namespace x_template_xPlc
@@ -46,7 +47,7 @@ namespace x_template_xPlc
         }
 
 
-        public object StepController { get { return this.Component._modeController; } }
+        public IVortexElement StepController { get { return this.Component._modeController; } }
     }
 }
 
