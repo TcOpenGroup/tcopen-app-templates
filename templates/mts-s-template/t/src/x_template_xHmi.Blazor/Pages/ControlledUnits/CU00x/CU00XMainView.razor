@@ -1,13 +1,18 @@
 ﻿@page "/operator/cu00x"
-<h1>CU00X</h1>
+    <h1>CU00X</h1>
+    <AuthorizeView Roles="@String.Format("{0},{1}",Roles.station_details, "Administrator")">
 
 
-<CUBaseControlView Vortex="ControlUnit"></CUBaseControlView>
+        <Authorized>
+            <CUBaseControlView Vortex="ControlUnit"></CUBaseControlView>
+        </Authorized>
+        <NotAuthorized>
+            Sorry, you are not authorized to see station detail. Please make sure you are logged in and have station_details role.
+        </NotAuthorized>
 
+    </AuthorizeView>
 
-
-@code {
-    [Parameter]
-    public CU00x ControlUnit { get; set; } = Entry.Plc.MAIN._technology._cu00x;
-
-}
+    @code {
+        [Parameter]
+        public CU00x ControlUnit { get; set; } = Entry.Plc.MAIN._technology._cu00x;
+    }

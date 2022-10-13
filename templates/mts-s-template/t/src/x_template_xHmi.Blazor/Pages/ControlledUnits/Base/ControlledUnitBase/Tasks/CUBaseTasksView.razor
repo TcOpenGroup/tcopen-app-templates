@@ -1,59 +1,47 @@
 ﻿@namespace x_template_xPlc
 @inherits RenderableViewModelComponentBase<CUBaseViewModel>
-<h3>CUBaseTasksView</h3>
 
 <div class="card">
     <div class="card-header d-flex">
-      
 
-        
-            <div class="p-2 " align="center">
-                <label class="form-label"><b>Actual CT</b></label>
-                <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.CurrentCycleTime.Cyclic)</p>
-            </div>
-            <div class="p-2" align="center">
-                <label class="form-label"><b>Avarage CT</b></label>
-                <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.AverageCycleTime.Cyclic)</p>
-            </div>
-            <div class="p-2" align="center">
-                <label class="form-label"><b>Actual Clean CT</b></label>
-                <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.CurrentCleanCycleTime.Cyclic)</p>
-            </div>
-            <div class="p-2" align="center">
-                <label class="form-label"><b>Avarage Clean CT</b></label>
-                <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.AverageCleanCycleTime.Cyclic)</p>
-            </div>
-            <h3 class="ms-auto">@NameOrSymbolConverterBlazor.Convert(ViewModel.Component)</h3>
-        
-       
+        <div class="p-2 " align="center">
+            <label class="form-label"><b>Actual CT</b></label>
+            <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.CurrentCycleTime.Cyclic)</p>
+        </div>
+        <div class="p-2" align="center">
+            <label class="form-label"><b>Avarage CT</b></label>
+            <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.AverageCycleTime.Cyclic)</p>
+        </div>
+        <div class="p-2" align="center">
+            <label class="form-label"><b>Actual Clean CT</b></label>
+            <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.CurrentCleanCycleTime.Cyclic)</p>
+        </div>
+        <div class="p-2" align="center">
+            <label class="form-label"><b>Avarage Clean CT</b></label>
+            <p>@string.Format("{0:hh\\:mm\\:ss\\:f}", @ViewModel.Component._statusInfo.AverageCleanCycleTime.Cyclic)</p>
+        </div>
+        <h3 class="ms-auto">@NameOrSymbolConverterBlazor.Convert(ViewModel.Component)</h3>
+
+
     </div>
     <div class="card-body">
-        <h5 class="card-title">@ViewModel.Component._statusInfo.CurrentTaskDescription.Cyclic</h5>
+        <div class="d-flex">
+            <h5 class="me-auto card-title">@ViewModel.Component._statusInfo.CurrentTaskDescription.Cyclic</h5>
 
-        @try
+            
+            @foreach (var task in ViewModel.TaskControls)
+            {
+                <RenderableContentControl Context="task"
+                                          Presentation="TaskCommand"
+                                          Class="p-2 "></RenderableContentControl>
+            }
+        </div>
+
+        @foreach (var task in ViewModel.TaskControls)
         {
-              <RenderableContentControl Context="(IVortexElement)ViewModel.TaskControls.First()" Presentation="Base"></RenderableContentControl>
-                //There is double inheritance, so it won't work!
-                @foreach (var task in ViewModel.TaskControls.Skip(1))
-                {
-                    <RenderableContentControl Context="(IVortexElement)task" Presentation="TaskCommand"></RenderableContentControl>
-                }
-                @*<RenderableContentControl Context="Entry.Plc.MAIN._technology._cu00x._automatTask" Presentation="Base"></RenderableContentControl>*@
-
-
-                <p>---------------------------------</p>
-
-                @foreach (var task in ViewModel.TaskControls.Skip(1))
-                {
-                    <RenderableContentControl Context="(IVortexElement)task" Presentation="Sequence-Components"></RenderableContentControl>
-                }
+            <RenderableContentControl Context="task" Presentation="Sequence-Components"></RenderableContentControl>
         }
-        catch  
-        {
 
-            //swallow
-        }
-      
     </div>
 </div>
 

@@ -4,10 +4,22 @@
 <RenderableContentControl Context="@Entry.Plc.MAIN._technology._processSettings" Presentation="SimpleSelector"></RenderableContentControl>
 
 <CUBaseSpotView Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._cu00x" />
-<CUBaseSpotLiteView Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._cu00x" />
+@*<CUBaseSpotLiteView Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._cu00x" />*@
 
-<RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._groundAllTask"></RenderableContentControl>
-<RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._automatAllTask"></RenderableContentControl>
+<div class="d-flex">
+
+    <AuthorizeView Roles="technology_automat_all, technology_ground_all">
+        <Authorized>
+            <RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._groundAllTask" Class="p-2"></RenderableContentControl>
+            <RenderableContentControl Context="@x_template_xPlcConnector.Entry.Plc.MAIN._technology._automatAllTask" Class="p-2"></RenderableContentControl>
+        </Authorized>
+        <NotAuthorized>
+            Authorize yourself to show tasks.
+        </NotAuthorized>
+    </AuthorizeView>
+
+</div>
+
 
 @code {
 

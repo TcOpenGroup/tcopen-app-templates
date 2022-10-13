@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog.Enrichers.EnrichedProperties" Version="1.0.63" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" /> 
-    <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
+    <PackageReference Include="RavenDB.Embedded" Version="5.4.4" />
   </ItemGroup>
 
 	<!--PROJ-START
@@ -28,13 +28,13 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.8.0-alpha.10" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.8.0-alpha.10" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.10.0-alpha.9" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.10.0-alpha.9" />
   </ItemGroup>
   <!--PCKG-END-->
 	
