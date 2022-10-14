@@ -2,21 +2,5 @@
 @inherits RenderableViewModelComponentBase<TcoTaskedSequencerTaskCommandViewModel>
 
 
+<RenderableContentControl Context="(TcoCore.TcoTask)ViewModel.Component._task" />
 
-@*<RenderableContentControl Context="(TcoCore.TcoTask)ViewModel.Component" Presentation="Base"></RenderableContentControl>*@
-<RenderableContentControl Context="(TcoCore.TcoTask)ViewModel.Component._task"  />
-
-
-
-@*<RenderableContentControl Context="" Presentation="Base" />*@
-@code {
-
-    
-
-    protected override void OnInitialized()
-    {
-        
-
-        base.OnInitialized();
-    }
-}

@@ -2,6 +2,8 @@
 @inherits RenderableViewModelComponentBase<CUBaseSpotViewModel>
 @inject NavigationManager _navigationManager
 @using TcoCore
+@using TcOpen.Inxton.Local.Security;
+@using x_template_xHmi.Blazor.Security;
 
 <button class="station hover-cyan @stateBorder"
         @onclick="() => NavigateToStationDetail() ">
@@ -45,7 +47,14 @@
     }
     private void NavigateToStationDetail()
     {
-        _navigationManager.NavigateTo($"/operator/{Context.AttributeShortName}");
+        if (AuthorizationChecker.HasAuthorization(Roles.station_details))
+        {
+            _navigationManager.NavigateTo($"/operator/{Context.AttributeShortName}");
+        }
+        else
+        {
+            _navigationManager.NavigateTo("Identity/Account/Login");
+        }
     }
     private void ChangeModeColorWatch(IValueTag sender, Vortex.Connector.ValueTypes.ValueChangedEventArgs args)
     {

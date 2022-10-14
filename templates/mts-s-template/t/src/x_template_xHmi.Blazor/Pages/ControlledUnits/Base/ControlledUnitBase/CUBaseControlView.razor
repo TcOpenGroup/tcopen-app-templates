@@ -2,9 +2,6 @@
 @inherits RenderableViewModelComponentBase<CUBaseControlViewModel>
 @inject NavigationManager _navigationManager
 
-<h3>CUBaseControlView</h3>
-
-
 
 <TabControl>
     <TabPage Text="Overview">
@@ -20,15 +17,15 @@
         <CUBaseComponentsView Vortex="ViewModel.Components"></CUBaseComponentsView>
     </TabPage>
     <TabPage Text="Diagnostics">
-        <RenderableContentControl Context="ViewModel.Component" Presentation="Diagnostics"></RenderableContentControl>
+        <CUBaseDiagView Vortex="ViewModel.Component"></CUBaseDiagView>
     </TabPage>
 </TabControl>
 
 
 @code {
 
-        [Parameter]
-        public CUBase Vortex { get; set; }
+    [Parameter]
+    public CUBase Vortex { get; set; }
 
 
     protected override void OnInitialized()

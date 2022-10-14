@@ -56,7 +56,8 @@ namespace x_template_xHmi.Blazor
             Roles.Create(roleGroupManager);
             services.AddVortexBlazorSecurity(userRepo,roleGroupManager);
             services.AddTcoCoreExtensions();
-
+           
+            Entry.Plc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
             SetUpRepositoriesUsingRavenDb();
         }
 
@@ -85,12 +86,10 @@ namespace x_template_xHmi.Blazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-
-            Entry.Plc.Connector.BuildAndStart();
            
         }
 
-        private static async void StartRavenDBEmbeddedServer()
+        private static void StartRavenDBEmbeddedServer()
         {
             // Start embedded RavenDB server
 
@@ -112,10 +111,6 @@ namespace x_template_xHmi.Blazor
               
             });
 
-
-           // await EmbeddedServer.Instance.RestartServerAsync();
-            // Uri url = await EmbeddedServer.Instance.GetServerUriAsync();
-            //EmbeddedServer.Instance.OpenStudioInBrowser();
         }
 
         private void SetUpRepositoriesUsingRavenDb()

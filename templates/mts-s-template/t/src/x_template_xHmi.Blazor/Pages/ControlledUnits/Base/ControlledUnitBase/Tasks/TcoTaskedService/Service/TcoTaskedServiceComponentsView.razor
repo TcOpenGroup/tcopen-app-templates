@@ -1,0 +1,12 @@
+﻿@namespace x_template_xPlc
+@inherits RenderableViewModelComponentBase<TcoTaskedServiceComponentsViewModel>
+
+
+@if (TaskToStateBlazorConverter.IsVisibleConverter(ViewModel.Component._taskState.Cyclic))
+{
+    <div class="card">
+        <div class="card-body">
+            <RenderableContentControl Context="ViewModel.Serviceable" Presentation="Service-Manual"></RenderableContentControl>
+        </div>
+    </div>
+}
