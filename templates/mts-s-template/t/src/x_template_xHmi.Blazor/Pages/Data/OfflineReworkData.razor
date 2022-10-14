@@ -1,4 +1,5 @@
 ﻿@page "/data/offline_rework_data"
+@inject BlazorAlertManager alertManager
 
 @inherits RenderableComponentBase
 <h2>OfflineReworkData</h2>
@@ -7,16 +8,16 @@
     <div class="col-6">
         @if (ViewModel.TargetData != null)
         {
-        <RenderableContentControl Context="@ViewModel.TargetData" Presentation="Display"></RenderableContentControl>
+            <RenderableContentControl Context="@ViewModel.TargetData" Presentation="Display"></RenderableContentControl>
         }
     </div>
     <div class="col-6 text-center">
         <div class="row">
             <select class="form-select" @bind="@SelectedSource">
-                <option class="form-control" selected disabled>Select</option>
-                @foreach (PlainProcessData item in Reworks)
+                <option class="form-control" selected disabled value="null">Select</option>
+                @foreach (PlainProcessData item in ViewModel.ReworkModel.Reworks.ToList())
                 {
-                    <option class="form-control">@item.qlikId</option>
+                    <option class="form-control" value="@item.qlikId">@item.qlikId</option>
                 }
             </select>
         </div>
@@ -33,33 +34,30 @@
         </div>
         <div class="row">
             <button type="button" class="btn btn-primary @(@SelectedSource != null && ViewModel.TargetData._data._EntityId.Shadow != null  ? "" : "disabled")" @onclick="() => MergeData() ">Rework entity</button>
-            <button type="button" class="btn btn-primary" @onclick="() => RefreshVal()">Refresh</button>
         </div>
     </div>
 </div>
 
 @code {
-
-
-    public string TargetData { get; set; }
     OfflineReworkDataViewModel ViewModel = new OfflineReworkDataViewModel();
     private string SelectedSource { get; set; }
-    private IList<PlainProcessData> Reworks { get; set; } = new List<PlainProcessData>();
+
     protected override void OnInitialized()
     {
         UpdateShadowValuesOnChange(ViewModel.TargetData._data);
-        UpdateValuesOnChange(ViewModel.TargetData);
-        Reworks = ViewModel.ReworkModel.Reworks.ToList();
+        //UpdateValuesOnChange(ViewModel.TargetData);
     }
 
     private async Task MergeData()
     {
-
-        await ViewModel.MergeDataAsync(SelectedSource, ViewModel.TargetData._data._EntityId.Shadow);
-        //await InvokeAsync(StateHasChanged);
-    }
-    public async void RefreshVal()
-    {
-        await InvokeAsync(StateHasChanged);
+        bool result = await ViewModel.ReworkModel.ReworkEntityAsync(SelectedSource, ViewModel.TargetData._data._EntityId.Shadow);
+        if (result)
+        {
+            alertManager.addAlert("info", "Rework successful!");
+        }
+        else
+        {
+            alertManager.addAlert("info", "Rework failed!");
+        }
     }
 }

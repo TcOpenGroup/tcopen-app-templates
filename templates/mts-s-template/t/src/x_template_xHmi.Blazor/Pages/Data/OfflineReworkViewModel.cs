@@ -41,10 +41,5 @@ namespace x_template_xPlc
                 return Startup.Rework;
             }
         }
-
-        public async Task MergeDataAsync(string source, string target)
-        {
-            await ReworkModel.ReworkEntityAsync(source, target);
-        }
     }
 }
