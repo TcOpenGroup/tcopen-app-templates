@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.10.0-alpha.12" />
-    <PackageReference Include="TcOpen.Inxton.Data" Version="0.10.0-alpha.12" />    
+    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.10.0-alpha.14" />
+    <PackageReference Include="TcOpen.Inxton.Data" Version="0.10.0-alpha.14" />    
   </ItemGroup>
 
 </Project>
