@@ -129,6 +129,9 @@
   <data name="ClearCounter" xml:space="preserve">
     <value>RESET </value>
   </data>
+  <data name="Conters" xml:space="preserve">
+    <value>COUNTERS</value>
+  </data>
   <data name="Count" xml:space="preserve">
     <value>COUNT</value>
   </data>

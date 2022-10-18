@@ -22,8 +22,7 @@ namespace x_template_xStatistic.Statistics.View
             ClearReworkCounterCommand = new RelayCommand(a => ClearReworkCounter());
             ClearTrendCounterCommand = new RelayCommand(a => ClearTrendCounter());
             SaveSettingsCommand = new RelayCommand(a => SaveSettings());
-            AddNewTestCommand = new RelayCommand(a => AddTest());
-      
+         
         }
 
       
@@ -41,48 +40,48 @@ namespace x_template_xStatistic.Statistics.View
             ClearReworkCounterCommand = new RelayCommand(a => ClearReworkCounter());
             ClearTrendCounterCommand = new RelayCommand(a => ClearTrendCounter());
             SaveSettingsCommand = new RelayCommand(a => SaveSettings());
-            AddNewTestCommand = new RelayCommand(a => AddTest());
+            
             Controller = statController;
 
 
 
         }
-        private void AddTest()
-        {
+        //private void AddTest()
+        //{
 
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "ABCD", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 5 ;CHYBA 6" }, Carrier = "5432548457984" }
-            });
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "ABCD", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 5 ;CHYBA 6" }, Carrier = "5432548457984" }
+        //    });
 
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XY", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 20, Failures = "" }, IsMaster = false, Carrier = "5432548457456" }
-            }); ;
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XYZ", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 4;Chyba 7" }, IsMaster = false }
-            }); ;
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XXXY", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 20, Failures = "" }, IsEmpty = true }
-            }); ;
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "XY", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 20, Failures = "" }, IsMaster = false, Carrier = "5432548457456" }
+        //    }); ;
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "XYZ", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "CHYBA 4;Chyba 7" }, IsMaster = false }
+        //    }); ;
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "XXXY", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 20, Failures = "" }, IsEmpty = true }
+        //    }); ;
 
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XXXX", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "" }, Carrier = "0123548457984" }
-            }); ;
-            Controller.Count(new PlainProcessData()
-            {
-                _Modified = DateTime.Now,
-                EntityHeader = new PlainEntityHeader() { Recipe = "XXXX", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "" }, Carrier = "0123548457984", WasReworked = true, LastReworkName = "Rwork OP20" }
-            }); ;
-        }
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "XXXX", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "" }, Carrier = "0123548457984" }
+        //    }); ;
+        //    Controller.Count(new PlainProcessData()
+        //    {
+        //        _Modified = DateTime.Now,
+        //        EntityHeader = new PlainEntityHeader() { Recipe = "XXXX", Results = new TcoInspectors.PlainTcoComprehensiveResult() { Result = 30, Failures = "" }, Carrier = "0123548457984", WasReworked = true, LastReworkName = "Rwork OP20" }
+        //    }); ;
+        //}
 
 
         private void ClearProductionTypeCounter()

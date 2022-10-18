@@ -439,7 +439,8 @@ namespace x_template_xTests
          
             Assert.AreEqual(_statisticControler.StatisticsData.ReworkCounter.Count(), 1);
             var reworkTypeItem = _statisticControler.StatisticsData.ReworkCounter.FirstOrDefault(p => p.Id == testReworkName);
-            Assert.AreEqual(reworkTypeItem.Id, isRework);
+            Assert.AreEqual(reworkTypeItem.Id, testReworkName);
+
             Assert.AreEqual(reworkTypeItem.Counter, 1);
 
             Assert.AreEqual(_statisticControler.StatisticsData.EntityTypeCounter.Count(), 1);

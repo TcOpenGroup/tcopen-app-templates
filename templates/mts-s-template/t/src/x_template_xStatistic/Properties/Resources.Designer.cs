@@ -97,6 +97,15 @@ namespace x_template_xStatistic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to COUNTERS.
+        /// </summary>
+        public static string Conters {
+            get {
+                return ResourceManager.GetString("Conters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to COUNT.
         /// </summary>
         public static string Count {

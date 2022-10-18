@@ -217,7 +217,7 @@ namespace x_template_xHmi.Wpf
         private static void IntializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
         {
             repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
-            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; CuxStatistic.Count(data); };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; cuxStatistic.Count(data); };
             processData.InitializeRepository(repository);
             processData.InitializeRemoteDataExchange(repository);
         }

@@ -117,8 +117,6 @@
 
 
             <Button Margin="5" Command="{Binding  SaveCommand}" Content="{x:Static p:Resources.Save}"  />
-            <Button Margin="5" Command="{Binding  DeleteCommand}" Content="{x:Static p:Resources.Delete}"  />
-            <Button Margin="5" Command="{Binding DeleteAllCommand}" Content="{x:Static p:Resources.DeleteAll}" />
             <Button Margin="5" Command="{Binding  ReinitCommand}" Content="{x:Static p:Resources.InitializeCounters}"  />
             <Button Margin="5" Command="{Binding  RefreshRecipeSourceCommand}" Content="{x:Static p:Resources.RefreshRecipeList}"  />
 

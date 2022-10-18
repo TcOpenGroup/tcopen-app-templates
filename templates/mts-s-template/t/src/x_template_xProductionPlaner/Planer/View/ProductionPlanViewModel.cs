@@ -13,38 +13,14 @@ namespace x_template_xProductionPlaner.Planer.View
         {
             Controller = controller;
 
-            UpdateCommand = new RelayCommand(a => UpdateList());
             SaveCommand = new RelayCommand(a => Controller.SaveDataSet(Controller.ConfigName));
             ReinitCommand = new RelayCommand(a => ReinitValues());
-            DeleteAllCommand = new RelayCommand(a => DeleteAll());
-            DeleteCommand = new RelayCommand(a => Delete());
+        
             RefreshRecipeSourceCommand = new RelayCommand(a => Controller.RefreshSourceRecipeList());
             UpCommand = new RelayCommand(a => Up());
             DownCommand = new RelayCommand(a => Down());
 
             Load();
-        }
-
-        private void DeleteAll()
-        {
-            Controller.CurrentProductionSet.Items.Clear();
-        }
-
-        private void Delete()
-        {
-            if (SelectedItem != null)
-            {
-
-                Controller.CurrentProductionSet.RemoveRecord(SelectedItem);
-
-            }
-        }
-
-        private void UpdateList()
-        {
-            ProductionItem result = null;
-            Controller.RefreshItems(out result);
-            Console.WriteLine(result);
         }
 
 
@@ -126,14 +102,7 @@ namespace x_template_xProductionPlaner.Planer.View
         /// Reinit command
         /// </summary>
         public RelayCommand ReinitCommand { get; private set; }
-        /// <summary>
-        /// Delete all  items in collectio command
-        /// </summary>
-        public RelayCommand DeleteAllCommand { get; private set; }
-        /// <summary>
-        /// delete single item in collection command
-        /// </summary>
-        public RelayCommand DeleteCommand { get; private set; }
+      
         /// <summary>
         /// update collection of recipes 
         /// </summary>

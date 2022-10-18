@@ -2,7 +2,7 @@
 {
     public enum EnumItemStatus
     {
-        None = 0,
+        None = 0,       
         Required = 10,
         Active = 20,
         Done = 30,

@@ -10,8 +10,8 @@
     <d:UserControl.DataContext>
         <local:StatisticsDataViewModel></local:StatisticsDataViewModel>
     </d:UserControl.DataContext>
-    <TabControl>
-        <TabItem Header="Tables">
+    <TabControl >
+        <TabItem Header="{x:Static strings:Resources.Counters}">
             <Grid >
 
         <Grid.RowDefinitions>
@@ -193,16 +193,13 @@
                 </ScrollViewer>
                 
                 
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-
-                    <Button   HorizontalAlignment="Center" Margin="5" Command="{Binding AddNewTestCommand}" Content="Add test"  />
-                </StackPanel>
+             
             </Grid>
         </TabItem>
 
 
 
-        <TabItem Header="{x:Static strings:Resources.Settings}">
+        <TabItem  Header="{x:Static strings:Resources.Settings}">
             <TabItem.Resources>
                 <x:Array x:Key="threeShiftXamlArray" Type="sys:String"
                                      xmlns:sys="clr-namespace:System;assembly=mscorlib">
@@ -217,7 +214,7 @@
                         <sys:String>02</sys:String>
                      </x:Array>
                 </TabItem.Resources>
-            <ScrollViewer>
+            <ScrollViewer Padding="0,10">
                
                 <ItemsControl>
                     <ItemsControl.Resources>

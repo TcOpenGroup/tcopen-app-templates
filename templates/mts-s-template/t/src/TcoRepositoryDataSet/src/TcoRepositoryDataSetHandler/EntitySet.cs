@@ -48,6 +48,7 @@ namespace TcoRepositoryDataSetHandler
         public void AddRecord(T item)
         {
             Items.Add(item);
+
         }
 
         public void RemoveRecord(T item)
