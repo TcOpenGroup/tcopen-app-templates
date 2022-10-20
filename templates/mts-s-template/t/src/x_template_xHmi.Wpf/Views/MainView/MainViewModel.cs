@@ -19,7 +19,7 @@ namespace x_template_xHmi.Wpf.Views.MainView
             this.Title = "TECHNOLOGY";
             this.OpenCommand(this.AddCommand(typeof(OperatorView), strings.Operator));
             this.AddCommand(typeof(DataView), strings.Data); 
-            this.AddCommand(typeof(UserManagementView), strings.UserManagement);           
+            this.AddCommand(typeof(UserManagementGroupManagementView), strings.UserManagement);           
             this.OpenLoginWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLoginWindow());
             this.LogOutWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => TcOpen.Inxton.TcoAppDomain.Current.AuthenticationService.DeAuthenticateCurrentUser() );
         }
