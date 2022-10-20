@@ -21,6 +21,7 @@ using x_template_xInstructor.TcoSequencer;
 using x_template_xPlc;
 using x_template_xPlcConnector;
 using x_template_xProductionPlaner.Planer;
+using x_template_xStatistic.Statistics;
 
 namespace x_template_xHmi.Wpf
 {
@@ -148,35 +149,37 @@ namespace x_template_xHmi.Wpf
             var ReworklDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "ReworkSettings", "", "");
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings));
 
+            //Statistics
+            var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new RavenDbRepository<EntitySet<StatisticsDataItem>>(new RavenDbRepositorySettings<EntitySet<StatisticsDataItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Statistics", "", "")));
+            var _statisticsConfigHandler = RepositoryDataSetHandler<StatisticsConfig>.CreateSet(new RavenDbRepository<EntitySet<StatisticsConfig>>(new RavenDbRepositorySettings<EntitySet<StatisticsConfig>>(new string[] { Constants.CONNECTION_STRING_DB }, "StatisticsConfig", "", "")));
+
+
+            CuxStatistic = new StatisticsDataController(x_template_xPlc.MAIN._technology._cu00x.AttributeShortName,_statisticsDataHandler,_statisticsConfigHandler);
+
+
+
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Constants.CONNECTION_STRING_DB }, "Traceability", "", "");
             IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));            
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability));
+            IntializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability),CuxStatistic);
 
             Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
 
-            //Production planer
-  
-                      
+            //Production planer         
             var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "ProductionPlan", "", "")));
-
 
             ProductionPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlanerTest", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
 
-
-
             Action prodPlan = () => GetProductionPlan(x_template_xPlc.MAIN._technology._cu00x._productionPlaner);
             x_template_xPlc.MAIN._technology._cu00x._productionPlaner.InitializeExclusively(prodPlan);
-
-
-
-           
-
+            
+            //Instructors
             var _instructionPlanHandler= RepositoryDataSetHandler<InstructionItem>.CreateSet(new RavenDbRepository<EntitySet<InstructionItem>>(new RavenDbRepositorySettings<EntitySet<InstructionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Instructions", "", "")));
          
             CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
             CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
 
 
+          
         }
 
         private void GetProductionPlan(ProductionPlaner productionPlaner)
@@ -207,6 +210,18 @@ namespace x_template_xHmi.Wpf
 
 
 
+        /// Initializes <see cref="ProcessDataManager"/>s repository for data exchange between PLC and storage (database).
+        /// </summary>
+        /// <param name="manager">Data manager</param>
+        /// <param name="repository">Repository</param>
+        private static void IntializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; cuxStatistic.Count(data); };
+            processData.InitializeRepository(repository);
+            processData.InitializeRemoteDataExchange(repository);
+        }
+
         /// <summary>
         /// Initializes <see cref="TechnologicalDataManager"/>s repository for data exchange between PLC and storage (database).
         /// </summary>
@@ -235,6 +250,7 @@ namespace x_template_xHmi.Wpf
         public static ProductionPlanController ProductionPlaner { get; private set; }
         public static InstructorController CuxInstructor { get; private set; }
         public static InstructorController CuxParalellInstructor { get; private set; }
+        public static StatisticsDataController CuxStatistic { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

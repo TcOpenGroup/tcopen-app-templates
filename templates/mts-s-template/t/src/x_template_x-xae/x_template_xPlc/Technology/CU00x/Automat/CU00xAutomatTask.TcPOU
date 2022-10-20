@@ -211,6 +211,7 @@ END_IF;
 *)
 IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------    
+	Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.Data.FailureDescription:='BoltPresenceInspector error';
     Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
         .Inspect(_inspectionResult)
         .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
@@ -220,6 +221,8 @@ END_IF
 
 IF (Step(1100, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
     //-------------------------------------    
+		Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.Data.FailureDescription:='BoltDimensionPresenceInspector error';
+
     Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.WithCoordinator(THIS^)
         .Inspect(_inspectionDimensionResult)
         .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)

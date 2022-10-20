@@ -1,4 +1,5 @@
-# MTS standard application tempalte 
+# MTS standard application tempalte
+
 # `mts-s-template`
 
 ## Foreword
@@ -78,7 +79,6 @@ Each part has an *Entity header* that contains information about the flow and st
 - `Last rework name` name of the rework applied to the part.
 - `Rework count` number of times the part has undergone reworks.
 
-
 #### Controlled unit header
 
 Each station (controlled unit) has a header that contains a set of information:
@@ -107,10 +107,10 @@ A special case occurs if **reset or ground position** is triggered on a station.
 
 # Application template architecture
 
-The application's entry point is the `MAIN` program called cyclically from the PLC task. 
+The application's entry point is the `MAIN` program called cyclically from the PLC task.
 `MAIN` declares the instance of the `Technology` type that is the context of the whole application. You should place all your code within the `Main` method of technology object (`_technology.Main()`) that will contextualize all your code.
 
-If you are not familiar with the architecture of the TcOpen framework `context` concept, you can find more 
+If you are not familiar with the architecture of the TcOpen framework `context` concept, you can find more
 [here](https://docs.tcopengroup.org/articles/TcOpenFramework/TcoCore/TcoContext.html) or a more generic overview [here](https://docs.tcopengroup.org/articles/TcOpenFramework/TcoCore/Introduction.html).
 
 *Following video introduces the application context*
@@ -131,10 +131,10 @@ The task that provides execution of the ground task to all controlled units with
 
 The task that provides the execution of the automatic task to all controlled units within the technology. Automat task provides each controlled unit's nominal (automatic) cycle logic.
 
-
 ## Controlled units
 
-The technology can contain multiple controlled units. The controlled unit has different `modes`: 
+The technology can contain multiple controlled units. The controlled unit has different `modes`:
+
 - **Ground**: brings the device into its initial state (home position, state resets, etc.). The ground mode can contain subsequences for parallelization or organization of logic.
 - **Automat**: represents the standard run of the unit. Automat mode is of sequence type. The automat mode can contain subsequences for parallelization or organization of logic.
 - **Manual**: provides access to a series of tools to manipulate single components of the controlled unit.
@@ -150,7 +150,6 @@ Controlled units also contain two main structures:
 
 ![TechnologyOverview](assets/technology_overview.png)
 
-
 ## ProcessData
 
 This application template provides a versatile model to allow for the extended control of the program flow from a manageable data set. Process data represent the set of information to follow and process during production. One way of thinking about the process data is as the recipe that, besides the instructive data, contains information that arises during the production process. Production data are filled into the data set during the production operations.
@@ -159,13 +158,14 @@ Typically, the process data are loaded at the beginning of the production into t
 
 ## TechnologicalData
 
-Technological data contain a manageable set of data related to the technology used, such as drives settings, limits, global timers, etc. 
+Technological data contain a manageable set of data related to the technology used, such as drives settings, limits, global timers, etc.
 
 ## ProcessTraceability
 
 Process traceability is a PLC placeholder for accessing the production data repository. This object points to the same traceability repository as the `ProcessData` of any controlled unit.
 
 # Controlled unit templates
+
 Controlled unit `CU00X` is a template from which other controlled units can derive.
 `CU00X` folder contains a template from which any controlled unit can be scaffolded. There is PowerShell script `Create-Controlled-Unit` located in the root of the solution directory for this purpose.
 
@@ -177,7 +177,7 @@ Controlled unit `CU00X` is a template from which other controlled units can deri
 
 Running the script will modify the PLC project files; if the project is opened in the visual studio a project reload will be required. In addition, you will need to add the call of the newly added controlled unit in the `Technology` manually.
 
-~~~
+~~~csharp
 FUNCTION_BLOCK Technology EXTENDS TcoCore.TcoContext
 VAR
     _processSettings     : ProcessDataManager(THIS^);
@@ -206,44 +206,45 @@ _NEWCU();  <------ NEWLY ADDED
 
 # Data handling #
 
-The usage of methods for  handling `ProcessData` are described on picture below. Controlled unit in template has a basic scheme for data handling. On first controlled unit is necessary load a `LoadProcessSettings`(Recipe). This method is usually used on first at Cu001(start of process) or can be called on each controlled unit. 
+The usage of methods for  handling `ProcessData` are described on picture below. Controlled unit in template has a basic scheme for data handling. On first controlled unit is necessary load a `LoadProcessSettings`(Recipe). This method is usually used on first at Cu001(start of process) or can be called on each controlled unit.
 
-If there is a Process traceability and  PLC is placeholder for accessing the production data repository, then is necessary call `DataEntityCreateNew` with specified `_entityId`. The method  `EntityDataOpen` load data from repository and check flow in header. If entity belongs to controlled unit sequence can start (operation start time stamp, user info, etc are populated in header). This method is usually called on each stations at beginning of the sequence. 
+If there is a Process traceability and  PLC is placeholder for accessing the production data repository, then is necessary call `DataEntityCreateNew` with specified `_entityId`. The method  `EntityDataOpen` load data from repository and check flow in header. If entity belongs to controlled unit sequence can start (operation start time stamp, user info, etc are populated in header). This method is usually called on each stations at beginning of the sequence.
 
 `DataEntityClose` is typically used after all operation on the technology are completed (operation end time stamp, user info, flow to next and etc are populated in header).
 
 ![DataHandlingOverviewScheme](assets/datahandlingflow.png)
 
-
 ## LoadProcessSettings ##
- 
+
  Typically used in the first station of the technology to load process settings that will be used trough out the production
-~~~
-				   
-	IF(Station.Technology.ProcessSettings.Data._EntityId <> '' AND NOT THIS^._missingProcessSettingMessage.Pinned) THEN
-		IF(Station.Technology.ProcessSettings.Read(Station.Technology.ProcessSettings.Data._EntityId).Done) THEN
-			Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
-			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
-			Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
-			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
-			Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
-			CompleteStep();
 
-		END_IF;	
-	ELSE
-		IF(_dialog.Show()
-	       .WithCaption('<#Process data not selected#>')
-		   .WithText('<#Would you like to load default settings?#>')
-		   .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
-		   
-		   	Station.Technology.ProcessSettings.Data._EntityId := 'default';
-		END_IF; 
+~~~csharp
+       
+ IF(Station.Technology.ProcessSettings.Data._EntityId <> '' AND NOT THIS^._missingProcessSettingMessage.Pinned) THEN
+  IF(Station.Technology.ProcessSettings.Read(Station.Technology.ProcessSettings.Data._EntityId).Done) THEN
+   Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
+   Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
+   Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
+   Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;    
+   Station.ProcessDataManager.Data._EntityId := ULINT_TO_STRING(Context.RealTimeClock.TickClock());
+   CompleteStep();
 
-			
-	END_IF		    				
+  END_IF; 
+ ELSE
+  IF(_dialog.Show()
+        .WithCaption('<#Process data not selected#>')
+     .WithText('<#Would you like to load default settings?#>')
+     .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
+     
+      Station.Technology.ProcessSettings.Data._EntityId := 'default';
+  END_IF; 
+
+   
+ END_IF          
 ~~~
 
 ## DataEntityCreateNew ##
+
  Creates new data entity (new part/item). Typically used in the first station of the technology to create new document/record to be persisted in the repository.Sets the status of the entity to `InProgress`
 
 ~~~
@@ -251,7 +252,9 @@ THIS^.DataEntityCreateNew(200, Station.ProcessDataManager.Data._EntityId, Header
 ~~~
 
 ## EntityDataOpen ##
+
 Populates the information in the data header of this controlled unit (operation start time stamp, user info, etc) Typically used prior to starting operation within a controlled unit.
+
 ~~~
 THIS^.DataEntityOpen(300,30000, Station.ProcessDataManager.Data._EntityId,Station.ProcessDataManager.Data.CU00x.Header)
 ~~~
@@ -266,11 +269,10 @@ The status of the entity is still **'InProgress'**
 IF(_dataClose) THEN THIS^.DataEntityClose(5000, eDataEntityInvokeType.InvokeAndWaitDone ,Station.ProcessDataManager.Data.CU00x.Header); END_IF;
 ~~~
 
-
 ## DataEntityFinalize ##
+
  Same as `DataCloseEntity` populates the information in the data header of this controlled unit (operations end time stamp, user info, etc)
  Typically used after all operation on the technology are completed (end of the process).
- 
 
 Sets the status of the entity to **Passed**
 
@@ -279,11 +281,12 @@ THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDa
 ~~~
 
 **Note!**
+
 - If input enum parameter in methods `DataCloseEntity` and `DataCloseFinalize`  is set to **InvokeAndWaitDone**  operation will  wait until task reaches the ```Done``` state .
 
- - If input enum is set to **InvokeOnly** results return True when  task reaches the ```Busy``` state .This option is used when we need to reduce cycle time. Later is recommended (necessary) to check  task  ```Done``` state  , check  task  status. 
+- If input enum is set to **InvokeOnly** results return True when  task reaches the ```Busy``` state .This option is used when we need to reduce cycle time. Later is recommended (necessary) to check  task  ```Done``` state  , check  task  status.
 
-    ~~~
+    ~~~csharp
     //save data
     THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDataManager.Data.CU00x.Header);
 
@@ -296,40 +299,39 @@ THIS^.DataEntityFinalize(5500,eDataEntityInvokeType.InvokeOnly,Station.ProcessDa
 
             StepCompleteWhen(Station.UpdateEntityTask.Done );
         
-        //-------------------------------------	
+        //------------------------------------- 
     END_IF
     ~~~
 
+# Notification panel #
 
- # Notification panel #   
-
-Use of this visual component is provide to a brief overview of `Technology`.  Essential signals in Technology such a **Control Voltage, Air pressure, Safety....** are displayed on this panel on *Main Screen*. 
+Use of this visual component is provide to a brief overview of `Technology`.  Essential signals in Technology such a **Control Voltage, Air pressure, Safety....** are displayed on this panel on *Main Screen*.
 
 ![NotificationPanel](assets/NotificationPanel.png)
 
 ![NotificationPanelOpened](assets/NotificationPanelOpen.png)
 
-Component is populated from plc   and  provide simple diagnostic if technology is ready for operation. 
+Component is populated from plc   and  provide simple diagnostic if technology is ready for operation.
 
-~~~
+~~~csharp
 //notification panel
 //messanging is suspensded 
  Context.Environment.Messaging.Suspend();
-			
+   
 _closed:=TRUE;
-//_closed   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsClosed 
-//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsClosed  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsClosed  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsClosed  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsClosed;
+//_closed   :=  Components.Safety.DoorCircuits.DoorCircuit_2.IsClosed 
+//   AND Components.Safety.DoorCircuits.DoorCircuit_3.IsClosed  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_4.IsClosed  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_5.IsClosed  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_6.IsClosed;
 
  _locked:=TRUE;
-//_locked   := 	Components.Safety.DoorCircuits.DoorCircuit_2.IsLocked 
-//			AND Components.Safety.DoorCircuits.DoorCircuit_3.IsLocked  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_4.IsLocked  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_5.IsLocked  
-//			AND Components.Safety.DoorCircuits.DoorCircuit_6.IsLocked;
-			
+//_locked   :=  Components.Safety.DoorCircuits.DoorCircuit_2.IsLocked 
+//   AND Components.Safety.DoorCircuits.DoorCircuit_3.IsLocked  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_4.IsLocked  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_5.IsLocked  
+//   AND Components.Safety.DoorCircuits.DoorCircuit_6.IsLocked;
+   
 _keysAto  := TRUE;
 _eStopActive:=0;
 
@@ -338,18 +340,384 @@ _notificationSourceSignals.ControlVoltage   := TRUE;//Components.ControlVoltage.
 _notificationSourceSignals.AirPressure      := TRUE;//Components.AirPressureOk.Signal.Signal, 
 _notificationSourceSignals.AutomatAllowed   := _keysAto; 
 _notificationSourceSignals.EmergencyStop    := _eStopActive > 0; 
-_notificationSourceSignals.SafetyDoorOk     :=safetyCircuitOk;	
-_notificationSourceSignals.LightCurtain     := TRUE; 	// not used
+_notificationSourceSignals.SafetyDoorOk     :=safetyCircuitOk; 
+_notificationSourceSignals.LightCurtain     := TRUE;  // not used
 _notificationSourceSignals.DoorClosed       := _closed; 
 _notificationSourceSignals.DoorLocked       := _locked; 
 _notificationSourceSignals.ProcessDataOk    := _processSettings._data._EntityId <> '';
 _notificationSourceSignals.TechnologyDataOk := _technologySettings._data._EntityId <> '';  
-	
+ 
 _notificationPanel(inBlinkPeriod:=T#500MS , inSignalSource:=_notificationSourceSignals );
-			
+   
  Context.Environment.Messaging.Resume();
 
 ~~~
+
 **Note!**
 It is possible to use like a **sub module diagnostic** (only one Cu, group of Cu or whole Technology)
 
+# Production Planner #
+
+ Production planer is a tool that allowe us to plan  production. It is a table configurator. Planer UI allows you to choose the appropriate recipe and set required amount of production. Usualy planer is used in automatic process , but can be used on manual station like guidance for operator.
+
+On picture below is  shown planer during production.
+
+![ProductionPlaner](assets/ProductionPlaner.png)
+
+- **ActualRecipe** - appropriate recipe name (column is a combobox with all available recipes)
+- **RequiredCount** - required amount of product
+- **ActualCount** - actual counter value
+- **Description** - it is optional field, it is used for note e.g.
+- **Status** - it is general state for actual row.
+
+~~~ csharp
+  public enum EnumItemStatus
+    {
+        None = 0,   //
+        Required = 10,
+        Active = 20,
+        Done = 30,
+        Skiped = 50,
+        AllCompleted =100
+
+    }
+~~~
+
+- None - default value
+- Required - requred not started
+- Active - active current production
+- Done -recipe has ben done
+- Skiped - it is in list but in production is skipped 
+- AllCompleted - whenl planer finish all required recipes this value is set.
+
+## Commands ##
+- **Save** save actual set
+- **Initialize counters** Set the counter value to zero for all items
+- **Refresh recipe list** by this command is updated list of recipe.(is updated when application starts )
+- **Up/Down**  selected item can be moved  in collection (the possiblility to change the production order) 
+
+## Production Planner Empty ##
+
+![ProductionPlanerEmpty](assets/ProductionPlanerEmpty.png)
+
+# Production Planner Completed #
+
+![ProductionPlanerCompleted](assets/ProductionPlanerCompleted.png)
+
+
+Definition in App.xaml.cs
+~~~cshartp
+
+//Production planer         
+var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "ProductionPlan", "", "")));
+
+ProductionPlaner = new ProductionPlanController(_productionPlanHandler, "ProductionPlanerTest", new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+
+Action prodPlan = () => GetProductionPlan(x_template_xPlc.MAIN._technology._cu00x._productionPlaner);
+x_template_xPlc.MAIN._technology._cu00x._productionPlaner.InitializeExclusively(prodPlan);
+~~~
+
+ViewModel 
+~~~
+ProductionPlanViewModel = new ProductionPlanViewModel(App.ProductionPlaner);
+
+public ProductionPlanViewModel ProductionPlanViewModel { get; private set; }
+~~~
+
+View
+~~~
+<view:ProductionPlanView Grid.Row="2" DataContext="{Binding ProductionPlanViewModel}"></view:ProductionPlanView>
+
+~~~
+
+Plc remote call
+
+~~~ csharp
+							   
+	 IF Station.ProductionPlanerTask.Invoke().Done	AND_THEN(Station.ProductionPlanerTask.RequiredProcessSettingsId <> '') THEN
+		
+		IF NOT Station.ProductionPlanerTask.ProductionPlanCompleted and_then (Station.Technology.ProcessSettings.Read(Station.ProductionPlanerTask.RequiredProcessSettingsId).Done)
+			 THEN
+			Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
+			Station.ProcessDataManager.Data.EntityHeader.RecipeLastModified  := Station.Technology.ProcessSettings.Data._Modified;
+			Station.ProcessDataManager.Data.EntityHeader.Recipe  := Station.Technology.ProcessSettings.Data._EntityId;				
+			CompleteStep();
+			Station.ProductionPlanerTask.Restore();
+		END_IF;
+	ELSIF  Station.ProductionPlanerTask.ProductionPlanIsEmpty THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Production planer#>')
+		   .WithText('<#Production planer is empty! #>')
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+	
+	ELSIF  Station.ProductionPlanerTask.ProductionPlanCompleted THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Production planer#>')
+		   .WithText('<#Production planer completed required plan! #>')
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+
+			
+	END_IF		    		
+~~~
+
+# Instructor #
+
+`TcoInstructor` is a package aiming to provide tool to display and configure instructions for operator.
+
+
+
+
+### Implementation example ###
+
+#### InstructableSequencer ####
+
+To provide step uids for `InstructorController` we need to extend existing `TcoTaskedSequencer`. Our new class has to implement `TcOpen.Inxton.Instructor.IInstructionControlProvider` interface.
+
+```csharp
+    public class InstructableSequencer : IInstructionControlProvider
+    {
+        private List<InstructionItem> _instructionSteps;
+
+        public InstructableSequencer(TcoTaskedSequencer sequencer)
+        {
+            Sequencer = sequencer;
+            Sequencer._currentStep.ID.Subscribe((sender, args) => this.ChangeStep(sender, args));
+        }
+
+        private TcoTaskedSequencer Sequencer { get; }
+
+        public IEnumerable<InstructionItem> InstructionSteps
+        {
+            get { return this._instructionSteps; }
+        }
+
+        public string ProviderId => this.Sequencer.Symbol;
+
+        public ChangeInstructionDelegate ChangeInstruction { get; set; }
+
+        private void ChangeStep(IValueTag sender, ValueChangedEventArgs args)
+        {
+            ChangeInstruction?.Invoke(args.NewValue.ToString());
+        }
+
+        public void UpdateTemplate()
+        {
+            _instructionSteps = new List<InstructionItem>();
+            this.Sequencer.Read();
+
+            foreach (var step in Sequencer._o._steps.Where(x=>x.ID.Cyclic != 0))
+            {
+                _instructionSteps.Add(new InstructionItem()
+                {
+                    Key = step.ID.LastValue.ToString(),
+                    Remarks = step.Description.LastValue
+                });
+            }
+        }
+
+```
+
+---
+
+#### Repository setup ####
+
+Configuration can be stored in any repository
+`
+With repository created and `InstructableSequencer` defined, we can now initialize instructor for each instance, where we need to display operator instructions.
+
+```csharp
+            //Instructors
+            var _instructionPlanHandler= RepositoryDataSetHandler<InstructionItem>.CreateSet(new RavenDbRepository<EntitySet<InstructionItem>>(new RavenDbRepositorySettings<EntitySet<InstructionItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Instructions", "", "")));
+         
+            CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
+            CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
+```
+
+> Implement these lines of code in `App.xampl.cs` in method `SetUpRepositoriesUsingRavenDb()` method in your project
+
+---
+
+#### XAML ####
+
+This example implements instructor in `OperatorView`.  To display operator instructions in our application, we need to add this line of code to our `OperatorView.xaml`.
+```xml
+    <x_template_xinstructor:InstructorView DataContext="{Binding InstructorViewModel}"></x_template_xinstructor:InstructorView>
+```
+
+We need to initialize ViewModel for `InstructionViewerView`. We can do this by initializing it  in `OperatorViewModel` constructor like this.
+```csharp
+  public class OperatorViewModel
+    {
+        public OperatorViewModel()
+        {
+            .
+            .
+            .
+
+            InstructorViewModel = new InstructorViewModel(App.CuxInstructor);
+            InstructorParalellViewModel = new InstructorViewModel(App.CuxParalellInstructor);
+            
+
+        }
+
+      
+        public InstructorViewModel InstructorViewModel { get; private set; }
+        public InstructorViewModel InstructorParalellViewModel { get; private set; }
+    }
+```
+#### Application view ####
+
+If everthing is working properly, you should see something like this (image and instruction will differ based on your configuration.).
+
+> ![Instructor](assets/Instructor.png)
+
+#### Configuration view ####
+
+Configuration view provides easy access to instruction customization. 
+
+* *Key* - step uid from sequencer.
+* *Remark* - step description from sequencer.
+* *Instruction* - editable field that contains instruction for operator.
+* *Image Location* - editable field contains full path to image to be displayed for specific instruction.
+
+Commands:
+* *Save* - saves actual configuration changes to the repository.
+* *Update* - gets updated collection of steps from our class `InstructableSequecer`.
+* *Remove* - removes selected entries from collection with status *Deleted*
+
+> ![InstructorConfig](assets/InstructorConfigurator.png)
+
+
+# Statistic #  
+
+Statistic is a library used to to collect  specified data from `PlainEntityHeader` in `PlainProcessData`. Usualy collecting data is executed on update entity (OnUpdate delegate), but can be used in deferent events.(OnCreated..). The counting method  collect data and distribute it into specified proces counters such are `Recipe counters`,`Error counter`,`Carrier counter`,`Rework counter`,`Hour counter`,`Shifts counter`...
+
+
+
+
+
+#### Repository setup ####
+
+Configuration can be stored in any repository
+`
+StatisticControler can be initialized in  `SetUpRepositoriesUsingRavenDb()`. It initialized with  two handlers, witch provide us data storing in repository.
+
+- RepositoryDataSetHandler<StatisticsDataItem> - here are stored collections
+- RepositoryDataSetHandler<StatisticsConfig> - config data for statistic
+
+~~~csharp
+           //Statistics
+            var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new RavenDbRepository<EntitySet<StatisticsDataItem>>(new RavenDbRepositorySettings<EntitySet<StatisticsDataItem>>(new string[] { Constants.CONNECTION_STRING_DB }, "Statistics", "", "")));
+            var _statisticsConfigHandler = RepositoryDataSetHandler<StatisticsConfig>.CreateSet(new RavenDbRepository<EntitySet<StatisticsConfig>>(new RavenDbRepositorySettings<EntitySet<StatisticsConfig>>(new string[] { Constants.CONNECTION_STRING_DB }, "StatisticsConfig", "", "")));
+
+
+            CuxStatistic = new StatisticsDataController(x_template_xPlc.MAIN._technology._cu00x.AttributeShortName,_statisticsDataHandler,_statisticsConfigHandler);
+
+           
+            IntializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability),CuxStatistic);
+
+            
+~~~~
+Usualy is data for exchange  initialized  by method `IntializeProcessDataRepositoryWithDataExchange` but if is needed collect statistic this metohod is replaced by method `IntializeProcessDataRepositoryWithDataExchangeWithStatistic`. See below
+~~~csharp
+    private static void IntializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; CuxStatistic.Count(data); };
+            processData.InitializeRepository(repository);
+            processData.InitializeRemoteDataExchange(repository);
+        }
+~~~~
+> Implement these lines of code in `App.xampl.cs` in method `SetUpRepositoriesUsingRavenDb()` method in your project
+
+**Note!**
+StatisticController must be initialized before IntializeProcessDataRepositoryWithDataExchange !
+
+#### XAML ####
+
+Here are  examples in `OperatorView`.  To display statistic  in our application, is neccessary to add this lines of code to our `OperatorView.xaml`.
+```xml
+            <TabItem Header="STATISTICS CUSTOMIZED">
+                <UniformGrid>
+                    <view1:ErrorsDataView DataContext="{Binding StatisticViewModel}"></view1:ErrorsDataView>
+                    <view1:RecipesDataView DataContext="{Binding StatisticViewModel}"></view1:RecipesDataView>
+                    <view1:CarriersDataView DataContext="{Binding StatisticViewModel}"></view1:CarriersDataView>
+                    <view1:ReworksDataView DataContext="{Binding StatisticViewModel}"></view1:ReworksDataView>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="PRODUCTION TREND">
+                <UniformGrid>
+                    <view1:TrendDataView DataContext="{Binding StatisticViewModel}"></view1:TrendDataView>
+                 
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="STATISTICS ADMIN">
+  
+                        <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+
+                            <view1:StatisticsDataView DataContext="{Binding StatisticViewModel}"></view1:StatisticsDataView>
+                        </vortexs:PermissionBox>
+                 
+
+            </TabItem>
+```
+
+We need to initialize ViewModel for `StatisticViewModel`. We can do this by initializing it  in `OperatorViewModel` constructor like this.
+```csharp
+  public class OperatorViewModel
+    {
+        public OperatorViewModel()
+        {
+            .
+            .
+            .
+            StatisticViewModel = new StatisticsDataViewModel(App.CuxStatistic);
+            
+
+        }
+
+      
+        public StatisticsDataViewModel StatisticViewModel { get; private set; }
+    }
+```
+
+
+#### Application view ####
+
+If everthing is working properly, you should see something like this (Tables and naming will differ based on your configuration.).
+
+> ![Stat](assets/StatisticCustomized.png)
+
+> ![Stat](assets/StatisticTrend.png)
+
+#### Admin view ####
+Admin view provides  access to all tables and config tab.
+> ![stat](assets/StatisticAdmin.png)
+
+#### Admin view Config ####
+
+> ![stat](assets/StatisticConfig.png)
+* *Key* - step uid from sequencer.
+* *Remark* - step description from sequencer.
+* *Instruction* - editable field that contains instruction for operator.
+* *Image Location* - editable field contains full path to image to be displayed for specific instruction.
+
+Commands:
+* *Save* - saves actual configuration changes to the repository.
+* *Update* - gets updated collection of steps from our class `InstructableSequecer`.
+* *Remove* - removes selected entries from collection with status *Deleted*
+
+> ![InstructorConfig](assets/InstructorConfigurator.png)

@@ -2,7 +2,7 @@
 
 namespace TcoRepositoryDataSetHandler.Handler
 {
-    public class RepositoryDataSetHandler<T>
+    public class RepositoryDataSetHandler<T> where T : class, new()
     {
         /// <summary>
         /// Creates new instance of <see cref="RepositorySetDataHandler"/>

@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml" 
     xmlns:view="clr-namespace:x_template_xProductionPlaner.Planer.View;assembly=x_template_xProductionPlaner" 
-     xmlns:x_template_xinstructor="clr-namespace:x_template_xInstructor;assembly=x_template_xInstructor"
+     xmlns:x_template_xinstructor="clr-namespace:x_template_xInstructor;assembly=x_template_xInstructor" xmlns:view1="clr-namespace:x_template_xStatistic.Statistics.View;assembly=x_template_xStatistic"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800">
@@ -77,6 +77,33 @@
                 </UniformGrid>
 
             </TabItem>
+
+            <TabItem Header="STATISTICS CUSTOMIZED">
+                <UniformGrid>
+                    <view1:ErrorsDataView DataContext="{Binding StatisticViewModel}"></view1:ErrorsDataView>
+                    <view1:RecipesDataView DataContext="{Binding StatisticViewModel}"></view1:RecipesDataView>
+                    <view1:CarriersDataView DataContext="{Binding StatisticViewModel}"></view1:CarriersDataView>
+                    <view1:ReworksDataView DataContext="{Binding StatisticViewModel}"></view1:ReworksDataView>
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="PRODUCTION TREND">
+                <UniformGrid>
+                    <view1:TrendDataView DataContext="{Binding StatisticViewModel}"></view1:TrendDataView>
+                 
+                </UniformGrid>
+
+            </TabItem>
+            <TabItem Header="STATISTICS ADMIN">
+  
+                        <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+
+                            <view1:StatisticsDataView DataContext="{Binding StatisticViewModel}"></view1:StatisticsDataView>
+                        </vortexs:PermissionBox>
+                 
+
+            </TabItem>
+            
         </TabControl>
      
           

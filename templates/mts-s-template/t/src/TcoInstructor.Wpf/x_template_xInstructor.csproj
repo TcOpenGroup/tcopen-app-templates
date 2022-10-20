@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcoInstructor\TcOpen.Inxton.Instructor.csproj" />
+    <ProjectReference Include="..\TcoInstructor\TcoInstructor.csproj" />
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 

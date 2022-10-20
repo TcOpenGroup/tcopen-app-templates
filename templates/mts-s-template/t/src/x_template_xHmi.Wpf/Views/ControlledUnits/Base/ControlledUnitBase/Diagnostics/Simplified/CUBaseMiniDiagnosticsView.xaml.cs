@@ -36,14 +36,13 @@ namespace x_template_xPlc
 
         private void MessageUpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            UpdateMessages();
+           // UpdateMessages();
         }
 
         private TcoDiagnosticsViewModel _context { get { return this.DataContext as TcoDiagnosticsViewModel; } }
 
         private void UpdateMessages()
-        {
-            
+        {          
             var inSight = false;
             TcoDiagnosticsViewModel MessageHandler = null;
             TcOpen.Inxton.TcoAppDomain.Current.Dispatcher.Invoke(() =>
@@ -59,6 +58,8 @@ namespace x_template_xPlc
                     MessageHandler = this.DataContext as TcoDiagnosticsViewModel;
                 }
             });
+
+
             bool isAutoUpdate = MessageHandler == null ? false : MessageHandler.AutoUpdate;
 
             

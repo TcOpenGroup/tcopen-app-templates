@@ -5,6 +5,7 @@ using TcOpen.Inxton.Data;
 using x_template_xPlc;
 using TcoRepositoryDataSetHandler;
 using TcoRepositoryDataSetHandler.Handler;
+using System;
 
 namespace x_template_xProductionPlaner.Planer
 {
@@ -38,6 +39,14 @@ namespace x_template_xProductionPlaner.Planer
 
                 OnPropertyChanged(nameof(CurrentItem));
             }
+        }
+
+        internal void DeleteAll()
+        {
+            CurrentProductionSet.Items.Clear();
+            OnPropertyChanged("Items");
+            OnPropertyChanged("CurrentProductionSet");
+
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace x_template_xProductionPlaner.Planer
             
 
         }
-
+       
         public void RefreshSourceRecipeList()
         {
             var items = RepositorySource.Queryable.Select(p => p._EntityId).ToList();
