@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
-    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.10.0-alpha.14" />
+    <PackageReference Include="TcOpen.Inxton.Abstractions" Version="0.10.0-alpha.15" />
 
   </ItemGroup>
 
