@@ -22,5 +22,6 @@ jobs:
       - name: Cake
         env:
           gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}
+	    TCOOPENNUGETDOTORGPAT : ${{ secrets.TCOOPENNUGETDOTORGPAT  }}
         run: >
           .\build.ps1          

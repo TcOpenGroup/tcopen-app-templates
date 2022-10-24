@@ -8,12 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cake.Common.Tools.DotNet.Pack;
 
 namespace Build.Scaffolder
 {
     public class Const
     {
         public const string BuildGroupName = " : Scaffolder";
+        public static readonly IEnumerable<string> Publishable = new List<string>() {"dev", "main", "master","release"};
     }
 
     [TaskName("Startup" + Const.BuildGroupName)]
@@ -75,7 +77,7 @@ namespace Build.Scaffolder
         {
             context.PublishCsProjAsArtifact(context, "net5.0-windows", "TcOpen.Scaffold.UI.zip",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\TcOpen.Scaffold.UI.csproj",  $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold.UI\\Publish");
             context.PublishCsProjAsArtifact(context, "net5.0", "tco.cli.zip", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold\\tco.csproj", $"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold\\Publish");
-
+            context.DotNetPack($"{context.ProjectRootDirectory}\\src\\TcOpen.Scaffold\\tco.csproj", new DotNetPackSettings() { OutputDirectory = Path.Combine(context.ArtifactsFolder, "nugets")});
             context.CleanBins(System.IO.Path.GetFullPath(System.IO.Path.Combine(context.Environment.WorkingDirectory.FullPath, "..//templates//mts-s-template//t")));
             context.ZipFolder(System.IO.Path.GetFullPath(System.IO.Path.Combine(context.Environment.WorkingDirectory.FullPath, "..//templates//mts-s-template//t")), System.IO.Path.Combine(context.ArtifactsFolder, "mts-s-template.zip"));
         }
@@ -83,15 +85,55 @@ namespace Build.Scaffolder
        
     }
 
-    [TaskName("Publish release" + Const.BuildGroupName)]
+    [TaskName("Publish nugets" + Const.BuildGroupName)]
     [IsDependentOn(typeof(CreateArtifactTask))]
+    public sealed class PublishNugets : FrostingTask<BuildContext>
+    {
+        public override void Run(BuildContext context)
+        {
+            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName))
+            {
+                foreach (var nugetFile in Directory
+                             .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
+                             .Select(p => new FileInfo(p)))
+                {
+                    context.DotNetNuGetPush(nugetFile.FullName,
+                        new Cake.Common.Tools.DotNet.NuGet.Push.DotNetNuGetPushSettings()
+                        {
+                            Source = "https://nuget.pkg.github.com/TcOpenGroup/index.json",
+                            ApiKey = System.Environment.GetEnvironmentVariable("gh-public-repos"),
+                            SkipDuplicate = true
+                        });
+                }
+
+
+                if (GitVersionInformation.BranchName == "release" || GitVersionInformation.BranchName == "main" ||
+                    GitVersionInformation.BranchName == "master")
+                {
+                    foreach (var nugetFile in Directory
+                                 .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
+                                 .Select(p => new FileInfo(p)))
+                    {
+                        context.DotNetNuGetPush(nugetFile.FullName,
+                            new Cake.Common.Tools.DotNet.NuGet.Push.DotNetNuGetPushSettings()
+                            {
+                                Source = "https://api.nuget.org/v3/index.json",
+                                ApiKey = System.Environment.GetEnvironmentVariable("TCOOPENNUGETDOTORGPAT"),
+                                SkipDuplicate = true
+                            });
+                    }
+                }
+            }
+        }
+    }
+
+    [TaskName("Publish release" + Const.BuildGroupName)]
+    [IsDependentOn(typeof(PublishNugets))]
     public sealed class PublishReleaseTask : FrostingTask<BuildContext>
     {
         public override void Run(BuildContext context)
         {
-            //var githubActionsProvider = new Cake.Common.Build.GitHubActions.GitHubActionsProvider(context.Environment, context.FileSystem);
-
-            //if (GitVersionInformation.BranchName == "dev")
+            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName))
             {
                 var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
                 var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
