@@ -13,7 +13,7 @@
      <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.10.0-alpha.14" />
+      <PackageReference Include="TcOpen.Inxton.RavenDb" Version="0.10.0-alpha.15" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />

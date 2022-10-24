@@ -9,7 +9,19 @@
     <RepositoryUrl>https://github.com/TcOpenGroup/tcopen-app-templates</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>TcOpen template twincat</PackageTags>
+    <Title>TcOpen application scaffolding</Title>
+    <Description>Provides CLI tool for TcOpen application scaffolding.</Description>
+    <PackageProjectUrl>https://github.com/TcOpenGroup/tcopen-app-templates</PackageProjectUrl>
+    <PackageIcon>ProfileImage.png</PackageIcon>
+    <PackAsTool>True</PackAsTool>
+    <PackageId>TcOpen.$(AssemblyName)</PackageId>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\assets\icons\ProfileImage.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
