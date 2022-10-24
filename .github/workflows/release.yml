@@ -24,4 +24,4 @@ jobs:
           gh-public-repos: ${{ secrets.TCOPENTEMPLATESPAT  }}
 	        TCOOPENNUGETDOTORGPAT : ${{ secrets.TCOOPENNUGETDOTORGPAT  }}
         run: >
-          .\build.ps1          
+          .\build.ps1  
