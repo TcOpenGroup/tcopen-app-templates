@@ -244,3 +244,7 @@ nugets/
 # CI/CD
 artifacts/
 .tools/
+
+# Binaries
+*.exe
+*.dll

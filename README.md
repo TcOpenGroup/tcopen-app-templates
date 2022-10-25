@@ -2,26 +2,35 @@
 
 This repository contains templates for TcOpen applications, for you to get started quickly, with the development and deployment of your TcOpen applications.
 
-## Scaffolding from template
+## Pre-requisites
 
-1. Go to the releases in this repository [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases).
-1. Open the latest release. 
-1. From **Assets** Download the latest version of *TcOpen.Scaffold.UI.zip*, copy it to an empty folder and unzip.
-1. Run *TcOpen.Scaffold.UI.exe*. 
+- [General pre-requisites TcOpen](https://github.com/TcOpenGroup/TcOpen#prerequisites)
 
-> **You may get a security warning about the executing file download from the internet. We will provide singed binaries later in the development process. If you have reason to distrust this binary, you can compile your version from the source of this repository.**
+For the specific requirements of a particular template see the readme of the template.
 
+## Add TcOpenGroup package feed
 
-![](assets/pics/scaffolder-ui.png)
+To get early access to the packages from TcOpen we advise you to get access to a dedicated package feed hosted on GitHub. 
+If you do not have a GitHub account please consider creating one by signing up at https://github.com.
 
-
-You can use `CLI` version of the scaffolder. Download the `tco.cli.zip` asset from the latest release and run `tco.exe --help` to see the available options.
-
+~~~PowerShell
+dotnet nuget add source --username <GITHUBUSERNAME> --password <PAT> --store-password-in-clear-text --name github-tcopen "https://nuget.pkg.github.com/TcOpenGroup/index.json"
 ~~~
+
+How to create your Personal Access Token (PAT) read [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+
+## Scaffolding from CLI
+
+## Installing
+
+~~~Powershell
+dotnet tool install TcOpen.tco --global --prerelease
+~~~
+
+### Get help
+
+~~~Powershell
 PS C:\> .\tco.exe --help
-Running version: 0.1.1-alpha.35
-tco 0.1.1-alpha.35+Branch.dev.Sha.c0ae152a3de0c0494209f94b520d966f63caecee
-Copyright (C) 2022 author
 
   -b, --branch-tag          Branch from which draw the scaffold.
 
@@ -41,6 +50,25 @@ Copyright (C) 2022 author
 
 ~~~
 
+### Example
+
+Get mts-s-template from the repository
+~~~Powershell
+tco --project-name MyNewProject --template-name mts-s-template --source repository --release 0.2.0-alpha.9
+~~~
+
+## Scaffolding from ui program
+
+1. Go to the releases in this repository [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases).
+1. Open the latest release. 
+1. From **Assets** Download the latest version of *TcOpen.Scaffold.UI.zip*, copy it to an empty folder and unzip.
+1. Run *TcOpen.Scaffold.UI.exe*. 
+
+> **You may get a security warning about the executing file download from the internet. We will provide singed binaries later in the development process. If you have reason to distrust this binary, you can compile your version from the source of this repository.**
+
+
+![](assets/pics/scaffolder-ui.png)
+
 ## Available project templates
 
 |    Template id    |                                           Description                                            |
@@ -48,11 +76,7 @@ Copyright (C) 2022 author
 | mts-s-template    | Standard template for [MTS](https://www.mts.sk/en/) more in the readme of the template  [templates\mts-s-template](templates/mts-s-template/t/README.md)|
 | more coming soon | -                                                                                                |
 
-## Pre-requisites
 
-- [General pre-requisites TcOpen](https://github.com/TcOpenGroup/TcOpen#prerequisites)
-
-For the specific requirements of a particular template see the readme of the template.
 
 
 
