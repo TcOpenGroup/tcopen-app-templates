@@ -107,7 +107,7 @@ namespace Build.Scaffolder
                 }
 
 
-                if (GitVersionInformation.BranchName == "release" || GitVersionInformation.BranchName == "main" ||
+                if (GitVersionInformation.BranchName.StartsWith("release/") || GitVersionInformation.BranchName == "main" ||
                     GitVersionInformation.BranchName == "master")
                 {
                     foreach (var nugetFile in Directory
