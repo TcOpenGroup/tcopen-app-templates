@@ -91,7 +91,7 @@ namespace Build.Scaffolder
     {
         public override void Run(BuildContext context)
         {
-            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName))
+            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName || GitVersionInformation.BranchName.StartsWith("release/")))
             {
                 foreach (var nugetFile in Directory
                              .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
