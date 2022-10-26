@@ -16,6 +16,23 @@ namespace Build.Scaffolder
     {
         public const string BuildGroupName = " : Scaffolder";
         public static readonly IEnumerable<string> Publishable = new List<string>() {"dev", "main", "master","release"};
+        public static readonly IEnumerable<string> Releasable = new List<string>() { "main", "master", "release" };
+
+        public static bool CanReleaseInternal()
+        {
+            return Publishable.Any(predicate =>
+                predicate == GitVersionInformation.BranchName ||
+                GitVersionInformation.BranchName.StartsWith("release/"));
+        }
+
+        public static bool CanReleasePublic()
+        {
+            return Releasable.Any(predicate =>
+                predicate == GitVersionInformation.BranchName ||
+                GitVersionInformation.BranchName.StartsWith("release/"));
+        }
+
+
     }
 
     [TaskName("Startup" + Const.BuildGroupName)]
@@ -91,7 +108,7 @@ namespace Build.Scaffolder
     {
         public override void Run(BuildContext context)
         {
-            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName || GitVersionInformation.BranchName.StartsWith("release/")))
+            if (Const.CanReleaseInternal())
             {
                 foreach (var nugetFile in Directory
                              .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
@@ -105,25 +122,25 @@ namespace Build.Scaffolder
                             SkipDuplicate = true
                         });
                 }
+            }
 
 
-                if (GitVersionInformation.BranchName.StartsWith("release/") || GitVersionInformation.BranchName == "main" ||
-                    GitVersionInformation.BranchName == "master")
+            if (Const.CanReleasePublic())
+            {
+                foreach (var nugetFile in Directory
+                             .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
+                             .Select(p => new FileInfo(p)))
                 {
-                    foreach (var nugetFile in Directory
-                                 .EnumerateFiles(Path.Combine(context.ArtifactsFolder, "nugets"), "*.nupkg")
-                                 .Select(p => new FileInfo(p)))
-                    {
-                        context.DotNetNuGetPush(nugetFile.FullName,
-                            new Cake.Common.Tools.DotNet.NuGet.Push.DotNetNuGetPushSettings()
-                            {
-                                Source = "https://api.nuget.org/v3/index.json",
-                                ApiKey = System.Environment.GetEnvironmentVariable("TCOOPENNUGETDOTORGPAT"),
-                                SkipDuplicate = true
-                            });
-                    }
+                    context.DotNetNuGetPush(nugetFile.FullName,
+                        new Cake.Common.Tools.DotNet.NuGet.Push.DotNetNuGetPushSettings()
+                        {
+                            Source = "https://api.nuget.org/v3/index.json",
+                            ApiKey = System.Environment.GetEnvironmentVariable("TCOOPENNUGETDOTORGPAT"),
+                            SkipDuplicate = true
+                        });
                 }
             }
+            
         }
     }
 
@@ -133,7 +150,7 @@ namespace Build.Scaffolder
     {
         public override void Run(BuildContext context)
         {
-            if (Const.Publishable.Any(predicate => predicate == GitVersionInformation.BranchName))
+            if (Const.CanReleaseInternal())
             {
                 var githubToken = context.Environment.GetEnvironmentVariable("gh-public-repos");
                 var githubClient = new GitHubClient(new ProductHeaderValue("TcOpen.Scaffold.UI"));
@@ -147,8 +164,8 @@ namespace Build.Scaffolder
                         Name = $"{GitVersionInformation.SemVer}",
                         TargetCommitish = GitVersionInformation.Sha,
                         Body = $"Release v{GitVersionInformation.SemVer}",
-                        Draft = true,
-                        Prerelease = true
+                        Draft = !Const.CanReleasePublic(),                        
+                        Prerelease = !string.IsNullOrEmpty(GitVersionInformation.PreReleaseTag)
                     }
                 ).Result;
 
