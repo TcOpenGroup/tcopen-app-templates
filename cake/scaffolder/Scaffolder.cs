@@ -124,6 +124,7 @@ namespace Build.Scaffolder
                 }
             }
 
+
             if (Const.CanReleasePublic())
             {
                 foreach (var nugetFile in Directory
