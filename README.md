@@ -56,7 +56,9 @@ Get mts-s-template from the repository
 ~~~Powershell
 tco --project-name MyNewProject --template-name mts-s-template --source repository --release 0.2.0-alpha.9
 ~~~
-
+### Important!  
+  Project name must comply with C# identifier rules.It must start with a letter (not number or other characters except for `@`). For details see [here](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/lexical-structure#643-identifiers).
+  
 ## Scaffolding from ui program
 
 1. Go to the releases in this repository [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases).
