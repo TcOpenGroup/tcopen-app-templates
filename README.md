@@ -24,7 +24,7 @@ How to create your Personal Access Token (PAT) read [here](https://docs.github.c
 ## Installing
 
 ~~~Powershell
-dotnet tool install TcOpen.tco --global --prerelease
+dotnet tool install TcOpen.tco --global --version 0.2.1-preview.1
 ~~~
 
 ### Get help
