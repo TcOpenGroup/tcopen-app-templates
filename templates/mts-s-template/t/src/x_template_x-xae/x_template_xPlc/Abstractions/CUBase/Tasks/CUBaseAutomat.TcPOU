@@ -50,9 +50,9 @@ END_VAR
     //-------------------------------------		
 	CASE InvokeAction OF
 		eDataEntityInvokeType.InvokeAndWaitDone: 
-				StepCompleteWhen(THIS^.Station.EntityFlowCloseForOperations(Header).Done);
+				StepCompleteWhen(THIS^.StationBase.EntityFlowCloseForOperations(Header).Done);
 		eDataEntityInvokeType.InvokeOnly: 
-				StepCompleteWhen(THIS^.Station.EntityFlowCloseForOperations(Header).Busy);	
+				StepCompleteWhen(THIS^.StationBase.EntityFlowCloseForOperations(Header).Busy);	
 	END_CASE;			   		    				
     //-------------------------------------
 END_IF
@@ -81,7 +81,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID, TRUE, 'CREATE NEW ENTITY DATA')) THEN
     //-------------------------------------		
-	StepCompleteWhen(THIS^.Station.EntityFlowCreateNew(EntityId, Header).Done);				   		    				
+	StepCompleteWhen(THIS^.StationBase.EntityFlowCreateNew(EntityId, Header).Done);				   		    				
     //-------------------------------------
 END_IF]]></ST>
       </Implementation>
@@ -98,7 +98,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID, TRUE, 'DISCARD ENTITY DATA')) THEN
     //-------------------------------------		
-	StepCompleteWhen(THIS^.Station.EntityFlowDiscard(EntityId, Header).Done);				   		    				
+	StepCompleteWhen(THIS^.StationBase.EntityFlowDiscard(EntityId, Header).Done);				   		    				
     //-------------------------------------
 END_IF]]></ST>
       </Implementation>
@@ -142,11 +142,11 @@ END_VAR]]></Declaration>
     //-------------------------------------		
 		CASE InvokeAction OF
 		eDataEntityInvokeType.InvokeAndWaitDone: 
-				StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Done);
+				StepCompleteWhen(THIS^.StationBase.EntityFlowFinalize(Header).Done);
 		eDataEntityInvokeType.InvokeOnly: 
-				StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Busy);	
+				StepCompleteWhen(THIS^.StationBase.EntityFlowFinalize(Header).Busy);	
 	END_CASE;			   		    				
-	StepCompleteWhen(THIS^.Station.EntityFlowFinalize(Header).Done );				   		    				
+	StepCompleteWhen(THIS^.StationBase.EntityFlowFinalize(Header).Done );				   		    				
     //-------------------------------------
 END_IF
 
@@ -187,8 +187,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID, TRUE, 'OPEN ENTITY DATA')) THEN
     //-------------------------------------		
-    IF THIS^.Station.EntityFlowOpenForOperations(inEntityId, CuHeader).Done THEN
-        IF THIS^.Station.ProcessDataManager.Data.EntityHeader.IsEmpty THEN
+    IF THIS^.StationBase.EntityFlowOpenForOperations(inEntityId, CuHeader).Done THEN
+        IF THIS^.StationBase.ProcessDataManager.Data.EntityHeader.IsEmpty THEN
             RequestStep(inReqStepId);
         ELSIF EntityDoesBelong() THEN
             CompleteStep();
@@ -206,7 +206,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[EntityDoesBelong:=THIS^.Station.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.Station.CuId;]]></ST>
+        <ST><![CDATA[EntityDoesBelong:=THIS^.StationBase.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.StationBase.CuId;]]></ST>
       </Implementation>
     </Method>
     <Method Name="MonitorAnyRecurringFailure" Id="{e0debd7d-76ba-040d-3b8f-a31d168a71a0}" FolderPath="ConsecutiveFailures\">
@@ -239,22 +239,22 @@ END_VAR
     //-------------------------------------		
 	
 	IF(inResult.Result<>eOverallResult.Failed ) THEN
-		THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
-		THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
+		THIS^.StationBase.RecurringFails.AnyRecurringFails.Counter:=0;
+		THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached :=FALSE;
 		This^.CompleteStep();
 	ELSE
 		//collect any recurring fails
-		IF NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN 
-			THIS^.Station.RecurringFails.AnyRecurringFails.Counter := THIS^.Station.RecurringFails.AnyRecurringFails.Counter +1;
+		IF NOT THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached THEN 
+			THIS^.StationBase.RecurringFails.AnyRecurringFails.Counter := THIS^.StationBase.RecurringFails.AnyRecurringFails.Counter +1;
 		END_IF
-		THIS^.Station.RecurringFails.AnyRecurringFails.Reached:=THIS^.Station.RecurringFails.AnyRecurringFails.Counter>=THIS^.Station._settings.AnyRecurringFailure;
+		THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached:=THIS^.StationBase.RecurringFails.AnyRecurringFails.Counter>=THIS^.StationBase._settings.AnyRecurringFailure;
 		
 
 		
 	
 
 		
-		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.AnyRecurringFails.Reached)
+		THIS^.Messenger.OnCondition(THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached)
 									   .Build()
 									   .Append('(Consecutive failure) The number of any recurring failure count has been reached!')
 									   .Append(' Failure code: ')
@@ -264,10 +264,10 @@ END_VAR
 									   .As()				   
 									   .AsError();
 									   
-		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.AnyRecurringFails.Reached);			
+		THIS^.StepCompleteWhen(NOT THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached);			
 						   
 									   
-		IF THIS^.Station.RecurringFails.AnyRecurringFails.Reached THEN
+		IF THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached THEN
 			
 				
 			IF(_dialog.Show()
@@ -275,8 +275,8 @@ END_VAR
 			   .WithText('<#Please acknowledge recurring failure!#>')
 			   .WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN
 			   
-					THIS^.Station.RecurringFails.AnyRecurringFails.Counter:=0;
-					THIS^.Station.RecurringFails.AnyRecurringFails.Reached :=FALSE;
+					THIS^.StationBase.RecurringFails.AnyRecurringFails.Counter:=0;
+					THIS^.StationBase.RecurringFails.AnyRecurringFails.Reached :=FALSE;
 					THIS^.CompleteStep();
 			END_IF; 
 		END_IF;
@@ -323,23 +323,23 @@ END_VAR
     //-------------------------------------		
 	
 	IF(inResult.Result<>eOverallResult.Failed ) THEN
-		THIS^.Station.RecurringFails.SameRecurringFails.Counter:=0;
-		THIS^.Station.RecurringFails.SameRecurringFails.Reached :=FALSE;
+		THIS^.StationBase.RecurringFails.SameRecurringFails.Counter:=0;
+		THIS^.StationBase.RecurringFails.SameRecurringFails.Reached :=FALSE;
 		THIS^.CompleteStep();
 	ELSE
 	
 		//collect same recurring
-		IF NOT THIS^.Station.RecurringFails.SameRecurringFails.Reached THEN 
-			IF THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes = inResult.ErrorCodes AND inResult.ErrorCodes <>';' THEN //if error code not defined ignore
-				THIS^.Station.RecurringFails.SameRecurringFails.Counter := THIS^.Station.RecurringFails.SameRecurringFails.Counter +1;
+		IF NOT THIS^.StationBase.RecurringFails.SameRecurringFails.Reached THEN 
+			IF THIS^.StationBase.RecurringFails.SameRecurringFails.Result.ErrorCodes = inResult.ErrorCodes AND inResult.ErrorCodes <>';' THEN //if error code not defined ignore
+				THIS^.StationBase.RecurringFails.SameRecurringFails.Counter := THIS^.StationBase.RecurringFails.SameRecurringFails.Counter +1;
 			END_IF;
-			THIS^.Station.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
+			THIS^.StationBase.RecurringFails.SameRecurringFails.Result.ErrorCodes := inResult.ErrorCodes ;
 		END_IF;
 		
-		THIS^.Station.RecurringFails.SameRecurringFails.Reached:=THIS^.Station.RecurringFails.SameRecurringFails.Counter>=THIS^.Station._settings.SameRecurringFailure;
+		THIS^.StationBase.RecurringFails.SameRecurringFails.Reached:=THIS^.StationBase.RecurringFails.SameRecurringFails.Counter>=THIS^.StationBase._settings.SameRecurringFailure;
 
 			
-		THIS^.Messenger.OnCondition(THIS^.Station.RecurringFails.SameRecurringFails.Reached)
+		THIS^.Messenger.OnCondition(THIS^.StationBase.RecurringFails.SameRecurringFails.Reached)
 									   .Build()
 									   .Append('(Consecutive failure) The number of same recurring failure count has been reached!')
 									   .Append(' Failure code: ')
@@ -349,18 +349,18 @@ END_VAR
 									   .As()				   
 									   .AsError();
 		
-		THIS^.StepCompleteWhen(NOT THIS^.Station.RecurringFails.SameRecurringFails.Reached);
+		THIS^.StepCompleteWhen(NOT THIS^.StationBase.RecurringFails.SameRecurringFails.Reached);
 	
 
 									   
-		IF THIS^.Station.RecurringFails.SameRecurringFails.Reached THEN
+		IF THIS^.StationBase.RecurringFails.SameRecurringFails.Reached THEN
 			IF(_dialog.Show()
 			   .WithCaption('<#(Consecutive failure) The number of same recurring failure count has been reached! #>')
 			   .WithText('<#Please acknowledge recurring failure! #>')
 			   .WithOk().Answer = TcoCore.eDialogAnswer.Ok) THEN
 			   
-					THIS^.Station.RecurringFails.SameRecurringFails.Counter:=0;
-					THIS^.Station.RecurringFails.SameRecurringFails.Reached :=FALSE;
+					THIS^.StationBase.RecurringFails.SameRecurringFails.Counter:=0;
+					THIS^.StationBase.RecurringFails.SameRecurringFails.Reached :=FALSE;
 					THIS^.CompleteStep();
 			END_IF; 
 		END_IF
@@ -377,8 +377,8 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Station" Id="{eaca3fe7-35ad-0454-21e6-545016e503be}">
-      <Declaration><![CDATA[PROPERTY Station : REFERENCE TO CU00x]]></Declaration>
+    <Property Name="StationBase" Id="{eaca3fe7-35ad-0454-21e6-545016e503be}">
+      <Declaration><![CDATA[PROPERTY StationBase : REFERENCE TO CU00x]]></Declaration>
       <Get Name="Get" Id="{ade5c0ee-01dd-065a-2c38-d3659e28429b}">
         <Declaration><![CDATA[VAR
     _station : POINTER TO CU00x;
@@ -386,7 +386,7 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[IF __QUERYPOINTER(Parent, _station) THEN // Check if _Parent is Station001
-    Station REF= _station^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
+    StationBase REF= _station^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
 END_IF]]></ST>
         </Implementation>
       </Get>

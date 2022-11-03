@@ -38,7 +38,7 @@ function Remove-Tc-Id
 
 function Add-ProcessData-Instance($name, $processDataDutPath)
 {
-    $processDataTemplate = "`n`t`t$CuTemplateName : $CuTemplate"+"NameProcessData := (Parent := THISSTRUCT);"
+    $processDataTemplate = "`n`t`t$CuTemplateName : $CuTemplateName"+"ProcessData := (Parent := THISSTRUCT);"
     $newProcessData = $processDataTemplate.Replace($CuTemplateName,$name)
     $startOfProcessDataRegion = (Get-Content $processDataDutPath | Select-String "END_STRUCT" ).LineNumber
     $processDataDUT = Get-Content $processDataDutPath
