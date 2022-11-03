@@ -23,14 +23,28 @@ How to create your Personal Access Token (PAT) read [here](https://docs.github.c
 
 ## Installing
 
+**Infomation about versions are [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases)**
+
+Installing latest available version:
+~~~Powershell
+dotnet tool install TcOpen.tco --global --version --prerelease
+~~~
+
+Installing specific version:
 ~~~Powershell
 dotnet tool install TcOpen.tco --global --version 0.2.1-preview.1
 ~~~
 
-## Updating
+## Updating to specific version
 
 ~~~Powershell
-dotnet tool update TcOpen.tco --global
+dotnet tool update TcOpen.tco --global --version 0.2.1-alpha.6
+~~~
+
+## Uninstalling global tool
+
+~~~Powershell
+dotnet tool uninstall TcOpen.tco -g
 ~~~
 
 ### Get help
