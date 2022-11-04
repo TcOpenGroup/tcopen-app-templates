@@ -1,5 +1,11 @@
 # TcOpen application templates
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/TcOpenGroup/tcopen-app-templates/graphs/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/TcOpenGroup/tcopen-app-templates/blob/dev/LICENSE)
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/TcOpenGroup/tcopen-app-templates)
+[![dev](https://github.com/TcOpenGroup/TcOpen/actions/workflows/main.yml/badge.svg?branch=dev)](https://github.com/TcOpenGroup/tcopen-app-templates/actions/workflows/dev.yml)
+
+
 This repository contains templates for TcOpen applications, for you to get started quickly, with the development and deployment of your TcOpen applications.
 
 ## Pre-requisites
@@ -24,6 +30,8 @@ How to create your Personal Access Token (PAT) read [here](https://docs.github.c
 ## Installing
 
 **Infomation about versions are [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases)**
+
+Latest public nuget.org release [![NuGet](https://img.shields.io/nuget/v/TcOpen.tco.svg?style=flat)](https://www.nuget.org/packages/TcOpen.tco/)
 
 Installing latest available version:
 ~~~Powershell
