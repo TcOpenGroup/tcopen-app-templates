@@ -1,5 +1,11 @@
 # TcOpen application templates
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/TcOpenGroup/tcopen-app-templates/graphs/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/TcOpenGroup/tcopen-app-templates/blob/dev/LICENSE)
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/TcOpenGroup/tcopen-app-templates)
+[![dev](https://github.com/TcOpenGroup/TcOpen/actions/workflows/main.yml/badge.svg?branch=dev)](https://github.com/TcOpenGroup/tcopen-app-templates/actions/workflows/dev.yml)
+
+
 This repository contains templates for TcOpen applications, for you to get started quickly, with the development and deployment of your TcOpen applications.
 
 ## Pre-requisites
@@ -23,8 +29,30 @@ How to create your Personal Access Token (PAT) read [here](https://docs.github.c
 
 ## Installing
 
+**Infomation about versions are [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases)**
+
+Latest public nuget.org release [![NuGet](https://img.shields.io/nuget/v/TcOpen.tco.svg?style=flat)](https://www.nuget.org/packages/TcOpen.tco/)
+
+Installing latest available version:
 ~~~Powershell
-dotnet tool install TcOpen.tco --global --prerelease
+dotnet tool install TcOpen.tco --global --version --prerelease
+~~~
+
+Installing specific version:
+~~~Powershell
+dotnet tool install TcOpen.tco --global --version 0.2.1-preview.1
+~~~
+
+## Updating to specific version
+
+~~~Powershell
+dotnet tool update TcOpen.tco --global --version 0.2.1-alpha.6
+~~~
+
+## Uninstalling global tool
+
+~~~Powershell
+dotnet tool uninstall TcOpen.tco -g
 ~~~
 
 ### Get help
@@ -56,7 +84,9 @@ Get mts-s-template from the repository
 ~~~Powershell
 tco --project-name MyNewProject --template-name mts-s-template --source repository --release 0.2.0-alpha.9
 ~~~
-
+### Important!  
+  Project name must comply with C# identifier rules.It must start with a letter (not number or other characters except for `@`). For details see [here](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/lexical-structure#643-identifiers).
+  
 ## Scaffolding from ui program
 
 1. Go to the releases in this repository [here](https://github.com/TcOpenGroup/tcopen-app-templates/releases).
