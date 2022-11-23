@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using TcoRepositoryDataSetHandler.Handler;
+using TcOpen.Inxton.RepositoryDataSet;
 
 namespace x_template_xProductionPlaner.Planer
 {

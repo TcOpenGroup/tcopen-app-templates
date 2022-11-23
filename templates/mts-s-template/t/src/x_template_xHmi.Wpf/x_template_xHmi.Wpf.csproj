@@ -27,19 +27,18 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.10.0-alpha.15" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.10.0-alpha.15" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.10.0-alpha.30" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.10.0-alpha.30" />
   </ItemGroup>
   <!--PCKG-END-->
 	
  <ItemGroup>
-		<ProjectReference Include="..\TcoInstructor.Wpf\x_template_xInstructor.csproj" />
-		<ProjectReference Include="..\TcoInstructor\TcoInstructor.csproj" />
+		<ProjectReference Include="..\x_template_xInstructor\x_template_xInstructor.csproj" />
 		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
 		<ProjectReference Include="..\x_template_xProductionPlaner\x_template_xProductionPlaner.csproj" />

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using TcoRepositoryDataSetHandler;
-using TcoRepositoryDataSetHandler.Handler;
+using TcOpen.Inxton.RepositoryDataSet;
 using x_template_xPlc;
 
 namespace x_template_xStatistic.Statistics

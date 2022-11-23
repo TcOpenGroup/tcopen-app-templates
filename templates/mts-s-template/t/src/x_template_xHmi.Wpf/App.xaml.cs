@@ -13,8 +13,7 @@ using TcOpen.Inxton.Local.Security.Wpf;
 using TcOpen.Inxton.RavenDb;
 using TcOpen.Inxton.Security;
 using TcOpen.Inxton.TcoCore.Wpf;
-using TcoRepositoryDataSetHandler;
-using TcoRepositoryDataSetHandler.Handler;
+using TcOpen.Inxton.RepositoryDataSet;
 using Vortex.Presentation.Wpf;
 using x_template_xDataMerge.Rework;
 using x_template_xInstructor.TcoSequencer;
@@ -76,7 +75,7 @@ namespace x_template_xHmi.Wpf
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-            SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
+           SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
             
         }
 

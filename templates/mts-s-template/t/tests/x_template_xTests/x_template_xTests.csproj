@@ -12,7 +12,6 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TcoDataMerge\scr\TcoDataMerge\TcoDataMerge.csproj" />
     <ProjectReference Include="..\..\src\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
     <ProjectReference Include="..\..\src\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>

@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcoDataMerge\scr\TcoDataMerge\TcoDataMerge.csproj" />
+    <PackageReference Include="TcOpen.Inxton.DataMerge" Version="0.10.0-alpha.30" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 

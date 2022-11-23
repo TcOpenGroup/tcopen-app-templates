@@ -8,7 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcoInstructor\TcoInstructor.csproj" />
+    <PackageReference Include="TcOpen.Inxton.Instructor" Version="0.10.0-alpha.30" />
+  </ItemGroup>
+  <ItemGroup>
+
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 

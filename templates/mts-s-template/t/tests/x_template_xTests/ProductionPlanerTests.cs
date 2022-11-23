@@ -7,8 +7,7 @@ using System.IO;
 using System.Linq;
 using TcoCore;
 using TcOpen.Inxton.RavenDb;
-using TcoRepositoryDataSetHandler.Handler;
-using TcoRepositoryDataSetHandler;
+using TcOpen.Inxton.RepositoryDataSet;
 using x_template_xProductionPlaner.Planer;
 
 namespace x_template_xTests

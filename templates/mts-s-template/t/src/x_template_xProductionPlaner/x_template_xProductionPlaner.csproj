@@ -10,7 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TcoRepositoryDataSet\src\TcoRepositoryDataSetHandler\TcoRepositoryDataSetHandler.csproj" />
+    <PackageReference Include="TcOpen.Inxton.RepositoryDataSet" Version="0.10.0-alpha.30" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
   </ItemGroup>
 
