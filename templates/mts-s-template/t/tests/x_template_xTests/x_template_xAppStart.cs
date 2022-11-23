@@ -26,7 +26,7 @@ namespace x_template_xTests
             var app = Path.GetFullPath(applicationPath);
             if (File.Exists(applicationPath))
             {
-                appProcess = Process.Start(applicationPath);
+                appProcess = Process.Start(applicationPath, "RavenDbEmbded");
                 System.Threading.Thread.Sleep(10000);
             }
             else
