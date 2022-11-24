@@ -10,7 +10,7 @@ namespace HmiProjectx_template_x.Wpf
     {
         // PLC
         public const DeployMode DEPLOY_MODE = DeployMode.Local;
-        public static DatabaseEngine DATABASE_ENGINE ;
+        public static DatabaseEngine DATABASE_ENGINE = DatabaseEngine.RavenDbEmbded;
         public string PLC_AMS_ID = Environment.GetEnvironmentVariable("Tc3Target");
        
 

@@ -31,33 +31,18 @@ namespace x_template_xHmi.Wpf
     /// </summary>
     public partial class App : Application
     {
-
-      
         
 
         public App()
         {
-             var args = Environment.GetCommandLineArgs();
-            foreach (var arg in args)
-            {
-                if (arg == DatabaseEngine.RavenDbEmbded.ToString())
-                {
-                    useRavenDbEmbdedForUnitTests = true;
-                    break;
-                }
-            }
+         
             StopIfRunning();
 
             // This starts the twin connector operations
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
 
-
-            var dbEngine = Constants.DATABASE_ENGINE;
-            if (useRavenDbEmbdedForUnitTests)
-            {
-                dbEngine = DatabaseEngine.RavenDbEmbded;
-            }
-            switch (dbEngine)
+   
+            switch (Constants.DATABASE_ENGINE)
             {
                 case DatabaseEngine.RavenDbEmbded:
                     StartRavenDBEmbeddedServer();
@@ -72,10 +57,10 @@ namespace x_template_xHmi.Wpf
                 default:
                     break;
             }
-      
 
-         
-            
+
+
+
             // TcOpen app setup
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
@@ -91,30 +76,32 @@ namespace x_template_xHmi.Wpf
                 .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
                 .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN }));
 
-                       
+
 
             // Otherwise undocumented feature in official IVF, for details refer to internal documentation.
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
 
-     
 
-          
+
+
 
 
             // Create user roles for this application.
             Roles.Create();
-            
+
             // Starts the retrieval loop from of the messages from the PLC
             // If you have more TcOpen.Inxton application make sure you retrieve the messages only one of them.
             x_template_xPlc.MAIN._technology._logger.StartLoggingMessages(TcoCore.eMessageCategory.Info);
-            
+
             SetUpExternalAuthenticationDevice();
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-           SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
-            
+            //SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
+
         }
+
+      
 
         private static void SetUpExternalAuthenticationDevice()
         {            
@@ -365,7 +352,6 @@ namespace x_template_xHmi.Wpf
         /// Determines whether the application at design time. (true when at design, false at runtime)
         /// </summary>
         private static bool designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());
-        private bool useRavenDbEmbdedForUnitTests;
 
         /// <summary>
         /// Checks that no other instance of this program is running on this system.

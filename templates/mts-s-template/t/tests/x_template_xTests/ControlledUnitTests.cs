@@ -136,12 +136,15 @@ namespace x_template_xTests
         {
             var cu = Entry.Plc.MAIN._technology._cu00x;
             cu._manualTask.Execute(); // Reset other tasks
+            System.Threading.Thread.Sleep(300);
+            while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
             cu._groundTask._task.Execute();
 
 
             //            Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._manualTask._taskState.Synchron);
             //            Assert.AreEqual(eTaskState.Ready, (eTaskState)cu._automatTask._task._taskState.Synchron);
-            System.Threading.Thread.Sleep(100);
+            System.Threading.Thread.Sleep(300);
+            while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Busy) ;
             Assert.AreEqual(eTaskState.Busy, (eTaskState)cu._groundTask._task._taskState.Synchron);
             while ((eTaskState)cu._groundTask._task._taskState.Synchron == eTaskState.Busy) ;
             while ((eTaskState)cu._groundTask._task._taskState.Synchron != eTaskState.Done) ;
@@ -155,7 +158,7 @@ namespace x_template_xTests
         {
             var cu = Entry.Plc.MAIN._technology._cu00x;
             cu._manualTask.Execute(); // Reset other tasks
-
+            while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
             cu._automatTask._task.Execute();
 
             System.Threading.Thread.Sleep(250);

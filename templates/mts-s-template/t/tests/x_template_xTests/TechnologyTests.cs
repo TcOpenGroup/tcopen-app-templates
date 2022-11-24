@@ -78,9 +78,9 @@ namespace x_template_xTests
 
             technologyTask.Execute();
 
-            System.Threading.Thread.Sleep(1000);
+            while ((eTaskState)cuTask._task._taskState.Synchron != eTaskState.Busy) ;
 
-            Assert.AreEqual(eTaskState.Busy, (eTaskState)cuTask._task._taskState.Synchron);
+          
         }
     }
 }
