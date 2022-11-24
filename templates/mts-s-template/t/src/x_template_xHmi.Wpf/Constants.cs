@@ -10,16 +10,30 @@ namespace HmiProjectx_template_x.Wpf
     {
         // PLC
         public const DeployMode DEPLOY_MODE = DeployMode.Local;
-        public static string PLC_AMS_ID = Environment.GetEnvironmentVariable("Tc3Target");
-        // DB
-        public const string CONNECTION_STRING_DB = DEPLOY_MODE==DeployMode.Plc ? PRODUCTION_CONNECTION_STRING_DB : LOCAL_CONNECTION_STRING_DB;
+        public static DatabaseEngine DATABASE_ENGINE = DatabaseEngine.RavenDbEmbded;
+        public string PLC_AMS_ID = Environment.GetEnvironmentVariable("Tc3Target");
+       
 
-        public const string PRODUCTION_CONNECTION_STRING_DB = @"http://localhost:8080";
-        public const string LOCAL_CONNECTION_STRING_DB = @"http://localhost:8080";
+        // DB
+        public static string GetConnectionString()
+        {
+            var connectionString = DATABASE_ENGINE == DatabaseEngine.MongoDb ? MONOGODB_PRODUCTION : RAVENDB_PRODUCTION;
+            if (DEPLOY_MODE == DeployMode.Local)
+            {
+                connectionString = DATABASE_ENGINE == DatabaseEngine.MongoDb ? MONOGODB_LOCAL : RAVENDB_LOCAL;
+            }
+            return connectionString;
+        }
+
+
         public const string DB_NAME = "tcomtsx_template_x";
-        public const string MONGODB_PATH = @"C:\Program Files\MongoDB\Server\5.0\bin\mongod.exe";
+        public const string MONGODB_PATH = @"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe";
         public const string MONGODB_ARGS = "--dbpath D:\\DATA\\DB\\ --bind_ip_all";
         public const bool MONGODB_RUN = true;
+        private const string MONOGODB_LOCAL = @"mongodb://localhost:27017";
+        private const string MONOGODB_PRODUCTION = @"mongodb://localhost:27017";
+        private const string RAVENDB_LOCAL = @"http://localhost:8080";
+        private const string RAVENDB_PRODUCTION = @"http://localhost:8080";
 
         // USER
         public const string AUTOLOGIN_USERNAME = "default";
@@ -34,5 +48,11 @@ namespace HmiProjectx_template_x.Wpf
         Local = 1,
         Dummy = 2,
         Plc = 3
+    }
+    public enum DatabaseEngine
+    {
+        RavenDbEmbded = 1,
+        MongoDb = 2,
+
     }
 }
