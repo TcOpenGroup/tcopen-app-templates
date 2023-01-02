@@ -1,6 +1,7 @@
 
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -12,9 +13,9 @@ namespace x_template_xPlc
         {
             if (!(bool)value)
             {
-                return Vortex.Presentation.Styling.Wpf.VortexResources.SignalOn;
+                return Application.Current.Resources["Alert"];
             }
-            return Vortex.Presentation.Styling.Wpf.VortexResources.Alert;
+            return Application.Current.Resources["Accent"];
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

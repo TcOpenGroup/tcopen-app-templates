@@ -97,7 +97,7 @@ namespace x_template_xHmi.Wpf
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-            //SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
+            SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
 
         }
 

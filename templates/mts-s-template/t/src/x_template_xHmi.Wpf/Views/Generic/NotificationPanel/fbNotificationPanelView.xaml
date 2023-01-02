@@ -18,7 +18,7 @@
         <Style x:Key="icon" TargetType="materialDesign:PackIcon">
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource OnPrimary}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -28,7 +28,7 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="Visibility" Value="Visible"/>
             <Setter Property="Margin" Value="10 0 10 10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource OnSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource OnPrimary}" />
             <Setter Property="BorderThickness" Value="3"></Setter>
             <Setter Property="CornerRadius" Value="3"/>
         </Style>
@@ -38,7 +38,7 @@
             <Setter Property="Margin" Value="20 0"/>
             <Setter Property="TextBlock.FontWeight" Value="Bold" />
             <Setter Property="TextBlock.FontWeight" Value="Bold" />
-            <Setter Property="TextBlock.Foreground" Value="{DynamicResource OnSecondary}" />
+            <Setter Property="TextBlock.Foreground" Value="{DynamicResource OnPrimary}" />
             <Setter Property="TextBlock.FontSize" Value="20" />
         </Style>
 
@@ -49,13 +49,13 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="{x:Null}" />
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnPrimary}" />
         </Style>
 
         <Style x:Key="menuIcon" TargetType="materialDesign:PackIcon">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="60"/>
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource OnPrimary}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -82,7 +82,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Border Background="{DynamicResource Secondary}" x:Name="ErrorBorder"  Width="85" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="0,0,0,150">
+        <Border Background="{DynamicResource Primary}" x:Name="ErrorBorder"  Width="85" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="0,0,0,150">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -226,7 +226,7 @@
                     </ListViewItem>
                 </ListView>
 
-                <TextBlock Grid.Row="2" Text="INFO" HorizontalAlignment="Center" Foreground="{DynamicResource OnSecondary}" TextBlock.FontSize="20" TextBlock.FontWeight="Bold"  >
+                <TextBlock Grid.Row="2" Text="INFO" HorizontalAlignment="Center" Foreground="{DynamicResource OnPrimary}" TextBlock.FontSize="20" TextBlock.FontWeight="Bold"  >
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="Gray"/>
                     </TextBlock.Effect>

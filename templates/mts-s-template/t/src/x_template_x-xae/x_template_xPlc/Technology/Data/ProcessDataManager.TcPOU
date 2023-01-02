@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK ProcessDataManager EXTENDS TcoData.TcoDataExchange
 VAR
     _data : ProcessData := (Parent := THIS^);
+	_sb : TcoCore.StringBuilder;
 END_VAR
 ]]></Declaration>
     <Implementation>

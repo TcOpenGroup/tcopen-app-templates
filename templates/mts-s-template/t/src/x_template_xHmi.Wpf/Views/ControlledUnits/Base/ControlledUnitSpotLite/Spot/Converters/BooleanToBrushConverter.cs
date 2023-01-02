@@ -1,8 +1,10 @@
 
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+
 
 namespace x_template_xPlc
 {
@@ -10,11 +12,13 @@ namespace x_template_xPlc
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+           
+
             if ((bool)value)
             {
-                return Vortex.Presentation.Styling.Wpf.VortexResources.SignalOn;
+                return  Application.Current.Resources["Accent"];//Vortex.Presentation.Styling.Wpf.VortexResources.SignalOn;
             }
-            return Vortex.Presentation.Styling.Wpf.VortexResources.Alert;
+            return   Application.Current.Resources["Alert"];//Vortex.Presentation.Styling.Wpf.VortexResources.Alert;
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

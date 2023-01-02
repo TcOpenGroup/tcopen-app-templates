@@ -10,13 +10,42 @@
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Light"
-                    PrimaryColor="LightBlue"
+                    PrimaryColor="DeepPurple"
                     SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
+                <ResourceDictionary Source="Wpf/Menu/MenuButton.xaml" />
                 <wpf:TcoResources></wpf:TcoResources>
-                <ResourceDictionary Source="pack://application:,,,/Vortex.Presentation.Styling.Wpf;component/VortexStyle.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Vortex.Presentation.Styling.Wpf;component/MDOverrides.xaml" />
+                <!--<ResourceDictionary Source="pack://MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />-->
+
+
             </ResourceDictionary.MergedDictionaries>
+
+
+
+            
+            
+            
+
+            <SolidColorBrush x:Key="Surface" Color="{Binding Color , Source={StaticResource MaterialDesignPaper}}" />
+            <SolidColorBrush x:Key="OnSurface" Color="{Binding Color , Source={StaticResource PrimaryHueLightForegroundBrush}}" />
+            <SolidColorBrush x:Key="Background" Color="{Binding Color , Source={StaticResource MaterialDesignBackground}}" />
+            <SolidColorBrush x:Key="Primary" Color="{Binding Color , Source={StaticResource PrimaryHueMidBrush}}" />
+            <SolidColorBrush x:Key="OnPrimary" Color="{Binding Color , Source={StaticResource PrimaryHueMidForegroundBrush}}" />
+            <SolidColorBrush x:Key="Secondary" Color="{Binding Color , Source={StaticResource SecondaryHueMidBrush}}" />
+            <SolidColorBrush x:Key="OnSecondary" Color="{Binding Color , Source={StaticResource SecondaryHueMidForegroundBrush}}" />
+            <SolidColorBrush x:Key="Accent" Color="{Binding Color , Source={StaticResource PrimaryHueDarkBrush}}" />
+            <SolidColorBrush x:Key="OnAccent" Color="{Binding Color , Source={StaticResource MaterialDesignDarkForeground}}" />
+            <SolidColorBrush x:Key="Warning" Color="{Binding Color , Source={StaticResource PrimaryHueLightBrush}}" />
+            <SolidColorBrush x:Key="OnWarning" Color="{Binding Color , Source={StaticResource PrimaryHueLightForegroundBrush}}" />
+            <SolidColorBrush x:Key="Alert" Color="{Binding Color , Source={StaticResource MaterialDesignValidationErrorBrush}}" />
+            <SolidColorBrush x:Key="OnAlert" Color="{Binding Color , Source={StaticResource MaterialDesignDarkForeground}}" />
+        
+            
+            
+            
+            
+            
 
             <Color x:Key="MtsGreenColor">#FF20A024</Color>
             <Color x:Key="MtsYellowColor">#FFFFD917</Color>
@@ -63,7 +92,7 @@
             <SolidColorBrush x:Key="OnMtsOrange" Color="{DynamicResource OnMtsOrangeColor}" />
 
 
-            <Color x:Key="PrimaryColor">#FFE54E31</Color>
+            <!--<Color x:Key="PrimaryColor">#FFE54E31</Color>
             <Color x:Key="OnPrimaryColor">White</Color>
 
             <SolidColorBrush x:Key="Primary" Color="{StaticResource MtsOrangeColor}" />
@@ -119,46 +148,46 @@
             <Color x:Key="IntermediateColor">SteelBlue</Color>
             <Color x:Key="OnIntermediateColor">White</Color>
 
-            <!--
+            --><!--
                 eMessageCategory.Debug:
                 eMessageCategory.Trace:
                 eMessageCategory.Info:
             -->
-            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{DynamicResource PrimaryColor}" />
+            <!--<SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{DynamicResource PrimaryColor}" />
             <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{DynamicResource OnPrimaryColor}" />
 
-            <!--<SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{DynamicResource PrimaryColor}"/>
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{DynamicResource PrimaryColor}"/>
             <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="{DynamicResource OnPrimaryColor}"/>-->
             <!--
                 eMessageCategory.TimedOut:
                 eMessageCategory.Notification:
             -->
             <!--<SolidColorBrush x:Key="SecondaryHueLightBrush" Color="{DynamicResource SecondaryColor}"/>
-            <SolidColorBrush x:Key="SecondaryHueLightForegroundBrush" Color="{DynamicResource OnSecondaryColor}"/>-->
+            <SolidColorBrush x:Key="SecondaryHueLightForegroundBrush" Color="{DynamicResource OnSecondaryColor}"/>
 
             <SolidColorBrush x:Key="SecondaryHueMidBrush" Color="{DynamicResource SecondaryColor}" />
             <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="{DynamicResource OnSecondaryColor}" />
 
-            <!--<SolidColorBrush x:Key="SecondaryHueDarkBrush" Color="{DynamicResource SecondaryColor}"/>
+            <SolidColorBrush x:Key="SecondaryHueDarkBrush" Color="{DynamicResource SecondaryColor}"/>
             <SolidColorBrush x:Key="SecondaryHueDarkForegroundBrush" Color="{DynamicResource OnSecondaryColor}"/>-->
             <!--
                 eMessageCategory.Warning
             -->
             <!--  Warning Color differs from global settings, it's applied directly in the diagnostic view  -->
-            <!--  CustomCuDiagnostics and DiagnosticsView  -->
+            <!--  CustomCuDiagnostics and DiagnosticsView  --><!--
             <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="{DynamicResource WarningColor}" />
             <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="{DynamicResource OnWarningColor}" />
-            <!--
+            --><!--
                 eMessageCategory.Error:
                 eMessageCategory.Critical:
                 eMessageCategory.Catastrophic:
                 eMessageCategory.ProgrammingError:
             -->
-            <SolidColorBrush x:Key="MaterialDesignValidationErrorBrush" Color="{DynamicResource AlertColor}" />
+            <!--<SolidColorBrush x:Key="MaterialDesignValidationErrorBrush" Color="{DynamicResource AlertColor}" />
             <SolidColorBrush x:Key="MaterialDesignDarkForeground" Color="{DynamicResource OnAlertColor}" />
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Padding" Value="0,0,0,0"></Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
 
     </Application.Resources>

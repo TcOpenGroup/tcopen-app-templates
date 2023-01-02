@@ -1,0 +1,202 @@
+﻿<UserControl
+    x:Class="x_template_xHmi.Wpf.MenuControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   
+    xmlns:modelview="clr-namespace:x_template_xHmi.Wpf" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converters="clr-namespace:Vortex.Presentation.Wpf.Converters;assembly=Vortex.Presentation.Wpf"
+    d:DesignHeight="1000"
+    d:DesignWidth="1500"
+    mc:Ignorable="d">
+
+
+    <d:UserControl.DataContext>
+        <modelview:MenuControlViewModel />
+    </d:UserControl.DataContext>
+  
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <ContentControl
+                x:Name="MainContentControl"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Content="{Binding CurrentView}" />
+        </Grid>
+        <Grid
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+
+            <!--<WrapPanel>
+
+                <Button VerticalAlignment="Center"
+                        Command="{Binding ToggleMenuCommand}"
+                        Content=">"/>
+
+            </WrapPanel>-->
+
+
+
+            <Border
+                Grid.Column="1"
+                Width="230"
+                modelview:MvvmVisualState.CurrentState="{Binding MenuVisibility}"
+                BorderBrush="{DynamicResource Primary}"
+                Margin="5"
+                BorderThickness="0.5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition  />
+                    </Grid.RowDefinitions>
+
+                    <Button
+            
+                        x:Name="ArrowLeft"
+                        VerticalAlignment="Center"
+                        Command="{Binding ToggleMenuCommand}"
+                        >
+                        <Button.Content>
+                            <materialDesign:PackIcon Kind="Menu"  VerticalAlignment="Center"/>
+
+                        </Button.Content>
+                        <!--<Button.Template>
+                            <ControlTemplate>
+                                <Grid MinHeight="50" >
+                                    <TextBlock
+                                        MaxHeight="75"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="25"
+                                        FontWeight="Light"
+                                        IsEnabled="False"
+                                        Text="ᐊ"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="WrapWithOverflow" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>-->
+                    </Button>
+
+                    <Button
+           
+                        x:Name="TitleText"
+                        VerticalAlignment="Center"
+                        Command="{Binding ToggleMenuCommand}"
+                        Content="{Binding Title, Converter={converters:CapitalizeConverter}}">
+                        
+                        <!--<Button.Template>
+                            <ControlTemplate>
+                                <Grid MinHeight="100">
+                                    <TextBlock
+                                        MaxHeight="25"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="25"
+                                        FontWeight="Light"
+                                        IsEnabled="False"
+                                        Text="{Binding Title, Converter={conv:CapitalizeConverter}}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="WrapWithOverflow" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>-->
+                    </Button>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl
+                
+                            ItemsSource="{Binding NavCommands}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!--<Button Content="{Binding ButtonContent, Converter={converters:CapitalizeConverter}}" Command="{Binding }">-->
+
+                                    <Button 
+                                        Command="{Binding}"
+                                            Content="{Binding ButtonContent, Converter={converters:CapitalizeConverter}}"
+                                            Style="{x:Null}">
+                                        <Button.Template>
+                                            <MultiBinding Converter="{modelview:SelectedButtonConverter}">
+                                                <Binding />
+                                                <Binding ElementName="MainContentControl" Path="Content" />
+                                            </MultiBinding>
+                                        </Button.Template>
+                                    </Button>
+                           
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <!--<ComboBox
+                        Grid.Row="1"
+                        DisplayMemberPath="Description"
+                        ItemsSource="{Binding ContentPresentationMode, Converter={modelview:EnumToCollectionConverter}, Mode=OneTime}"
+                        SelectedValue="{Binding ContentPresentationMode}"
+                        SelectedValuePath="Value"></ComboBox>-->
+                </Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Visible">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Width"
+                                    To="230"
+                                    Duration="00:00:00:0.25" />
+                                <DoubleAnimation
+                                    Storyboard.TargetName="TitleText"
+                                    Storyboard.TargetProperty="Opacity"
+                                    To="1"
+                                    Duration="00:00:00:0.5" />
+                                <ObjectAnimationUsingKeyFrames
+                                    BeginTime="00:00:00"
+                                    Storyboard.TargetName="TitleText"
+                                    Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00.00" Value="{x:Static Visibility.Visible}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames
+                                    BeginTime="00:00:00"
+                                    Storyboard.TargetName="ArrowLeft"
+                                    Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00.00" Value="{x:Static Visibility.Hidden}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Collapsed">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    BeginTime="00:00:00"
+                                    Storyboard.TargetProperty="Width"
+                                    To="50"
+                                    Duration="00:00:00:0.25" />
+                                <ObjectAnimationUsingKeyFrames
+                                    BeginTime="00:00:00"
+                                    Storyboard.TargetName="TitleText"
+                                    Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00.00" Value="{x:Static Visibility.Hidden}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames
+                                    BeginTime="00:00:00"
+                                    Storyboard.TargetName="ArrowLeft"
+                                    Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00.00" Value="{x:Static Visibility.Visible}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+        </Grid>
+    </Grid>
+
+</UserControl>
