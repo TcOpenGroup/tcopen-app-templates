@@ -25,11 +25,7 @@
             <ScrollViewer>
                 <ItemsControl Margin="5">
                     <ItemsControl.Resources>
-                        <Style TargetType="GroupBox" >
-                            <Setter Property="MaxHeight" Value="350"></Setter>
-                            <Setter Property="MaxWidth" Value="700"></Setter>
-                            <Setter Property="MinWidth" Value="700"></Setter>
-                        </Style>
+
                     
                         <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
                             <Setter Property="Margin" Value="5,5,5,0"></Setter>
@@ -218,9 +214,7 @@
                
                 <ItemsControl>
                     <ItemsControl.Resources>
-                        <Style TargetType="GroupBox" >
-                            <Setter Property="MaxHeight" Value="350"></Setter>
-                        </Style>
+       
                         <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
                             <Setter Property="Margin" Value="5,5,5,0"></Setter>
                             <Setter Property="AutoGenerateColumns" Value="False"></Setter>

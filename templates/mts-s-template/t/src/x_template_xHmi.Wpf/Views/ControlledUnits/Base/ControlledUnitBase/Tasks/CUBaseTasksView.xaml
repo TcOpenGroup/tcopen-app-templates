@@ -46,7 +46,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <!-- Controlled unit name card -->
@@ -174,11 +174,10 @@
                 </Grid>
             </materialDesign:Card>
             <!-- Tasks details card -->
-            <ScrollViewer
+            <materialDesign:Card
                 Grid.Row="2"
-                Margin="0"
-                HorizontalScrollBarVisibility="Auto"
-                VerticalScrollBarVisibility="Auto">
+                materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                Padding="2.5">
                 <Grid>
                     <ItemsControl ItemsSource="{Binding TaskControls}">
                         <ItemsControl.ItemsPanel>
@@ -195,7 +194,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-            </ScrollViewer>
+            </materialDesign:Card>
         </Grid>
         <!-- Diagnostics card -->
         <materialDesign:Card

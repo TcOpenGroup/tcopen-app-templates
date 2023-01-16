@@ -26,7 +26,7 @@ namespace x_template_xPlc
             if (AuthorizationChecker.HasAuthorization(Roles.station_details))
             {
                 var detailsView = Vortex.Presentation.Wpf.LazyRenderer.Get.CreatePresentation("Control", Component, new Grid(), false);
-                Vortex.Presentation.Wpf.NavigableViewModelBase.Current.OpenView(detailsView as FrameworkElement);
+                NavigableViewModelBase.Current.OpenView(detailsView as FrameworkElement);
             }
         }
 

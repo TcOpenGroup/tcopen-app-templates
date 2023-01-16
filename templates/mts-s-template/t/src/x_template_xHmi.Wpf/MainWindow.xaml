@@ -18,10 +18,8 @@
         <local:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
-        <TabControl TabStripPlacement="Bottom">
-            <TabItem Header="Operator">
-                <mainview:MainView/>
-            </TabItem>
-        </TabControl>
+
+           <mainview:MainView/>
+   
     </Grid>
 </Window>

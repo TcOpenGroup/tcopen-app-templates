@@ -25,7 +25,7 @@
 
         
         <vortex:TcoDataExchangeSimpleSelectorView DataContext="{Binding x_template_xPlc.MAIN._technology._processSettings, Mode=OneWay}" />
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" >
             <TabItem Header="LAYOUT">
                 <Canvas>
 

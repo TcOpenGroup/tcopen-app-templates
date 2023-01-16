@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:x_template_xHmi.Wpf.Views.Data.ProcessTraceability"
              xmlns:s="clr-namespace:x_template_xHmi.Wpf.Properties"   
              xmlns:vortexs="http://vortex.security.mts/xaml" 
-             xmlns:vortex="http://vortex.mts/xaml"
+             xmlns:vortex="http://vortex.mts/xaml" xmlns:tcodata="clr-namespace:TcoData;assembly=TcOpen.Inxton.Data.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -14,7 +14,7 @@
     </UserControl.DataContext>
     <Grid>
         <vortexs:PermissionBox Grid.Row="1" Permissions="process_traceability_access" SecurityMode="Disabled">
-            <vortex:TcoDataExchangeDisplayView DataContext="{Binding ProcessData}" x:Name="fu">
+            <tcodata:TcoDataExchangeDisplayView DataContext="{Binding ProcessData}" >
                 <vortex:TcoDataExchangeDisplayView.DataListColumns>
                     <DataGridTextColumn Binding="{Binding _Created, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Created}"/>
                     <DataGridTextColumn Binding="{Binding _Modified, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Modified}"/>
@@ -22,7 +22,10 @@
                                         Width="*"
                                         Binding="{Binding EntityHeader.IsMaster}" Header="Master"/>
                 </vortex:TcoDataExchangeDisplayView.DataListColumns>
-            </vortex:TcoDataExchangeDisplayView>
+            </tcodata:TcoDataExchangeDisplayView>
+            
+            
+
         </vortexs:PermissionBox>
     </Grid>
 </UserControl>

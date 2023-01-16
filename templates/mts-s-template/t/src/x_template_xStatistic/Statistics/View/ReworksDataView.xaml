@@ -22,9 +22,7 @@
 
         </Grid.RowDefinitions>
         <Grid.Resources>
-            <Style TargetType="GroupBox" >
-           
-            </Style>
+
 
             <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
                 <Setter Property="Margin" Value="5,5,5,0"></Setter>

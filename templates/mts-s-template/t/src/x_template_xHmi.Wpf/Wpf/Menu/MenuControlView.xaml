@@ -25,6 +25,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <ContentControl
+                Margin="5,0,0,0"
                 x:Name="MainContentControl"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
@@ -38,90 +39,47 @@
             </Grid.ColumnDefinitions>
 
 
-            <!--<WrapPanel>
-
-                <Button VerticalAlignment="Center"
-                        Command="{Binding ToggleMenuCommand}"
-                        Content=">"/>
-
-            </WrapPanel>-->
-
-
-
-            <Border
+           <Border
                 Grid.Column="1"
                 Width="230"
                 modelview:MvvmVisualState.CurrentState="{Binding MenuVisibility}"
                 BorderBrush="{DynamicResource Primary}"
-                Margin="5"
+                Margin="1"
                 BorderThickness="0.5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="50"  />
                         <RowDefinition  />
                     </Grid.RowDefinitions>
 
                     <Button
-            
+                        Background="{StaticResource Accent}"
+                        MinHeight="50"
                         x:Name="ArrowLeft"
                         VerticalAlignment="Center"
-                        Command="{Binding ToggleMenuCommand}"
-                        >
-                        <Button.Content>
-                            <materialDesign:PackIcon Kind="Menu"  VerticalAlignment="Center"/>
+                        Command="{Binding ToggleMenuCommand}">
 
-                        </Button.Content>
-                        <!--<Button.Template>
-                            <ControlTemplate>
-                                <Grid MinHeight="50" >
-                                    <TextBlock
-                                        MaxHeight="75"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontSize="25"
-                                        FontWeight="Light"
-                                        IsEnabled="False"
-                                        Text="ᐊ"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="WrapWithOverflow" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>-->
+
+                        <materialDesign:PackIcon Kind="MenuRight" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                         
+                       
+                     
                     </Button>
 
                     <Button
-           
+                        Background="{StaticResource Accent}"
+                        MinHeight="50"
                         x:Name="TitleText"
                         VerticalAlignment="Center"
                         Command="{Binding ToggleMenuCommand}"
                         Content="{Binding Title, Converter={converters:CapitalizeConverter}}">
-                        
-                        <!--<Button.Template>
-                            <ControlTemplate>
-                                <Grid MinHeight="100">
-                                    <TextBlock
-                                        MaxHeight="25"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontSize="25"
-                                        FontWeight="Light"
-                                        IsEnabled="False"
-                                        Text="{Binding Title, Converter={conv:CapitalizeConverter}}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="WrapWithOverflow" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>-->
+                   
                     </Button>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl
-                
-                            ItemsSource="{Binding NavCommands}">
+                        <ItemsControl ItemsSource="{Binding NavCommands}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <!--<Button Content="{Binding ButtonContent, Converter={converters:CapitalizeConverter}}" Command="{Binding }">-->
-
                                     <Button 
                                         Command="{Binding}"
                                             Content="{Binding ButtonContent, Converter={converters:CapitalizeConverter}}"

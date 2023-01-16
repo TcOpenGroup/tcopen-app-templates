@@ -26,7 +26,5 @@ namespace x_template_xHmi.Wpf
         private object SelectedTemplate { get => Application.Current.FindResource("MenuButtonSelected"); }
         private object NotSelectedTemplate { get => Application.Current.FindResource("MenuButtonNotSelected"); }
 
-        // private object SelectedTemplate { get => Application.Current.FindResource("SideMenuSelectedButtonControlTemplate"); }
-        // private object NotSelectedTemplate { get => Application.Current.FindResource("SideMenuButtonControlTemplate"); }
     }
 }
