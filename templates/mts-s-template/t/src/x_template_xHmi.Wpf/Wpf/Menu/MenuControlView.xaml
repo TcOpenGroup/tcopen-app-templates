@@ -31,6 +31,7 @@
                 VerticalAlignment="Stretch"
                 Content="{Binding CurrentView}" />
         </Grid>
+        
         <Grid
             Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -38,7 +39,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-
+            
            <Border
                 Grid.Column="1"
                 Width="230"
@@ -65,7 +66,7 @@
                        
                      
                     </Button>
-
+                    
                     <Button
                         Background="{StaticResource Accent}"
                         MinHeight="50"
@@ -80,7 +81,8 @@
                         <ItemsControl ItemsSource="{Binding NavCommands}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button 
+                                    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                        <Button 
                                         Command="{Binding}"
                                             Content="{Binding ButtonContent, Converter={converters:CapitalizeConverter}}"
                                             Style="{x:Null}">
@@ -91,7 +93,8 @@
                                             </MultiBinding>
                                         </Button.Template>
                                     </Button>
-                           
+                                    </materialDesign:Card>
+
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

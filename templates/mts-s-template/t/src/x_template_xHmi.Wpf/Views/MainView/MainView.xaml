@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <Viewbox Grid.Row="0" Grid.RowSpan="2">
+        <Viewbox Grid.Row="0" Grid.RowSpan="1">
             <x_template_xplc:NotificationPanelView ModelObject="{Binding x_template_xPlc.MAIN._technology._notificationPanel}" />
         </Viewbox>
         <Expander Grid.Row="1" Grid.ColumnSpan="2">

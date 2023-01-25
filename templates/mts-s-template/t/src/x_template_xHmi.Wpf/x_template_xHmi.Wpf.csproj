@@ -13,7 +13,7 @@
     <PackageReference Include="Serilog.Enrichers.EnrichedProperties" Version="1.0.63" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" /> 
     <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
   </ItemGroup>
 
 	<!--PROJ-START

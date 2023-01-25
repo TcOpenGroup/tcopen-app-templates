@@ -1,4 +1,3 @@
-using HmiProjectx_template_x.Wpf;
 using Raven.Embedded;
 using Serilog;
 using System;
@@ -26,7 +25,7 @@ using System.Diagnostics;
 using System.Windows.Media;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
-using Constants = HmiProjectx_template_x.Wpf.Constants;
+using Constants = x_template_xPlcConnector.Constants;
 
 namespace x_template_xHmi.Wpf
 {

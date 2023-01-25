@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HmiProjectx_template_x.Wpf
+namespace x_template_xPlcConnector
 {
     public class Constants
     {

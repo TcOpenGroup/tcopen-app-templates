@@ -5,29 +5,27 @@
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
-		{attribute addProperty Name "(A1)Horizontal Axis"}
-      	horizontalCylinder : TcoPneumatics.TcoCylinder(THISSTRUCT); 
-		{attribute addProperty Name "PRITOMNOST  KUSU"}
-     	PresenceOnInspection : TcoElements.TcoDi(THISSTRUCT);
-		
-		{attribute addProperty Name "PRITOMNOST  KOMPONENTU NA ZACIATKU KRATKY DOP."}
-     	PresenceComponentAtEntryShort: TcoElements.TcoDi(THISSTRUCT);
-		
-		{attribute addProperty Name "KOLIZNY SENZOR NA VYSTUPE KRATKY DOP."}
-     	ColisonSensorComponentAtExitShort: TcoElements.TcoDi(THISSTRUCT);
-
-		{attribute addProperty Name "PRITOMNOST  KUSOV NA VSTUPE DOPRAVNIKA"}
-     	ConvAtEntryIsEmpty : TcoElements.TcoDi(THISSTRUCT);
-		
-		{attribute addProperty Name "VYSLEDOK KAMEROVEJ INSPEKCIE NOK"}
-     	InspectionIsNok : TcoElements.TcoDi(THISSTRUCT);
-
- 
-		{attribute addProperty Name "PRITOMNOST OK BOXU"}
-     	PresenceOkBox : TcoElements.TcoDi(THISSTRUCT); 
-		
-		{attribute addProperty Name "PRITOMNOST NOK BOXU"}
-     	PresenceNokBox : TcoElements.TcoDi(THISSTRUCT);   
+		{attribute addProperty Name "GROUP 1"}
+		Group1 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 2"}
+		Group2 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 3"}
+		Group3 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 4"}
+		Group4 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 5"}
+		Group5 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 6"}
+		Group6 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 7"}
+		Group7 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 8"}
+		Group8 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 9"}
+		Group9 : TemplateComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 10"}
+		Group10 : TemplateComponents:= (Parent := THISSTRUCT);  
+	
     END_STRUCT
 END_TYPE
 ]]></Declaration>

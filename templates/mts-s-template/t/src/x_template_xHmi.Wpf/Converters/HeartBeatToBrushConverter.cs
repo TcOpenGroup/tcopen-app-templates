@@ -16,7 +16,7 @@ namespace x_template_xPlc
             {
                 return  Application.Current.Resources["Primary"];
             }
-            return Application.Current.Resources["Accent"];//Vortex.Presentation.Styling.Wpf.VortexResources.Secondary;
+            return Application.Current.Resources["Accent"];
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

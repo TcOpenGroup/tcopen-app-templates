@@ -11,13 +11,24 @@ namespace x_template_xPlc
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if ((bool)value)
+            bool inverted = (parameter is null) ? false : bool.Parse(parameter.ToString());
+
+            if (!inverted)
             {
+                if ((bool)value)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Hidden;
+            }
+            else
+                if ((bool)value)
+                return Visibility.Hidden;
+            else
                 return Visibility.Visible;
 
-            }
-            return Visibility.Hidden;
         }
+
+
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();

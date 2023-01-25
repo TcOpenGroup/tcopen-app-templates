@@ -21,7 +21,7 @@ METHOD PROTECTED Main : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Messenger.Notify('Running manual mode');
-Station.Components.horizontalCylinder.Service();
+Station.Components.Group1.horizontalCylinder.Service();
 ]]></ST>
       </Implementation>
     </Method>
