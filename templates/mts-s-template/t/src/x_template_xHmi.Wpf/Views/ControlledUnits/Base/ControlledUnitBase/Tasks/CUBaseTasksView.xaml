@@ -39,8 +39,8 @@
     <Grid>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition MaxHeight="250"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="auto" MaxHeight="250"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>

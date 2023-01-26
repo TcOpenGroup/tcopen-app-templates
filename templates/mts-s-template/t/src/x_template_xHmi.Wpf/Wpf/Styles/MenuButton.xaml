@@ -16,7 +16,7 @@
         <Setter Property="MinWidth" Value="200" />
         <Setter Property="Height" Value="60" />
         <Setter Property="Margin" Value="0,0,0,0" />
-        <Setter Property="Background" Value="{DynamicResource Primary}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
     </Style>
   
     <ControlTemplate x:Key="MenuButtonNotSelected" TargetType="{x:Type ButtonBase}">
@@ -37,18 +37,18 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Content="{Binding Tag}"
-                        Foreground="{DynamicResource OnPrimary}" />
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" />
                 </StackPanel>
                 <TextBlock
                     x:Name="ContentTextblock"
                     Grid.Column="1"
-                    Foreground="{DynamicResource OnPrimary}"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                     Style="{StaticResource ButtonText}"
                     Text="{TemplateBinding Content}" />
             </Grid>
             <Border
                 x:Name="RadiusBackground"
-                Background="{DynamicResource Secondary}"
+                Background="{DynamicResource PrimaryHueMidBrush}"
                 BorderThickness="1"
                 Opacity=".00" />
         </Grid>
@@ -74,16 +74,16 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Content="{Binding Tag}"
-                        Foreground="{DynamicResource OnPrimary}" />
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" />
                 </StackPanel>
                 <TextBlock
                     Grid.Column="1"
                     Panel.ZIndex="50"
-                    Foreground="{DynamicResource OnPrimary}"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                     Style="{StaticResource ButtonText}"
                     Text="{TemplateBinding Content}" />
             </Grid>
-            <Border Background="{DynamicResource Accent}" BorderThickness="1" />
+            <Border Background="{DynamicResource PrimaryHueDarkBrush}" BorderThickness="1" />
         </Grid>
 
     </ControlTemplate>

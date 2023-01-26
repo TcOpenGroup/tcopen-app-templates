@@ -12,6 +12,7 @@
     <d:UserControl.DataContext>
         <local:TcoTaskedServiceComponentsViewModel/>
     </d:UserControl.DataContext>
+  
     <materialDesign:Card
             materialDesign:ShadowAssist.ShadowDepth="Depth1"
             Padding="2.5"

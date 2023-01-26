@@ -34,8 +34,8 @@ namespace x_template_xHmi.Wpf
 
         private FrameworkElement MenuIcon(string menuTitle) => new Border()
         {
-            Background = (Brush)Application.Current.FindResource("Accent"),
-            BorderBrush = (Brush)Application.Current.FindResource("OnAccent"),
+            Background = (Brush)Application.Current.FindResource("PrimaryHueDarkBrush"),
+            BorderBrush = (Brush)Application.Current.FindResource("PrimaryHueDarkForegroundBrush"),
             BorderThickness = new Thickness(2.0),
             CornerRadius = new CornerRadius(5.0),
             Width = 25.0,
@@ -46,7 +46,7 @@ namespace x_template_xHmi.Wpf
                 VerticalAlignment = VerticalAlignment.Center,
                 FontSize = 15,
                 FontWeight = FontWeight.FromOpenTypeWeight(700),
-                Foreground = (Brush)Application.Current.FindResource("OnAccent"),
+                Foreground = (Brush)Application.Current.FindResource("PrimaryHueDarkForegroundBrush"),
                 Style = null,
                 Text = menuTitle.ToUpper()[0].ToString()
             }

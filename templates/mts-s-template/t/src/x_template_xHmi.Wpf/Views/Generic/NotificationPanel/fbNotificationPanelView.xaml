@@ -38,7 +38,7 @@
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="CornerRadius" Value="30"/>
-            <Setter Property="Margin" Value="0,-35,0,0"/>
+            <Setter Property="Margin" Value="0,-55,0,0"/>
 
             <Setter Property="Background" Value="{DynamicResource Alert}"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -56,19 +56,19 @@
     </UserControl.Resources>
 
     <Grid>
-        <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="1.5"  Background="{DynamicResource Primary}" >
+        <materialDesign:Card   materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="1.5"  Background="{DynamicResource Primary}" >
 
             <Expander x:Name="NotificationExpander" 
                       Background="{StaticResource Primary}" Foreground="{StaticResource OnPrimary}"
-            ExpandDirection="Right">
-                <Expander.Header>
+                    ExpandDirection="Right">
+                <Expander.Header >
                     <StackPanel >
                         <Border  Visibility="{Binding Component._badgeValue.Cyclic, Converter={StaticResource BadgeConverter}}" Style="{StaticResource badge}">
                             <TextBlock Text="{Binding Component._badgeValue.Cyclic}" Style="{StaticResource badgeText}" />
                             
                         </Border>
                         <!--Visibility="{Binding ElementName=NotificationExpander, Path=IsExpanded ,Converter={plc:BoolToVisibilityConverter}, ConverterParameter=true}"-->
-                        <ListView   Margin="10"  ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                        <ListView   Margin="0"  ScrollViewer.HorizontalScrollBarVisibility="Auto" >
 
 
                             <ListViewItem Height="60" >
@@ -192,7 +192,7 @@
                  
                 </Expander.Header>
 
-                <ListView Margin="0,74,0,0"    Visibility="{Binding MenuVisibility}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Background="Transparent"   >
+                <ListView Margin="0,64,0,0"    Visibility="{Binding MenuVisibility}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Background="Transparent"   >
                     <ListView.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextBlock.Foreground" Value="{DynamicResource OnPrimary}"></Setter>
