@@ -1,4 +1,3 @@
-using HmiProjectx_template_x.Wpf;
 using Raven.Embedded;
 using Serilog;
 using System;
@@ -23,6 +22,10 @@ using x_template_xStatistic.Statistics;
 using TcOpen.Inxton.Data.MongoDb;
 using TcOpen.Inxton.RavenDb;
 using System.Diagnostics;
+using System.Windows.Media;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using Constants = x_template_xPlcConnector.Constants;
 
 namespace x_template_xHmi.Wpf
 {
@@ -31,7 +34,19 @@ namespace x_template_xHmi.Wpf
     /// </summary>
     public partial class App : Application
     {
-        
+        protected override void OnStartup(StartupEventArgs e)
+        {
+
+            Color primaryColor = SwatchHelper.Lookup[MaterialDesignColor.Indigo];
+            Color accentColor = SwatchHelper.Lookup[MaterialDesignColor.Lime];
+            ITheme theme = Theme.Create(new MaterialDesignLightTheme(), primaryColor, accentColor);
+            Resources.SetTheme(theme);
+
+
+
+
+            base.OnStartup(e);
+        }
 
         public App()
         {
@@ -97,7 +112,7 @@ namespace x_template_xHmi.Wpf
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-            //SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
+            SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
 
         }
 

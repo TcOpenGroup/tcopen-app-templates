@@ -221,7 +221,7 @@ METHOD Idle : BOOL
       <Implementation>
         <ST><![CDATA[
 
-components.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
+components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
 							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
 							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);

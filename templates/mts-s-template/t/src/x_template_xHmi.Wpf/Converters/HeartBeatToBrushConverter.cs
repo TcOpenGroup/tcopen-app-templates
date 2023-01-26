@@ -7,16 +7,16 @@ using System.Windows.Markup;
 
 namespace x_template_xPlc
 {
-    public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
+    public class HeartBeatToBrushConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+   
             if ((bool)value)
             {
-                return Visibility.Visible;
-
+                return  Application.Current.Resources["Primary"];
             }
-            return Visibility.Hidden;
+            return Application.Current.Resources["Accent"];
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

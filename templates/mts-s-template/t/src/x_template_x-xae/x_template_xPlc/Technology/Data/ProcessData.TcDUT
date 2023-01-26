@@ -23,8 +23,50 @@ TYPE
         {attribute addProperty Name "<#Entity header#>"}
         EntityHeader : EntityHeader     := (Parent := THISSTRUCT);
 		{attribute addProperty Name "<#CU00x#>"}
-		 {attribute clr [Container(Layout.Stack)]}
+		{attribute clr [Container(Layout.Stack)]}
         CU00x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU01x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU02x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU03x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU04x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU05x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU06x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU07x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU08x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU09x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU10x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU11x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU12x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU13x : CU00xProcessData := (Parent := THISSTRUCT);
+		{attribute addProperty Name "<#CU00x#>"}
+		{attribute clr [Container(Layout.Stack)]}
+        CU14x : CU00xProcessData := (Parent := THISSTRUCT);
     END_STRUCT
 END_TYPE
 ]]></Declaration>

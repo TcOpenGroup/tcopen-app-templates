@@ -6,8 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using TcoCore;
 using TcOpen.Inxton.Local.Security;
-using Vortex.Presentation.Wpf;
-
 namespace x_template_xPlc
 {
     public class CUBaseViewModel : MenuRenderableControlViewModel
@@ -28,7 +26,7 @@ namespace x_template_xPlc
             if (AuthorizationChecker.HasAuthorization(Roles.station_details))
             {
                 var detailsView = Vortex.Presentation.Wpf.LazyRenderer.Get.CreatePresentation("Control", Component, new Grid(), false);
-                Vortex.Presentation.Wpf.NavigableViewModelBase.Current.OpenView(detailsView as FrameworkElement);
+                NavigableViewModelBase.Current.OpenView(detailsView as FrameworkElement);
             }
         }
 

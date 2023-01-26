@@ -1,21 +1,34 @@
 
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace x_template_xPlc
 {
-    public class BooleanToBrushConverter : MarkupExtension, IValueConverter
+    public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if ((bool)value)
+            bool inverted = (parameter is null) ? false : bool.Parse(parameter.ToString());
+
+            if (!inverted)
             {
-                return Vortex.Presentation.Styling.Wpf.VortexResources.SignalOn;
+                if ((bool)value)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Hidden;
             }
-            return Vortex.Presentation.Styling.Wpf.VortexResources.Alert;
+            else
+                if ((bool)value)
+                return Visibility.Hidden;
+            else
+                return Visibility.Visible;
+
         }
+
+
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();

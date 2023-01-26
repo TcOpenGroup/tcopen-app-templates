@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TcOpen.Inxton.Local.Security.Wpf;
-using Vortex.Presentation.Wpf;
+
 using x_template_xHmi.Wpf.Views.Data.OfflineReworkData;
 
 namespace x_template_xHmi.Wpf.Data

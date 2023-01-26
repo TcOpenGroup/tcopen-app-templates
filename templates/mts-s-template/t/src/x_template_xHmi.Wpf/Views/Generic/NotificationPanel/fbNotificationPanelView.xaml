@@ -16,62 +16,36 @@
         <plc:BadgeConverter x:Key="BadgeConverter"/>
 
         <Style x:Key="icon" TargetType="materialDesign:PackIcon">
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Foreground" Value="{DynamicResource OnPrimary}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="iconContainer" TargetType="Border">
-            <Setter Property="Width" Value="50"/>
-            <Setter Property="Height" Value="50"/>
+    
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Margin" Value="10 0 10 10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource OnSecondary}" />
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OnPrimary}" />
             <Setter Property="BorderThickness" Value="3"></Setter>
             <Setter Property="CornerRadius" Value="3"/>
         </Style>
 
-        <Style x:Key="iconDescription" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="20 0"/>
-            <Setter Property="TextBlock.FontWeight" Value="Bold" />
-            <Setter Property="TextBlock.FontWeight" Value="Bold" />
-            <Setter Property="TextBlock.Foreground" Value="{DynamicResource OnSecondary}" />
-            <Setter Property="TextBlock.FontSize" Value="20" />
-        </Style>
-
-        <Style x:Key="menu" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="60"/>
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{x:Null}" />
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}" />
-        </Style>
-
-        <Style x:Key="menuIcon" TargetType="materialDesign:PackIcon">
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="Height" Value="60"/>
-            <Setter Property="Foreground" Value="{DynamicResource OnSecondary}"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
+        
 
         <Style x:Key="badge" TargetType="Border">
-            <Setter Property="Width" Value="35"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="CornerRadius" Value="35"/>
-            <Setter Property="Margin" Value="-5,0,-5,-5"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="Margin" Value="0,-55,0,0"/>
+
             <Setter Property="Background" Value="{DynamicResource Alert}"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
 
         <Style x:Key="badgeText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -82,157 +56,222 @@
     </UserControl.Resources>
 
     <Grid>
-        <Border Background="{DynamicResource Secondary}" x:Name="ErrorBorder"  Width="85" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="0,0,0,150">
+        <materialDesign:Card   materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="1.5"  Background="{DynamicResource Primary}" >
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <!-- Menu Open -->
-                <Button x:Name="ButtonOpenMenu" Style="{StaticResource menu}" Click="ButtonOpenMenu_Click">
-                    <Grid>
-                        <materialDesign:PackIcon Kind="Menu" Style="{StaticResource menuIcon}" Margin="0,-2,0,-2" VerticalAlignment="Bottom"/>
-                        <Border Visibility="{Binding Component._badgeValue.Cyclic, Converter={StaticResource BadgeConverter}}" Style="{StaticResource badge}">
+            <Expander x:Name="NotificationExpander" 
+                      Background="{StaticResource Primary}" Foreground="{StaticResource OnPrimary}"
+                    ExpandDirection="Right">
+                <Expander.Header >
+                    <StackPanel >
+                        <Border  Visibility="{Binding Component._badgeValue.Cyclic, Converter={StaticResource BadgeConverter}}" Style="{StaticResource badge}">
                             <TextBlock Text="{Binding Component._badgeValue.Cyclic}" Style="{StaticResource badgeText}" />
+                            
                         </Border>
-                    </Grid>
-                </Button>
+                        <!--Visibility="{Binding ElementName=NotificationExpander, Path=IsExpanded ,Converter={plc:BoolToVisibilityConverter}, ConverterParameter=true}"-->
+                        <ListView   Margin="0"  ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+
+
+                            <ListViewItem Height="60" >
+                                <StackPanel Orientation="Horizontal" >
+                                    <Border  x:Name="ControlVoltageBorder" Style="{StaticResource iconContainer}" Background="{Binding Component._notificationPanelSignals.ControlVoltage.Cyclic,Converter={plc:BooleanToBrushConverter}}">
+                                        <materialDesign:PackIcon Kind="Power" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border  Background="{Binding Component._notificationPanelSignals.AirPressure.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="OxygenTank" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
 
 
 
-                <!-- Menu Close -->
-                <Button x:Name="ButtonCloseMenu" Visibility="Collapsed" Style="{StaticResource menu}" Click="ButtonCloseMenu_Click">
-                    <Grid>
-                        <materialDesign:PackIcon Kind="ArrowLeft"  Style="{StaticResource menuIcon}"/>
-                        <Border 
-                            Visibility="{Binding Component._badgeValue.Cyclic, Converter={StaticResource BadgeConverter}}" Style="{StaticResource badge}">
-                            <TextBlock Text="{Binding Component._badgeValue.Cyclic}" Style="{StaticResource badgeText}" />
-                        </Border>
-                    </Grid>
-                </Button>
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.EmergencyStop.Cyclic,Converter={plc:BooleanToBrushInvertedConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="Alert" Style="{StaticResource icon}"/>
+                                    </Border>
 
-                <ListView ScrollViewer.CanContentScroll="False" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  x:Name="ListViewMenu" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+
+                            <ListViewItem  Height="60">
+                                <StackPanel Orientation="Horizontal" >
+                                    <Border Background="{Binding Component._notificationPanelSignals.SafetyDoorOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="ShieldCheck" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.DoorClosed.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="Door" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.DoorLocked.Cyclic,Converter={plc:BooleanToBrushConverter}}" Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="DoorClosedLock" Width="Auto" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.AutomatAllowed.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="RunFast" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.ProcessDataOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="ClipboardCheckOutline" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.TechnologyDataOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="CogOutline" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{Binding Component._notificationPanelSignals.LightCurtain.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="Hand" Style="{StaticResource icon}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+
+
+                            <ListViewItem Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource iconContainer}">
+                                        <materialDesign:PackIcon Kind="HeartPulse" Style="{StaticResource icon}" Foreground="{Binding Component._heartBeat.Cyclic,Converter={plc:HeartBeatToBrushConverter}}"/>
+                                    </Border>
+
+                                </StackPanel>
+                            </ListViewItem>
+                        </ListView>
+                    </StackPanel>
+                 
+                </Expander.Header>
+
+                <ListView Margin="0,64,0,0"    Visibility="{Binding MenuVisibility}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Background="Transparent"   >
+                    <ListView.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource OnPrimary}"></Setter>
+                          
+                        </Style>
+                    </ListView.Resources>
                     <!--Control Voltage-->
-                    <ListViewItem x:Name="ItemControlVoltage" >
-                        <StackPanel Orientation="Horizontal" >
-                            <Border  x:Name="ControlVoltageBorder" Style="{StaticResource iconContainer}" Background="{Binding Component._notificationPanelSignals.ControlVoltage.Cyclic,Converter={plc:BooleanToBrushConverter}}">
-                                <materialDesign:PackIcon Kind="Power" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.ControlVoltage }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem  Height="60">
+
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static s:NotificationPanel.ControlVoltage }" />
+                    
                     </ListViewItem>
 
                     <!--Air Pressure-->
-                    <ListViewItem x:Name="ItemAirPressure" >
-                        <StackPanel Orientation="Horizontal">
-                            <Border  Background="{Binding Component._notificationPanelSignals.AirPressure.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="OxygenTank" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.AirPressure }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem Height="60">
+                        <TextBlock Text="{x:Static s:NotificationPanel.AirPressure }"  />
                     </ListViewItem>
 
                     <!--Emergency Stop-->
-                    <ListViewItem x:Name="ItemEmgStop">
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.EmergencyStop.Cyclic,Converter={plc:BooleanToBrushInvertedConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="Alert" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.EmergencyStop }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem Height="60">
+
+                            <TextBlock Text="{x:Static s:NotificationPanel.EmergencyStop }"  />
+                
                     </ListViewItem>
 
                     <!--Safety Door Ok-->
-                    <ListViewItem x:Name="ItemSecondSafety" >
-                        <StackPanel Orientation="Horizontal" >
-                            <Border Background="{Binding Component._notificationPanelSignals.SafetyDoorOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="ShieldCheck" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.SafetyDoorOk }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem Height="60" >
+                                    <TextBlock Text="{x:Static s:NotificationPanel.SafetyDoorOk }"  />
+           
                     </ListViewItem>
 
                     <!--Door Closed-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.DoorClosed.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="Door" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.DoorClosed }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem Height="60">
+                                    <TextBlock Text="{x:Static s:NotificationPanel.DoorClosed }"  />
+         
                     </ListViewItem>
 
                     <!--Door Locked-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.DoorLocked.Cyclic,Converter={plc:BooleanToBrushConverter}}" Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="DoorClosedLock" Width="Auto" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.DoorLocked }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem  Height="60">
+         
+                            <TextBlock Text="{x:Static s:NotificationPanel.DoorLocked }"  />
+
                     </ListViewItem>
 
                     <!--Automatic Mode-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.AutomatAllowed.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="RunFast" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.AutomaticMode }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                        <ListViewItem Height="60">
+                            <TextBlock Text="{x:Static s:NotificationPanel.AutomaticMode }"  />
+                 
                     </ListViewItem>
 
                     <!--Process data-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.ProcessDataOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="ClipboardCheckOutline" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.ProcessData }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem  Height="60">
+                             <TextBlock Text="{x:Static s:NotificationPanel.ProcessData }"  />
+                   
                     </ListViewItem>
                     <!--Process data-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.TechnologyDataOk.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="CogOutline" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.TechnologyData }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem  Height="60">
+                             <TextBlock Text="{x:Static s:NotificationPanel.TechnologyData }"  />
+                  
                     </ListViewItem>
 
                     <!--Light Curtain-->
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="{Binding Component._notificationPanelSignals.LightCurtain.Cyclic,Converter={plc:BooleanToBrushConverter}}"  Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="Hand" Style="{StaticResource icon}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.LightCurtain }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem  Height="60">
+                                 <TextBlock Text="{x:Static s:NotificationPanel.LightCurtain }"  />
+                  
                     </ListViewItem>
 
 
 
                     <!--Heart beat-->
-                    <ListViewItem >
-                        <StackPanel Orientation="Horizontal">
-                            <Border Style="{StaticResource iconContainer}">
-                                <materialDesign:PackIcon Kind="HeartPulse" Style="{StaticResource icon}" Foreground="{Binding Component._heartBeat.Cyclic,Converter={plc:HeartBeatToBrushConverter}}"/>
-                            </Border>
-                            <TextBlock Text="{x:Static s:NotificationPanel.HeartBeat }"  Style="{StaticResource iconDescription}"/>
-                        </StackPanel>
+                    <ListViewItem   Height="60">
+                        <TextBlock Text="{x:Static s:NotificationPanel.HeartBeat }"  />
                     </ListViewItem>
                 </ListView>
 
-                <TextBlock Grid.Row="2" Text="INFO" HorizontalAlignment="Center" Foreground="{DynamicResource OnSecondary}" TextBlock.FontSize="20" TextBlock.FontWeight="Bold"  >
-                    <TextBlock.Effect>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="Gray"/>
-                    </TextBlock.Effect>
-                </TextBlock>
-            </Grid>
-        </Border>
+            </Expander>
+
+
+
+        </materialDesign:Card>
     </Grid>
-    
 </UserControl>

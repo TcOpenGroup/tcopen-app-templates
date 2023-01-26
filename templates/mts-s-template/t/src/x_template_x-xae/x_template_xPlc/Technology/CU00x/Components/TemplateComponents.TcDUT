@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TemplateComponents" Id="{8bcea52c-0238-45b1-830c-a8d1106fbc52}">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Tabs)]}
+{attribute wpf [Group(Layout.Scroll)]}
+TYPE TemplateComponents EXTENDS TcoCore.TcoStruct :
+
+    STRUCT
+		{attribute wpf [Container(Layout.Stack,"PNEU")]}	
+		{attribute addProperty Name "(A1)HORIZONTAL AXIS"}
+      	horizontalCylinder : TcoPneumatics.TcoCylinder(THISSTRUCT); 
+		{attribute addProperty Name "(A2)VERTICAL AXIS"}
+      	verticalCylinder : TcoPneumatics.TcoCylinder(THISSTRUCT); 
+		
+		{attribute wpf [Container(Layout.Stack,"INPUTS")]}	
+		{attribute addProperty Name "PRESENCE ON INSPECTION"}
+     	PresenceOnInspection : TcoElements.TcoDi(THISSTRUCT);
+		
+		{attribute addProperty Name "PRESENCE AT ENTRY CONVEYOR"}
+     	PresenceComponentAtEntr: TcoElements.TcoDi(THISSTRUCT);
+		
+		{attribute addProperty Name "COLISION SENSOR"}
+     	ColisonSensorComponent: TcoElements.TcoDi(THISSTRUCT);
+
+		{attribute addProperty Name "CONVEYOR AT ENTRY IS EMPTY"}
+     	ConvAtEntryIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+		
+		{attribute addProperty Name "INSPECTION NOK"}
+     	InspectionIsNok : TcoElements.TcoDi(THISSTRUCT);
+		
+
+		{attribute wpf [Container(Layout.Stack,"OUTPUTS")]}		
+		{attribute addProperty Name "LIGHT ON"}
+     	LightOn : TcoElements.TcoDi(THISSTRUCT); 
+		
+		{attribute addProperty Name "LIGHT OFF"}
+     	LightOff : TcoElements.TcoDi(THISSTRUCT);
+		{attribute wpf [Container(Layout.Stack,"ANALOGS")]}	
+		{attribute addProperty Name "VERIFY SETPOINT"}
+     	VerifySetpoint : TcoElements.TcoAi(THISSTRUCT);
+		{attribute addProperty Name "SETPOINT"}
+     	Setpoint : TcoElements.TcoAo(THISSTRUCT);   
+    END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>
