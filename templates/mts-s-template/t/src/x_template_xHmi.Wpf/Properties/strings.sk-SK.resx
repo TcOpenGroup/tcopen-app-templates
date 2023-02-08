@@ -343,4 +343,7 @@ HLAVNÁ SEKVENCIA</value>
   <data name="ReworkEntity" xml:space="preserve">
     <value>Reworkuj kus</value>
   </data>
+  <data name="CycleTime" xml:space="preserve">
+    <value>Čas cyklu</value>
+  </data>
 </root>

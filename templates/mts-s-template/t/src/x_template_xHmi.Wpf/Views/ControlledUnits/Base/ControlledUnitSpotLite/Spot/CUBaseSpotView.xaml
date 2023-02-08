@@ -212,7 +212,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontSize="18"
+                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                         Foreground="{StaticResource Alert}"
                         Text="{Binding EntityHeader.Results.Failures.Cyclic}"
                         TextAlignment="Center"
@@ -227,22 +227,11 @@
                 <Expander Grid.Row="5" Background="{StaticResource Surface}">
                     <Expander.Header>
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="600" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
                             <TextBlock
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
-                        Text="{Binding Component._statusInfo.HumanReadable}" />
-                           
+                                HorizontalAlignment="Left"
+                                Style="{DynamicResource MaterialDesignBody1TextBlock}"
+                                Text= "{x:Static p:strings.CycleTime}"/>
+
                         </Grid>
                     </Expander.Header>
                     <ScrollViewer Background="{Binding Component._statusInfo.State.Cyclic,Converter={plc:ControledUnitStateToBackgroundBrushConverter}}" Grid.Row="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">

@@ -196,6 +196,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cycle Time.
+        /// </summary>
+        public static string CycleTime {
+            get {
+                return ResourceManager.GetString("CycleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DATA.
         /// </summary>
         public static string Data {
