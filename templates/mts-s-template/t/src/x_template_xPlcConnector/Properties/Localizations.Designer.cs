@@ -61,6 +61,53 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Consecutive failure) The number of any recurring failure count has been reached!.
+        /// </summary>
+        public static string ____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reached___ {
+            get {
+                return ResourceManager.GetString("____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reach" +
+                        "ed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Consecutive failure) The number of same recurring failure count has been reached! .
+        /// </summary>
+        public static string ____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached____ {
+            get {
+                return ResourceManager.GetString("____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reac" +
+                        "hed____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _cu00x.
+        /// </summary>
+        public static string ____cu00x__ {
+            get {
+                return ResourceManager.GetString("____cu00x__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Air pressure.
+        /// </summary>
+        public static string ___Air_pressure__ {
+            get {
+                return ResourceManager.GetString("___Air_pressure__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autmatic mode allowed.
+        /// </summary>
+        public static string ___Autmatic_mode_allowed__ {
+            get {
+                return ResourceManager.GetString("___Autmatic_mode_allowed__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTOMAT.
         /// </summary>
         public static string ___AUTOMAT__ {
@@ -75,6 +122,33 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___AUTOMAT_ALL__ {
             get {
                 return ResourceManager.GetString("___AUTOMAT_ALL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average clean cycle time .
+        /// </summary>
+        public static string ___Average_clean_cycle_time___ {
+            get {
+                return ResourceManager.GetString("___Average_clean_cycle_time___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average cycle time .
+        /// </summary>
+        public static string ___Average_cycle_time___ {
+            get {
+                return ResourceManager.GetString("___Average_cycle_time___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average cycle time filter constant.
+        /// </summary>
+        public static string ___Average_cycle_time_filter_constant__ {
+            get {
+                return ResourceManager.GetString("___Average_cycle_time_filter_constant__", resourceCulture);
             }
         }
         
@@ -106,11 +180,29 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Control voltage.
+        /// </summary>
+        public static string ___Control_voltage__ {
+            get {
+                return ResourceManager.GetString("___Control_voltage__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created.
         /// </summary>
         public static string ___Created__ {
             get {
                 return ResourceManager.GetString("___Created__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CU00x.
+        /// </summary>
+        public static string ___CU00x__ {
+            get {
+                return ResourceManager.GetString("___CU00x__", resourceCulture);
             }
         }
         
@@ -124,6 +216,33 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doors closed.
+        /// </summary>
+        public static string ___Doors_closed__ {
+            get {
+                return ResourceManager.GetString("___Doors_closed__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doors locked.
+        /// </summary>
+        public static string ___Doors_locked__ {
+            get {
+                return ResourceManager.GetString("___Doors_locked__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency stop.
+        /// </summary>
+        public static string ___Emergency_stop__ {
+            get {
+                return ResourceManager.GetString("___Emergency_stop__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empty.
         /// </summary>
         public static string ___Empty__ {
@@ -133,11 +252,29 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Energy saving mode - Inactivity time.
+        /// </summary>
+        public static string ___Energy_saving_mode___Inactivity_time__ {
+            get {
+                return ResourceManager.GetString("___Energy_saving_mode___Inactivity_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entity header.
         /// </summary>
         public static string ___Entity_header__ {
             get {
                 return ResourceManager.GetString("___Entity_header__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ___Error__ {
+            get {
+                return ResourceManager.GetString("___Error__", resourceCulture);
             }
         }
         
@@ -156,6 +293,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___GROUND_ALL__ {
             get {
                 return ResourceManager.GetString("___GROUND_ALL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heart beat.
+        /// </summary>
+        public static string ___Heart_beat__ {
+            get {
+                return ResourceManager.GetString("___Heart_beat__", resourceCulture);
             }
         }
         
@@ -196,6 +342,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light curtain.
+        /// </summary>
+        public static string ___Light_curtain__ {
+            get {
+                return ResourceManager.GetString("___Light_curtain__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MANUAL.
         /// </summary>
         public static string ___MANUAL__ {
@@ -210,6 +365,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Master__ {
             get {
                 return ResourceManager.GetString("___Master__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max allowed number of any recurring failures (consecutive).
+        /// </summary>
+        public static string ___Max_allowed_number_of_any_recurring_failures__consecutive___ {
+            get {
+                return ResourceManager.GetString("___Max_allowed_number_of_any_recurring_failures__consecutive___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max allowed number of same recurring failures (consecutive).
+        /// </summary>
+        public static string ___Max_allowed_number_of_same_recurring_failures__consecutive___ {
+            get {
+                return ResourceManager.GetString("___Max_allowed_number_of_same_recurring_failures__consecutive___", resourceCulture);
             }
         }
         
@@ -250,6 +423,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nominal.
+        /// </summary>
+        public static string ___Nominal__ {
+            get {
+                return ResourceManager.GetString("___Nominal__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation ended.
         /// </summary>
         public static string ___Operation_ended__ {
@@ -286,11 +468,65 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please acknowledge recurring failure!.
+        /// </summary>
+        public static string ___Please_acknowledge_recurring_failure___ {
+            get {
+                return ResourceManager.GetString("___Please_acknowledge_recurring_failure___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please acknowledge recurring failure! .
+        /// </summary>
+        public static string ___Please_acknowledge_recurring_failure____ {
+            get {
+                return ResourceManager.GetString("___Please_acknowledge_recurring_failure____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process data.
+        /// </summary>
+        public static string ___Process_data__ {
+            get {
+                return ResourceManager.GetString("___Process_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process data not selected.
         /// </summary>
         public static string ___Process_data_not_selected__ {
             get {
                 return ResourceManager.GetString("___Process_data_not_selected__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Production planer.
+        /// </summary>
+        public static string ___Production_planer__ {
+            get {
+                return ResourceManager.GetString("___Production_planer__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Production planer completed required plan! .
+        /// </summary>
+        public static string ___Production_planer_completed_required_plan____ {
+            get {
+                return ResourceManager.GetString("___Production_planer_completed_required_plan____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Production planer is empty! .
+        /// </summary>
+        public static string ___Production_planer_is_empty____ {
+            get {
+                return ResourceManager.GetString("___Production_planer_is_empty____", resourceCulture);
             }
         }
         
@@ -367,6 +603,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Safety doors OK.
+        /// </summary>
+        public static string ___Safety_doors_OK__ {
+            get {
+                return ResourceManager.GetString("___Safety_doors_OK__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start manual/Service mode.
         /// </summary>
         public static string ___Start_manual_Service_mode__ {
@@ -382,6 +627,42 @@ namespace x_template_xPlcConnector.Properties {
             get {
                 return ResourceManager.GetString("___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence" +
                         "___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STATUS INFO.
+        /// </summary>
+        public static string ___STATUS_INFO__ {
+            get {
+                return ResourceManager.GetString("___STATUS_INFO__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step time.
+        /// </summary>
+        public static string ___Step_time__ {
+            get {
+                return ResourceManager.GetString("___Step_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technology data.
+        /// </summary>
+        public static string ___Technology_data__ {
+            get {
+                return ResourceManager.GetString("___Technology_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string ___Warning__ {
+            get {
+                return ResourceManager.GetString("___Warning__", resourceCulture);
             }
         }
         

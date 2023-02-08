@@ -12,7 +12,9 @@ VAR
     {attribute addProperty Name "<#AUTOMAT ALL#>"}
     _automatAllTask : TcoCore.TcoTask(THIS^);					// Commmand-like taks to execute automation mode on whole technology. Handled in controlled units.
     {attribute addProperty Name "<#GROUND ALL#>"}
-    _groundAllTask : TcoCore.TcoTask(THIS^);					// Commmand-like taks to execute ground mode on whole technology. Handled in controlled units.
+    _groundAllTask : TcoCore.TcoTask(THIS^);	
+
+	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
 END_VAR
 ]]></Declaration>

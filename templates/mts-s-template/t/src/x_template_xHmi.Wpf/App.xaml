@@ -53,6 +53,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+                                
 
                                 <materialDesign:Card     materialDesign:ShadowAssist.ShadowDepth="Depth0" Padding="1.5">
                                     <WrapPanel x:Name="HeaderPanel" HorizontalAlignment="Stretch" IsItemsHost="True" />

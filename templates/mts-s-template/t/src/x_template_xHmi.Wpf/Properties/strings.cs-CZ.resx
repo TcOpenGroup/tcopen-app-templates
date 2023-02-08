@@ -334,4 +334,7 @@ HLAVNÍ SEKVENCE!</value>
   <data name="Modified" xml:space="preserve">
     <value>Upraveno</value>
   </data>
+  <data name="CycleTime" xml:space="preserve">
+    <value> Čas cyklu</value>
+  </data>
 </root>

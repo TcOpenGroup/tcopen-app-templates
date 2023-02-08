@@ -18,8 +18,7 @@
         <local:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
-
-           <mainview:MainView/>
+          <mainview:MainView/>
    
     </Grid>
 </Window>

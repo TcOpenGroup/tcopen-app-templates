@@ -6,6 +6,7 @@ FUNCTION_BLOCK ABSTRACT CUBase EXTENDS TcoCore.TcoObject IMPLEMENTS ICuBase
 VAR
     _cuId        : eStations;
     _processData : ProcessDataManager(THIS^);
+	{attribute addProperty Name "<#STATUS INFO#>"}
     _statusInfo  : CUBaseStatusInfo := (Parent := THIS^);
 	_operatorInfo : OperatorInfo := (Parent := THIS^);
 	_settings  : CUBaseSettings := (Parent := THIS^);

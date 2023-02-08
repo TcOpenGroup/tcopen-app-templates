@@ -343,4 +343,7 @@ MAIN SEQUENCE</value>
   <data name="ReworkEntity" xml:space="preserve">
     <value>Rework entity</value>
   </data>
+  <data name="CycleTime" xml:space="preserve">
+    <value>Cycle Time</value>
+  </data>
 </root>
