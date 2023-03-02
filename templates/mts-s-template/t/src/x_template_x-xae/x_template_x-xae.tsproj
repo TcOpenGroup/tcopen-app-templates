@@ -326,6 +326,26 @@
 							<Name>GVL_iXlinker.RexrothPress.Request.VirtualIo</Name>
 							<Type>WORD</Type>
 						</Var>
+						<Var>
+							<Name>GVL_iXlinker.byte1</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.byte2</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.byte3</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.Value1</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.byte4</Name>
+							<Type>BYTE</Type>
+						</Var>
 					</Vars>
 					<Contexts>
 						<Context>

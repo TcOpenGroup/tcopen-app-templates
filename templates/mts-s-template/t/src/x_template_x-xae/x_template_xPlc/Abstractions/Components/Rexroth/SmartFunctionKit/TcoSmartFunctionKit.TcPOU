@@ -64,7 +64,10 @@ END_IF
 
 
 CASE _request.Command OF
-	
+	//eTcoSmartFunctionKitCommand.StartProgram:
+//	GVL_iXlinker.Value1:=TcoUtilities.TcoBytesToReal(inFormat:=eTcoDataFormat.BigEndian,GVL_iXlinker.byte1,GVL_iXlinker.byte1,GVL_iXlinker.byte1,GVL_iXlinker.byte1);
+//		
+//		_request.Value1:=GVL_iXlinker.Value1;
 	eTcoSmartFunctionKitCommand.SetProgramActive:
 		_request.Value1:= INT_TO_DWORD(_request.ProgramId*1000);	
 	eTcoSmartFunctionKitCommand.Positioning:

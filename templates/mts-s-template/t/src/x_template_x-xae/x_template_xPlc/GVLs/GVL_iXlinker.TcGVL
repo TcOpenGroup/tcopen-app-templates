@@ -5,6 +5,12 @@
 VAR_GLOBAL
 		EC1 : EC1_DFE7C435;
 		RexrothPress:TcoSmartFunctionKitIO;
+		  Value1 AT %Q* : REAL;
+		  byte1 AT %Q* : BYTE;
+  		  byte2 AT %Q* : BYTE;
+		  byte3 AT %Q* : BYTE;
+		  byte4 AT %Q* : BYTE;
+
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
