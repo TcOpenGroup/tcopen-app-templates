@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoSmartFunctionKitRequest" Id="{18ba4d42-4782-47cd-a06f-8c02b59ef6c0}">
+    <Declaration><![CDATA[TYPE TcoSmartFunctionKitRequest :
+STRUCT
+        Command : eTcoSmartFunctionKitCommand;
+		ProgramId:INT;
+		PositionDistanceTara:REAL;
+		TravelSpeed:REAL;
+		Acceleration:REAL;
+		Offset:REAL;
+		
+      	Value1:DWORD;
+      	Value2:DWORD;
+      	Value3:DWORD;
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

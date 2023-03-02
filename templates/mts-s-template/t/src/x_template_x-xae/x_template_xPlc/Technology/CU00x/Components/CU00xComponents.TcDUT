@@ -5,6 +5,8 @@
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
+		{attribute addProperty Name "RexrothSfk"}
+		Sfk : TcoSmartFunctionKit (THISSTRUCT);  
 		{attribute addProperty Name "GROUP 1"}
 		Group1 : TemplateComponents:= (Parent := THISSTRUCT);  
 		{attribute addProperty Name "GROUP 2"}

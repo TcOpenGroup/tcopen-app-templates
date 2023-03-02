@@ -17,8 +17,10 @@
             materialDesign:ShadowAssist.ShadowDepth="Depth1"
             Padding="2.5"
             Visibility="{Binding Component._taskState.Cyclic, Converter={local:TaskStateToVisibilityConverter}}">
-        <vortex:RenderableContentControl DataContext="{Binding Serviceable}" PresentationType="Service-Manual">
-         
+        <Expander IsExpanded="True">
+            <vortex:RenderableContentControl DataContext="{Binding Serviceable}" PresentationType="Service-Manual">
         </vortex:RenderableContentControl>
+        </Expander>
+
     </materialDesign:Card>
 </UserControl>

@@ -180,6 +180,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Config.
+        /// </summary>
+        public static string ___Config__ {
+            get {
+                return ResourceManager.GetString("___Config__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Control voltage.
         /// </summary>
         public static string ___Control_voltage__ {
@@ -324,6 +333,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid reference: .
+        /// </summary>
+        public static string ___Invalid_reference____ {
+            get {
+                return ResourceManager.GetString("___Invalid_reference____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Rework Name.
         /// </summary>
         public static string ___Last_Rework_Name__ {
@@ -432,6 +450,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not ready for operation.ECAT is not in OP!.
+        /// </summary>
+        public static string ___Not_ready_for_operation_ECAT_is_not_in_OP___ {
+            get {
+                return ResourceManager.GetString("___Not_ready_for_operation_ECAT_is_not_in_OP___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation ended.
         /// </summary>
         public static string ___Operation_ended__ {
@@ -482,6 +509,51 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Please_acknowledge_recurring_failure____ {
             get {
                 return ResourceManager.GetString("___Please_acknowledge_recurring_failure____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressing finished with error..
+        /// </summary>
+        public static string ___Pressing_finished_with_error___ {
+            get {
+                return ResourceManager.GetString("___Pressing_finished_with_error___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressing running..
+        /// </summary>
+        public static string ___Pressing_running___ {
+            get {
+                return ResourceManager.GetString("___Pressing_running___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressing started..
+        /// </summary>
+        public static string ___Pressing_started___ {
+            get {
+                return ResourceManager.GetString("___Pressing_started___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressing was aborted, while not yet completed!.
+        /// </summary>
+        public static string ___Pressing_was_aborted__while_not_yet_completed___ {
+            get {
+                return ResourceManager.GetString("___Pressing_was_aborted__while_not_yet_completed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pressing was completed successfully..
+        /// </summary>
+        public static string ___Pressing_was_completed_successfully___ {
+            get {
+                return ResourceManager.GetString("___Pressing_was_completed_successfully___", resourceCulture);
             }
         }
         
@@ -576,6 +648,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore executed!.
+        /// </summary>
+        public static string ___Restore_executed___ {
+            get {
+                return ResourceManager.GetString("___Restore_executed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string ___Results__ {
@@ -599,6 +680,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Reworked__ {
             get {
                 return ResourceManager.GetString("___Reworked__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run Command.
+        /// </summary>
+        public static string ___Run_Command__ {
+            get {
+                return ResourceManager.GetString("___Run_Command__", resourceCulture);
             }
         }
         
@@ -631,6 +721,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ___Status__ {
+            get {
+                return ResourceManager.GetString("___Status__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STATUS INFO.
         /// </summary>
         public static string ___STATUS_INFO__ {
@@ -654,6 +753,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Technology_data__ {
             get {
                 return ResourceManager.GetString("___Technology_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for acknowledge Handle signal!.
+        /// </summary>
+        public static string ___Waiting_for_acknowledge_Handle_signal___ {
+            get {
+                return ResourceManager.GetString("___Waiting_for_acknowledge_Handle_signal___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for ProgramActive!.
+        /// </summary>
+        public static string ___Waiting_for_ProgramActive___ {
+            get {
+                return ResourceManager.GetString("___Waiting_for_ProgramActive___", resourceCulture);
             }
         }
         

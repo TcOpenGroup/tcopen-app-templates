@@ -225,6 +225,11 @@ components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Chan
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
 							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
 							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
+
+Components.sfk(inoIoData:=GVL_iXlinker.RexrothPress);
+Components.Sfk.Config.ErrorTime:=T#20S;
+Components.Sfk.Config.InfoTime:=T#10S;
+
 ]]></ST>
       </Implementation>
     </Method>

@@ -22,6 +22,7 @@ METHOD PROTECTED Main : BOOL
       <Implementation>
         <ST><![CDATA[Messenger.Notify('Running manual mode');
 Station.Components.Group1.horizontalCylinder.Service();
+Station.Components.Sfk.Service();
 ]]></ST>
       </Implementation>
     </Method>

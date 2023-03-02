@@ -6,7 +6,7 @@ namespace x_template_xPlcConnector
 {
     public class Entry
     {
-        public static readonly string AmsId = Environment.GetEnvironmentVariable("Tc3Target");
+        public static readonly string AmsId = "39.254.143.177.1.1";//Environment.GetEnvironmentVariable("Tc3Target");
 
         public static x_template_xPlc.x_template_xPlcTwinController Plc { get; }
             = new x_template_xPlc.x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(AmsId, 851, true));
