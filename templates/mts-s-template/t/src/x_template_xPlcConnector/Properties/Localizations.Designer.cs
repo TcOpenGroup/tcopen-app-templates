@@ -288,6 +288,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Results.
+        /// </summary>
+        public static string ___Get_Results__ {
+            get {
+                return ResourceManager.GetString("___Get_Results__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GROUND.
         /// </summary>
         public static string ___GROUND__ {
@@ -698,6 +707,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Safety_doors_OK__ {
             get {
                 return ResourceManager.GetString("___Safety_doors_OK__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save curve.
+        /// </summary>
+        public static string ___Save_curve__ {
+            get {
+                return ResourceManager.GetString("___Save_curve__", resourceCulture);
             }
         }
         

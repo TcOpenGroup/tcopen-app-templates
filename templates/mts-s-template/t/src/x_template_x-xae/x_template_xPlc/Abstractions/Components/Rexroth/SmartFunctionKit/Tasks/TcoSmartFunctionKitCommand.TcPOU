@@ -53,6 +53,10 @@ END_VAR
 		THIS^.inoIoData.Request.Value1:=inCommand.Value1;
 		THIS^.inoIoData.Request.Value2:=inCommand.Value2;
 		THIS^.inoIoData.Request.Value3:=inCommand.Value3;
+		THIS^.inoIoData.Request.Value4:=inCommand.Value4;
+		THIS^.inoIoData.Request.Value5:=inCommand.Value5;
+		THIS^.inoIoData.Request.Value6:=inCommand.Value6;
+		THIS^.inoIoData.Request.Value7:=inCommand.Value7;
 		IF  THIS^.inoStatus.ResponseStatus.RequestPossible THEN
 			_progress := _progress + 1;
 		END_IF;

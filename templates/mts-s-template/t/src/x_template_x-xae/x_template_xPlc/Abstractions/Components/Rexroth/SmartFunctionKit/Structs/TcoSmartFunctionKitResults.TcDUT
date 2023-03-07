@@ -1,11 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <DUT Name="TcoSmartFunctionKitResults" Id="{0ebb6877-3cce-41e1-861d-57af02882eb1}">
-    <Declaration><![CDATA[TYPE TcoSmartFunctionKitResults :
-STRUCT	
-	Id: UINT;
-	
-END_STRUCT
+    <Declaration><![CDATA[TYPE
+    TcoSmartFunctionKitResults :
+    STRUCT
+        id : STRING;
+        maxForce : REAL;
+        maxPosition : REAL;
+        valid : BOOL;
+        createdDate : DATE;
+        cycleTime : REAL;
+        validationTime : INT;
+        status : STRING;
+        customId : STRING;
+        dataRecordingDisabled : BOOL;
+        samplingInterval : INT;
+        _v : INT;
+    END_STRUCT
 END_TYPE
 ]]></Declaration>
   </DUT>

@@ -33,6 +33,9 @@
     <PackageReference Include="TcOpen.TcoPneumaticsConnector" Version="0.11.0-alpha.19" />
     <PackageReference Include="TcOpen.TcoUtilitiesConnector" Version="0.11.0-alpha.19" />
     <PackageReference Include="TcOpen.TcoIoConnector" Version="0.11.0-alpha.19" />
+
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+
   </ItemGroup>
   <!--PCKG-END-->  
   

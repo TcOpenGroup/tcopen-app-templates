@@ -17,6 +17,11 @@ VAR
 
 	{attribute addProperty Name "<#Results#>"}
 	_results	: TcoSmartFunctionKitResults;
+	converted: DWORD;
+	i: INT;
+	{attribute 'hide'}
+	chars: ARRAY [0..MAX_STRING_LENGTH] OF BYTE;
+	sCharacter : STRING(1) := '1';
 END_VAR
 
 VAR
@@ -26,6 +31,13 @@ VAR
 
 	{attribute addProperty Name "<#Run Command#>"}
     _runCommandTask : TcoSmartFunctionKitCommand(THIS^);
+	
+	{attribute addProperty Name "<#Get Results#>" }
+	_getResultsTask : TcoCore.TcoRemoteTask(THIS^);
+	
+	{attribute addProperty Name "<#Save curve#>" }
+	_exportCurveTask : TcoCore.TcoRemoteTask(THIS^);
+
 END_VAR
 VAR
     {attribute 'hide'} 
@@ -64,10 +76,23 @@ END_IF
 
 
 CASE _request.Command OF
-	//eTcoSmartFunctionKitCommand.StartProgram:
-//	GVL_iXlinker.Value1:=TcoUtilities.TcoBytesToReal(inFormat:=eTcoDataFormat.BigEndian,GVL_iXlinker.byte1,GVL_iXlinker.byte1,GVL_iXlinker.byte1,GVL_iXlinker.byte1);
-//		
-//		_request.Value1:=GVL_iXlinker.Value1;
+	eTcoSmartFunctionKitCommand.StartProgram:
+		chars:=MAXSTRING_TO_BYTEARR(_request.SerialNumber);
+		i:=0;
+		_request.Value1:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=4;
+		_request.Value2:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=8;
+		_request.Value3:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=12;
+		_request.Value4:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=16;
+		_request.Value5:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=20;
+		_request.Value6:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		i:=24;
+		_request.Value6:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+	
 	eTcoSmartFunctionKitCommand.SetProgramActive:
 		_request.Value1:= INT_TO_DWORD(_request.ProgramId*1000);	
 	eTcoSmartFunctionKitCommand.Positioning:
@@ -90,13 +115,57 @@ _taskEnabled := _taskEnabled ;
 _runCommandTask.Enabled :=  _taskEnabled;
 _runCommandTask(inCommand:=_request, inoIoData := THIS^.inoIoData,inoConfig := THIS^._config,inoStatus := THIS^._status,inoResults := THIS^._results);
 //****************************************
-]]></ST>
+
+
+_exportCurveTask();
+_getResultsTask();]]></ST>
     </Implementation>
     <Folder Name="_Internals" Id="{f7465398-dfd5-4304-a9c7-fb9b1c2bdc29}" />
     <Folder Name="Operations" Id="{d9742a61-87e9-44cb-af6c-e10389d60ffe}" />
     <Folder Name="ResultData" Id="{d07d2d4c-fe06-4445-abb9-0e2a2b8fb0b6}" />
     <Folder Name="States" Id="{2e6e2374-1869-4cb5-bcf5-e444d2829d61}" />
     <Folder Name="Tasks" Id="{dde3613c-3e1b-480f-ab05-f62d0d4a0c43}" />
+    <Method Name="_BYTES_TO_DWORD" Id="{4132e013-4ef8-4489-8380-9cafb65c49c6}" FolderPath="_Internals\">
+      <Declaration><![CDATA[METHOD _BYTES_TO_DWORD : DWORD
+VAR_INPUT
+	Format : TcoUtilities.eTcoDataFormat;
+	INb0 : BYTE;
+	INb1 : BYTE;
+	INb2 : BYTE;
+	INb3 : BYTE;
+END_VAR
+VAR
+    b0: BYTE;
+	b1: BYTE;
+	b2: BYTE;
+    b3: BYTE;
+	tmpDWORD : DWORD;
+END_VAR
+ ]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Format=TcoUtilities.eTcoDataFormat.LittleEndian THEN
+	b0 := INb3;
+	b1 := INb2;	
+	b2 := INb1;
+	b3 := INb0;	
+ELSIF Format=TcoUtilities.eTcoDataFormat.BigEndian THEN
+	b0 := INb0;
+	b1 := INb1;	
+	b2 := INb2;
+	b3 := INb3;	
+END_IF
+
+tmpDWORD := b0;
+tmpDWORD := SHL(tmpDWORD,8);
+tmpDWORD := tmpDWORD + b1;
+tmpDWORD := SHL(tmpDWORD,8);
+tmpDWORD := tmpDWORD + b2;
+tmpDWORD := SHL(tmpDWORD,8);
+tmpDWORD := tmpDWORD + b3;
+
+_BYTES_TO_DWORD := tmpDWORD;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="Config" Id="{d097aa82-3255-4848-8d04-863bfbd6ce53}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -151,6 +220,8 @@ METHOD Restore : ITcoRestorable]]></Declaration>
         <ST><![CDATA[SUPER^._restoreTask.Restore();
 
 _runCommandTask.Restore();
+_getResultsTask.Restore();
+_exportCurveTask.Restore();
 
 
 //Tc2_System.MEMSET(destAddr:= ADR(THIS^._results.Data) , fillByte:= 0 , n:= SIZEOF(THIS^._results.Data));

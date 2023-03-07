@@ -21,6 +21,13 @@
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value1 }" PresentationType="Control"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value2 }" PresentationType="Control"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value3 }" PresentationType="Control"/>
+                   
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" Margin="5,0" Orientation="Horizontal" Visibility="{Binding _request.Command.Cyclic, Converter={converters:TcoSmartFunctionKitVisibilityStartProgramConverter}}">
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.SerialNumber }" PresentationType="Control"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value1 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value2 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value3 }" PresentationType="Display"/>
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Top" Margin="5,0" Orientation="Horizontal" Visibility="{Binding _request.Command.Cyclic, Converter={converters:TcoSmartFunctionKitVisibilityJogTaraPositioningConverter}}">
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.PositionDistanceTara }" PresentationType="Control"/>
@@ -32,10 +39,12 @@
                 </StackPanel>
             
                 <tcoCore:RenderableContentControl  Margin="10,0" DataContext="{Binding _runCommandTask}"/>
+                <tcoCore:RenderableContentControl Margin="10,0" DataContext="{Binding _getResultsTask}"/>
+                <tcoCore:RenderableContentControl Margin="10,0" DataContext="{Binding _exportCurveTask}"/>
                 <tcoCore:RenderableContentControl Margin="10,0" DataContext="{Binding _restoreTask}"/>
-               
-         
-          
+
+
+
 
             </WrapPanel>
      
@@ -65,7 +74,7 @@
                     </WrapPanel>
                     <WrapPanel>
                         <GroupBox Header="{Binding _results.AttributeName}" >
-                            <tcoCore:RenderableContentControl  DataContext="{Binding _status}" PresentationType="DisplaySlim" />
+                            <tcoCore:RenderableContentControl  DataContext="{Binding _results}" PresentationType="DisplaySlim" />
                         </GroupBox>
                     </WrapPanel>
 

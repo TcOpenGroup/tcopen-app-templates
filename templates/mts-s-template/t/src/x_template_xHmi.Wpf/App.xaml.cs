@@ -114,6 +114,10 @@ namespace x_template_xHmi.Wpf
             // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
 
+
+
+            x_template_xPlc.MAIN._technology._cu00x._components.Sfk.InitializeTask();
+
         }
 
       
@@ -289,8 +293,11 @@ namespace x_template_xHmi.Wpf
             CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
             CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
 
+            //
 
-          
+         
+
+
         }
 
         private void GetProductionPlan(ProductionPlaner productionPlaner)

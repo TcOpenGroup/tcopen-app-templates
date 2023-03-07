@@ -243,6 +243,18 @@
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
+							<Name>GVL_iXlinker.byte1</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.byte2</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>GVL_iXlinker.Value1</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -327,20 +339,8 @@
 							<Type>WORD</Type>
 						</Var>
 						<Var>
-							<Name>GVL_iXlinker.byte1</Name>
-							<Type>BYTE</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.byte2</Name>
-							<Type>BYTE</Type>
-						</Var>
-						<Var>
 							<Name>GVL_iXlinker.byte3</Name>
 							<Type>BYTE</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.Value1</Name>
-							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.byte4</Name>

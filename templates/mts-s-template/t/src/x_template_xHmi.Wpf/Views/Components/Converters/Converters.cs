@@ -14,10 +14,46 @@ namespace x_template_xPlc.Converters
 
             switch (command)
             {
-                case eTcoSmartFunctionKitCommand.StartProgram:
                 case eTcoSmartFunctionKitCommand.SetSystemVariable:
                 case eTcoSmartFunctionKitCommand.LockParticipant:
                 case eTcoSmartFunctionKitCommand.ReadSystemVariable:
+                    return Visibility.Visible;
+                case eTcoSmartFunctionKitCommand.StartProgram:
+                case eTcoSmartFunctionKitCommand.Positioning:
+                case eTcoSmartFunctionKitCommand.Jog:
+                case eTcoSmartFunctionKitCommand.SetProgramActive:
+                case eTcoSmartFunctionKitCommand.Tare:
+                case eTcoSmartFunctionKitCommand.ClearError:
+                case eTcoSmartFunctionKitCommand.StopMovement:
+                case eTcoSmartFunctionKitCommand.RestartDrive:
+                case eTcoSmartFunctionKitCommand.StartHoming:
+                case eTcoSmartFunctionKitCommand.SetReference:
+                    return Visibility.Collapsed;
+                default:
+                    return Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
+    }
+    public class TcoSmartFunctionKitVisibilityStartProgramConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            eTcoSmartFunctionKitCommand command = (eTcoSmartFunctionKitCommand)Enum.ToObject(typeof(eCUMode), value);
+
+            switch (command)
+            {
+                case eTcoSmartFunctionKitCommand.StartProgram:
                     return Visibility.Visible;
                 case eTcoSmartFunctionKitCommand.Positioning:
                 case eTcoSmartFunctionKitCommand.Jog:
@@ -28,6 +64,9 @@ namespace x_template_xPlc.Converters
                 case eTcoSmartFunctionKitCommand.RestartDrive:
                 case eTcoSmartFunctionKitCommand.StartHoming:
                 case eTcoSmartFunctionKitCommand.SetReference:
+                case eTcoSmartFunctionKitCommand.SetSystemVariable:
+                case eTcoSmartFunctionKitCommand.LockParticipant:
+                case eTcoSmartFunctionKitCommand.ReadSystemVariable:
                     return Visibility.Collapsed;
                 default:
                     return Visibility.Collapsed;
