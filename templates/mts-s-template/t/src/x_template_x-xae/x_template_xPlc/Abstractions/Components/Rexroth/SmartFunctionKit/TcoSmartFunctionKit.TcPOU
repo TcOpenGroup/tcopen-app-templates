@@ -32,10 +32,10 @@ VAR
 	{attribute addProperty Name "<#Run Command#>"}
     _runCommandTask : TcoSmartFunctionKitCommand(THIS^);
 	
-	{attribute addProperty Name "<#Get Results#>" }
+	{attribute addProperty Name "<#Get last Results#>" }
 	_getResultsTask : TcoCore.TcoRemoteTask(THIS^);
 	
-	{attribute addProperty Name "<#Save curve#>" }
+	{attribute addProperty Name "<#Save last curve#>" }
 	_exportCurveTask : TcoCore.TcoRemoteTask(THIS^);
 
 END_VAR
@@ -182,6 +182,37 @@ PROPERTY Config : REFERENCE TO TcoSmartFunctionKitConfig]]></Declaration>
         </Implementation>
       </Get>
     </Property>
+    <Method Name="ExportLastCurve" Id="{5122aff6-6516-463d-a3e7-65c79b2aa5d4}" FolderPath="Operations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Run specified comand of smart function kit. 		
+		</summary>			
+	</docu>	
+~*)
+METHOD ExportLastCurve : TcoCore.ITcoTaskStatus
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ExportLastCurve := THIS^._exportCurveTask.Invoke();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ExportLastCurveTask" Id="{9815ed4e-a426-4eec-a4ea-662ac674ca3d}" FolderPath="Tasks\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the `ReadTask` task that controls the reading sequence. 		
+		</summary>			
+	</docu>	
+~*)
+PROPERTY ExportLastCurveTask :  REFERENCE TO TcoCore.TcoRemoteTask]]></Declaration>
+      <Get Name="Get" Id="{3ec8d6cf-7c93-4031-a527-be3c2b535de7}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ExportLastCurveTask ref= _exportCurveTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="FB_init" Id="{dc37b870-e64a-49d6-9902-223c8cccd396}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
@@ -194,6 +225,31 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="GetResults" Id="{ed520f73-dba3-4a63-b132-9d5ea7c4e6d8}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD GetResults :TcoCore.ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetResults:=this^._getResultsTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="GetResultsTask" Id="{750c1c89-019a-4ea6-8e6f-0052a89c15e4}" FolderPath="Tasks\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the `ReadTask` task that controls the reading sequence. 		
+		</summary>			
+	</docu>	
+~*)
+PROPERTY GetResultsTask : REFERENCE TO TcoCore.TcoRemoteTask]]></Declaration>
+      <Get Name="Get" Id="{e7ed6d90-0644-4b85-a786-6fa1fbc5a6a1}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[GetResultsTask ref= _getResultsTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="InvalidReference" Id="{3fb9cd7d-6da0-44fd-8dad-f3fee2f03612}" FolderPath="_Internals\">
       <Declaration><![CDATA[METHOD INTERNAL InvalidReference : BOOL
 ]]></Declaration>
@@ -207,6 +263,22 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="Request" Id="{b7c173f8-ddbf-477d-9012-44c8c5cda31e}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the configuration of the reader. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Request : REFERENCE TO TcoSmartFunctionKitRequest]]></Declaration>
+      <Get Name="Get" Id="{2ef3cfa6-433e-43c7-ada4-a3bb5479d066}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Request REF= _request;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Restore" Id="{5681afda-7c1a-4157-b799-03f51fb376ba}">
       <Declaration><![CDATA[(*~
 	<docu>

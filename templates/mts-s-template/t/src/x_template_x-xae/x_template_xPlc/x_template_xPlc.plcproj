@@ -152,6 +152,9 @@
     <Compile Include="Technology\CU00x\Automat\CU00xAutomatParalell_1_Task.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\CU00x\Automat\CU00xSmartFunctionKitTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Technology\CU00x\Automat\CU00xAutomatTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>

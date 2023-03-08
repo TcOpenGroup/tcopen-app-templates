@@ -43,51 +43,31 @@ namespace x_template_xPlc
 
             return curve;
         }
+        public CurveItem GetCurveDataById(string id)
+        {
 
-       
+
+            var resp = this.Api("curves/"+id).Get();
+            var removeRootBracket = resp.Substring(1, resp.Length - 2);
+            var curve = JsonConvert.DeserializeObject<CurveItem>(removeRootBracket);
+
+            return curve;
+        }
+
+        public CurveItem GetCurveDataByCustomId(string id)
+        {
 
 
-        //private void SaveCurve(string uid)
-        //{
-        //    if (uid.Length == 0)
-        //    {
+            var resp = this.Api("curves?page=0&size=1&q={\"customId\": {\"$eq\":\""+id+ "\"}}" + id).Get();
+            var removeRootBracket = resp.Substring(1, resp.Length - 2);
+            var curve = JsonConvert.DeserializeObject<CurveItem>(removeRootBracket);
 
-        //        return ;
-        //    }
+            return curve;
+        }
 
-        //    string dateStamp = DateTime.Now.ToString(".yyyy.MM.dd.HH.mm.ss");
-        //    string FileName = uid + dateStamp.Replace(".", "_") + ".json";
-        //    string dirName = DateTime.Now.ToString("yyyy.MM.dd");
-        //    string FilePath = Path.Combine(saveDir, dirName, FileName);
-        //    string json = "";
 
-        //    Directory.CreateDirectory(Path.Combine(saveDir, dirName));
 
-        //    try
-        //    {
-        //        using (WebClient wc = new WebClient())
-        //        {
-        //            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
-        //            Uri url = new Uri("https://" + ipAddress + "/api/curves/" + uid);
-        //            json = wc.DownloadString(url);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //        //   MessageBox.Show(e.Message);
-        //        this.Status.ErrorMessage.Cyclic = e.Message;
-        //    }
-
-        //    if (json.Length == 0)
-        //    {
-        //        this.Status.ErrorMessage.Cyclic = "Curve .json file contains no data!";
-        //        return false;
-        //    }
-
-        //    File.WriteAllText(FilePath, json);
-        //    return true;
-        //}
+      
     }
 }
 

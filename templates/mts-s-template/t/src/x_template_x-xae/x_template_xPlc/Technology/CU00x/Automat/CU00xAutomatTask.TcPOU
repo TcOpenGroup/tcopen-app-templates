@@ -6,6 +6,7 @@ VAR
 
 	_missingProcessSettingMessage : TcoCore.TcoMessenger(THIS^);	
 	_paralellTask : CU00xAutomatParalell_1_Task(THIS^, TcoCore.eRestoreMode.None);
+	_paralellSfkTask : CU00xSmartFunctionKitTask(THIS^, TcoCore.eRestoreMode.None);
 	
 END_VAR
 
@@ -315,7 +316,14 @@ IF (Step(30000, TRUE, 'LAST STEP')) THEN
     //-------------------------------------	
 END_IF
 
-_paralellTask();]]></ST>
+_paralellTask();
+_paralellSfkTask();
+
+_paralellSfkTask.Task.Invoke();
+
+    IF _paralellSfkTask.Task.Done THEN
+        _paralellSfkTask.Restore();
+    END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnStart" Id="{8fe4788f-029c-4df9-a93a-9297bee7e169}">
@@ -326,6 +334,7 @@ _paralellTask();]]></ST>
         <ST><![CDATA[Station.GroundTask.Restore();
 Station.ManualTask.Restore();
 _paralellTask.Restore();
+_paralellSfkTask.Restore();
 ]]></ST>
       </Implementation>
     </Method>

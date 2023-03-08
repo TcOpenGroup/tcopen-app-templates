@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CU00xSmartFunctionKitTask" Id="{dd092db8-573b-4eee-88c5-79d3cb1be9b3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CU00xSmartFunctionKitTask EXTENDS TcoTaskedSequencer 
+VAR
+	_counterData: INT;
+	fillChar: STRING(INT#11);
+	_counterDataString: STRING;
+	firstRun: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Run();]]></ST>
+    </Implementation>
+    <Method Name="Main" Id="{764f53bc-a8f7-4330-9e02-44c87ba7a8f8}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Main method of the sequener. Custom code needs to be placed here. The sequencer is executed by call of **Instance.Run()** method.
+			This method is abstract, and it must be overridden in derived block.
+		</summary>
+	</docu>
+~*)
+METHOD PROTECTED Main : BOOL
+
+
+VAR
+	done: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Takes mode (step/continous) from the parent controller
+THIS^.ModeController.Mode := ParentSequence.ModeController.Mode;
+
+IF (Step(1000, TRUE, 'SFK RESTORE')) THEN
+    //-------------------------------------    
+		THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		StepCompleteWhen(TRUE);	
+    //-------------------------------------
+END_IF
+
+done:=false;
+IF (Step(2000, TRUE, 'SFK STOP MOVEMENT')) THEN
+    //-------------------------------------
+		THIS^.ParentSequence.Station.Components.Sfk.Request.Command:=eTcoSmartFunctionKitCommand.StopMovement; 
+		done:=THIS^.ParentSequence.Station.Components.Sfk.RunCommand().Done;
+		
+		StepCompleteWhen(done);	
+		IF done THEN
+			THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		END_IF
+    //-------------------------------------
+END_IF
+
+IF (Step(3000, TRUE, 'SFK RESET')) THEN
+    //-------------------------------------
+		THIS^.ParentSequence.Station.Components.Sfk.Request.Command:=eTcoSmartFunctionKitCommand.ClearError; 
+		done:=THIS^.ParentSequence.Station.Components.Sfk.RunCommand().Done ;	
+		StepCompleteWhen(done);	
+		IF done THEN
+			THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		END_IF
+    //-------------------------------------
+END_IF
+IF (Step(4000, TRUE, 'SFK HOME')) THEN
+    //-------------------------------------
+		THIS^.ParentSequence.Station.Components.Sfk.Request.Command:=eTcoSmartFunctionKitCommand.StartHoming; 
+		done := THIS^.ParentSequence.Station.Components.Sfk.RunCommand().Done ;	
+		
+		StepCompleteWhen(done);	
+		
+		IF done THEN
+			THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		END_IF
+    //-------------------------------------
+END_IF
+
+IF (Step(5000, TRUE, 'SFK SET PROGRAM')) THEN
+    //-------------------------------------
+		THIS^.ParentSequence.Station.Components.Sfk.Request.Command:=eTcoSmartFunctionKitCommand.SetProgramActive;
+		THIS^.ParentSequence.Station.Components.Sfk.Request.ProgramId:=4;
+ 
+		done:=THIS^.ParentSequence.Station.Components.Sfk.RunCommand().Done ;	
+		
+		StepCompleteWhen(done);	
+		IF done THEN
+			THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		END_IF
+    //-------------------------------------
+END_IF
+IF (Step(6000, TRUE, 'SFK START PROGRAM')) THEN
+    //-------------------------------------
+		THIS^.ParentSequence.Station.Components.Sfk.Request.Command:=eTcoSmartFunctionKitCommand.StartProgram;
+		_counterData:=_counterData+1;
+		fillChar:='00000000000';
+		
+	
+		_counterDataString:=DINT_TO_STRING(_counterData);
+		THIS^.ParentSequence.Station.Components.Sfk.Request.SerialNumber:=Tc2_Standard.MID(STR:=fillChar , LEN:=11- Tc2_Standard.LEN(_counterDataString), POS:=1 );
+ 
+		done:=THIS^.ParentSequence.Station.Components.Sfk.RunCommand().Done ;	
+		StepCompleteWhen(done);	
+		IF done THEN
+			THIS^.ParentSequence.Station.Components.Sfk.Restore();
+		END_IF
+    //-------------------------------------
+END_IF
+
+
+IF (Step(7000, TRUE, 'EXPORT CURVE')) THEN
+    //-------------------------------------
+	
+		StepCompleteWhen(THIS^.ParentSequence.Station.Components.Sfk.ExportLastCurve().Done );	
+    //-------------------------------------
+END_IF
+
+IF (Step(10000, TRUE, 'PARALELL TASK DONE')) THEN
+    //-------------------------------------
+    _task.DoneWhen(TRUE );
+    //-------------------------------------	
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ParentSequence" Id="{7abdbb3b-7e1a-4dc6-822a-1827345680b9}">
+      <Declaration><![CDATA[PROPERTY ParentSequence : REFERENCE TO CU00xAutomatTask]]></Declaration>
+      <Get Name="Get" Id="{e8ddabc8-f806-4c8e-8f72-cb47eb65e617}">
+        <Declaration><![CDATA[VAR
+    _parentSequence : POINTER TO CU00xAutomatTask;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF __QUERYPOINTER(Parent, _parentSequence) THEN 
+    ParentSequence REF= _parentSequence^;              
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Vortex.Connector;
 using System.Windows;
 using System.Threading;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+
 using AutoMapper;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace x_template_xPlc
 {
@@ -18,12 +20,16 @@ namespace x_template_xPlc
     {
         public void InitializeTask()
         {
-            this.__getResultsTask.InitializeExclusively(GetResults);
+            this._getResultsTask.InitializeExclusively(GetResults);
+            this._exportCurveTask.InitializeExclusively(SaveLast);
+
         }
 
         private void GetResults()
         {
-            var client = new Client("192.168.0.1");
+            this.Read();
+
+            var client = new Client(_config.IpAddress.Cyclic);
 
            var curve = client.GetLastCurveData();
             _results.createdDate.Cyclic = curve.createdDate;
@@ -41,48 +47,55 @@ namespace x_template_xPlc
             this.Write();
 
         }
-
-        private bool Save()
+        private string RemoveUnnecessary(string source)
         {
-            //if (uid.Length == 0)
-            //{
-            //    Console.WriteLine( "Provided UID is blank!");
-            //    return false;
-            //}
+            string result = string.Empty;
+            string regex = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            Regex reg = new Regex(string.Format("[{0}]", Regex.Escape(regex)));
+            result = reg.Replace(source, "");
+            return result;
+        }
+        private void SaveLast()
+        {
 
-            //string dateStamp = DateTime.Now.ToString(".yyyy.MM.dd.HH.mm.ss");
-            //string FileName = uid + dateStamp.Replace(".", "_") + ".json";
-            //string dirName = DateTime.Now.ToString("yyyy.MM.dd");
-            //string FilePath = Path.Combine(saveDir, dirName, FileName);
-            string json = "";
+            this.Read();
 
-            //Directory.CreateDirectory(Path.Combine(saveDir, dirName));
+            var client = new Client(_config.IpAddress.LastValue);
+
+
+            if (_config.CurveExportLocation.Cyclic == string.Empty)
+            {
+                throw new FileNotFoundException(@"Export location is not defined!");
+                
+            }
+            var curve = client.GetLastCurveData();
+
+            string dateTieme = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string fileName =String.Format("{0}_{1}_{2}.json ",curve.customId,curve.id, dateTieme);
+            string dirName = DateTime.Now.ToString("yyyyMMdd");
+            Directory.CreateDirectory(Path.Combine(_config.CurveExportLocation.LastValue, dirName));
+            string path = Path.Combine(_config.CurveExportLocation.Cyclic, dirName, RemoveUnnecessary(fileName));
+
+
 
             try
             {
-                using (WebClient wc = new WebClient())
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Converters.Add(new JavaScriptDateTimeConverter());
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+
+                using (StreamWriter sw = new StreamWriter(path))
+                using (JsonWriter writer = new JsonTextWriter(sw))
                 {
-                    System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
-                    string uri = "https://192.168.0.1/api/curves?page=0&size=1&sort={" + " \"_id \":\"desc\"}";
-                    Uri url = new Uri(uri);
-                    json = wc.DownloadString(url);
+                    serializer.Serialize(writer, curve);
+                
                 }
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-
-                //   MessageBox.Show(e.Message);
-               Console.WriteLine( e.Message);
+                throw exp;
             }
-
-            //if (json.Length == 0)
-            //{
-            //    this.Status.ErrorMessage.Cyclic = "Curve .json file contains no data!";
-            //    return false;
-            //}
-
-            //File.WriteAllText(FilePath, json);
-            return true;
+          
         }
     }
 

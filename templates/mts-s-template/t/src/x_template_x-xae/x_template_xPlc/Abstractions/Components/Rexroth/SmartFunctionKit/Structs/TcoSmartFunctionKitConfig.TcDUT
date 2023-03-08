@@ -7,6 +7,7 @@
         DataFormat : eTcoDataFormat := TcoUtilities.eTcoDataFormat.BigEndian;
         InfoTime : TIME := T#2S;
         ErrorTime : TIME := T#5S;
+		IpAddress : STRING;
 		CurveExportLocation : STRING;
     END_STRUCT
 END_TYPE

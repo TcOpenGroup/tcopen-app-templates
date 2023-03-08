@@ -156,11 +156,11 @@
   <data name="___Run_Command__" xml:space="preserve">
     <value>Run Command</value>
   </data>
-  <data name="___Get_Results__" xml:space="preserve">
-    <value>Get Results</value>
+  <data name="___Get_last_Results__" xml:space="preserve">
+    <value>Get last Results</value>
   </data>
-  <data name="___Save_curve__" xml:space="preserve">
-    <value>Save curve</value>
+  <data name="___Save_last_curve__" xml:space="preserve">
+    <value>Save last curve</value>
   </data>
   <data name="___Restore_executed___" xml:space="preserve">
     <value>Restore executed!</value>
