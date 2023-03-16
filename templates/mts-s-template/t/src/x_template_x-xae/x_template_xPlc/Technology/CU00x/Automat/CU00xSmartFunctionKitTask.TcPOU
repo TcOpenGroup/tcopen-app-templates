@@ -107,7 +107,7 @@ END_IF
 
 IF (Step(7000, TRUE, 'EXPORT CURVE')) THEN
     //-------------------------------------
-	
+
 		StepCompleteWhen(THIS^.ParentSequence.Station.Components.Sfk.ExportLastCurve().Done );	
     //-------------------------------------
 END_IF

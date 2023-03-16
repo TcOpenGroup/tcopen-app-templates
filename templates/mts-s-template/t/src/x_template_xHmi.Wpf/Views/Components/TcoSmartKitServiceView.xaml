@@ -21,13 +21,17 @@
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value1 }" PresentationType="Control"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value2 }" PresentationType="Control"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value3 }" PresentationType="Control"/>
-                   
+
                 </StackPanel>
                 <StackPanel VerticalAlignment="Top" Margin="5,0" Orientation="Horizontal" Visibility="{Binding _request.Command.Cyclic, Converter={converters:TcoSmartFunctionKitVisibilityStartProgramConverter}}">
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.SerialNumber }" PresentationType="Control"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value1 }" PresentationType="Display"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value2 }" PresentationType="Display"/>
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value3 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value4 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value5 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value6 }" PresentationType="Display"/>
+                    <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.Value7 }" PresentationType="Display"/>
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Top" Margin="5,0" Orientation="Horizontal" Visibility="{Binding _request.Command.Cyclic, Converter={converters:TcoSmartFunctionKitVisibilityJogTaraPositioningConverter}}">
                     <tcoCore:RenderableContentControl Margin="5,0" DataContext="{Binding _request.PositionDistanceTara }" PresentationType="Control"/>

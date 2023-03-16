@@ -77,7 +77,12 @@ END_IF
 
 CASE _request.Command OF
 	eTcoSmartFunctionKitCommand.StartProgram:
+	
 		chars:=MAXSTRING_TO_BYTEARR(_request.SerialNumber);
+		FOR i:=LEN(_request.SerialNumber)+1 TO 255 BY 1 DO
+			chars[i] := 0;
+		END_FOR;
+		//Tc2_System.MEMSET(destAddr:= ADR(chars) , fillByte:= 0 , n:= SIZEOF(chars));
 		i:=0;
 		_request.Value1:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
 		i:=4;
@@ -91,7 +96,7 @@ CASE _request.Command OF
 		i:=20;
 		_request.Value6:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
 		i:=24;
-		_request.Value6:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
+		_request.Value7:=THIS^._BYTES_TO_DWORD(Format:=_config.DataFormat,INb0:=chars[i],INb1:=chars[i+1],INb2:=chars[i+2],INb3:=chars[i+3]);
 	
 	eTcoSmartFunctionKitCommand.SetProgramActive:
 		_request.Value1:= INT_TO_DWORD(_request.ProgramId*1000);	
