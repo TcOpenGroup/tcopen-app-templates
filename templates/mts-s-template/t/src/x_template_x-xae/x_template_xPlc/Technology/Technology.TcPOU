@@ -16,8 +16,6 @@ VAR
 
 	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
-	
-	Screwdriver : TcoCvirII(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
