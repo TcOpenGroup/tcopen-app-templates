@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoCvirII_Control" Id="{b5806dfb-66bd-4a68-b7c7-788534c9d424}">
+    <Declaration><![CDATA[TYPE TcoCvirII_Control :
+STRUCT
+	{attribute addProperty Name "<#Cycle bit 1#>"}
+	CycleBit1 : BOOL;
+	{attribute addProperty Name "<#Cycle bit 2#>"}
+	CycleBit2 : BOOL;
+	{attribute addProperty Name "<#Cycle bit 4#>"}
+	CycleBit4 : BOOL;
+	{attribute addProperty Name "<#Spindle validation#>"}
+	SpindleValidation : BOOL;
+	{attribute addProperty Name "<#Error acknowledge#>"}
+	ErrorAck : BOOL;
+	{attribute addProperty Name "<#Start#>"}
+	StartCycle : BOOL;
+	{attribute addProperty Name "<#Direction#>"}
+	Direction : BOOL;
+	{attribute addProperty Name "<#Reset#>"}
+	Reset : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

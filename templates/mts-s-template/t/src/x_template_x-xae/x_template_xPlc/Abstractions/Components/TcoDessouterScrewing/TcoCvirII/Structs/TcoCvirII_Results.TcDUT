@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoCvirII_Results" Id="{49a6aa01-ce91-4905-89c4-de8a18392bec}">
+    <Declaration><![CDATA[TYPE TcoCvirII_Results :
+STRUCT
+	{attribute addProperty Name "<#Torque#>"}
+	Torque : REAL;			
+	{attribute addProperty Name "<#Torque trend#>"}
+	TorqueTrend : INT;			
+	{attribute addProperty Name "<#Angle#>"}
+	Angle : REAL;			
+	{attribute addProperty Name "<#Angle trend#>"}
+	AngleTrend : INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

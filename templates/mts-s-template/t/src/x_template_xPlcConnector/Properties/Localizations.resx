@@ -117,6 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="___Not_ready_for_operation_by_means_of_Profinet_network___" xml:space="preserve">
+    <value>Not ready for operation by means of Profinet network!</value>
+  </data>
+  <data name="___Ready_for_operation___" xml:space="preserve">
+    <value>Ready for operation!</value>
+  </data>
+  <data name="___Screwing_Program_Number__" xml:space="preserve">
+    <value>Screwing Program Number</value>
+  </data>
+  <data name="___Automatic_Start__" xml:space="preserve">
+    <value>Automatic Start</value>
+  </data>
+  <data name="___Run_screwing_cycle__" xml:space="preserve">
+    <value>Run screwing cycle</value>
+  </data>
+  <data name="___Set_screwing_program__" xml:space="preserve">
+    <value>Set screwing program</value>
+  </data>
+  <data name="___Enable__" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="___Disable__" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="___Forward__" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="___Reverse__" xml:space="preserve">
+    <value>Reverse</value>
+  </data>
+  <data name="___Restore__" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="___Invalid_reference____" xml:space="preserve">
+    <value>Invalid reference: </value>
+  </data>
+  <data name="___Restore_executed___" xml:space="preserve">
+    <value>Restore executed!</value>
+  </data>
+  <data name="___Screwdriver_not_ready___" xml:space="preserve">
+    <value>Screwdriver not ready.</value>
+  </data>
   <data name="___STATUS_INFO__" xml:space="preserve">
     <value>STATUS INFO</value>
   </data>
@@ -183,6 +225,66 @@
   <data name="____cu00x__" xml:space="preserve">
     <value>_cu00x</value>
   </data>
+  <data name="___Cycle_bit_1__" xml:space="preserve">
+    <value>Cycle bit 1</value>
+  </data>
+  <data name="___Cycle_bit_2__" xml:space="preserve">
+    <value>Cycle bit 2</value>
+  </data>
+  <data name="___Cycle_bit_4__" xml:space="preserve">
+    <value>Cycle bit 4</value>
+  </data>
+  <data name="___Spindle_validation__" xml:space="preserve">
+    <value>Spindle validation</value>
+  </data>
+  <data name="___Error_acknowledge__" xml:space="preserve">
+    <value>Error acknowledge</value>
+  </data>
+  <data name="___Start__" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="___Direction__" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="___Reset__" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="___Status__" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="___Actual_screwing_program__" xml:space="preserve">
+    <value>Actual screwing program</value>
+  </data>
+  <data name="___Torque__" xml:space="preserve">
+    <value>Torque</value>
+  </data>
+  <data name="___Torque_trend__" xml:space="preserve">
+    <value>Torque trend</value>
+  </data>
+  <data name="___Angle__" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="___Angle_trend__" xml:space="preserve">
+    <value>Angle trend</value>
+  </data>
+  <data name="___Required_screwing_program__" xml:space="preserve">
+    <value>Required screwing program</value>
+  </data>
+  <data name="___Ready__" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="___InCycle__" xml:space="preserve">
+    <value>InCycle</value>
+  </data>
+  <data name="___Passed__" xml:space="preserve">
+    <value>Passed</value>
+  </data>
+  <data name="___Failed__" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="___Number_of_cycles_OK__" xml:space="preserve">
+    <value>Number of cycles OK</value>
+  </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
     <value>Next on Passed</value>
   </data>
@@ -239,9 +341,6 @@
   </data>
   <data name="___Carrier__" xml:space="preserve">
     <value>Carrier</value>
-  </data>
-  <data name="___Reset__" xml:space="preserve">
-    <value>Reset</value>
   </data>
   <data name="___Master__" xml:space="preserve">
     <value>Master</value>

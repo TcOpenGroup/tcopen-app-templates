@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoCvirII_States" Id="{a491a537-4f31-4a61-831c-7004303fda7d}">
+    <Declaration><![CDATA[TYPE TcoCvirII_States :
+STRUCT
+	{attribute addProperty Name "<#Cycle bit 1#>"}
+	CycleBit1 : BOOL;
+	{attribute addProperty Name "<#Cycle bit 2#>"}
+	CycleBit2 : BOOL;
+	{attribute addProperty Name "<#Cycle bit 4#>"}
+	CycleBit4 : BOOL;
+	{attribute addProperty Name "<#Ready#>"}
+	Ready : BOOL;
+	{attribute addProperty Name "<#InCycle#>"}
+	InCycle : BOOL;
+	{attribute addProperty Name "<#Passed#>"}
+	Passed : BOOL;
+	{attribute addProperty Name "<#Failed#>"}
+	Failed : BOOL;
+	{attribute addProperty Name "<#Number of cycles OK#>"}
+	NumberOfCyclesOk : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

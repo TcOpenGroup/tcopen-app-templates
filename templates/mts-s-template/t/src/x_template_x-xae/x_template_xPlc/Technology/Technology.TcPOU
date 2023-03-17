@@ -16,6 +16,8 @@ VAR
 
 	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
+	
+	Screwdriver : TcoCvirII(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -215,5 +217,43 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <LineIds Name="Technology">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowAutomat">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowGround">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowManual">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AutomatAllTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ForceStepMode">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.GroundAllTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.Main">
+      <LineId Id="3" Count="65" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.OnExit">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ProcessSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ReworkSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.TechnologicalSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="NotificationPanel" Id="{2928ab2f-ea83-0435-171c-b9c0980f8160}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
-FUNCTION_BLOCK NotificationPanel EXTENDS TcoObject
+FUNCTION_BLOCK NotificationPanel EXTENDS TcoCore.TcoObject
 VAR_INPUT
 	(*~
 		<docu>
@@ -61,5 +61,9 @@ _badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.TechnologyD
 
 ]]></ST>
     </Implementation>
+    <LineIds Name="NotificationPanel">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoCvirII" Id="{c305f929-a2d4-40de-88d1-0f089dc5dd68}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoCvirII EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoScrewdriver //TODO: EXTENDS TcoIo.TcoPnIoComponent //IMPLEMENTS TcoAbstractions.ITcoScrewdriver
+VAR_IN_OUT
+	inoIoData : TcoCvirII_Io;
+END_VAR
+
+VAR
+	_config : TcoCvirII_Config;
+	_status : TcoCvirII_Status;
+END_VAR
+
+VAR
+	_data : TcoCvirII_Data;
+	_results : TcoCvirII_Results;
+	
+	_state : TcoCore.TcoState(THIS^, eRestoreMode.None);
+	
+	{attribute 'hide'}
+	_timer : TON;
+
+	//INPUT VARIABLES	
+	{attribute addProperty Name "<#Screwing Program Number#>"}
+	_programNo : BYTE;
+	{attribute addProperty Name "<#Automatic Start#>"}
+	_automaticStart : BOOL;
+	
+	{attribute addProperty Name "<#Run screwing cycle#>"}
+	_screwingTask : TcoCore.TcoTask(THIS^);					//sequence
+	
+//	{attribute addProperty Name "<#Screwing program number#>"}	
+//	_programNumber : BYTE; 
+	{attribute addProperty Name "<#Set screwing program#>"}
+	_setScrewingProgramTask : TcoCore.TcoTask(THIS^); 		//waiting for hw response
+	
+	{attribute addProperty Name "<#Enable#>"}
+	_enableTask : TcoCore.TcoTask(THIS^);					//immediately done
+	{attribute addProperty Name "<#Disable#>"}
+	_disableTask : TcoCore.TcoTask(THIS^);
+	{attribute addProperty Name "<#Forward#>"}
+	_forwardTask : TcoCore.TcoTask(THIS^);					//sequence
+	{attribute addProperty Name "<#Reverse#>"}
+	_reverseTask : TcoCore.TcoTask(THIS^);					//sequence
+	{attribute addProperty Name "<#Restore#>"}
+    _restoreTask : TcoCore.TcoTask(THIS^);
+END_VAR
+
+VAR
+    {attribute 'hide'} 
+	_varInfo : __SYSTEM.VAR_INFO;
+    {attribute 'hide'} 
+	_sb : TcoCore.StringBuilder;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF InvalidReference() THEN
+    RETURN;
+END_IF
+
+//SUPER^(inPnIoBoxState := THIS^.inoIoData.PnIoBoxState, inPnIoBoxDiag := THIS^.inoIoData.PnIoBoxDiag);
+
+InitializeComponent();
+
+//IF NOT SUPER^.ProfinetReady THEN
+//	THIS^._status.ActionDescription := '<#Not ready for operation by means of Profinet network!#>';	
+//END_IF
+
+//IF SUPER^.ProfinetReady AND THIS^._status.ActionDescription = '<#Not ready for operation by means of Profinet network!#>' THEN
+//	THIS^._status.ActionDescription := '<#Ready for operation!#>';	
+//END_IF
+
+//*************RESTORE********************
+_restoreTask.Enabled := TRUE;
+IF _restoreTask.Execute() THEN
+	Restore();
+END_IF
+//****************************************
+
+//**********SET SCREWING PROGRAM**********
+_setScrewingProgramTask.Enabled := TRUE;
+IF _setScrewingProgramTask.Execute() THEN
+	_data.ScrewingProgramOUT := _programNo;
+	IF (_data.ScrewingProgramOUT  = _data.ScrewingProgramIN) THEN
+		_setScrewingProgramTask.DoneWhen(TRUE);
+	END_IF
+END_IF
+//****************************************
+
+//****************SCREWING****************
+_screwingTask.Enabled := NOT _forwardTask.Busy AND NOT _reverseTask.Busy;
+IF _screwingTask.Execute() THEN
+	_screwingTask.DoneWhen(ScrewingInternal());
+END_IF
+//****************************************
+
+//****************ENABLE******************
+_enableTask.Enabled := TRUE;
+IF _enableTask.Execute() THEN
+	_data.Control.SpindleValidation := TRUE;
+	_enableTask.DoneWhen(TRUE);
+END_IF
+//****************************************
+
+//****************DISABLE******************
+_disableTask.Enabled := TRUE;
+IF _disableTask.Execute() THEN
+	_data.Control.SpindleValidation := FALSE;
+	_disableTask.DoneWhen(TRUE);
+END_IF
+//*****************************************
+
+//****************FORWARD******************
+_forwardTask.Enabled := NOT _screwingTask.Busy AND NOT _reverseTask.Busy;
+IF _forwardTask.Execute() THEN
+	_forwardTask.DoneWhen(ScrewClockwiseInternal());
+END_IF
+//*****************************************
+
+//****************REVERSE******************
+_reverseTask.Enabled := NOT _screwingTask.Busy AND NOT _forwardTask.Busy;
+IF _reverseTask.Execute() THEN
+	_reverseTask.DoneWhen(ScrewCounterClockwiseInternal());
+END_IF
+//*****************************************]]></ST>
+    </Implementation>
+    <Folder Name="_Internals" Id="{15bb9f30-74ce-4a79-904b-d6d9cf546a32}" />
+    <Folder Name="Operations" Id="{efcda785-c2ff-4f3c-8ac5-4fae255d743d}" />
+    <Folder Name="Tasks" Id="{4caea513-dbf2-4fc6-a892-0214b0d0def2}" />
+    <Property Name="Config" Id="{d097aa82-3255-4848-8d04-863bfbd6ce53}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the configuration of the screwdriver. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Config : REFERENCE TO TcoCvirII_Config]]></Declaration>
+      <Get Name="Get" Id="{f0a60fa8-c67f-4d62-a6b9-546c59aac019}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config REF= _config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="DisableTask" Id="{8088f83d-5719-4515-a225-9987cf2b6650}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY DisableTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{994090bc-6ae9-4d0c-8c10-5634587748e7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DisableTask := THIS^._disableTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="EnableTask" Id="{605e007d-c265-4186-b55e-0f3135a348ff}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY EnableTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{03382cd9-641c-408a-af3f-b3c52bb03cf0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[EnableTask := THIS^._enableTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ForwardTask" Id="{48d179b9-4550-4ff6-9512-5ff84db8b04c}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ForwardTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{a80d4c0f-c000-42fb-9854-f4fcbbe19df8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ForwardTask := THIS^._forwardTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="InitializeComponent" Id="{1c5e9459-c3a5-4faa-93ef-1c1b9a05397b}">
+      <Declaration><![CDATA[METHOD PRIVATE InitializeComponent
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF(InvalidReference()) THEN
+	RETURN;
+END_IF
+
+//Reading input data
+_data.Status.CycleBit1 := inoIoData.Status.0;
+_data.Status.CycleBit2 := inoIoData.Status.1;
+_data.Status.CycleBit4 := inoIoData.Status.2;
+_data.Status.Ready := inoIoData.Status.3;
+_data.Status.InCycle := inoIoData.Status.4;
+_data.Status.Passed := inoIoData.Status.5;
+_data.Status.Failed := inoIoData.Status.6;
+_data.Status.NumberOfCyclesOk := inoIoData.Status.7;
+
+_data.ScrewingProgramIN := inoIoData.ScrewingProgramIN;
+
+_data.Torque := inoIoData.Torque;
+_data.TorqueTrend := inoIoData.TorqueTrend;
+_data.Angle := inoIoData.Angle;
+_data.AngleTrend := inoIoData.AngleTrend;
+
+
+//Write output data
+inoIoData.Control.0 := _data.Control.CycleBit1;
+inoIoData.Control.1 := _data.Control.CycleBit2;
+inoIoData.Control.2 := _data.Control.CycleBit4;
+inoIoData.Control.3 := _data.Control.SpindleValidation;
+inoIoData.Control.4 := _data.Control.ErrorAck;
+inoIoData.Control.5 := _data.Control.StartCycle;
+inoIoData.Control.6 := _data.Control.Direction;
+inoIoData.Control.7 := _data.Control.Reset;
+
+inoIoData.ScrewingProgramOUT := _data.ScrewingProgramOUT;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InvalidReference" Id="{3fb9cd7d-6da0-44fd-8dad-f3fee2f03612}" FolderPath="_Internals\">
+      <Declaration><![CDATA[METHOD INTERNAL InvalidReference : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InvalidReference := FALSE;
+IF NOT __ISVALIDREF(inoIoData) THEN
+	_varInfo :=__VARINFO(inoIoData);
+	Messenger.Error(_sb.Clear().Append('<#Invalid reference: #>').Append(_varInfo.Symbol).ToString());
+    InvalidReference := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Restore" Id="{b59bc427-e777-423a-b569-9ea0401f7842}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_screwingTask.Restore();
+_setScrewingProgramTask.Restore();
+
+_enableTask.Restore();
+_disableTask.Restore();
+
+_forwardTask.Restore();
+_reverseTask.Restore();
+
+_state.Restore();
+
+THIS^._results.Torque := 0;
+THIS^._results.TorqueTrend := 0;
+THIS^._results.Angle := 0;
+THIS^._results.AngleTrend := 0;
+	
+IF InvalidReference() THEN
+    RETURN;
+END_IF
+
+Tc2_System.MEMSET(destAddr:= ADR(THIS^.inoIoData) , fillByte:= 0 , n:= SIZEOF(THIS^.inoIoData));
+
+_status.ActionDescription := '<#Restore executed!#>';
+_restoreTask.Restore();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Results" Id="{0dc966e9-0758-48f9-94ae-403d475eecf0}">
+      <Declaration><![CDATA[PROPERTY Results : TcoCvirII_Results]]></Declaration>
+      <Get Name="Get" Id="{a6751168-99e6-4edd-be02-22276c6b2605}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Results := _results;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReverseTask" Id="{8afef5ce-b48f-4540-b571-de4f4649d570}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ReverseTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{2e94ebca-508a-48d7-9c7e-83d3edff2f95}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReverseTask := THIS^._reverseTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ScrewClockwise" Id="{17a4fe0f-cbdb-44b8-b61e-b1d28e5474f6}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD ScrewClockwise : TcoCore.ITcoTaskStatus
+VAR_INPUT
+	AutomaticStart : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_automaticStart := AutomaticStart;
+ScrewClockwise := THIS^._forwardTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ScrewClockwiseInternal" Id="{12b8b5a9-e646-4bcd-b1f2-cad2ebce7ff3}" FolderPath="_Internals\">
+      <Declaration><![CDATA[METHOD INTERNAL ScrewClockwiseInternal : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ScrewClockwiseInternal := FALSE;
+
+IF (InvalidReference()) THEN
+	RETURN;
+END_IF
+
+IF (_state.State<0) THEN
+	_state.ChangeState(0);
+END_IF
+
+//Initialization	
+IF (_state.State=0) THEN
+	_state.ChangeState(30);
+END_IF
+
+//Waiting for device ready	
+IF (_state.State=30) THEN
+	IF _data.Status.Ready THEN
+		_state.ChangeState(40);
+	END_IF
+END_IF
+
+//Start cycle	
+IF (_state.State=40) THEN
+	_data.Control.Direction := FALSE;
+	//_data.Control.SpindleValidation := TRUE;
+	_data.Control.StartCycle := _automaticStart;
+	IF _data.Status.InCycle THEN
+		_state.ChangeState(50);
+	END_IF
+END_IF
+
+//Done
+IF (_state.State=50) THEN
+	_state.Restore();
+	ScrewClockwiseInternal := TRUE;
+END_IF
+
+	
+	]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ScrewCounterClockwise" Id="{17774663-1986-4eef-9c98-4bedf4780ad5}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD ScrewCounterClockwise : TcoCore.ITcoTaskStatus
+VAR_INPUT
+	AutomaticStart : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_automaticStart := AutomaticStart;
+ScrewCounterClockwise := THIS^._reverseTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ScrewCounterClockwiseInternal" Id="{2b9f336f-e584-45b1-9583-92dcfb6afc59}" FolderPath="_Internals\">
+      <Declaration><![CDATA[METHOD INTERNAL ScrewCounterClockwiseInternal : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ScrewCounterClockwiseInternal := FALSE;
+
+IF(InvalidReference()) THEN
+	RETURN;
+END_IF
+
+IF (_state.State<0) THEN
+	_state.ChangeState(0);
+END_IF
+
+//Initialization
+IF (_state.State=0) THEN
+	_state.ChangeState(40);
+END_IF
+
+//Waiting for device ready
+IF (_state.State=40) THEN
+	IF _data.Status.Ready THEN
+		_state.ChangeState(50);
+	END_IF
+END_IF
+
+//Start cycle
+IF (_state.State=50) THEN
+	_data.Control.Direction := TRUE;
+	//_data.Control.SpindleValidation := TRUE;
+	_data.Control.StartCycle := _automaticStart;
+	IF _data.Status.InCycle THEN
+		_state.ChangeState(60);
+	END_IF
+END_IF
+
+//Done
+IF (_state.State=60) THEN
+	_state.Restore();	
+	ScrewCounterClockwiseInternal := TRUE;
+END_IF
+
+	
+	]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Screwing" Id="{376db3da-4c91-437e-b2da-76af7fb6fa76}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD Screwing : TcoCore.ITcoTaskStatus
+VAR_INPUT
+	ProgramNo : BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_programNo := ProgramNo;
+_automaticStart := TRUE;
+Screwing := THIS^._screwingTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ScrewingInternal" Id="{1b5cb66f-49ef-465b-b4bc-8643a6ff9746}" FolderPath="_Internals\">
+      <Declaration><![CDATA[METHOD INTERNAL ScrewingInternal : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (InvalidReference()) THEN
+	RETURN;
+END_IF
+
+ScrewingInternal := FALSE;
+
+IF (_state.State<0) THEN
+	_state.ChangeState(0);
+END_IF
+
+//Initialization
+IF (_state.State=0) THEN
+	_state.ChangeState(10);
+END_IF
+
+//Set screwing program
+IF (_state.State=10) THEN
+	_data.ScrewingProgramOUT := _programNo;
+	IF (_data.ScrewingProgramOUT  = _data.ScrewingProgramIN) THEN
+		_state.ChangeState(20);
+	END_IF
+
+	THIS^.Messenger.Debug('Set screwing program.');
+END_IF
+
+//Check screwdriver ready
+IF (_state.State=20) THEN
+	_timer(IN := TRUE, PT := T#2S);
+	
+	THIS^._data.Control.SpindleValidation := TRUE;
+	
+	IF THIS^._data.Status.Ready THEN
+		_state.ChangeState(30);
+	END_IF
+
+	IF NOT THIS^._data.Status.Ready AND _timer.Q THEN
+		THIS^.Messenger.Warning('<#Screwdriver not ready.#>');
+	END_IF
+END_IF
+
+//Check screwdriver started
+IF (_state.State=30) THEN
+	_timer(IN := TRUE, PT := T#2S);
+	
+	_data.Control.Direction := FALSE;
+	//_data.Control.SpindleValidation := TRUE;
+	_data.Control.StartCycle := _automaticStart;
+	IF _data.Status.InCycle THEN
+		_timer(IN:=FALSE);
+		_state.ChangeState(40);
+	ELSIF _automaticStart AND NOT THIS^._data.status.InCycle AND _timer.Q THEN
+		THIS^.Messenger.Debug('Screwdriver not started.');
+	END_IF
+END_IF
+
+//Check screwdriver finished
+IF (_state.State=40) THEN
+	_timer(IN := TRUE, PT := T#2S);
+	IF NOT THIS^._data.Status.InCycle THEN
+		_timer(IN:=FALSE);
+		_state.ChangeState(60);
+	ELSIF THIS^._data.Status.InCycle AND _timer.Q THEN
+		THIS^.Messenger.Debug('Screwdriver not finished.');
+	END_IF
+END_IF
+
+//Reset StartCycle signal
+IF (_state.State=60) THEN
+	THIS^._data.Control.StartCycle := FALSE;
+	_data.Control.SpindleValidation := FALSE;
+	_state.ChangeState(70);
+END_IF
+
+//Collect result data
+IF (_state.State=70) THEN
+	THIS^._results.Angle := THIS^._data.Angle;
+	THIS^._results.AngleTrend := THIS^._data.AngleTrend;
+	THIS^._results.Torque := THIS^._data.Torque;
+	THIS^._results.TorqueTrend := THIS^._data.TorqueTrend;
+	_state.ChangeState(80);
+END_IF
+
+//Done
+IF (_state.State=80) THEN
+	_state.Restore();
+	ScrewingInternal :=TRUE;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ScrewingTask" Id="{7cc4d045-588e-4533-a5bf-32b3ff2c207e}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ScrewingTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{f0c26b60-1844-44bf-abe4-13a0d740cf76}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ScrewingTask := THIS^._screwingTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ScrewingWithAutomaticStart" Id="{54b738e3-f415-43be-80e7-1b2dde8e49cd}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD ScrewingWithAutomaticStart : TcoCore.ITcoTaskStatus
+VAR_INPUT
+	ProgramNo : BYTE;
+	AutomaticStart : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_programNo := ProgramNo;
+_automaticStart := AutomaticStart;
+ScrewingWithAutomaticStart := THIS^._screwingTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{b30ae61c-6cb6-4c11-b997-c67bc593c5c6}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SetScrewingProgramTask" Id="{6a502898-a737-4abe-9c46-c5a298c2cbad}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY SetScrewingProgramTask : TcoCore.ITcoTaskStatus]]></Declaration>
+      <Get Name="Get" Id="{44ae92ef-8c11-455b-b83c-33b045ec5189}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SetScrewingProgramTask := THIS^._setScrewingProgramTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Status" Id="{9f04587f-2cd5-4ce7-965a-55ffcb50b2dd}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the status of the screwdriver. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Status : REFERENCE TO TcoCvirII_Status]]></Declaration>
+      <Get Name="Get" Id="{a5b8a1d1-9db9-4d07-bddd-cbac49d95ee9}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF= _status;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="TcoCvirII">
+      <LineId Id="1980" Count="5" />
+      <LineId Id="1989" Count="0" />
+      <LineId Id="2004" Count="0" />
+      <LineId Id="1990" Count="8" />
+      <LineId Id="2000" Count="3" />
+      <LineId Id="1978" Count="0" />
+      <LineId Id="2011" Count="0" />
+      <LineId Id="2008" Count="0" />
+      <LineId Id="2032" Count="0" />
+      <LineId Id="1889" Count="6" />
+      <LineId Id="2014" Count="0" />
+      <LineId Id="2012" Count="0" />
+      <LineId Id="2083" Count="0" />
+      <LineId Id="1896" Count="1" />
+      <LineId Id="1899" Count="0" />
+      <LineId Id="2013" Count="0" />
+      <LineId Id="2016" Count="0" />
+      <LineId Id="1900" Count="0" />
+      <LineId Id="2137" Count="0" />
+      <LineId Id="1901" Count="3" />
+      <LineId Id="2015" Count="0" />
+      <LineId Id="2017" Count="0" />
+      <LineId Id="1905" Count="0" />
+      <LineId Id="2136" Count="0" />
+      <LineId Id="1906" Count="4" />
+      <LineId Id="2019" Count="0" />
+      <LineId Id="2018" Count="0" />
+      <LineId Id="2084" Count="0" />
+      <LineId Id="1911" Count="2" />
+      <LineId Id="2022" Count="0" />
+      <LineId Id="2020" Count="0" />
+      <LineId Id="1914" Count="0" />
+      <LineId Id="2085" Count="0" />
+      <LineId Id="1915" Count="2" />
+      <LineId Id="2023" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.Config.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.DisableTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.EnableTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ForwardTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.InitializeComponent">
+      <LineId Id="110" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="118" Count="18" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="138" Count="9" />
+      <LineId Id="137" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.InvalidReference">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.Restore">
+      <LineId Id="47" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="29" Count="11" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.Results.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ReverseTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewClockwise">
+      <LineId Id="100" Count="0" />
+      <LineId Id="97" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewClockwiseInternal">
+      <LineId Id="6" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="89" Count="2" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="48" Count="2" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewCounterClockwise">
+      <LineId Id="121" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewCounterClockwiseInternal">
+      <LineId Id="57" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="113" Count="2" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="102" Count="1" />
+      <LineId Id="67" Count="2" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="72" Count="3" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="76" Count="3" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="81" Count="3" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="85" Count="3" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.Screwing">
+      <LineId Id="21" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewingInternal">
+      <LineId Id="861" Count="4" />
+      <LineId Id="943" Count="0" />
+      <LineId Id="945" Count="1" />
+      <LineId Id="944" Count="0" />
+      <LineId Id="935" Count="0" />
+      <LineId Id="866" Count="1" />
+      <LineId Id="869" Count="1" />
+      <LineId Id="936" Count="0" />
+      <LineId Id="871" Count="8" />
+      <LineId Id="937" Count="0" />
+      <LineId Id="880" Count="13" />
+      <LineId Id="938" Count="0" />
+      <LineId Id="894" Count="2" />
+      <LineId Id="947" Count="0" />
+      <LineId Id="952" Count="3" />
+      <LineId Id="898" Count="5" />
+      <LineId Id="939" Count="0" />
+      <LineId Id="904" Count="9" />
+      <LineId Id="940" Count="0" />
+      <LineId Id="914" Count="5" />
+      <LineId Id="941" Count="0" />
+      <LineId Id="920" Count="7" />
+      <LineId Id="942" Count="0" />
+      <LineId Id="928" Count="5" />
+      <LineId Id="534" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewingTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ScrewingWithAutomaticStart">
+      <LineId Id="21" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.ServiceMode">
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.SetScrewingProgramTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoCvirII.Status.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -90,11 +90,38 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actual screwing program.
+        /// </summary>
+        public static string ___Actual_screwing_program__ {
+            get {
+                return ResourceManager.GetString("___Actual_screwing_program__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Air pressure.
         /// </summary>
         public static string ___Air_pressure__ {
             get {
                 return ResourceManager.GetString("___Air_pressure__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string ___Angle__ {
+            get {
+                return ResourceManager.GetString("___Angle__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle trend.
+        /// </summary>
+        public static string ___Angle_trend__ {
+            get {
+                return ResourceManager.GetString("___Angle_trend__", resourceCulture);
             }
         }
         
@@ -122,6 +149,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___AUTOMAT_ALL__ {
             get {
                 return ResourceManager.GetString("___AUTOMAT_ALL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic Start.
+        /// </summary>
+        public static string ___Automatic_Start__ {
+            get {
+                return ResourceManager.GetString("___Automatic_Start__", resourceCulture);
             }
         }
         
@@ -207,11 +243,56 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cycle bit 1.
+        /// </summary>
+        public static string ___Cycle_bit_1__ {
+            get {
+                return ResourceManager.GetString("___Cycle_bit_1__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cycle bit 2.
+        /// </summary>
+        public static string ___Cycle_bit_2__ {
+            get {
+                return ResourceManager.GetString("___Cycle_bit_2__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cycle bit 4.
+        /// </summary>
+        public static string ___Cycle_bit_4__ {
+            get {
+                return ResourceManager.GetString("___Cycle_bit_4__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cycle time.
         /// </summary>
         public static string ___Cycle_time__ {
             get {
                 return ResourceManager.GetString("___Cycle_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string ___Direction__ {
+            get {
+                return ResourceManager.GetString("___Direction__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable.
+        /// </summary>
+        public static string ___Disable__ {
+            get {
+                return ResourceManager.GetString("___Disable__", resourceCulture);
             }
         }
         
@@ -252,6 +333,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        public static string ___Enable__ {
+            get {
+                return ResourceManager.GetString("___Enable__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Energy saving mode - Inactivity time.
         /// </summary>
         public static string ___Energy_saving_mode___Inactivity_time__ {
@@ -275,6 +365,33 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Error__ {
             get {
                 return ResourceManager.GetString("___Error__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error acknowledge.
+        /// </summary>
+        public static string ___Error_acknowledge__ {
+            get {
+                return ResourceManager.GetString("___Error_acknowledge__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed.
+        /// </summary>
+        public static string ___Failed__ {
+            get {
+                return ResourceManager.GetString("___Failed__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forward.
+        /// </summary>
+        public static string ___Forward__ {
+            get {
+                return ResourceManager.GetString("___Forward__", resourceCulture);
             }
         }
         
@@ -320,6 +437,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___IDLE__ {
             get {
                 return ResourceManager.GetString("___IDLE__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InCycle.
+        /// </summary>
+        public static string ___InCycle__ {
+            get {
+                return ResourceManager.GetString("___InCycle__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid reference: .
+        /// </summary>
+        public static string ___Invalid_reference____ {
+            get {
+                return ResourceManager.GetString("___Invalid_reference____", resourceCulture);
             }
         }
         
@@ -432,6 +567,24 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not ready for operation by means of Profinet network!.
+        /// </summary>
+        public static string ___Not_ready_for_operation_by_means_of_Profinet_network___ {
+            get {
+                return ResourceManager.GetString("___Not_ready_for_operation_by_means_of_Profinet_network___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of cycles OK.
+        /// </summary>
+        public static string ___Number_of_cycles_OK__ {
+            get {
+                return ResourceManager.GetString("___Number_of_cycles_OK__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation ended.
         /// </summary>
         public static string ___Operation_ended__ {
@@ -464,6 +617,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Operator__ {
             get {
                 return ResourceManager.GetString("___Operator__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passed.
+        /// </summary>
+        public static string ___Passed__ {
+            get {
+                return ResourceManager.GetString("___Passed__", resourceCulture);
             }
         }
         
@@ -531,6 +693,24 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        public static string ___Ready__ {
+            get {
+                return ResourceManager.GetString("___Ready__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready for operation!.
+        /// </summary>
+        public static string ___Ready_for_operation___ {
+            get {
+                return ResourceManager.GetString("___Ready_for_operation___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to READY TO START.
         /// </summary>
         public static string ___READY_TO_START__ {
@@ -567,6 +747,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required screwing program.
+        /// </summary>
+        public static string ___Required_screwing_program__ {
+            get {
+                return ResourceManager.GetString("___Required_screwing_program__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string ___Reset__ {
@@ -576,11 +765,38 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string ___Restore__ {
+            get {
+                return ResourceManager.GetString("___Restore__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore executed!.
+        /// </summary>
+        public static string ___Restore_executed___ {
+            get {
+                return ResourceManager.GetString("___Restore_executed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string ___Results__ {
             get {
                 return ResourceManager.GetString("___Results__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse.
+        /// </summary>
+        public static string ___Reverse__ {
+            get {
+                return ResourceManager.GetString("___Reverse__", resourceCulture);
             }
         }
         
@@ -603,11 +819,65 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run screwing cycle.
+        /// </summary>
+        public static string ___Run_screwing_cycle__ {
+            get {
+                return ResourceManager.GetString("___Run_screwing_cycle__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Safety doors OK.
         /// </summary>
         public static string ___Safety_doors_OK__ {
             get {
                 return ResourceManager.GetString("___Safety_doors_OK__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screwdriver not ready..
+        /// </summary>
+        public static string ___Screwdriver_not_ready___ {
+            get {
+                return ResourceManager.GetString("___Screwdriver_not_ready___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screwing Program Number.
+        /// </summary>
+        public static string ___Screwing_Program_Number__ {
+            get {
+                return ResourceManager.GetString("___Screwing_Program_Number__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set screwing program.
+        /// </summary>
+        public static string ___Set_screwing_program__ {
+            get {
+                return ResourceManager.GetString("___Set_screwing_program__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spindle validation.
+        /// </summary>
+        public static string ___Spindle_validation__ {
+            get {
+                return ResourceManager.GetString("___Spindle_validation__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string ___Start__ {
+            get {
+                return ResourceManager.GetString("___Start__", resourceCulture);
             }
         }
         
@@ -627,6 +897,15 @@ namespace x_template_xPlcConnector.Properties {
             get {
                 return ResourceManager.GetString("___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence" +
                         "___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ___Status__ {
+            get {
+                return ResourceManager.GetString("___Status__", resourceCulture);
             }
         }
         
@@ -654,6 +933,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Technology_data__ {
             get {
                 return ResourceManager.GetString("___Technology_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Torque.
+        /// </summary>
+        public static string ___Torque__ {
+            get {
+                return ResourceManager.GetString("___Torque__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Torque trend.
+        /// </summary>
+        public static string ___Torque_trend__ {
+            get {
+                return ResourceManager.GetString("___Torque_trend__", resourceCulture);
             }
         }
         

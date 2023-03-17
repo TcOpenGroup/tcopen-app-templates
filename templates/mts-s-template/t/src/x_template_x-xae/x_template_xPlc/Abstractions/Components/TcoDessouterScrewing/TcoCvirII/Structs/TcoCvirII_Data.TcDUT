@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoCvirII_Data" Id="{0d2f8bb7-6beb-49aa-9a43-94ad7e93fcdd}">
+    <Declaration><![CDATA[TYPE TcoCvirII_Data :
+STRUCT
+	{attribute addProperty Name "<#Status#>"}
+	Status : TcoCvirII_States; //States, because name conflict with Component status.
+	{attribute addProperty Name "<#Actual screwing program#>"}
+	ScrewingProgramIN : BYTE;
+	{attribute addProperty Name "<#Torque#>"}
+	Torque : REAL;
+	{attribute addProperty Name "<#Torque trend#>"}
+	TorqueTrend : INT;
+	{attribute addProperty Name "<#Angle#>"}
+	Angle : REAL;
+	{attribute addProperty Name "<#Angle trend#>"}
+	AngleTrend : INT;
+	{attribute addProperty Name "<#Actual screwing program#>"}
+	Control : TcoCvirII_Control;
+	{attribute addProperty Name "<#Required screwing program#>"}
+	ScrewingProgramOUT : BYTE;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

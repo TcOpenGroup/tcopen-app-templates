@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoCvirII_Io" Id="{dcdd0f42-7a4e-408d-b42e-d392c52d5290}">
+    <Declaration><![CDATA[TYPE TcoCvirII_Io :
+STRUCT
+	PnIoBoxState AT %I*	:	UINT;
+	PnIoBoxDiag AT %I*	:	UINT;
+	PnIoBoxCtrl AT %Q*	:	UINT;	
+
+	Status AT %I* : BYTE;
+	ScrewingProgramIN AT %I* : BYTE;
+	Torque AT %I* : REAL;			
+	TorqueTrend AT %I* : INT;			
+	Angle AT %I* : REAL;			
+	AngleTrend AT %I* : INT;			
+	Control AT %Q* : BYTE;
+	ScrewingProgramOUT AT %Q* : BYTE; 
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

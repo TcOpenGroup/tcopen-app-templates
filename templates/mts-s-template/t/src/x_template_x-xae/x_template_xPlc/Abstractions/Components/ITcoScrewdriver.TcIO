@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoScrewdriver" Id="{c3828ed3-c856-45da-99c0-a802bde2a9d5}">
+    <Declaration><![CDATA[INTERFACE ITcoScrewdriver EXTENDS __SYSTEM.IQueryInterface
+]]></Declaration>
+    <Method Name="Screwing" Id="{2be64ce8-8445-4eb3-adaa-8ecb2d6a324d}">
+      <Declaration><![CDATA[METHOD Screwing : TcoCore.ITcoTaskStatus
+VAR_INPUT
+	ProgramNo : BYTE;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

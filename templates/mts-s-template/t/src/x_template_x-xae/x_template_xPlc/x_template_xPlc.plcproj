@@ -26,6 +26,33 @@
     <PreserveCompiledLibComments>false</PreserveCompiledLibComments>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\Components\ITcoScrewdriver.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\IO\TcoCvirII_Io.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_Data.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_Results.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_States.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs\TcoCvirII_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\TcoCvirII.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\CuBaseRecurringFail.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -227,12 +254,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstractions" />
+    <Folder Include="Abstractions\Components\TcoDessouterScrewing" />
+    <Folder Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII" />
+    <Folder Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\IO" />
+    <Folder Include="Abstractions\Components\TcoDessouterScrewing\TcoCvirII\Structs" />
     <Folder Include="Abstractions\CUBase" />
     <Folder Include="Abstractions\CUBase\Data" />
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
+    <Folder Include="Abstractions\Components" />
     <Folder Include="Abstractions\Technology" />
     <Folder Include="Abstractions\TcoCore" />
     <Folder Include="DUTs" />
@@ -267,27 +299,31 @@
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoCore">
-      <DefaultResolution>TcoCore, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoCore, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoCore</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoData">
-      <DefaultResolution>TcoData, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoData, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoData</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoElements">
-      <DefaultResolution>TcoElements, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoElements, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoElements</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoInspectors">
-      <DefaultResolution>TcoInspectors, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoInspectors, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoInspectors</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcoIo">
+      <DefaultResolution>TcoIo, 0.11.0.19 (Vortex.Library)</DefaultResolution>
+      <Namespace>TcoIo</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="TcoPneumatics">
-      <DefaultResolution>TcoPneumatics, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoPneumatics, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoUtilities">
-      <DefaultResolution>TcoUtilities, 0.11.0.16 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoUtilities, 0.11.0.19 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoUtilities</Namespace>
     </PlaceholderReference>
   </ItemGroup>
@@ -298,22 +334,25 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="TcoCore">
-      <Resolution>TcoCore, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoCore, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoData">
-      <Resolution>TcoData, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoData, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoElements">
-      <Resolution>TcoElements, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoElements, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoInspectors">
-      <Resolution>TcoInspectors, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoInspectors, 0.11.0.19 (Vortex.Library)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="TcoIo">
+      <Resolution>TcoIo, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
-      <Resolution>TcoPneumatics, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoPneumatics, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoUtilities">
-      <Resolution>TcoUtilities, 0.11.0.16 (Vortex.Library)</Resolution>
+      <Resolution>TcoUtilities, 0.11.0.19 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
