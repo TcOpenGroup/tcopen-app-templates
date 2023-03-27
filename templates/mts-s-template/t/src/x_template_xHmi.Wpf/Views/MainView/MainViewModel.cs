@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcOpen.Inxton.Local.Security.Wpf;
 using x_template_xPlc;
+using x_template_xHmi.Wpf.Views.Diagnostics;
 
 namespace x_template_xHmi.Wpf.Views.MainView
 {
@@ -18,7 +19,8 @@ namespace x_template_xHmi.Wpf.Views.MainView
             this.Title = "TECHNOLOGY";
             this.OpenCommand(this.AddCommand(typeof(OperatorView), strings.Operator));
             this.AddCommand(typeof(DataView), strings.Data); 
-            this.AddCommand(typeof(UserManagementGroupManagementView), strings.UserManagement);           
+            this.AddCommand(typeof(UserManagementGroupManagementView), strings.UserManagement);
+            this.AddCommand(typeof(DiagnosticsView), strings.Diagnostics);
             this.OpenLoginWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLoginWindow());
             this.LogOutWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => TcOpen.Inxton.TcoAppDomain.Current.AuthenticationService.DeAuthenticateCurrentUser() );
         }

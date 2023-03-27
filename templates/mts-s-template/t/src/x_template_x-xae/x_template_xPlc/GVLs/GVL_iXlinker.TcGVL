@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.2.0.0">
-  <GVL Name="GVL_iXlinker" Id="{b555b60c-e215-4bfc-aaff-03687217c4e8}">
+  <GVL Name="GVL_iXlinker" Id="{f2f34d28-08cd-4cd1-8c9f-843767c77363}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-		EC1 : EC1_DFE7C435;
+		EC1 : EC1_53109142;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

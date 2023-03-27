@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Splash\splash.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Serilog.Enrichers.EnrichedProperties" Version="1.0.63" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" /> 
@@ -28,13 +32,14 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.16" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.16" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.23" />
   </ItemGroup>
   <!--PCKG-END-->
 	
@@ -82,5 +87,13 @@
     <Page Update="Views\Data\ReworkSettings\ReworkSettingsView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="Views\Diagnostics\TopologyView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Splash\splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
+    xmlns:plc="clr-namespace:x_template_xPlc"
     xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml"
     mc:Ignorable="d"
     d:DesignHeight="450"
@@ -148,7 +149,7 @@
                             Visibility="{Binding Component._statusInfo.CurrentIsInStepMode.Cyclic, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                         <materialDesign:PackIcon
-                                Foreground="{StaticResource OnSecondary}"
+                                Foreground="{Binding Component._statusInfo.Mode.Cyclic, Converter={plc:SelectorStateToForegroundBrushConverter}}"
                                 Kind="ShoePrint"
                                 Style="{StaticResource icon}" />
                     </StackPanel>

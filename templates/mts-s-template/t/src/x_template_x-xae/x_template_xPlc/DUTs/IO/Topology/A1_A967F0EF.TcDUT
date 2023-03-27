@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.2.0.0">
-  <DUT Name="A1_A967F0EF" Id="{90d38881-a3ed-4c5c-9030-7492b962074b}">
+  <DUT Name="A1_A967F0EF" Id="{8a4ff9d4-bc00-4c92-abf7-87a06b60f05d}">
     <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EK1100-0000-0018'}
 {attribute addProperty BoxType "EK1100-0000-0018"}
 {attribute addProperty Id "A1_1EL1008_78E8D3DD12A1_2EL2008_E2806B9511"}
 {attribute addProperty CRC "2842161391"}
 {attribute addProperty Size "23"}
+{attribute addProperty Name "A1"}
 TYPE A1_A967F0EF EXTENDS EK1100_1FC0878B :
 STRUCT
-	{attribute addProperty Name "A1_1"}
+	{attribute addProperty Name "A1-1"}
 	{attribute addProperty PreviousPort "A1 : B"}
+	{attribute addProperty SyncUnit "default"}
 	A1_1 : EL1008_78E8D3DD;
-	{attribute addProperty Name "A1_2"}
+	{attribute addProperty Name "A1-2"}
 	{attribute addProperty PreviousPort "A1-1 : B"}
+	{attribute addProperty SyncUnit "default"}
 	A1_2 : EL2008_E2806B95;
 END_STRUCT
 END_TYPE

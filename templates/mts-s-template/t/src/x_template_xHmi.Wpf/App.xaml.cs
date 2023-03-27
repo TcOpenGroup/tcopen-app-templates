@@ -55,8 +55,10 @@ namespace x_template_xHmi.Wpf
 
             // This starts the twin connector operations
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
+           
 
-   
+
+
             switch (Constants.DATABASE_ENGINE)
             {
                 case DatabaseEngine.RavenDbEmbded:

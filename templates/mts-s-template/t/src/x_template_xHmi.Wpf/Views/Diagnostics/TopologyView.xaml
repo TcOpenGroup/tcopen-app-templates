@@ -1,0 +1,13 @@
+﻿<Window x:Class="x_template_xHmi.Wpf.Views.Diagnostics.TopologyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"       
+             mc:Ignorable="d" 
+            Title="EtherCAT TOPOLOGY"
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:vortex="http://vortex.mts/xaml" >
+    <Grid>
+        <vortex:TopologyRenderer DataContext="{Binding }"></vortex:TopologyRenderer>
+    </Grid>
+</Window>
