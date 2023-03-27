@@ -16,6 +16,9 @@ VAR
 
 	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
+	
+	{attribute addProperty Name "Device 1 (EtherCAT)"}
+	Device_1 : TcoIo.TcoEthercatMasterDevice(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -164,7 +167,13 @@ _technologySettings();
 	
 *)
 
-_cu00x();]]></ST>
+_cu00x();
+
+
+Device_1(	SyncUnits		:= ADR(		GVL_iXlinker.EC1.SyncUnits),
+			SyncUnitsSize	:= SIZEOF(	GVL_iXlinker.EC1.SyncUnits),
+			Inputs			:=			GVL_iXlinker.EC1.Inputs,
+			InfoData		:=			GVL_iXlinker.EC1.InfoData);	]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExit" Id="{29dbb73f-9a28-0fe3-31dc-e1185889822b}">

@@ -41,7 +41,10 @@ METHOD DataLoadProcessSettings : BOOL
 VAR_INPUT
 	inStepID : INT;
 END_VAR
-]]></Declaration>
+
+VAR
+	_ans: TcoCore.eDialogAnswer;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID, _dataLoadProcessSettings, 'LOAD PROCESS SETTING')) THEN
     //-------------------------------------
@@ -54,7 +57,7 @@ END_VAR
 									   .Pin();
 					   
 				   
-	IF(Station.Technology.ProcessSettings.Data._EntityId <> '' AND NOT THIS^._missingProcessSettingMessage.Pinned) THEN
+	IF(Station.Technology.ProcessSettings.Data._EntityId <> '' (*AND NOT THIS^._missingProcessSettingMessage.Pinned*)) THEN
 		IF(Station.Technology.ProcessSettings.Read(Station.Technology.ProcessSettings.Data._EntityId).Done) THEN
 			Station.ProcessDataManager.Data := Station.Technology.ProcessSettings.Data;
 			Station.ProcessDataManager.Data.EntityHeader.RecipeCreated := Station.Technology.ProcessSettings.Data._Created;
@@ -64,10 +67,14 @@ END_VAR
 
 		END_IF;	
 	ELSE
-		IF(_dialog.Show()
+		_ans:=_dialog.Show()
 	       .WithCaption('<#Process data not selected#>')
 		   .WithText('<#Would you like to load default settings?#>')
-		   .WithYesNoCancel().Answer = TcoCore.eDialogAnswer.Yes) THEN
+		   .WithYesNoCancel().Answer;
+		IF(_ans=TcoCore.eDialogAnswer.Cancel) THEN
+			this^.Restore();
+		END_IF
+		IF( _ans= TcoCore.eDialogAnswer.Yes) THEN
 		   
 		   	Station.Technology.ProcessSettings.Data._EntityId := 'default';
 		END_IF; 

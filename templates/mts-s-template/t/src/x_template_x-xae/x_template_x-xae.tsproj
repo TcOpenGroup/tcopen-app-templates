@@ -1,23 +1,19 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.25">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.32">
 	<DataTypes>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-000000000041}" TcBaseType="true" HideSubItems="true" CName="AmsNetId">AMSNETID</Name>
+			<Name GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo" AutoDeleteType="true">TcoAmsNetId</Name>
 			<BitSize>48</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>6</Elements>
-			</ArrayInfo>
-			<Format>
-				<Printf>%d.%d.%d.%d.%d.%d</Printf>
-				<Parameter>[0]</Parameter>
-				<Parameter>[1]</Parameter>
-				<Parameter>[2]</Parameter>
-				<Parameter>[3]</Parameter>
-				<Parameter>[4]</Parameter>
-				<Parameter>[5]</Parameter>
-			</Format>
+			<SubItem>
+				<Name>netId</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>6</Elements>
+				</ArrayInfo>
+				<BitSize>48</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
 		</DataType>
 	</DataTypes>
 	<ImageDatas>
@@ -38,7 +34,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{1F826822-78EF-46D2-B0C2-A803A090596D}" Name="x_template_xPlc" PrjFilePath="x_template_xPlc\x_template_xPlc.plcproj" TmcFilePath="x_template_xPlc\x_template_xPlc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{62A51D39-44FA-FF67-E1EA-15307BD17F65}">
 					<Name>x_template_xPlc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -105,7 +101,7 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.SyncUnits._default.unreferenced.InfoData.ObjectId</Name>
-							<Type>OTCID</Type>
+							<Type>DWORD</Type>
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.SyncUnits._default.unreferenced.InfoData.State</Name>
@@ -121,7 +117,7 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask.InfoData.ObjectId</Name>
-							<Type>OTCID</Type>
+							<Type>DWORD</Type>
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask.InfoData.State</Name>
@@ -129,22 +125,6 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask.InfoData.SlaveCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask1.WcState.WcState</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask1.InfoData.ObjectId</Name>
-							<Type>OTCID</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask1.InfoData.State</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_iXlinker.EC1.SyncUnits._default.PlcTask1.InfoData.SlaveCount</Name>
 							<Type>UINT</Type>
 						</Var>
 						<Var>
@@ -177,7 +157,7 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.InfoData.AmsNetId</Name>
-							<Type GUID="{18071995-0000-0000-0000-000000000041}">AMSNETID</Type>
+							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.InfoData.CfgSlaveCount</Name>
@@ -189,6 +169,50 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.InfoData.DcToExtTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.SlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.DevState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0State</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0WcState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0InputToggle</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.ChangeCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DevId</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.AmsNetId</Name>
+							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.CfgSlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToTcTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToExtTimeOffset</Name>
 							<Type>LINT</Type>
 						</Var>
 					</Vars>
@@ -238,7 +262,26 @@
 							<Name>GVL_iXlinker.EC1.Outputs.Frm0WcCtrl</Name>
 							<Type>UINT</Type>
 						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0Ctrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0WcCtrl</Name>
+							<Type>UINT</Type>
+						</Var>
 					</Vars>
+					<UnrestoredVarLinks ImportTime="2023-03-27T10:36:05">
+						<OwnerA Name="InputDst" Prefix="TIPC^x_template_xPlc^x_template_xPlc Instance" Type="1">
+							<OwnerB Name="TIID^EC1">
+								<Link VarA="GVL_iXlinker.EC1.InfoData.AmsNetId" TypeA="AMSNETID" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000041}" VarB="InfoData^AmsNetId" RestoreInfo="TypeMismatch" OldTypeA="AMSNETID" OldGuidA="{18071995-0000-0000-0000-000000000041}" NewTypeA="TcoIo.TcoAmsNetId" NewGuidA="{132E66EA-9D48-518D-E919-C407F4B9DB22}"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
@@ -257,7 +300,7 @@
 			</Project>
 		</Plc>
 		<Io>
-			<Device Id="1" Disabled="true" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="192.168.4.1.2.1" RemoteName="EC1" InfoImageId="2">
+			<Device Id="6" Disabled="true" DevType="111" DevFlags="#x0003" AmsPort="28678" AmsNetId="192.168.4.1.7.1" RemoteName="EC1" InfoImageId="1">
 				<Name>EC1</Name>
 				<AddressInfo>
 					<Pnp>
@@ -266,17 +309,17 @@
 						<DeviceData>000000000000</DeviceData>
 					</Pnp>
 				</AddressInfo>
-				<Image Id="1" AddrType="9" ImageType="3">
+				<Image Id="11" AddrType="9" ImageType="3">
 					<Name>Image</Name>
 				</Image>
-				<Box Id="1" BoxType="9099">
+				<Box Id="1164" Disabled="true" BoxType="9099">
 					<Name>A1</Name>
 					<ImageId>1000</ImageId>
 					<EtherCAT SlaveType="1" PdiType="#x0d00" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x044c2c52" RevisionNo="#x00120000" PortPhys="305" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1100 EtherCAT Coupler (2A E-Bus)" Desc="EK1100" PortABoxInfo="#x00ffffff"/>
-					<Box Id="2" BoxType="9099">
+					<Box Id="1165" BoxType="9099">
 						<Name>A1-1</Name>
 						<ImageId>7</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8Ch. Dig. Input 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000001">
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8Ch. Dig. Input 24V, 3ms" Desc="EL1008" PortABoxInfo="#x0100048c">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
@@ -321,10 +364,10 @@
 							</Pdo>
 						</EtherCAT>
 					</Box>
-					<Box Id="3" BoxType="9099">
+					<Box Id="1166" BoxType="9099">
 						<Name>A1-2</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8Ch. Dig. Output 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000002">
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8Ch. Dig. Output 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x0100048d">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
@@ -374,4 +417,49 @@
 			</Device>
 		</Io>
 	</Project>
+	<Mappings>
+		<OwnerA Name="TIPC^x_template_xPlc^x_template_xPlc Instance">
+			<OwnerB Name="TIID^EC1">
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.InfoData.CfgSlaveCount" VarB="InfoData^CfgSlaveCount"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.InfoData.ChangeCount" VarB="InfoData^ChangeCount"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.InfoData.DevId" VarB="InfoData^DevId"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.Inputs.DevState" VarB="Inputs^DevState"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.Inputs.Frm0InputToggle" VarB="Inputs^Frm0InputToggle"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.Inputs.Frm0State" VarB="Inputs^Frm0State"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.Inputs.Frm0WcState" VarB="Inputs^Frm0WcState"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.Inputs.SlaveCount" VarB="Inputs^SlaveCount"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.Outputs.DevCtrl" VarB="Outputs^DevCtrl"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.Outputs.Frm0Ctrl" VarB="Outputs^Frm0Ctrl"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.Outputs.Frm0WcCtrl" VarB="Outputs^Frm0WcCtrl"/>
+			</OwnerB>
+			<OwnerB Name="TIID^EC1^A1">
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.InfoData.State" VarB="InfoData^State"/>
+			</OwnerB>
+			<OwnerB Name="TIID^EC1^A1^A1-1">
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input" VarB="Channel 1^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input" VarB="Channel 2^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_3.Input" VarB="Channel 3^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input" VarB="Channel 4^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_5.Input" VarB="Channel 5^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input" VarB="Channel 6^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_7.Input" VarB="Channel 7^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.Channel_8.Input" VarB="Channel 8^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.InfoData.State" VarB="InfoData^State"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.WcState.InputToggle" VarB="WcState^InputToggle"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_1.WcState.WcState" VarB="WcState^WcState"/>
+			</OwnerB>
+			<OwnerB Name="TIID^EC1^A1^A1-2">
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_2.InfoData.State" VarB="InfoData^State"/>
+				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC1.A1.A1_2.WcState.WcState" VarB="WcState^WcState"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output" VarB="Channel 2^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output" VarB="Channel 3^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_4.Output" VarB="Channel 4^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_5.Output" VarB="Channel 5^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_6.Output" VarB="Channel 6^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_7.Output" VarB="Channel 7^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_iXlinker.EC1.A1.A1_2.Channel_8.Output" VarB="Channel 8^Output"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
 </TcSmProject>

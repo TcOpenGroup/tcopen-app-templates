@@ -103,9 +103,12 @@
 
 
                         <StackPanel Orientation="Horizontal" Visibility="{Binding EntityHeader.Results.Result.Cyclic, Converter={plc:DataStateToVisibilityConverter}}">
-                            <Border Background="{Binding EntityHeader.Results.Result.Cyclic, Converter={plc:DataStateToBrushConverter}}" Style="{StaticResource iconContainer}">
+                            <Border 
+                                BorderBrush="{Binding Component._statusInfo.Mode.Cyclic, Converter={plc:SelectorStateToForegroundBrushConverter}}"
+                                Background="{Binding EntityHeader.Results.Result.Cyclic, Converter={plc:DataStateToBrushConverter}}" Style="{StaticResource iconContainer}">
+                                
                                 <materialDesign:PackIcon
-                                    Foreground="{StaticResource OnSecondary}"
+                                    Foreground="{Binding Component._statusInfo.Mode.Cyclic, Converter={plc:SelectorStateToForegroundBrushConverter}}"
                                     Kind="{Binding  EntityHeader.Results.Result.Cyclic, Converter={plc:DataStateToIconKindConverter}}"
                                     Style="{StaticResource icon}" />
                             </Border>
@@ -182,7 +185,7 @@
                             Visibility="{Binding Component._statusInfo.CurrentIsInStepMode.Cyclic, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                             <materialDesign:PackIcon
-                                Foreground="{StaticResource OnSecondary}"
+                                Foreground="{Binding Component._statusInfo.Mode.Cyclic, Converter={plc:SelectorStateToForegroundBrushConverter}}"
                                 Kind="ShoePrint"
                                 Style="{StaticResource icon}" />
                         </StackPanel>

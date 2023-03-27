@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:x_template_xHmi.Wpf"                 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-
-          
+             ShutdownMode="OnMainWindowClose"             
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
