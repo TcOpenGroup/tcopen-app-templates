@@ -9,9 +9,7 @@
     <UserSecretsId>898a9847-9e04-4830-849d-662011ed5f2e</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Splash\splash.jpg" />
-  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
@@ -53,16 +51,17 @@
  </ItemGroup>
 
 
-	<ItemGroup>
-	  <ApplicationDefinition Update="App.xaml">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </ApplicationDefinition>
-	</ItemGroup>
+
 	<ItemGroup>
 		<Compile Update="Properties\NotificationPanel.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>NotificationPanel.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>Settings.settings</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\strings.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -95,5 +94,17 @@
     <SplashScreen Include="Splash\splash.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </SplashScreen>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\CulturalFlags\cz.png" />
+    <Resource Include="Assets\CulturalFlags\sk.png" />
+    <Resource Include="Assets\CulturalFlags\us.png" />
+ 
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

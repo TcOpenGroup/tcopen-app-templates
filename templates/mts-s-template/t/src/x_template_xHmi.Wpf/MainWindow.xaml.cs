@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,39 @@ namespace x_template_xHmi.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool IsRestarting { get; set; } = false;
         public MainWindow()
         {
             InitializeComponent();
         }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!IsRestarting)
+            {
+                KillEveryInstance();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (NumberOfRunningInstances() > 1)
+            {
+                KillOtherInstances();
+            }
+        }
+        private void KillEveryInstance() => Process
+            .GetProcessesByName(Process.GetCurrentProcess().ProcessName)
+            .ToList()
+            .ForEach(p => p.Kill());
+
+        private void KillOtherInstances() => Process
+                    .GetProcessesByName(Process.GetCurrentProcess().ProcessName)
+                    .Where(process => process.Id != Process.GetCurrentProcess().Id)
+                    .ToList()
+                    .ForEach(p => p.Kill());
+
+        private int NumberOfRunningInstances() => Process
+                .GetProcesses()
+                .Count(p => p.ProcessName == Process.GetCurrentProcess().ProcessName);
     }
 }

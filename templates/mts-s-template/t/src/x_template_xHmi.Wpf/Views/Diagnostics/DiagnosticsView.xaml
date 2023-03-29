@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"       
              mc:Ignorable="d" 
+             xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
+             
              d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:vortex="http://vortex.mts/xaml" xmlns:diagnostics="clr-namespace:x_template_xHmi.Wpf.Views.Diagnostics" 
-            >
+             xmlns:vortex="http://vortex.mts/xaml" xmlns:diagnostics="clr-namespace:x_template_xHmi.Wpf.Views.Diagnostics" xmlns:wpf="clr-namespace:x_template_xHmi.Wpf">
     <UserControl.DataContext>
         <diagnostics:DiagnosticsViewModel></diagnostics:DiagnosticsViewModel>
     </UserControl.DataContext>
@@ -16,20 +17,22 @@
     <Grid>
         
         <TabControl>
-            <TabItem Header="Diagnostic">
+            <TabItem Header="{x:Static p:strings.Diagnostics}">
                 <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology}" PresentationType="Diagnostics"></vortex:RenderableContentControl>
             </TabItem>
-            <TabItem Header="I/O TreeView">
+            <TabItem Header="{x:Static p:strings.IoTreeView}">
                 <ScrollViewer>
                     <vortex:DynamicTreeView DataContext="{Binding x_template_xPlc.GVL_iXlinker}"></vortex:DynamicTreeView>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Topology Ecat">
+            <TabItem Header="{x:Static p:strings.Topology}">
 
-                <Button HorizontalAlignment="Center" Command="{Binding ShowTopologyCommand}" Content="SHOW TOPOLOGY"></Button>
+                <Button HorizontalAlignment="Center" Command="{Binding ShowTopologyCommand}" Content="{x:Static p:strings.ShowTopology}"></Button>
    
             </TabItem>
-          
+            <TabItem Header="{x:Static p:strings.Console}">
+                <wpf:SystemMonitor/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vortex="http://vortex.mts/xaml" xmlns:x_template_xplc="clr-namespace:x_template_xPlc" xmlns:wpf="clr-namespace:x_template_xHmi.Wpf"
     mc:Ignorable="d"
+
     d:DesignHeight="450"
+    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
     d:DesignWidth="800">
     <UserControl.DataContext>
         <local:MainViewModel />
@@ -34,13 +36,20 @@
                         Command="{Binding OpenLoginWindowCommand}"
                         Content="LOGIN"
                         IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedSecondaryButton}"/>
+                        Style="{StaticResource MaterialDesignRaisedButton}"/>
                     <Button
                         Command="{Binding LogOutWindowCommand}"
                         Content="LOGOUT"
                         IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedSecondaryButton}"/>
+                        Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button
+                        Margin="20,0"
+                        Command="{Binding OpenLanguageCommand}"
+                        Content="{x:Static p:strings.LangSelector}"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"/>
                 </WrapPanel>
+
             </Expander.Header>
         </Expander>
         <wpf:MenuControlView Grid.Column="1"/>

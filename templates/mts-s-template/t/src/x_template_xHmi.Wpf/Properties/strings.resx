@@ -346,4 +346,19 @@ MAIN SEQUENCE</value>
   <data name="CycleTime" xml:space="preserve">
     <value>Cycle Time</value>
   </data>
+  <data name="IoTreeView" xml:space="preserve">
+    <value>IO HW </value>
+  </data>
+  <data name="LanguageMessageBoxSelect" xml:space="preserve">
+    <value>Select laguage first!</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="ShowTopology" xml:space="preserve">
+    <value>Show Topology</value>
+  </data>
+  <data name="Topology" xml:space="preserve">
+    <value>Topolgy of Ecat</value>
+  </data>
 </root>
