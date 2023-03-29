@@ -322,6 +322,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IO HW .
+        /// </summary>
+        public static string IoTreeView {
+            get {
+                return ResourceManager.GetString("IoTreeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JOURNAL.
         /// </summary>
         public static string Journal {
@@ -345,6 +354,15 @@ namespace x_template_xHmi.Wpf.Properties {
         public static string LanguageMessageBoxCaption {
             get {
                 return ResourceManager.GetString("LanguageMessageBoxCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select laguage first!.
+        /// </summary>
+        public static string LanguageMessageBoxSelect {
+            get {
+                return ResourceManager.GetString("LanguageMessageBoxSelect", resourceCulture);
             }
         }
         
@@ -548,11 +566,29 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string Set {
+            get {
+                return ResourceManager.GetString("Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Topology.
+        /// </summary>
+        public static string ShowTopology {
+            get {
+                return ResourceManager.GetString("ShowTopology", resourceCulture);
             }
         }
         
@@ -679,6 +715,15 @@ namespace x_template_xHmi.Wpf.Properties {
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topolgy of Ecat.
+        /// </summary>
+        public static string Topology {
+            get {
+                return ResourceManager.GetString("Topology", resourceCulture);
             }
         }
         

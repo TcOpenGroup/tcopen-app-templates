@@ -136,7 +136,7 @@
     <value>Užívateľské meno</value>
   </data>
   <data name="ParallelSequencers" xml:space="preserve">
-    <value>Paralelné sekvencery!</value>
+    <value>Paralelné sekvencie!</value>
   </data>
   <data name="AutomatWarning" xml:space="preserve">
     <value>Žiadate o spustenie automatického režimu. Vybrané zariadenie spustí sekvenciu. Ak prechádzate z režimu Step (Krok), uistite sa, že sekvencie sú v správnom stave, aby ste mohli pokračovať v operáciách. Chcete spustiť automatickú sekvenciu?!</value>
@@ -269,7 +269,7 @@ HLAVNÁ SEKVENCIA</value>
     <value>OPERÁTOR</value>
   </data>
   <data name="TechnologyUnit" xml:space="preserve">
-    <value>TECHNOLÓGIE</value>
+    <value>TECHNOLÓGIA</value>
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value>UŽÍVATELIA</value>
@@ -311,10 +311,10 @@ HLAVNÁ SEKVENCIA</value>
     <value>Priemerný CT</value>
   </data>
   <data name="StepModeOff" xml:space="preserve">
-    <value>REŽIM UVOĽŇOVACIEHO KROKU</value>
+    <value>ZRUŠENIE KROKOVEHO REŽIMU</value>
   </data>
   <data name="StepModeOn" xml:space="preserve">
-    <value>REŽIM KROKOVANIA SILY</value>
+    <value>ZAPNUTIE KROKOVEHO REŽIMU</value>
   </data>
   <data name="Counters" xml:space="preserve">
     <value>Počítadlá</value>
@@ -345,5 +345,20 @@ HLAVNÁ SEKVENCIA</value>
   </data>
   <data name="CycleTime" xml:space="preserve">
     <value>Čas cyklu</value>
+  </data>
+  <data name="IoTreeView" xml:space="preserve">
+    <value>IO HW </value>
+  </data>
+  <data name="LanguageMessageBoxSelect" xml:space="preserve">
+    <value>Označ požadovaný  jazyk!</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Nastav</value>
+  </data>
+  <data name="ShowTopology" xml:space="preserve">
+    <value>Zobraz Topológiu</value>
+  </data>
+  <data name="Topology" xml:space="preserve">
+    <value>Topológia Ecat</value>
   </data>
 </root>

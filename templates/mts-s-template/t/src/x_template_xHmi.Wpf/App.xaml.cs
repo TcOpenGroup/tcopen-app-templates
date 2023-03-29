@@ -26,6 +26,11 @@ using System.Windows.Media;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Constants = x_template_xPlcConnector.Constants;
+using System.Windows.Threading;
+using System.Runtime.InteropServices;
+using x_template_xHmi.Wpf.Properties;
+using System.Globalization;
+using System.Threading;
 
 namespace x_template_xHmi.Wpf
 {
@@ -48,14 +53,20 @@ namespace x_template_xHmi.Wpf
             base.OnStartup(e);
         }
 
+
         public App()
         {
-         
+            SetCulture();
+
+            Console.SetOut(SystemDiagnosticsSingleton.Instance.ConsoleWriter);
+
+            GeAssembliesVersion("Tc");
+            GeAssembliesVersion("Vortex");
             StopIfRunning();
 
             // This starts the twin connector operations
             x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
-           
+
 
 
 
@@ -116,9 +127,38 @@ namespace x_template_xHmi.Wpf
             // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
 
+
         }
 
-      
+        private static void SetCulture()
+        {
+            Culture = Settings.Default.Culture;
+            CultureInfo ci = new CultureInfo(Culture);
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+            LanguageSelectionModel = new LanguageSelectionViewModel();
+            LanguageSelectionModel.AddCulture("sk-SK", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\sk.png"));
+            LanguageSelectionModel.AddCulture("cs-CZ", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\cz.png"));
+            LanguageSelectionModel.AddCulture("en-US", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\us.png"));
+        }
+
+        private static void GeAssembliesVersion(string contains)
+        {
+    
+
+            Assembly
+            .GetExecutingAssembly()
+            .GetReferencedAssemblies()
+            .Where(assembly => assembly.FullName.Contains(contains)).Where(a => a.Version.Major != 0 || a.Version.Minor != 0)
+            .ToList()
+            .ForEach(assembly =>
+            {
+                var info = Assembly.Load(assembly)?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
+                Console.WriteLine($"{assembly.Name}\t{info.Split('+').First()}\t{assembly}");
+            });
+        }
+
 
         private static void SetUpExternalAuthenticationDevice()
         {            
@@ -358,18 +398,20 @@ namespace x_template_xHmi.Wpf
                 return designTime ? Entry.PlcDesign : Entry.Plc;                
             }
         }
-
+        static string Culture = "";
         public static ReworkModel Rework { get; private set; }
         public static ProductionPlanController ProductionPlaner { get; private set; }
         public static InstructorController CuxInstructor { get; private set; }
         public static InstructorController CuxParalellInstructor { get; private set; }
         public static StatisticsDataController CuxStatistic { get; private set; }
+        public static LanguageSelectionViewModel LanguageSelectionModel { get; private set; }
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)
         /// </summary>
         private static bool designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
+  
         /// <summary>
         /// Checks that no other instance of this program is running on this system.
         /// </summary>

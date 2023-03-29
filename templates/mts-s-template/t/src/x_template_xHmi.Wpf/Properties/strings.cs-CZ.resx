@@ -260,7 +260,7 @@ HLAVNÍ SEKVENCE!</value>
     <value>Informace</value>
   </data>
   <data name="Console" xml:space="preserve">
-    <value>Konzola</value>
+    <value>KONZOLA</value>
   </data>
   <data name="MainMenu" xml:space="preserve">
     <value>HLAVNÍ MENU</value>
@@ -336,5 +336,20 @@ HLAVNÍ SEKVENCE!</value>
   </data>
   <data name="CycleTime" xml:space="preserve">
     <value> Čas cyklu</value>
+  </data>
+  <data name="IoTreeView" xml:space="preserve">
+    <value>IO HW </value>
+  </data>
+  <data name="LanguageMessageBoxSelect" xml:space="preserve">
+    <value>Navol požadovaný  jazyk!</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Navol</value>
+  </data>
+  <data name="ShowTopology" xml:space="preserve">
+    <value>Zobraz Topologii</value>
+  </data>
+  <data name="Topology" xml:space="preserve">
+    <value>Topológie Ecat</value>
   </data>
 </root>

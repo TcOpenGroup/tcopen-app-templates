@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using x_template_xHmi.Wpf.Properties;
 
 namespace x_template_xHmi.Wpf.Views.MainView
 {
@@ -24,5 +25,8 @@ namespace x_template_xHmi.Wpf.Views.MainView
         {
             InitializeComponent();
         }
+
+   
+
     }
 }
