@@ -10,6 +10,7 @@
     MaxHeight="400"
     MaxWidth="200"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     Title="Language selection"
     mc:Ignorable="d">
 
