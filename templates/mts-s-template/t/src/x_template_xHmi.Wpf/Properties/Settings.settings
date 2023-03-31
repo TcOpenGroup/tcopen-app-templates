@@ -5,5 +5,8 @@
     <Setting Name="Culture" Type="System.String" Scope="User">
       <Value Profile="(Default)">en-US</Value>
     </Setting>
+    <Setting Name="SettingLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\TcoData\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
