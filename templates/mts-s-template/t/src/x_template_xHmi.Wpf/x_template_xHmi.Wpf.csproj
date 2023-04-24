@@ -30,14 +30,15 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.23" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.23" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.26" />
+    <PackageReference Include="TcOpen.Inxton.TcoRexrothPress.Wpf" Version="0.11.0-alpha.26" />
   </ItemGroup>
   <!--PCKG-END-->
 	
