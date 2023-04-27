@@ -40,6 +40,190 @@ The production environment is represented by a series of hierarchically organize
 
 >>>**Tasked services** represent a series of actions organized arbitrarily (controlled unit contains by default manual/service tasked service).
 
+
+## Application
+
+
+
+- `Application settings`
+
+    Application settings class is located in connector project `x_template_xPlcConnector`. This project is referenced in `x_template_xHmi.Wpf`, and might be referenced in others HMI apps(Supervisor,OperatorPanel..) Here you can find most common settings witch are used to run application.
+
+~~~csharp
+ public class ApplicationSettings
+    {
+
+        public DeployMode DepoyMode{ get; set; } = DeployMode.Plc;
+        public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
+        public string PlcAmsId =Environment.GetEnvironmentVariable("Tc3Target");
+        public bool ShowConsoleOutput { get; set; } = false;
+
+        public int ReadWriteCycleDelay { get; set; } = 100;
+
+        public string DbName { get; set; } = "tcomtsx_template_x";
+        public string MongoPath {get;set;} = @"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe";
+        public string MongoArgs { get; set; } = "--dbpath D:\\DATA\\DB\\ --bind_ip_all";
+        public bool MongoDbRun { get; set; } = true;
+        private string MongoDbLocal { get; set; } = @"mongodb://localhost:27017";
+        private string MongoDbProduction { get; set; } = @"mongodb://localhost:27017";
+        private string RavenDbLocal { get; set; } = @"http://localhost:8080";
+        private string RavenDbProduction { get; set; } = @"http://localhost:8080";
+
+        //Verbose - tracing information and debugging minutiae; generally only switched on in unusual situations
+        //Debug - internal control flow and diagnostic state dumps to facilitate pinpointing of recognised problems
+        //Information - events of interest or that have relevance to outside observers; the default enabled minimum logging level
+        //Warning - indicators of possible issues or service/functionality degradation
+        //Error - indicating a failure within the application or connected system
+        //Fatal - critical errors causing complete failure of the application
+        public Serilog.Events.LogEventLevel LogRestrictedToMiniummLevel { get; set; } = Serilog.Events.LogEventLevel.Information;
+        /// <summary>
+        /// Capped size  max size of logs collection in MB
+        /// </summary>
+        public long CappedMaxSizeMb { get; set; } = 1000;
+        /// <summary>
+        /// Max documents in logs collection 
+        /// </summary>
+        public long CappedMaxDocuments { get; set; } = 1000000;
+
+        // USER
+        public string AutologinUserName { get; set; } = "admin";
+        public  string AutologinUserPassword { get; set; }= "admin";
+
+        public  string GetConnectionString()
+        {
+            var connectionString = DatabaseEngine == DatabaseEngine.MongoDb ? MongoDbProduction : RavenDbProduction;
+            if (DepoyMode == DeployMode.Local)
+            {
+                connectionString = DatabaseEngine == DatabaseEngine.MongoDb ? MongoDbLocal : RavenDbLocal;
+            }
+            return connectionString;
+        }
+
+    }
+    public enum DeployMode
+    {
+        Local = 1,
+        Dummy = 2,
+        Plc = 3
+    }
+    public enum DatabaseEngine
+    {
+        RavenDbEmbded = 1,
+        MongoDb = 2,
+
+    }
+~~~
+
+   - `Serialize/Deserialize AppSettings`
+
+Settings are serialized automatically, but only if file does not exist in location  `c:\TcoData\`+`setId`. It is saved as `json` format. Location is defined in application settings of `x_template_xPlcConnector` project. Is possible to use various 'setId' for multiple applications.
+
+---
+**NOTE**
+
+If settings file exist in defined location, all application settings is deserialized from this file! To change some parameters remove this file and change it in code (will be published new file) or change set in file directly.
+
+---
+
+![Stat](assets/ApplicationSettings.png)
+
+![Stat](assets/ApplicationSettingsPath.png)
+
+   ~~~csharp
+    /// <summary>
+        /// Load specific parameters stored in json file stored in 'x_template_xPlcConnector.Properties.Settings.Default.SettingsLocation'
+        /// </summary>
+        /// <param name="setId">Name for set</param>
+        public static void LoadAppSettings(string setId)
+        {
+
+            RepositoryDataSetHandler<ApplicationSettings> _settings = RepositoryDataSetHandler<ApplicationSettings>.CreateSet(new JsonRepository<EntitySet<ApplicationSettings>>(new JsonRepositorySettings<EntitySet<ApplicationSettings>>(Properties.Settings.Default.SettingsLocation)));//todo tco adresar
+            var result = _settings.Repository.Queryable.FirstOrDefault(p => p._EntityId == setId);
+            var set = new EntitySet<ApplicationSettings>();
+            set._Modified = DateTime.Now;
+            set._EntityId = setId;
+            if (result == null)
+            {
+                set._Created = DateTime.Now;
+              
+                _settings.Create(setId, set);
+            }
+
+            Entry._settings = _settings.Read(setId).Item;
+
+            plc = Entry._settings.DepoyMode == DeployMode.Dummy
+                ? new x_template_xPlcTwinController(new ConnectorAdapter(typeof(DummyConnector)))
+                : Entry._settings.DepoyMode == DeployMode.Local
+                    ? new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, Settings.ShowConsoleOutput))
+                    : new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(Entry._settings.PlcAmsId, 851, Settings.ShowConsoleOutput));
+        }
+   ~~~
+
+- `Load settings and example usage`
+
+    Example in `App.xaml.cs`
+   
+    ~~~csharp  
+
+    Entry.LoadAppSettings("default");
+    .
+    .
+    .
+     .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
+                                        .WriteTo.Console()
+                                        .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}","log",
+                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
+                                        .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+    ~~~
+
+- `First run`
+    After successful start up template application is necessary assign roles to logged user, in template it is `admin`(see procedure below).
+
+- `1`
+
+    Admin is connected (because of autologin), but  still does not have assigned roles.
+
+    ![logrequired](assets/LoginRequired.png)
+
+- `2`
+
+    Open `Users` tab  and then in `Group management` assign required roles to this group.
+
+    ![](assets/GroupRoles.png)
+
+    ![](assets/GroupRolesAssigned.png)
+
+- `3`
+
+        Login again and you have admin access to control application.
+
+
+- `Localization settings`
+
+defined in `App.xaml.cs`
+
+~~~csharp
+      SetCulture();
+~~~
+It is possible to add additional culture in this method. After change language application will be restarted with new language.git 
+~~~csharp
+  private static void SetCulture()
+        {
+            Culture = Settings.Default.Culture;
+            CultureInfo ci = new CultureInfo(Culture);
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+            LanguageSelectionModel = new LanguageSelectionViewModel();
+            LanguageSelectionModel.AddCulture("sk-SK", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\sk.png"));
+            LanguageSelectionModel.AddCulture("cs-CZ", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\cz.png"));
+            LanguageSelectionModel.AddCulture("en-US", Path.Combine(Assembly.GetExecutingAssembly().Location, @"\..\..\..\Assets\CulturalFlags\us.png"));
+        }
+~~~
+
+![language selector](assets/localization.png)
+
+
+
 ## Data-driven production process
 
 The production flow is typically organized in sequences driven by a set of data called **Production settings**.
