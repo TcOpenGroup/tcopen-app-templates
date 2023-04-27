@@ -52,8 +52,11 @@ namespace x_template_xPlcConnector
 
             Entry._settings = _settings.Read(setId).Item;
 
-            plc = new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(Entry._settings.PlcAmsId, 851, Settings.ShowConsoleOutput));
-
+            plc = Entry._settings.DepoyMode == DeployMode.Dummy
+                ? new x_template_xPlcTwinController(new ConnectorAdapter(typeof(DummyConnector)))
+                : Entry._settings.DepoyMode == DeployMode.Local
+                    ? new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, Settings.ShowConsoleOutput))
+                    : new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(Entry._settings.PlcAmsId, 851, Settings.ShowConsoleOutput));
         }
     }
 

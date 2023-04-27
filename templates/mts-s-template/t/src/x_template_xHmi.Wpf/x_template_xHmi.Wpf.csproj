@@ -14,7 +14,8 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Serilog.Enrichers.EnrichedProperties" Version="1.0.63" />
-    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" /> 
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+    <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.0.0" />
     <PackageReference Include="RavenDB.Embedded" Version="5.3.102" />
   </ItemGroup>
 

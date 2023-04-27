@@ -28,6 +28,7 @@ using MaterialDesignThemes.Wpf;
 using x_template_xHmi.Wpf.Properties;
 using System.Globalization;
 using System.Threading;
+using MongoDB.Driver;
 
 namespace x_template_xHmi.Wpf
 {
@@ -66,7 +67,7 @@ namespace x_template_xHmi.Wpf
            
 
             // This starts the twin connector operations
-            x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = 100;
+            x_template_xPlc.Connector.BuildAndStart().ReadWriteCycleDelay = Entry.Settings.ReadWriteCycleDelay;
 
 
 
@@ -94,6 +95,8 @@ namespace x_template_xHmi.Wpf
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
                                         .WriteTo.Console()
+                                        .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}","log",
+                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
                                         .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
                                         .MinimumLevel.Verbose()
                                         .Enrich.WithEnvironmentName()
@@ -126,7 +129,7 @@ namespace x_template_xHmi.Wpf
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-            SecurityManager.Manager.Service.AuthenticateUser("admin", "admin");
+            SecurityManager.Manager.Service.AuthenticateUser(Entry.Settings.AutologinUserName, Entry.Settings.AutologinUserPassword);
 
 
         }
@@ -232,21 +235,19 @@ namespace x_template_xHmi.Wpf
             var groups = new RavenDbRepository<GroupData>(new RavenDbRepositorySettings<GroupData>(new string[] { Entry.Settings.GetConnectionString() }, "Groups", "", ""));
             var roleGroupManager = new RoleGroupManager(groups);
             return SecurityManager.Create(users, roleGroupManager);
-            //    return SecurityManager.Create(new RavenDbRepository<UserData>(
-            //                                  new RavenDbRepositorySettings<UserData>
-            //                                  (new string[] { Entry.Settings.CONNECTION_STRING_DB }, "Users", "", "")));
         }
+      
 
         private void SetUpRepositoriesUsingRavenDb()
         {
             var ProcessDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "ProcessSettings", "", "");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processSettings, new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processSettings, new RavenDbRepository<PlainProcessData>(ProcessDataRepoSettings));
 
             var TechnologicalDataRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { Entry.Settings.GetConnectionString() }, "TechnologySettings", "", "");
             IntializeTechnologyDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._technologySettings, new RavenDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
 
             var ReworklDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "ReworkSettings", "", "");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings));
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings));
 
             //Statistics
             var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new RavenDbRepository<EntitySet<StatisticsDataItem>>(new RavenDbRepositorySettings<EntitySet<StatisticsDataItem>>(new string[] { Entry.Settings.GetConnectionString() }, "Statistics", "", "")));
@@ -258,8 +259,8 @@ namespace x_template_xHmi.Wpf
 
 
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "Traceability", "", "");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));
-            IntializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability), CuxStatistic);
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability));
+            InitializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability), CuxStatistic);
 
             Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
 
@@ -287,21 +288,21 @@ namespace x_template_xHmi.Wpf
             var groups = new MongoDbRepository<GroupData>(new MongoDbRepositorySettings<GroupData>( Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Groups"));
             var roleGroupManager = new RoleGroupManager(groups);
             return SecurityManager.Create(users, roleGroupManager);
-            //    return SecurityManager.Create(new RavenDbRepository<UserData>(
-            //                                  new RavenDbRepositorySettings<UserData>
-            //                                  (new string[] { Entry.Settings.CONNECTION_STRING_DB }, "Users", "", "")));
+
         }
+
 
         private void SetUpRepositoriesUsingMongoDb()
         {
             var ProcessDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ProcessSettings");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processSettings, new MongoDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processSettings, new MongoDbRepository<PlainProcessData>(ProcessDataRepoSettings));
+            InitializeIndexProcessDataRepositoryMongoDb(ProcessDataRepoSettings);
 
             var TechnologicalDataRepoSettings = new MongoDbRepositorySettings<PlainTechnologyData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TechnologySettings");
             IntializeTechnologyDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._technologySettings, new MongoDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
 
             var ReworklDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkSettings");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings));
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings));
 
             //Statistics
             var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new MongoDbRepository<EntitySet<StatisticsDataItem>>(new MongoDbRepositorySettings<EntitySet<StatisticsDataItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Statistics")));
@@ -313,8 +314,9 @@ namespace x_template_xHmi.Wpf
 
 
             var Traceability = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Traceability");
-            IntializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability));            
-            IntializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability),CuxStatistic);
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability));            
+            InitializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability),CuxStatistic);
+            InitializeIndexProcessDataRepositoryMongoDb(Traceability);
 
             Rework = new ReworkModel(new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings), new MongoDbRepository<PlainProcessData>(Traceability));
 
@@ -349,26 +351,61 @@ namespace x_template_xHmi.Wpf
 
         }
 
+
+        public void InitializeIndexProcessDataRepositoryMongoDb(MongoDbRepositorySettings<PlainProcessData> mongoDbRepositorySettings)
+        {
+
+            var indexes = mongoDbRepositorySettings.Collection.Indexes.List().ToList();
+            var name = "_EntityId";
+            if (!indexes.Exists(i => i.GetElement("name").ToString().Contains(name)))
+            {
+                var indexOptions = new CreateIndexOptions();
+                indexOptions.Name = name;
+                var indexKey = Builders<PlainProcessData>.IndexKeys.Descending(p => p._EntityId);
+                mongoDbRepositorySettings.Collection.Indexes.CreateOne(new CreateIndexModel<PlainProcessData>(indexKey, indexOptions));
+
+            }
+
+            name = "_Created";
+            if (!indexes.Exists(i => i.GetElement("name").ToString().Contains(name)))
+            {
+                var indexOptions = new CreateIndexOptions();
+                indexOptions.Name = name;
+                var indexKey = Builders<PlainProcessData>.IndexKeys.Descending(p => p._Created);
+                mongoDbRepositorySettings.Collection.Indexes.CreateOne(new CreateIndexModel<PlainProcessData>(indexKey, indexOptions));
+
+            }
+            name = "_Modified";
+            if (!indexes.Exists(i => i.GetElement("name").ToString().Contains(name)))
+            {
+                var indexOptions = new CreateIndexOptions();
+                indexOptions.Name = name;
+                var indexKey = Builders<PlainProcessData>.IndexKeys.Descending(p => p._Modified);
+                mongoDbRepositorySettings.Collection.Indexes.CreateOne(new CreateIndexModel<PlainProcessData>(indexKey, indexOptions));
+
+            }
+
+        }
+     
         /// <summary>
         /// Initializes <see cref="ProcessDataManager"/>s repository for data exchange between PLC and storage (database).
         /// </summary>
         /// <param name="manager">Data manager</param>
         /// <param name="repository">Repository</param>
-        private static void IntializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
+        private static void InitializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
         {
             repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
             repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
             processData.InitializeRepository(repository);
             processData.InitializeRemoteDataExchange(repository);
+
         }
-
-
 
         /// Initializes <see cref="ProcessDataManager"/>s repository for data exchange between PLC and storage (database).
         /// </summary>
         /// <param name="manager">Data manager</param>
         /// <param name="repository">Repository</param>
-        private static void IntializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
+        private static void InitializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
         {
             repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
             repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; cuxStatistic.Count(data); };
@@ -424,11 +461,18 @@ namespace x_template_xHmi.Wpf
             {
                 MessageBox.Show("This program is already running on this system. We cannot run another instance of this program.",
                                 "Checking for running processes", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                KillOtherInstances();
                 Application.Current.Shutdown(-1);
             }
         }
 
-      
+
+        private void KillOtherInstances() => Process
+                    .GetProcessesByName(Process.GetCurrentProcess().ProcessName)
+                    .Where(process => process.Id != Process.GetCurrentProcess().Id)
+                    .ToList()
+                    .ForEach(p => p.Kill());
+
+
     }
 }

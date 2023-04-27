@@ -26,6 +26,7 @@
 
   <!--PCKG-START-->
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.11.0" />
 	  <PackageReference Include="Inxton.iXlinker" Version="0.1.4-alpha.100" />
 	  <PackageReference Include="Inxton.vortex.compiler.console" Version="2.0.0" />
 	  <PackageReference Include="TcOpen.Inxton.App" Version="0.11.0-alpha.26" />
