@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PairTagTask" Id="{b083ca0f-7862-4042-9ba0-9233a2104f8e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PairTagTask EXTENDS TcoCore.TcoRemoteTask
+VAR
+	
+	_key: STRING;
+	_assignedValue : STRING;	
+	_answerInstruction : STRING(254);
+	_answer: TagsPairing;
+	{attribute 'hide'}
+	_answerClean: TagsPairing;
+	_mode: eTagPairingMode;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Property Name="Answer" Id="{8dbbb230-6fd8-4cd9-a004-ea5f80e0b2d6}">
+      <Declaration><![CDATA[PROPERTY Answer : TagsPairing]]></Declaration>
+      <Get Name="Get" Id="{b2c02d2a-2ee9-4b05-bc9f-52cb6497fa69}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Answer:=_answer;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AnswerInstruction" Id="{38bbcf52-7bdf-400e-bbe2-be224e427c46}">
+      <Declaration><![CDATA[PROPERTY AnswerInstruction : string]]></Declaration>
+      <Get Name="Get" Id="{f8ea9d96-50e2-4901-9759-3031dac03323}">
+        <Declaration><![CDATA[VAR
+	retVal: STRING;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnswerInstruction :=_answerInstruction;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{771560ea-d503-408a-ae88-5ce69517fc8b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.
+			<para>
+				See also <see cref="PlcDocu.TcoCore.TcoTask.AutoRestorable()"/>
+			</para>
+		</summary>			
+	</docu>	
+~*)
+METHOD Restore : ITcoRestorable]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.Restore();
+_answer:=_answerClean;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Run" Id="{b1078f12-a7f9-4b35-95ef-8e26e435bc71}">
+      <Declaration><![CDATA[METHOD Run : REFERENCE TO PairTagTask
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The mode is type of operation to be done by invoking  this remote task.(GetTag,CreateTag...)
+		</summary>						
+	</docu>	
+	~*)
+	inMode :eTagPairingMode;
+	(*~
+	<docu>
+		<summary>
+			The Key is ID  of the tag's Uid on which assigned value will be found . 	
+		</summary>						
+	</docu>	
+	~*)
+	inKey : STRING;
+		(*~
+	<docu>
+		<summary>
+			The AAssignedValue is user defined additional value, this value provide  better undersanding identification of carriers . 	
+		</summary>						
+	</docu>	
+	~*)
+	inAssignedValue : STRING;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^._key := inKey;
+THIS^._mode := inMode;
+THIS^._assignedValue := inAssignedValue;
+
+
+Run REF= THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

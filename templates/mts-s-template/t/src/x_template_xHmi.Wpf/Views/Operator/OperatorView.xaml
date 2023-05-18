@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vortex="http://vortex.mts/xaml" xmlns:vortexs="http://vortex.security.mts/xaml" 
     xmlns:view="clr-namespace:x_template_xProductionPlaner.Planer.View;assembly=x_template_xProductionPlaner" 
-     xmlns:x_template_xinstructor="clr-namespace:x_template_xInstructor;assembly=x_template_xInstructor" xmlns:view1="clr-namespace:x_template_xStatistic.Statistics.View;assembly=x_template_xStatistic"
+     xmlns:x_template_xinstructor="clr-namespace:x_template_xInstructor;assembly=x_template_xInstructor" xmlns:view1="clr-namespace:x_template_xStatistic.Statistics.View;assembly=x_template_xStatistic" xmlns:view2="clr-namespace:x_template_xTagsDictionary.View;assembly=x_template_xTagsDictionary"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800">
@@ -103,7 +103,17 @@
                  
 
             </TabItem>
-            
+
+            <TabItem Header="TAGS PAIRING">
+
+                <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+
+                    <view2:TagsPairingView DataContext="{Binding TagsPairingViewModel}"></view2:TagsPairingView>
+                </vortexs:PermissionBox>
+
+
+            </TabItem>
+
         </TabControl>
      
           

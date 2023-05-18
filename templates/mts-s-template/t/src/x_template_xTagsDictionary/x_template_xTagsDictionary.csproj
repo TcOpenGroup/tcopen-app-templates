@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Planer\View\Converters\**" />
-    <EmbeddedResource Remove="Planer\View\Converters\**" />
-    <None Remove="Planer\View\Converters\**" />
-    <Page Remove="Planer\View\Converters\**" />
+    <Compile Remove="View\Converters\**" />
+    <EmbeddedResource Remove="View\Converters\**" />
+    <None Remove="View\Converters\**" />
+    <Page Remove="View\Converters\**" />
   </ItemGroup>
 
   <ItemGroup>

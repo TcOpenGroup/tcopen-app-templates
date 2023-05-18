@@ -8,6 +8,7 @@ using System.Windows;
 using x_template_xProductionPlaner.Planer.View;
 using x_template_xInstructor;
 using x_template_xStatistic.Statistics.View;
+using x_template_xTagsDictionary.View;
 
 namespace x_template_xHmi.Wpf.Views.Operator
 {
@@ -32,6 +33,9 @@ namespace x_template_xHmi.Wpf.Views.Operator
             InstructorViewModel = new InstructorViewModel(App.CuxInstructor);
             InstructorParalellViewModel = new InstructorViewModel(App.CuxParalellInstructor);
             StatisticViewModel = new StatisticsDataViewModel(App.CuxStatistic);
+            TagsPairingViewModel = new TagsPairingViewModel(App.CuxTagsPairing);
+
+
 
         }
 
@@ -41,5 +45,6 @@ namespace x_template_xHmi.Wpf.Views.Operator
         public InstructorViewModel InstructorViewModel { get; private set; }
         public InstructorViewModel InstructorParalellViewModel { get; private set; }
         public StatisticsDataViewModel StatisticViewModel { get; private set; }
+        public TagsPairingViewModel TagsPairingViewModel { get; private set; }
     }
 }

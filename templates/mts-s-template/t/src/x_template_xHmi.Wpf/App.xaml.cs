@@ -29,6 +29,8 @@ using x_template_xHmi.Wpf.Properties;
 using System.Globalization;
 using System.Threading;
 using MongoDB.Driver;
+using x_template_xTagsDictionary;
+using Vortex.Connector;
 
 namespace x_template_xHmi.Wpf
 {
@@ -78,17 +80,21 @@ namespace x_template_xHmi.Wpf
                     StartRavenDBEmbeddedServer();
                     CreateSecurityManageUsingRavenDb();
                     SetUpRepositoriesUsingRavenDb();
+                    CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new RavenDbRepository<EntitySet<TagItem>>(new RavenDbRepositorySettings<EntitySet<TagItem>>(new string[] { Entry.Settings.GetConnectionString() }, "TagsDictionary", "", ""))), "TagsCfg"); ;
+
+
+                  
                     break;
                 case DatabaseEngine.MongoDb:
                     StartMongoDbServer(Entry.Settings.MongoPath, Entry.Settings.MongoArgs, Entry.Settings.MongoDbRun);
                     CreateSecurityManageUsingMongoDb();
                     SetUpRepositoriesUsingMongoDb();
+                    CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new MongoDbRepository<EntitySet<TagItem>>(new MongoDbRepositorySettings<EntitySet<TagItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TagsDictionary"))), "TagsCfg");
+
                     break;
                 default:
                     break;
             }
-
-
 
 
             // TcOpen app setup
@@ -130,6 +136,49 @@ namespace x_template_xHmi.Wpf
 
             // Authenticates default user, change this line if you need to authenticate different user.
             SecurityManager.Manager.Service.AuthenticateUser(Entry.Settings.AutologinUserName, Entry.Settings.AutologinUserPassword);
+
+
+
+            // initialize custom remote tasks here
+            Action assignTagValeAction = () => TagsPairingOperation(x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask);
+            x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask.InitializeExclusively(assignTagValeAction);
+
+
+
+        }
+        /// <summary>
+        /// this is remontely invoked from plc , 
+        /// </summary>
+        /// <param name="pairTagTask"></param>
+        private void TagsPairingOperation(PairTagTask pairTagTask)
+        {
+            pairTagTask.Read();
+
+            TagItem currentItem = new TagItem();
+            EnumResultsStatus result;
+            switch ((eTagPairingMode) pairTagTask._mode.Cyclic)
+            {
+                case eTagPairingMode.GetTag:
+                    CuxTagsPairing.GetTag(pairTagTask._key.Cyclic, out currentItem, out result);
+                    pairTagTask._answer.AssignedValue.Cyclic = currentItem.AssignedValue;
+                    pairTagTask._answer.Status.Cyclic =(short)currentItem.Status;
+                    pairTagTask._answer.Answer.Cyclic = (short)result;
+                    pairTagTask._answerInstruction.Cyclic = "";
+                    break;
+                case eTagPairingMode.RemoveTag:
+                    //not used , for removing use UI
+                    break;
+                case eTagPairingMode.AddTag:
+                    CuxTagsPairing.AddTag(new TagItem() {Key= pairTagTask._key.Cyclic, AssignedValue= pairTagTask._assignedValue.Cyclic}, out result);
+                    pairTagTask._answer.Answer.Cyclic = (short)result;
+                    pairTagTask._answerInstruction.Cyclic = "";
+                    break;
+                default:
+                    break;
+            }
+
+
+            pairTagTask.Write();
 
 
         }
@@ -442,6 +491,7 @@ namespace x_template_xHmi.Wpf
         public static InstructorController CuxInstructor { get; private set; }
         public static InstructorController CuxParalellInstructor { get; private set; }
         public static StatisticsDataController CuxStatistic { get; private set; }
+        public static TagsPairingController CuxTagsPairing { get; private set; }
         public static LanguageSelectionViewModel LanguageSelectionModel { get; private set; }
 
         /// <summary>

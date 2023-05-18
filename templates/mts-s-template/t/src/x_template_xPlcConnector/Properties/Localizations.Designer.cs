@@ -61,6 +61,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  already exist! .
+        /// </summary>
+        public static string ____already_exist____ {
+            get {
+                return ResourceManager.GetString("____already_exist____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (Consecutive failure) The number of any recurring failure count has been reached!.
         /// </summary>
         public static string ____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reached___ {
@@ -90,11 +99,74 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  is founded but assigned value is empty! Would you like continue? .
+        /// </summary>
+        public static string ____is_founded_but_assigned_value_is_empty__Would_you_like_continue____ {
+            get {
+                return ResourceManager.GetString("____is_founded_but_assigned_value_is_empty__Would_you_like_continue____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  is inactive! .
+        /// </summary>
+        public static string ____is_inactive____ {
+            get {
+                return ResourceManager.GetString("____is_inactive____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  is not founded ! Would you like assign right now? .
+        /// </summary>
+        public static string ____is_not_founded___Would_you_like_assign_right_now____ {
+            get {
+                return ResourceManager.GetString("____is_not_founded___Would_you_like_assign_right_now____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  was not founnd! Would you like still like to continue? .
+        /// </summary>
+        public static string ____was_not_founnd__Would_you_like_still_like_to_continue____ {
+            get {
+                return ResourceManager.GetString("____was_not_founnd__Would_you_like_still_like_to_continue____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADD NEW TAG  EXAMPLE.
+        /// </summary>
+        public static string ___ADD_NEW_TAG__EXAMPLE__ {
+            get {
+                return ResourceManager.GetString("___ADD_NEW_TAG__EXAMPLE__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding Tag.
+        /// </summary>
+        public static string ___Adding_Tag__ {
+            get {
+                return ResourceManager.GetString("___Adding_Tag__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Air pressure.
         /// </summary>
         public static string ___Air_pressure__ {
             get {
                 return ResourceManager.GetString("___Air_pressure__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned Value.
+        /// </summary>
+        public static string ___Assigned_Value__ {
+            get {
+                return ResourceManager.GetString("___Assigned_Value__", resourceCulture);
             }
         }
         
@@ -279,6 +351,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Founded tag .
+        /// </summary>
+        public static string ___Founded_tag___ {
+            get {
+                return ResourceManager.GetString("___Founded_tag___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GROUND.
         /// </summary>
         public static string ___GROUND__ {
@@ -320,6 +401,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___IDLE__ {
             get {
                 return ResourceManager.GetString("___IDLE__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key UID.
+        /// </summary>
+        public static string ___Key_UID__ {
+            get {
+                return ResourceManager.GetString("___Key_UID__", resourceCulture);
             }
         }
         
@@ -464,6 +554,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Operator__ {
             get {
                 return ResourceManager.GetString("___Operator__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAIR TAG WITH ASSIGNED VALUE EXAMPLE.
+        /// </summary>
+        public static string ___PAIR_TAG_WITH_ASSIGNED_VALUE_EXAMPLE__ {
+            get {
+                return ResourceManager.GetString("___PAIR_TAG_WITH_ASSIGNED_VALUE_EXAMPLE__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pairing Tag.
+        /// </summary>
+        public static string ___Pairing_Tag__ {
+            get {
+                return ResourceManager.GetString("___Pairing_Tag__", resourceCulture);
             }
         }
         
@@ -631,6 +739,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ___Status__ {
+            get {
+                return ResourceManager.GetString("___Status__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STATUS INFO.
         /// </summary>
         public static string ___STATUS_INFO__ {
@@ -645,6 +762,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Step_time__ {
             get {
                 return ResourceManager.GetString("___Step_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag .
+        /// </summary>
+        public static string ___Tag___ {
+            get {
+                return ResourceManager.GetString("___Tag___", resourceCulture);
             }
         }
         

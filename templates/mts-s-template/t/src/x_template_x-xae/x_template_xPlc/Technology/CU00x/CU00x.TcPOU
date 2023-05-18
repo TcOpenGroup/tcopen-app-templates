@@ -220,6 +220,7 @@ METHOD Idle : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
+Components.PairTagTask();
 
 components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 

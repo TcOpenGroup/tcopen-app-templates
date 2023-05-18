@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eTagPairingMode" Id="{7ae0d7d9-b0a1-4aca-b9ad-687f274c0c7c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE
+    eTagPairingMode :
+    (
+        GetTag := 1,
+        RemoveTag := 2,
+        AddTag := 3
+    );
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eTagPairingAnswer" Id="{6659739f-9d1d-4703-b97b-a39bc2fb5621}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE
+    eTagPairingAnswer :
+    (
+        TagFound := 0,
+        TagFoundInactive := 10,
+        TagFoundAssignedValueEmpty := 20,
+        TagFoundUnknown := 30,
+        TagNotFound := 40,
+        TagAlreadyExist := 50,
+        TagAddedSuccessfully := 60,
+        TagAddedNotSuccessfuly := 70,
+        EmptyCollection := 100
+    );
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
