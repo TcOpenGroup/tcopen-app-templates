@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TagsPairing" Id="{2a1079d5-bf96-416a-9b1d-5c890f372f7d}">
+    <Declaration><![CDATA[TYPE TagsPairing  EXTENDS TcoCore.TcoStruct :
+STRUCT
+	{attribute addProperty Name "<#Key UID#>"}
+	Key : STRING;
+	{attribute addProperty Name "<#Assigned Value#>"}
+	AssignedValue : STRING;
+	{attribute addProperty Name "<#Status#>"}
+	Status : eTagPairingStatus;
+	{attribute addProperty Name "<Answer>"}
+	Answer : eTagPairingAnswer;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

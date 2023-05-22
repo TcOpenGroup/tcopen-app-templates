@@ -25,7 +25,8 @@ TYPE
 		Group9 : TemplateComponents:= (Parent := THISSTRUCT);  
 		{attribute addProperty Name "GROUP 10"}
 		Group10 : TemplateComponents:= (Parent := THISSTRUCT);  
-	
+		{attribute addProperty Name "Pair Tags"}
+		PairTagTask: PairTagTask(THISSTRUCT);
     END_STRUCT
 END_TYPE
 ]]></Declaration>

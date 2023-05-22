@@ -165,6 +165,39 @@
   <data name="___Production_planer_completed_required_plan____" xml:space="preserve">
     <value>Production planer completed required plan! </value>
   </data>
+  <data name="___PAIR_TAG_WITH_ASSIGNED_VALUE_EXAMPLE__" xml:space="preserve">
+    <value>PAIR TAG WITH ASSIGNED VALUE EXAMPLE</value>
+  </data>
+  <data name="___Pairing_Tag__" xml:space="preserve">
+    <value>Pairing Tag</value>
+  </data>
+  <data name="___Founded_tag___" xml:space="preserve">
+    <value>Founded tag </value>
+  </data>
+  <data name="____is_inactive____" xml:space="preserve">
+    <value> is inactive! </value>
+  </data>
+  <data name="___Tag___" xml:space="preserve">
+    <value>Tag </value>
+  </data>
+  <data name="____is_founded_but_assigned_value_is_empty__Would_you_like_continue____" xml:space="preserve">
+    <value> is founded but assigned value is empty! Would you like continue? </value>
+  </data>
+  <data name="____is_not_founded___Would_you_like_assign_right_now____" xml:space="preserve">
+    <value> is not founded ! Would you like assign right now? </value>
+  </data>
+  <data name="___ADD_NEW_TAG__EXAMPLE__" xml:space="preserve">
+    <value>ADD NEW TAG  EXAMPLE</value>
+  </data>
+  <data name="___Adding_Tag__" xml:space="preserve">
+    <value>Adding Tag</value>
+  </data>
+  <data name="____already_exist____" xml:space="preserve">
+    <value> already exist! </value>
+  </data>
+  <data name="____was_not_founnd__Would_you_like_still_like_to_continue____" xml:space="preserve">
+    <value> was not founnd! Would you like still like to continue? </value>
+  </data>
   <data name="___Start_manual_Service_mode__" xml:space="preserve">
     <value>Start manual/Service mode</value>
   </data>
@@ -299,6 +332,15 @@
   </data>
   <data name="___Technology_data__" xml:space="preserve">
     <value>Technology data</value>
+  </data>
+  <data name="___Key_UID__" xml:space="preserve">
+    <value>Key UID</value>
+  </data>
+  <data name="___Assigned_Value__" xml:space="preserve">
+    <value>Assigned Value</value>
+  </data>
+  <data name="___Status__" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="___Average_cycle_time___" xml:space="preserve">
     <value>Average cycle time </value>

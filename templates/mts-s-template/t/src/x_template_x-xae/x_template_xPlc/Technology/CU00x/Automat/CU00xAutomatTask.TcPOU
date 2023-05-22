@@ -7,6 +7,7 @@ VAR
 	_missingProcessSettingMessage : TcoCore.TcoMessenger(THIS^);	
 	_paralellTask : CU00xAutomatParalell_1_Task(THIS^, TcoCore.eRestoreMode.None);
 	
+	_sb : TcoCore.StringBuilder;
 END_VAR
 
 VAR
@@ -20,6 +21,10 @@ VAR
 	_loop : BOOL;	
 	_inspectionResult:BOOL;
 	_inspectionDimensionResult:REAL;
+	_tagsPairing:BOOL;
+	_reqKey: STRING;
+	_reqAssignedValue: STRING;
+
 	
 END_VAR
 ]]></Declaration>
@@ -28,6 +33,7 @@ END_VAR
     </Implementation>
     <Folder Name="DataOperations" Id="{d77a8e00-2872-034f-1865-d779c1d38e60}" />
     <Folder Name="ProductionPlaner" Id="{691cdfd9-0331-4efc-8523-78110e4374bd}" />
+    <Folder Name="TagsPairing" Id="{b51b23bb-1645-431d-b66e-3f544bdad45c}" />
     <Method Name="DataLoadProcessSettings" Id="{31612bac-ea85-0141-34e0-d7b2a3994f8e}" FolderPath="DataOperations\">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -121,7 +127,7 @@ END_VAR
 	       .WithCaption('<#Production planer#>')
 		   .WithText('<#Production planer is empty! #>')
 			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
-			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+			;// Production plan comleted , here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 	
 		 	//Station.GroundTask.Task.Invoke();
 		   
@@ -132,7 +138,7 @@ END_VAR
 	       .WithCaption('<#Production planer#>')
 		   .WithText('<#Production planer completed required plan! #>')
 			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
-			;// Production plan comleted , here you can write diferent scenarion ( leave it with current state , provide ground etc)	 
+			;// Production plan comleted , here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 	
 		 	//Station.GroundTask.Task.Invoke();
 		   
@@ -210,6 +216,12 @@ IF (_dataOpen) THEN
         Station.ProcessDataManager.Data.CU00x.Header);
 END_IF;
 
+
+// Handle user defined carier id
+// Typically used in the first station of the technology to assign user defined carier ID  instead of raw unique id(RfidChip....)
+IF (_tagsPairing) THEN
+    THIS^.PairTag(400);
+END_IF;
 (*
 
 		STEPS OF THE SEQUENCE
@@ -334,6 +346,133 @@ _paralellTask();]]></ST>
 Station.ManualTask.Restore();
 _paralellTask.Restore();
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PairTag" Id="{baf0b22c-d2fb-48c7-a6ee-a2a5ae7f437b}" FolderPath="TagsPairing\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Loads process settings from the current process set into this controlled unit.
+			The `StationProcessDataManager.Data` is populated by data from process settings.						
+		</summary>
+	</docu>
+~*)
+METHOD PairTag : BOOL
+VAR_INPUT
+	inStepID : INT;
+END_VAR
+
+VAR
+	answer: TagsPairing;
+	_addNewTag: BOOL;
+	dialogAnswer: eDialogAnswer;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, _tagsPairing, '<#PAIR TAG WITH ASSIGNED VALUE EXAMPLE#>')) THEN
+    //-------------------------------------
+	_addNewTag:=FALSE;
+
+	answer:= Station.Components.PairTagTask.Answer;
+	//this field may be assigned by unique ID of rfid chip , or dmc code.The PairTagTask provide answer where is assigned user defined value for this unique ID value.
+	//If not, there may be diferent scenarios defined. See example bellow.
+	_reqKey:='123456789';				   
+	 IF Station.Components.PairTagTask.Run(inMode:=eTagPairingMode.GetTag, inKey:=_reqKey ,inAssignedValue:='').Invoke().Done	 THEN
+		
+		IF  answer.Answer =eTagPairingAnswer.TagFound 
+			 THEN
+			Station.ProcessDataManager.Data.EntityHeader.Carrier := answer.AssignedValue;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		
+		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundInactive THEN
+			IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Founded tag #>').Append(_reqKey).Append('<# is inactive! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+				;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
+		
+				//Station.GroundTask.Task.Invoke();
+			   
+			End_if;
+		
+		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundAssignedValueEmpty THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is founded but assigned value is empty! Would you like continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+		   
+		ELSIF  answer.Answer = eTagPairingAnswer.TagNotFound THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				_addNewTag:=TRUE;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+	
+		
+			ELSIF  answer.Answer = eTagPairingAnswer.EmptyCollection THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded due collection is empty ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				_addNewTag:=TRUE;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+		End_if;
+			
+	END_IF		    				
+    //-------------------------------------
+END_IF
+
+IF (Step(inStepID+10, _tagsPairing AND _addNewTag, '<#ADD NEW TAG  EXAMPLE#>')) THEN
+    //-------------------------------------
+	
+	answer:= Station.Components.PairTagTask.Answer;
+	//this field may be assigned by unique ID of rfid chip , or dmc code.The PairTagTask provide answer where is assigned user defined value for this unique ID value.
+	//If not, there may be diferent scenarios defined. See example bellow.
+	_reqKey:='123456789';		
+	_reqAssignedValue := 'CustomIdExample123';	   
+	 IF Station.Components.PairTagTask.Run(inMode:=eTagPairingMode.AddTag, inKey:=_reqKey, inAssignedValue:=_reqAssignedValue).Invoke().Done	 THEN
+		
+		IF  answer.Answer =eTagPairingAnswer.TagAddedSuccessfully 
+			 THEN
+			Station.ProcessDataManager.Data.EntityHeader.Carrier := answer.AssignedValue;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		END_IF;
+	ELSIF  answer.Answer = eTagPairingAnswer.TagAlreadyExist THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Adding Tag#>')
+		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# already exist! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+	
+	ELSIF  answer.Answer = eTagPairingAnswer.TagAddedNotSuccessfuly THEN
+			dialogAnswer := _dialog.Show()
+	       .WithCaption('<#Pairing Tag#>')
+		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# was not founnd! Would you like still like to continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			.WithYesNo().Answer;
+			
+	      IF (dialogAnswer= TcoCore.eDialogAnswer.Yes) THEN;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		END_IF;
+		   
+
+			
+	END_IF		    				
+    //-------------------------------------
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Station" Id="{c497129d-26cb-43ef-a7d7-df3034f001ea}">

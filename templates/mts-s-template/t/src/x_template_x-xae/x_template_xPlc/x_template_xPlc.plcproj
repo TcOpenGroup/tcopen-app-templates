@@ -89,6 +89,21 @@
     <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanelInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Generic\TagsPairing\eTagPairingAnswer.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\TagsPairing\eTagPairingMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\TagsPairing\eTagPairingStatus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\TagsPairing\PairTagTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\TagsPairing\TagsPairing.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\TcoCore\CycleTimeAnalitics.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -190,6 +205,7 @@
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
+    <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
     <Folder Include="Abstractions\Technology" />
     <Folder Include="Abstractions\TcoCore" />

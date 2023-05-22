@@ -785,7 +785,7 @@ Commands:
 
 # Statistic #  
 
-Statistic is a library used to to collect  specified data from `PlainEntityHeader` in `PlainProcessData`. Usualy collecting data is executed on update entity (OnUpdate delegate), but can be used in deferent events.(OnCreated..). The counting method  collect data and distribute it into specified proces counters such are `Recipe counters`,`Error counter`,`Carrier counter`,`Rework counter`,`Hour counter`,`Shifts counter`...
+Statistic is a library used to to collect  specified data from `PlainEntityHeader` in `PlainProcessData`. Usualy collecting data is executed on update entity (OnUpdate delegate), but can be used in deferent events.(OnCreated..). The counting method  collect data and distribute it into specified process counters such are `Recipe counters`,`Error counter`,`Carrier counter`,`Rework counter`,`Hour counter`,`Shifts counter`...
 
 
 
@@ -905,3 +905,348 @@ Commands:
 * *Remove* - removes selected entries from collection with status *Deleted*
 
 > ![InstructorConfig](assets/InstructorConfigurator.png)
+
+
+# Tag Pairing #  
+
+Tags pairing is a  tool that facilitates the assignment of a unique key, such as an RFID (Radio Frequency Identification) chip ID, with a user-defined value in a human-readable format. This tool is designed to enable the efficient management and tracking of tagged items(pallete with RFID) by associating them with specific user-defined information.This information  can be provided as carrier identification `PlainEntityHeader` in `PlainProcessData`
+
+#### Repository setup ####
+
+Configuration can be stored in any repository
+
+
+~~~csharp
+           //Raven embded
+           CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new RavenDbRepository<EntitySet<TagItem>>(new RavenDbRepositorySettings<EntitySet<TagItem>>(new string[] { Entry.Settings.GetConnectionString() }, "TagsDictionary", "", ""))), "TagsCfg"); ;
+
+            //mongodb
+            CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new MongoDbRepository<EntitySet<TagItem>>(new MongoDbRepositorySettings<EntitySet<TagItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TagsDictionary"))), "TagsCfg");
+
+            
+~~~~
+
+
+> Implementation of these lines are stored in `App.xaml.cs` 
+
+**Note!**
+There can be created various sets defined by custom name. In this example it is used `TagsCfg`. This set is stored in `TagsDictionary collection`.!
+
+## XAML 
+
+Here are  examples in `OperatorView`.  To display this tool  in our application, is necessary to add this lines of code to our `OperatorView.xaml`.
+```xml
+          <TabItem Header="TAGS PAIRING">
+
+                <vortexs:PermissionBox  Permissions="Administrator|instructor_access" SecurityMode="Disabled">
+
+                    <view2:TagsPairingView DataContext="{Binding TagsPairingViewModel}"></view2:TagsPairingView>
+                </vortexs:PermissionBox>
+
+
+            </TabItem>
+
+```
+
+We need to initialize ViewModel for `TagsPairingViewModel`. We can do this by initializing it  in `OperatorViewModel` constructor like this.
+
+```csharp
+  public class OperatorViewModel
+    {
+        public OperatorViewModel()
+        {
+            .
+            .
+            .
+             TagsPairingViewModel = new TagsPairingViewModel(App.CuxTagsPairing);
+            
+
+        }
+
+      
+        
+        public TagsPairingViewModel TagsPairingViewModel { get; private set; }
+    }
+```
+
+## Application view
+
+If everthing is working properly, you should see something like this (Tables and naming will differ based on your configuration directili in project.).
+
+> ![Overview](assets/TagPairing//TagPairingOverview.png)
+
+## Configuration table
+
+
+* *Key* - The Key is ID  of the tag's Uid
+* *AssignedValue* - user-defined value in a human-readable format
+* *Description* - additional string information dedicated for note
+* *Status* -  is an enumerated value. Defined tag status .
+
+~~~csharp
+  public enum EnumItemStatus
+    {
+        Unknown = 0,
+        Active = 10,
+        Inactive = 20
+    }
+~~~
+
+* *FirstUse* -  first time tag was assigned .
+* *LastUse* -  last known time when tag was assigned .
+* *NumberOfUse* -  counter value, defined how many times was carrier with specified uid requested(used)
+Commands:
+* *Save* - saves actual configuration changes to the repository.
+* *Remove* - removing items is possible to provide directly on table by selecting line and press `Delete key` 
+
+## Add tag manualy (Via UI) 
+
+> ![Add](assets/TagPairing//TagPairing%20add%20manualy.png)
+
+## Get  tag manualy (Via UI) 
+
+On picture below is show info abut tag and assigned  values.
+
+> ![Add](assets/TagPairing//TagPairing%20founded%20manualy.png)
+> ![Add](assets/TagPairing//TagPairing%20not%20founded%20manualy.png)
+
+There is a general result enumerator that provides information about requested operations, known as the `EnumResultsStatus`. This enumerator enables the standardized communication of operation outcomes. The general result can be transferred to a PLC or utilized as custom information in the user interface (UI).
+
+~~~csharp
+ public enum EnumResultsStatus
+    {
+        // these results are used when we are requesting tag
+        TagFound = 0,
+        TagFoundInactive = 10,
+        TagFoundAssignedValueEmpty =20,
+        TagFoundUnknown = 30,
+        TagNotFound = 40,
+        //these results are used when we are requesting insertion new into collection
+        TagAlreadyExist = 50,
+        TagAddedSuccessfully = 60,
+        TagAddedNotSuccessfuly = 70,
+        EmptyCollection = 100,
+       
+    }
+~~~
+
+## PLC EXAMPLE
+
+### Definition and implementation
+
+* *Create function as a wrapper* - witch extending `TcoCore.TcoRemoteTask. Here we can pot some members witch are necessary.
+
+~~~pascal
+    FUNCTION_BLOCK PairTagTask EXTENDS TcoCore.TcoRemoteTask
+    VAR
+        
+        _key: STRING;
+        _assignedValue : STRING;	
+        _answerInstruction : STRING(254);
+        _answer: TagsPairing;
+        {attribute 'hide'}
+        _answerClean: TagsPairing;
+        _mode: eTagPairingMode;
+    END_VAR
+~~~
+
+* *Define method witch will be a trigger for remote exec*
+
+~~~pascal
+METHOD Run : REFERENCE TO PairTagTask
+VAR_INPUT
+	(*~
+	<docu>
+		<summary>
+			The mode is type of operation to be done by invoking  this remote task.(GetTag,CreateTag...)
+		</summary>						
+	</docu>	
+	~*)
+	inMode :eTagPairingMode;
+	(*~
+	<docu>
+		<summary>
+			The Key is ID  of the tag's Uid on which assigned value will be found . 	
+		</summary>						
+	</docu>	
+	~*)
+	inKey : STRING;
+		(*~
+	<docu>
+		<summary>
+			The AAssignedValue is user defined additional value, this value provide  better undersanding identification of carriers . 	
+		</summary>						
+	</docu>	
+	~*)
+	inAssignedValue : STRING;
+	
+END_VAR
+
+~~~
+body will looks like this
+~~~pascal
+THIS^._key := inKey;
+THIS^._mode := inMode;
+THIS^._assignedValue := inAssignedValue;
+
+
+Run REF= THIS^;
+~~~
+
+* *Definition PC side -initialize  remote exec*
+
+~~~csharp
+   // initialize custom remote tasks here
+    Action assignTagValeAction = () => TagsPairingOperation(x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask);
+    x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask.InitializeExclusively(assignTagValeAction);
+~~~
+
+* *Example in PC side* 
+
+~~~csharp
+    /// <summary>
+    /// this is remontely invoked from plc , 
+    /// </summary>
+    /// <param name="pairTagTask"></param>
+    private void TagsPairingOperation(PairTagTask pairTagTask)
+    {
+        pairTagTask.Read();
+
+        TagItem currentItem = new TagItem();
+        EnumResultsStatus result;
+        switch ((eTagPairingMode) pairTagTask._mode.Cyclic)
+        {
+            case eTagPairingMode.GetTag:
+                CuxTagsPairing.GetTag(pairTagTask._key.Cyclic, out currentItem, out result);
+                pairTagTask._answer.AssignedValue.Cyclic = currentItem.AssignedValue;
+                pairTagTask._answer.Status.Cyclic =(short)currentItem.Status;
+                pairTagTask._answer.Answer.Cyclic = (short)result;
+                pairTagTask._answerInstruction.Cyclic = "";
+                break;
+            case eTagPairingMode.RemoveTag:
+                //not used , for removing use UI
+                break;
+            case eTagPairingMode.AddTag:
+                CuxTagsPairing.AddTag(new TagItem() {Key= pairTagTask._key.Cyclic, AssignedValue= pairTagTask._assignedValue.Cyclic}, out result);
+                pairTagTask._answer.Answer.Cyclic = (short)result;
+                pairTagTask._answerInstruction.Cyclic = "";
+                break;
+            default:
+                break;
+        }
+    }
+~~~
+
+### USAGE in PLC application
+Plc remote call
+
+~~~ pascal
+IF (Step(inStepID, _tagsPairing, '<#PAIR TAG WITH ASSIGNED VALUE EXAMPLE#>')) THEN
+    //-------------------------------------
+	_addNewTag:=FALSE;
+
+	answer:= Station.Components.PairTagTask.Answer;
+	//this field may be assigned by unique ID of rfid chip , or dmc code.The PairTagTask provide answer where is assigned user defined value for this unique ID value.
+	//If not, there may be diferent scenarios defined. See example bellow.
+	_reqKey:='123456789';				   
+	 IF Station.Components.PairTagTask.Run(inMode:=eTagPairingMode.GetTag, inKey:=_reqKey ,inAssignedValue:='').Invoke().Done	 THEN
+		
+		IF  answer.Answer =eTagPairingAnswer.TagFound 
+			 THEN
+			Station.ProcessDataManager.Data.EntityHeader.Carrier := answer.AssignedValue;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		
+		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundInactive THEN
+			IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Founded tag #>').Append(_reqKey).Append('<# is inactive! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+				;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
+		
+				//Station.GroundTask.Task.Invoke();
+			   
+			End_if;
+		
+		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundAssignedValueEmpty THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is founded but assigned value is empty! Would you like continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+		   
+		ELSIF  answer.Answer = eTagPairingAnswer.TagNotFound THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				_addNewTag:=TRUE;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+	
+		
+			ELSIF  answer.Answer = eTagPairingAnswer.EmptyCollection THEN
+			  IF (_dialog.Show()
+			   .WithCaption('<#Pairing Tag#>')
+			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded due collection is empty ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
+				_addNewTag:=TRUE;
+				CompleteStep();
+				Station.Components.PairTagTask.Restore();
+			END_IF;
+		End_if;
+			
+	END_IF		    				
+    //-------------------------------------
+END_IF
+
+IF (Step(inStepID+10, _tagsPairing AND _addNewTag, '<#ADD NEW TAG  EXAMPLE#>')) THEN
+    //-------------------------------------
+	
+	answer:= Station.Components.PairTagTask.Answer;
+	//this field may be assigned by unique ID of rfid chip , or dmc code.The PairTagTask provide answer where is assigned user defined value for this unique ID value.
+	//If not, there may be diferent scenarios defined. See example bellow.
+	_reqKey:='123456789';		
+	_reqAssignedValue := 'CustomIdExample123';	   
+	 IF Station.Components.PairTagTask.Run(inMode:=eTagPairingMode.AddTag, inKey:=_reqKey, inAssignedValue:=_reqAssignedValue).Invoke().Done	 THEN
+		
+		IF  answer.Answer =eTagPairingAnswer.TagAddedSuccessfully 
+			 THEN
+			Station.ProcessDataManager.Data.EntityHeader.Carrier := answer.AssignedValue;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		END_IF;
+	ELSIF  answer.Answer = eTagPairingAnswer.TagAlreadyExist THEN
+		IF (_dialog.Show()
+	       .WithCaption('<#Adding Tag#>')
+		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# already exist! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
+			;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
+	
+		 	//Station.GroundTask.Task.Invoke();
+		   
+		End_if;
+	
+	ELSIF  answer.Answer = eTagPairingAnswer.TagAddedNotSuccessfuly THEN
+			dialogAnswer := _dialog.Show()
+	       .WithCaption('<#Pairing Tag#>')
+		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# was not founnd! Would you like still like to continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			.WithYesNo().Answer;
+			
+	      IF (dialogAnswer= TcoCore.eDialogAnswer.Yes) THEN;
+			CompleteStep();
+			Station.Components.PairTagTask.Restore();
+		END_IF;
+		   
+
+			
+	END_IF		    				
+    //-------------------------------------
+END_IF
+~~~
+
+Output will be
+> ![Add](assets/TagPairing//TagPairing%20in%20progress.png)
