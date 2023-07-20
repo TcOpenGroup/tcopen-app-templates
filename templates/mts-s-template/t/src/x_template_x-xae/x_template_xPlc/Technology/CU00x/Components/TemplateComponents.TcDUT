@@ -40,6 +40,14 @@ TYPE TemplateComponents EXTENDS TcoCore.TcoStruct :
      	VerifySetpoint : TcoElements.TcoAi(THISSTRUCT);
 		{attribute addProperty Name "SETPOINT"}
      	Setpoint : TcoElements.TcoAo(THISSTRUCT);   
+		
+		{attribute wpf [Container(Layout.Stack,"DRIVES AND MANIPULATORS")]}	
+		{attribute addProperty Name "MultiAxis"}
+     	MultiAxis : TcoDrivesBeckhoff.TcoMultiAxis (THISSTRUCT);
+		{attribute addProperty Name "Single Axis"}
+     	SingleAxis : TcoDrivesBeckhoff.TcoSingleAxis (THISSTRUCT);
+		{attribute addProperty Name "Simple drive"}
+     	SimpleDrive : TcoDrivesBeckhoff.TcoDriveSimple (THISSTRUCT);
     END_STRUCT
 END_TYPE]]></Declaration>
   </DUT>

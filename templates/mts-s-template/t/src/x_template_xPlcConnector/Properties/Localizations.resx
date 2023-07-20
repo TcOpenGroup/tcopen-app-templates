@@ -186,6 +186,9 @@
   <data name="____is_not_founded___Would_you_like_assign_right_now____" xml:space="preserve">
     <value> is not founded ! Would you like assign right now? </value>
   </data>
+  <data name="____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____" xml:space="preserve">
+    <value> is not founded due collection is empty ! Would you like assign right now? </value>
+  </data>
   <data name="___ADD_NEW_TAG__EXAMPLE__" xml:space="preserve">
     <value>ADD NEW TAG  EXAMPLE</value>
   </data>
