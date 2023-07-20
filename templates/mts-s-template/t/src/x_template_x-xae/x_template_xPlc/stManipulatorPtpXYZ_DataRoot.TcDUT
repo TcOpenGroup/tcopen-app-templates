@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="stManipulatorPtpXYZ_DataRoot" Id="{86b7073d-19ad-0be4-0645-6a5850667066}">
+    <Declaration><![CDATA[TYPE stManipulatorPtpXYZ_DataRoot EXTENDS VortexBase.stVortexer:
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

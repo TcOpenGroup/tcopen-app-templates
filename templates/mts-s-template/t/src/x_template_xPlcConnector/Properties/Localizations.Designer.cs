@@ -126,6 +126,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  is not founded due collection is empty ! Would you like assign right now? .
+        /// </summary>
+        public static string ____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____ {
+            get {
+                return ResourceManager.GetString("____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  was not founnd! Would you like still like to continue? .
         /// </summary>
         public static string ____was_not_founnd__Would_you_like_still_like_to_continue____ {
