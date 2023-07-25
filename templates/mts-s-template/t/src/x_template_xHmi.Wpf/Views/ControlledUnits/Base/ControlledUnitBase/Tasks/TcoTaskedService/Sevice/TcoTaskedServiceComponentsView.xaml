@@ -16,11 +16,10 @@
     <materialDesign:Card
             materialDesign:ShadowAssist.ShadowDepth="Depth1"
             Padding="2.5"
-           >
-        <StackPanel  Visibility="{Binding Component._taskState.Cyclic, Converter={local:TaskStateToVisibilityConverter}}">
-        <vortex:RenderableContentControl DataContext="{Binding Serviceable}" PresentationType="Service-Manual">
-       
-        </vortex:RenderableContentControl>
-        </StackPanel>
+            Visibility="{Binding Component._taskState.Cyclic, Converter={local:TaskStateToVisibilityConverter}}"           >
+        <!--<vortex:RenderableContentControl DataContext="{Binding Serviceable}" PresentationType="Service-Manual">
+        </vortex:RenderableContentControl>-->
+        
+        
     </materialDesign:Card>
 </UserControl>
