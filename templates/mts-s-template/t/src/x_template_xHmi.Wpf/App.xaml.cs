@@ -48,11 +48,8 @@ namespace x_template_xHmi.Wpf
             Resources.SetTheme(theme);
 
 
-
-
             base.OnStartup(e);
         }
-
 
         public App()
         {
@@ -112,7 +109,7 @@ namespace x_template_xHmi.Wpf
                 .SetSecurity(SecurityManager.Manager.Service)
                 .SetEditValueChangeLogging(Entry.Plc.Connector)
                 .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
-                .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN }));
+                .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
 
 
 
@@ -485,6 +482,7 @@ namespace x_template_xHmi.Wpf
                 return designTime ? Entry.PlcDesign : Entry.Plc;                
             }
         }
+
         static string Culture = "";
         public static ReworkModel Rework { get; private set; }
         public static ProductionPlanController ProductionPlaner { get; private set; }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:x_template_xHmi.Wpf"                 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:wpf="clr-namespace:TcoCore.Wpf;assembly=TcOpen.Inxton.TcoCore.Wpf" xmlns:styles="clr-namespace:x_template_xHmi.Wpf.Wpf.Styles"
              ShutdownMode="OnMainWindowClose"             
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -28,8 +28,10 @@
 
                 <!--<wpf:TcoResources></wpf:TcoResources>-->
                 
-                
-            
+                <!--here you  can customize styles-->
+                <!--<styles:CustomizedResources></styles:CustomizedResources>--> 
+
+
             </ResourceDictionary.MergedDictionaries>
 
 
