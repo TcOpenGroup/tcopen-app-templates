@@ -112,7 +112,7 @@ namespace x_template_xDataMerge.Rework
                 throw ex;
             }
 
-            MessageBox.Show(Resources.ResourceManager.GetString("ReworkSuccesfull"));
+            MessageBox.Show(Resources.ResourceManager.GetString("ReworkSuccessfull"));
             retVal = true;
 
 

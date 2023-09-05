@@ -14,15 +14,15 @@
     </UserControl.DataContext>
     <Grid>
         <vortexs:PermissionBox Grid.Row="1" Permissions="process_traceability_access" SecurityMode="Disabled">
-            <tcodata:TcoDataExchangeDisplayView DataContext="{Binding ProcessData}" >
-                <vortex:TcoDataExchangeDisplayView.DataListColumns>
+            <tcodata:TcoDataExchangeView DataContext="{Binding ProcessData}" >
+                <vortex:TcoDataExchangeView.DataListColumns>
                     <DataGridTextColumn Binding="{Binding _Created, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Created}"/>
                     <DataGridTextColumn Binding="{Binding _Modified, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Modified}"/>
                     <DataGridTextColumn
                                         Width="*"
                                         Binding="{Binding EntityHeader.IsMaster}" Header="Master"/>
-                </vortex:TcoDataExchangeDisplayView.DataListColumns>
-            </tcodata:TcoDataExchangeDisplayView>
+                </vortex:TcoDataExchangeView.DataListColumns>
+            </tcodata:TcoDataExchangeView>
             
             
 

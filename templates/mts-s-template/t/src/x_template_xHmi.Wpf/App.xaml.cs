@@ -56,7 +56,7 @@ namespace x_template_xHmi.Wpf
             SetCulture();
             Entry.LoadAppSettings("default");
 
-            Console.SetOut(SystemDiagnosticsSingleton.Instance.ConsoleWriter);
+           Console.SetOut(SystemDiagnosticsSingleton.Instance.ConsoleWriter);
 
             GeAssembliesVersion("Tc");
             GeAssembliesVersion("Vortex");
@@ -98,9 +98,9 @@ namespace x_template_xHmi.Wpf
             TcOpen.Inxton.TcoAppDomain.Current.Builder
                 .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
                                         .WriteTo.Console()
-                                        .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}","log",
-                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
-                                        .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+                                        //     .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}", "log",
+                                        //                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
+                                        //                                        .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
                                         .MinimumLevel.Verbose()
                                         .Enrich.WithEnvironmentName()
                                         .Enrich.WithEnvironmentUserName()
@@ -347,8 +347,7 @@ namespace x_template_xHmi.Wpf
             var TechnologicalDataRepoSettings = new MongoDbRepositorySettings<PlainTechnologyData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TechnologySettings");
             IntializeTechnologyDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._technologySettings, new MongoDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings));
 
-            var ReworklDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkSettings");
-            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings));
+         
 
             //Statistics
             var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new MongoDbRepository<EntitySet<StatisticsDataItem>>(new MongoDbRepositorySettings<EntitySet<StatisticsDataItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Statistics")));
@@ -358,9 +357,12 @@ namespace x_template_xHmi.Wpf
             CuxStatistic = new StatisticsDataController(x_template_xPlc.MAIN._technology._cu00x.AttributeShortName,_statisticsDataHandler,_statisticsConfigHandler);
 
 
+            var ReworklDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkSettings");
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings));
 
             var Traceability = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Traceability");
-            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability));            
+            InitializeProcessDataRepositoryWithDataExchange(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability));       
+            
             InitializeProcessDataRepositoryWithDataExchangeWithStatistic(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability),CuxStatistic);
             InitializeIndexProcessDataRepositoryMongoDb(Traceability);
 

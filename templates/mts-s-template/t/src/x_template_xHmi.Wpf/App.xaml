@@ -26,7 +26,7 @@
                 <ResourceDictionary Source="Wpf/Styles/MenuButton.xaml" />
 
 
-                <!--<wpf:TcoResources></wpf:TcoResources>-->
+                <wpf:TcoResources></wpf:TcoResources>
                 
                 <!--here you  can customize styles-->
                 <!--<styles:CustomizedResources></styles:CustomizedResources>--> 

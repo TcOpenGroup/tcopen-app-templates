@@ -48,7 +48,8 @@ namespace x_template_xTests
                 ServerUrl = "http://127.0.0.1:8080",
             });
 
-
+            Entry.LoadAppSettings("default");
+            Entry.Plc.Connector.BuildAndStart();
 
         }
 

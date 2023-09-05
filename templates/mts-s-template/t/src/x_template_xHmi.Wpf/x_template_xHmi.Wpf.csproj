@@ -94,11 +94,11 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <SplashScreen Include="Splash\splash.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </SplashScreen>
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <Resource Include="Assets\CulturalFlags\cz.png" />
     <Resource Include="Assets\CulturalFlags\sk.png" />

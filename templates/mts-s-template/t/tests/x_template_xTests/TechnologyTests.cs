@@ -11,6 +11,7 @@ namespace x_template_xTests
         [SetUp]
         public void Setup()
         {
+            Entry.LoadAppSettings("default");
             Entry.Plc.Connector.BuildAndStart();
         }
 

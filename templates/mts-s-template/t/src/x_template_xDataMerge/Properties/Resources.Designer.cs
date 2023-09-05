@@ -97,11 +97,11 @@ namespace x_template_xDataMerge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Piece was reworked successfully.
+        ///   Looks up a localized string similar to Entity was reworked successfully.
         /// </summary>
-        public static string ReworkSuccessfully {
+        public static string ReworkSuccessfull {
             get {
-                return ResourceManager.GetString("ReworkSuccessfully", resourceCulture);
+                return ResourceManager.GetString("ReworkSuccessfull", resourceCulture);
             }
         }
     }

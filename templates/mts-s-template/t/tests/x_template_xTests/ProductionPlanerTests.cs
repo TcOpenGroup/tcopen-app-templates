@@ -36,7 +36,7 @@ namespace x_template_xTests
         public void OneTimeSetup()
         {
             var a = x_template_xApp.Get;
-
+            Entry.LoadAppSettings("default");
             Entry.Plc.Connector.BuildAndStart();
 
             var ProcessSettningsRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "ProcessSettings", "", "");

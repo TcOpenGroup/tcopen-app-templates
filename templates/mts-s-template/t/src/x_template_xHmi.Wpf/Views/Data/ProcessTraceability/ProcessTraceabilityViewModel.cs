@@ -10,11 +10,12 @@ namespace x_template_xHmi.Wpf.Views.Data.ProcessTraceability
 {
     public class ProcessTraceabilityViewModel
     {
-        public TcoDataExchangeDisplayViewModel ProcessData
+        public ProcessDataManager ProcessData
         {
             get
             {
-                return new TcoDataExchangeDisplayViewModel() { Model = App.x_template_xPlc.MAIN._technology._processTraceability };
+                return App.x_template_xPlc.MAIN._technology._processTraceability;
+                //return new TcoDataExchangeDisplayViewModel() { Model = App.x_template_xPlc.MAIN._technology._processTraceability };
             }           
         }
     }
