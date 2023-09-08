@@ -40,50 +40,6 @@
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.SlaveCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.DevState</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0State</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0WcState</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0InputToggle</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.ChangeCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DevId</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.AmsNetId</Name>
-							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.CfgSlaveCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DcToTcTimeOffset</Name>
-							<Type>LINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DcToExtTimeOffset</Name>
-							<Type>LINT</Type>
-						</Var>
-						<Var>
 							<Name>GVL_iXlinker.EC1.A1.InfoData.State</Name>
 							<Type>UINT</Type>
 						</Var>
@@ -215,21 +171,53 @@
 							<Name>GVL_iXlinker.EC1.InfoData.DcToExtTimeOffset</Name>
 							<Type>LINT</Type>
 						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.SlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.DevState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0State</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0WcState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0InputToggle</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.ChangeCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DevId</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.AmsNetId</Name>
+							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.CfgSlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToTcTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToExtTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.Frm0Ctrl</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.Frm0WcCtrl</Name>
-							<Type>UINT</Type>
-						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output</Name>
 							<Type>BOOL</Type>
@@ -272,6 +260,18 @@
 						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.Outputs.Frm0WcCtrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0Ctrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0WcCtrl</Name>
 							<Type>UINT</Type>
 						</Var>
 					</Vars>

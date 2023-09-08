@@ -8,7 +8,7 @@ namespace x_template_xPlcConnector
         public DeployMode DepoyMode{ get; set; } = DeployMode.Plc;
         public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
         public string PlcAmsId =Environment.GetEnvironmentVariable("Tc3Target");
-        public bool ShowConsoleOutput { get; set; } = false;
+        public bool ShowConsoleOutput { get; set; } = true;
 
         public int ReadWriteCycleDelay { get; set; } = 100;
 
