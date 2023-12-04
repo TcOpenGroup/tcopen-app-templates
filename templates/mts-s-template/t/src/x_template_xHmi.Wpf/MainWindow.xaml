@@ -9,7 +9,7 @@
     xmlns:vortex="http://vortex.mts/xaml"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
-    WindowStyle="ToolWindow"
+    WindowStyle="None"
     Width="800"
     Height="450"
     mc:Ignorable="d"

@@ -133,6 +133,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Application.
+        /// </summary>
+        public static string CloseApplication {
+            get {
+                return ResourceManager.GetString("CloseApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Components.
         /// </summary>
         public static string Components {

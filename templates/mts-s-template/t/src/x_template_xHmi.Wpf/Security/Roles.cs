@@ -3,7 +3,7 @@ using TcOpen.Inxton.Security;
 
 namespace x_template_xHmi.Wpf
 {
-    internal class Roles
+    public class Roles
     {
         private Roles()
         {

@@ -108,7 +108,7 @@ END_VAR
 *)
 
 
-_automatTask.Task.Enabled := _groundTask.GroundDone AND THIS^.Technology.AllowAutomat();
+_automatTask.Task.Enabled := (_groundTask.GroundDone OR  _automatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
 
 (*
 	Invokes `groundTask` from technology object.
@@ -173,7 +173,7 @@ END_VAR
 	]
 *)
 
-_groundTask.Task.Enabled := NOT _groundTask.Task.Done AND THIS^.Technology.AllowGround();
+_groundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
 
 (*
 	Invokes `groundTask` from technology object.
@@ -181,11 +181,15 @@ _groundTask.Task.Enabled := NOT _groundTask.Task.Done AND THIS^.Technology.Allow
 
 IF(Technology.GroundAllTask.Execute()) THEN _groundTask.Task.Invoke(); END_IF;
 
+
+IF _groundTask.GroundDone AND _groundTask.Task.Execute() THEN _groundTask.Restore();_groundTask.Task.Invoke();END_IF;
+
 (*
 
 	Executes sequence of groundTask.
 
 *)
+
 _groundTask();]]></ST>
       </Implementation>
     </Method>

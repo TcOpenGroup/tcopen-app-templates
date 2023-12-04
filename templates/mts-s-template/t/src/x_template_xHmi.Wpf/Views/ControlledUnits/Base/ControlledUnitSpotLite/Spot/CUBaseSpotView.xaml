@@ -192,7 +192,7 @@
                     </Grid>
                 </Border>
                 <Border Grid.Row="2" Background="{StaticResource Surface}">
-                    <TextBlock
+                    <TextBlock Visibility="{Binding Component._statusInfo.Mode.Cyclic, Converter={plc:SelectorStateToVisibilityConverter}}"
                         Margin=".5"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"

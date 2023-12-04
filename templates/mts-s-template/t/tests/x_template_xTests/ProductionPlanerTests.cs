@@ -41,7 +41,7 @@ namespace x_template_xTests
 
             var ProcessSettningsRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "ProcessSettings", "", "");
             var ProcessSettingsRepository = new RavenDbRepository<PlainProcessData>(ProcessSettningsRepoSettings);
-            ProcessSettingsRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            ProcessSettingsRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             ProcessSettingsRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
             Entry.Plc.MAIN._technology._processSettings.InitializeRepository(ProcessSettingsRepository);
 
@@ -147,7 +147,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
             var recordsTraceability = TraceabilityRepository.Queryable.Where(p => true).Select(p => p._EntityId).ToList();
@@ -280,7 +280,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
 
@@ -336,7 +336,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
 
@@ -398,7 +398,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
 
@@ -459,7 +459,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
 
@@ -522,7 +522,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
 

@@ -17,6 +17,8 @@ VAR
 	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
 	
+
+	
 	{attribute addProperty Name "Device 1 (EtherCAT)"}
 	Device_1 : TcoIo.TcoEthercatMasterDevice(THIS^);
 END_VAR
@@ -24,6 +26,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="Stations" Id="{f0ad222a-fb7f-4f66-a9ed-d5267740cf2e}" />
     <Method Name="AllowAutomat" Id="{0aa54757-4c4d-0cde-13e5-b7414e695af4}">
       <Declaration><![CDATA[METHOD AllowAutomat : BOOL
 VAR_INPUT
@@ -59,6 +62,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[AutomatAllTask REF= _automatAllTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Cu00x" Id="{337711e9-b98b-42fe-9e42-55b23f91ea92}" FolderPath="Stations\">
+      <Declaration><![CDATA[PROPERTY PUBLIC Cu00x : Reference to CU00x]]></Declaration>
+      <Get Name="Get" Id="{d0dd6d4e-2ea5-49a8-a332-57a4e1943b42}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Cu00x REF=_cu00x;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -107,7 +121,7 @@ END_VAR]]></Declaration>
 
 // RTC Synchronisation
 THIS^.RtcSynchronize(TRUE,  
-					 '',    // Provide AMS ID of the time source, leave blank if local. 
+					 '192.168.4.1.1.1',    // Provide AMS ID of the time source, leave blank if local. 
 					 60);
 
 // Messenger logger settings
