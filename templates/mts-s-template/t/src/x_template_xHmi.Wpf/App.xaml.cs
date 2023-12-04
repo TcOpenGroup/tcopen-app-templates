@@ -54,10 +54,9 @@ namespace x_template_xHmi.Wpf
         public App()
         {
             SetCulture();
-            Entry.LoadAppSettings("default");
+            Entry.LoadAppSettings("default",true);
 
-            Console.SetOut(SystemDiagnosticsSingleton.Instance.ConsoleWriter);
-
+          
             GeAssembliesVersion("Tc");
             GeAssembliesVersion("Vortex");
             StopIfRunning();
@@ -79,8 +78,22 @@ namespace x_template_xHmi.Wpf
                     SetUpRepositoriesUsingRavenDb();
                     CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new RavenDbRepository<EntitySet<TagItem>>(new RavenDbRepositorySettings<EntitySet<TagItem>>(new string[] { Entry.Settings.GetConnectionString() }, "TagsDictionary", "", ""))), "TagsCfg"); ;
 
+                    // TcOpen app setup
+                    TcOpen.Inxton.TcoAppDomain.Current.Builder
+                        .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
+                                                .WriteTo.Console()
+                                                .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+                                                .Enrich.WithEnvironmentName()
+                                                .Enrich.WithEnvironmentUserName()
+                                                .Enrich.WithEnrichedProperties()))
+                        .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
+                        .SetSecurity(SecurityManager.Manager.Service)
+                        .SetEditValueChangeLogging(Entry.Plc.Connector)
+                        .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
 
-                  
+
+
                     break;
                 case DatabaseEngine.MongoDb:
                     StartMongoDbServer(Entry.Settings.MongoPath, Entry.Settings.MongoArgs, Entry.Settings.MongoDbRun);
@@ -88,30 +101,32 @@ namespace x_template_xHmi.Wpf
                     SetUpRepositoriesUsingMongoDb();
                     CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new MongoDbRepository<EntitySet<TagItem>>(new MongoDbRepositorySettings<EntitySet<TagItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TagsDictionary"))), "TagsCfg");
 
+
+                    // TcOpen app setup
+                    TcOpen.Inxton.TcoAppDomain.Current.Builder
+                        .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
+                                                .WriteTo.Console()
+                                                .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+                                                .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}", "log",
+                                                                     Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
+                                                                    .MinimumLevel.Information()
+                                                .Enrich.WithEnvironmentName()
+                                                .Enrich.WithEnvironmentUserName()
+                                                .Enrich.WithEnrichedProperties()))
+                        .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
+                        .SetSecurity(SecurityManager.Manager.Service)
+                        .SetEditValueChangeLogging(Entry.Plc.Connector)
+                        .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
+
+
                     break;
                 default:
                     break;
             }
 
 
-            // TcOpen app setup
-            TcOpen.Inxton.TcoAppDomain.Current.Builder
-                .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
-                                        .WriteTo.Console()
-                                        .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}","log",
-                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
-                                        .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
-                                        .MinimumLevel.Verbose()
-                                        .Enrich.WithEnvironmentName()
-                                        .Enrich.WithEnvironmentUserName()
-                                        .Enrich.WithEnrichedProperties()))
-                .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
-                .SetSecurity(SecurityManager.Manager.Service)
-                .SetEditValueChangeLogging(Entry.Plc.Connector)
-                .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
-                .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
-
-
+         
 
             // Otherwise undocumented feature in official IVF, for details refer to internal documentation.
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
@@ -440,7 +455,7 @@ namespace x_template_xHmi.Wpf
         /// <param name="repository">Repository</param>
         private static void InitializeProcessDataRepositoryWithDataExchange(ProcessDataManager processData, IRepository<PlainProcessData> repository)
         {
-            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
             repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
             processData.InitializeRepository(repository);
             processData.InitializeRemoteDataExchange(repository);
@@ -453,7 +468,7 @@ namespace x_template_xHmi.Wpf
         /// <param name="repository">Repository</param>
         private static void InitializeProcessDataRepositoryWithDataExchangeWithStatistic(ProcessDataManager processData, IRepository<PlainProcessData> repository, StatisticsDataController cuxStatistic)
         {
-            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
             repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; cuxStatistic.Count(data); };
             processData.InitializeRepository(repository);
             processData.InitializeRemoteDataExchange(repository);

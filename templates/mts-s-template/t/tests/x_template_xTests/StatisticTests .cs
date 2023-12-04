@@ -43,7 +43,7 @@ namespace x_template_xTests
         {
            EmbeddedServer.Instance.StartServer(new ServerOptions
             {
-                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
+                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp1", "data"),
                 AcceptEula = true,
                 ServerUrl = "http://127.0.0.1:8080",
             });
@@ -78,7 +78,7 @@ namespace x_template_xTests
 
             var TraceabilityRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "Traceability", "", "");
             var TraceabilityRepository = new RavenDbRepository<PlainProcessData>(TraceabilityRepoSettings);
-            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; data.qlikId = id; };
+            TraceabilityRepository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now;  };
             TraceabilityRepository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
 
             var recordsTraceability = TraceabilityRepository.Queryable.Where(p => true).Select(p => p._EntityId).ToList();

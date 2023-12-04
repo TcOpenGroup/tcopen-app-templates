@@ -1,0 +1,42 @@
+<Application x:Class="x_template_xOp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:wpf="clr-namespace:TcoCore.Wpf;assembly=TcOpen.Inxton.TcoCore.Wpf" 
+             ShutdownMode="OnMainWindowClose"  
+            
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+
+         
+            <ResourceDictionary.MergedDictionaries>
+
+             
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/x_template_xHmi.Wpf;component/Wpf/Styles/MenuButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/x_template_xHmi.Wpf;component/Wpf/Styles/Colors.xaml" />
+
+
+
+                <wpf:TcoResources></wpf:TcoResources>
+                
+                <!--here you  can customize styles-->
+                <!--<styles:CustomizedResources></styles:CustomizedResources>--> 
+
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

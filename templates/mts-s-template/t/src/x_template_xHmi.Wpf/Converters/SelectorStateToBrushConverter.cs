@@ -81,9 +81,9 @@ namespace x_template_xPlc
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var stateNumber = (ushort)value;
+            eCUMode stateNumber = (eCUMode)Enum.ToObject(typeof(eCUMode), value);
 
-            if (stateNumber == (int)eCUMode.ManualMode)
+            if (stateNumber == eCUMode.ManualMode)
                 return Visibility.Collapsed;
 
             else

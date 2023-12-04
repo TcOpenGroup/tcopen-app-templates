@@ -50,15 +50,16 @@ METHOD PROTECTED Main : BOOL
 END_IF
 
 IF (Step(200, TRUE, 'STOPPING OTHER MODES')) THEN	
-	//---------------------------------------------------
+//	---------------------------------------------------
 	
 	Station.AutomatTask.ResetCycleTime();
 	Station.ProductionPlanerTask.Restore();
 	Station.Components.PairTagTask.Restore();
 	
+	Messenger.Info('INFO MESSAGE');
 	
-    StepCompleteWhen(THIS^._currentStep.Duration > T#250MS);
-	//---------------------------------------------------
+    StepCompleteWhen(THIS^._currentStep.Duration > T#1250MS);
+//	---------------------------------------------------
 END_IF
 
 DataEntityDiscard(5000, THIS^.Station.ProcessDataManager.Data._EntityId);
@@ -75,7 +76,10 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD PUBLIC OnStart]]></Declaration>
       <Implementation>
         <ST><![CDATA[Station.AutomatTask.Restore();
-Station.ManualTask.Restore();]]></ST>
+Station.ManualTask.Restore();
+Station.GroundTask.CancelGround();
+
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Station" Id="{f5f158e7-8f54-483b-8ef9-070bf6fa1248}">

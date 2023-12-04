@@ -121,10 +121,10 @@
     <value>AUTOMAT</value>
   </data>
   <data name="___GROUND__" xml:space="preserve">
-    <value>POZEMOK</value>
+    <value>RESET</value>
   </data>
   <data name="___MANUAL__" xml:space="preserve">
-    <value>MANUÁLNE</value>
+    <value>MANUÁL</value>
   </data>
   <data name="___READY_TO_START__" xml:space="preserve">
     <value>PRIPRAVENÉ NA ŠTART</value>
@@ -133,7 +133,7 @@
     <value>IDLE</value>
   </data>
   <data name="___Process_data_not_selected__" xml:space="preserve">
-    <value>Údaje o spracovaní nie sú vybrané</value>
+    <value>Procesné nastavenia nie sú vybrané</value>
   </data>
   <data name="___Would_you_like_to_load_default_settings___" xml:space="preserve">
     <value>Chcete načítať predvolené nastavenia?</value>
@@ -145,16 +145,16 @@
     <value>Uvedie zariadenie do základnej polohy.</value>
   </data>
   <data name="___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence___" xml:space="preserve">
-    <value>Spustí automatickú sekvenciu. Pred spustením je potrebné vykonať sekvenciu uzemnenia.</value>
+    <value>Spustí automatickú sekvenciu. Pred spustením je potrebné vykonať reset sekvenciu .</value>
   </data>
   <data name="___AUTOMAT_ALL__" xml:space="preserve">
     <value>AUTOMAT ALL</value>
   </data>
   <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>POZEMOK VŠETKO</value>
+    <value>RESET VŠETKO</value>
   </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
-    <value>Ďalšia stanica pri OK processe</value>
+    <value>Ďalšia stanica pri OK</value>
   </data>
   <data name="___Next_on_Failed__" xml:space="preserve">
     <value>Ďalšia stanica pri chybe</value>
@@ -166,16 +166,16 @@
     <value>Čas čistej slučky</value>
   </data>
   <data name="___Operation_started__" xml:space="preserve">
-    <value>Operácia sa začala</value>
+    <value>Operácie  začiatok</value>
   </data>
   <data name="___Operation_ended__" xml:space="preserve">
-    <value>Operácia sa skončila</value>
+    <value>Operácie koniec</value>
   </data>
   <data name="___Operator__" xml:space="preserve">
-    <value>Prevádzkovateľ</value>
+    <value>Operátor</value>
   </data>
   <data name="___Entity_header__" xml:space="preserve">
-    <value>Záhlavie subjektu</value>
+    <value>Hlavička kusu</value>
   </data>
   <data name="___Recipe__" xml:space="preserve">
     <value>Recept</value>
@@ -190,13 +190,13 @@
     <value>Nosič</value>
   </data>
   <data name="___Reset__" xml:space="preserve">
-    <value>Obnovenie</value>
+    <value>Resetovanie</value>
   </data>
   <data name="___Master__" xml:space="preserve">
     <value>Master</value>
   </data>
   <data name="___Empty__" xml:space="preserve">
-    <value>Prázdne stránky</value>
+    <value>Prázdny</value>
   </data>
   <data name="___Last_station__" xml:space="preserve">
     <value>Posledná stanica</value>
@@ -205,19 +205,19 @@
     <value>Ďalšia stanica</value>
   </data>
   <data name="___Operations_opened__" xml:space="preserve">
-    <value>Otvorenie prevádzky</value>
+    <value>Otvorenie operacii</value>
   </data>
   <data name="___Results__" xml:space="preserve">
     <value>Výsledky</value>
   </data>
   <data name="___Reworked__" xml:space="preserve">
-    <value>Prepracované stránky</value>
+    <value>Reworkované</value>
   </data>
   <data name="___Last_Rework_Name__" xml:space="preserve">
-    <value>Posledný názov prepracovania</value>
+    <value>Posledný použity rework</value>
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
-    <value>Počet prepracovaní</value>
+    <value>Počet reworkovaní</value>
   </data>
   <data name="___ID__" xml:space="preserve">
     <value>ID</value>
@@ -227,5 +227,8 @@
   </data>
   <data name="___Modified__" xml:space="preserve">
     <value>Upravené</value>
+  </data>
+  <data name="___START_MEASURE_CT_TRIGGER__" xml:space="preserve">
+    <value>START MERANIA ČASU CYKLU</value>
   </data>
 </root>

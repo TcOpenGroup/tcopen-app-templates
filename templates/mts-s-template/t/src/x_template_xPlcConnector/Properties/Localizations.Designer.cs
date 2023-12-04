@@ -396,15 +396,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID.
-        /// </summary>
-        public static string ___ID__ {
-            get {
-                return ResourceManager.GetString("___ID__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to IDLE.
         /// </summary>
         public static string ___IDLE__ {
@@ -554,15 +545,6 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Operations_opened__ {
             get {
                 return ResourceManager.GetString("___Operations_opened__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Operator.
-        /// </summary>
-        public static string ___Operator__ {
-            get {
-                return ResourceManager.GetString("___Operator__", resourceCulture);
             }
         }
         
@@ -734,6 +716,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Start_manual_Service_mode__ {
             get {
                 return ResourceManager.GetString("___Start_manual_Service_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to START MEASURE CT TRIGGER.
+        /// </summary>
+        public static string ___START_MEASURE_CT_TRIGGER__ {
+            get {
+                return ResourceManager.GetString("___START_MEASURE_CT_TRIGGER__", resourceCulture);
             }
         }
         

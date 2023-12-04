@@ -31,7 +31,7 @@
         <Expander Grid.Row="1" Grid.ColumnSpan="2">
             
             <Expander.Header>
-                <WrapPanel>
+                <StackPanel Orientation="Horizontal">
                     <Button
                         Command="{Binding OpenLoginWindowCommand}"
                         Content="LOGIN"
@@ -48,7 +48,14 @@
                         Content="{x:Static p:strings.LangSelector}"
                         IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                         Style="{StaticResource MaterialDesignRaisedButton}"/>
-                </WrapPanel>
+                    <Button
+                        HorizontalAlignment="Right"
+                        Margin="20,0"
+                        Command="{Binding CloseApplicationCommand}"
+                        Content="{x:Static p:strings.CloseApplication}"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </StackPanel>
 
             </Expander.Header>
         </Expander>
