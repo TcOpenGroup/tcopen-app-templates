@@ -43,7 +43,7 @@ namespace x_template_xTests
         {
            EmbeddedServer.Instance.StartServer(new ServerOptions
             {
-                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp1", "data"),
+                DataDirectory = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName, "tmp", "data"),
                 AcceptEula = true,
                 ServerUrl = "http://127.0.0.1:8080",
             });
