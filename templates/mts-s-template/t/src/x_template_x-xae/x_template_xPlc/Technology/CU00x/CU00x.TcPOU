@@ -18,6 +18,12 @@ VAR
     {attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
     _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
   	
+	{attribute addProperty Name "<#Test positions#>"}
+	_positions : Cu00xTestPositions(THIS^);
+
+
+	{attribute addProperty Name "<#Test multi positions#>"}
+	 _positionsMulti : CU00xTestMultiPositions(THIS^);
 
 END_VAR
 ]]></Declaration>
@@ -230,7 +236,25 @@ components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Chan
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
 							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
 							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
-]]></ST>
+Components.SingleAxis.Config.InfoTime:=T#4S;
+Components.SingleAxis.Config.ErrorTime:=T#10S;
+		
+	
+Components.SingleAxis(inEnable := ,
+    inEnablePositive := ,
+    inEnableNegative := ,
+    inCalibrationCam := ,
+    refAxis := GVL_iXlinker.Axis1,
+	inoPositions:= _positions);
+	
+	
+		
+Components.MultiAxis(inEnableAxis1 := ,
+    inEnablePositiveAxis1 := ,
+    inEnableNegativeAxis1 := ,
+    inCalibrationCamAxis1 := ,
+    refAxis1 := GVL_iXlinker.Axis1,
+	inoPositions:= _positionsMulti);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Manual" Id="{f43c6193-c9c5-0244-248c-08c5ef114438}" FolderPath="Modes\">

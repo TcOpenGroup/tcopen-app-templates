@@ -567,6 +567,24 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick Position.
+        /// </summary>
+        public static string ___Pick_Position__ {
+            get {
+                return ResourceManager.GetString("___Pick_Position__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place  Position.
+        /// </summary>
+        public static string ___Place__Position__ {
+            get {
+                return ResourceManager.GetString("___Place__Position__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please acknowledge recurring failure!.
         /// </summary>
         public static string ___Please_acknowledge_recurring_failure___ {
@@ -780,6 +798,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Technology_data__ {
             get {
                 return ResourceManager.GetString("___Technology_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test multi positions.
+        /// </summary>
+        public static string ___Test_multi_positions__ {
+            get {
+                return ResourceManager.GetString("___Test_multi_positions__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test positions.
+        /// </summary>
+        public static string ___Test_positions__ {
+            get {
+                return ResourceManager.GetString("___Test_positions__", resourceCulture);
             }
         }
         
