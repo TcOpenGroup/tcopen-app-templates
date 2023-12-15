@@ -9,9 +9,9 @@ using x_template_xHmi.Wpf.Properties;
 namespace x_template_xHmi.Wpf
 {
 
-    public partial class LanguageSelectionView : Window
+    public partial class ShutdownView : Window
     {
-        public LanguageSelectionView()
+        public ShutdownView()
         {
           
             InitializeComponent();

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using x_template_xPlcConnector;
 
 namespace x_template_xOp
 {
@@ -23,11 +24,17 @@ namespace x_template_xOp
     {
         public static bool IsRestarting { get; set; } = false;
         public MainWindow()
-        {
+        {    
+
             InitializeComponent();
+            if (Debugger.IsAttached /*|| Entry.Settings.DepoyMode == DeployMode.Local*/ || Entry.Settings.DepoyMode == DeployMode.Dummy)
+            { this.WindowStyle = WindowStyle.SingleBorderWindow; }
+            else
+                this.WindowStyle = WindowStyle.None;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             if (!IsRestarting)
             {
                 KillEveryInstance();
@@ -36,6 +43,7 @@ namespace x_template_xOp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
             if (NumberOfRunningInstances() > 1)
             {
                 KillOtherInstances();

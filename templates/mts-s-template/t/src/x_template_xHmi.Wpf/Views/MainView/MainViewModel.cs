@@ -26,12 +26,27 @@ namespace x_template_xHmi.Wpf.Views.MainView
             OpenLoginWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLoginWindow());
             LogOutWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => TcOpen.Inxton.TcoAppDomain.Current.AuthenticationService.DeAuthenticateCurrentUser() );
             OpenLanguageCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLanguageWindow());
-            CloseApplicationCommand = new TcOpen.Inxton.Input.RelayCommand(a => ClloseApplication());
+            CloseApplicationCommand = new TcOpen.Inxton.Input.RelayCommand(a => CloseApplication());
         }
 
-        private void ClloseApplication()
+        private void CloseApplication()
         {
-            Application.Current.Shutdown();
+            TcoAppDomain.Current.Dispatcher.Invoke(
+              (Action)(() =>
+              {
+                  var win = new ShutdownView();
+                  var viewInstance = Activator.CreateInstance((Type)win.GetType());
+
+                  win = viewInstance as ShutdownView;
+                  if (win != null)
+                  {
+                      win.DataContext = App.AppShutdownModel;
+                      win.ShowDialog();
+
+
+                  }
+              })
+            );
         }
 
         public TcOpen.Inxton.Input.RelayCommand CloseApplicationCommand { get; private set; }
@@ -47,12 +62,7 @@ namespace x_template_xHmi.Wpf.Views.MainView
            (Action)(() =>
            {
 
-/* Unmerged change from project 'x_template_xHmi.Wpf (net5.0-windows)'
-Before:
-               var win = new CultureWindowView();
-After:
-               var win = new Wpf.CultureWindowView();
-*/
+
                var win = new LanguageSelectionView();
                var viewInstance = Activator.CreateInstance((Type)win.GetType());
 

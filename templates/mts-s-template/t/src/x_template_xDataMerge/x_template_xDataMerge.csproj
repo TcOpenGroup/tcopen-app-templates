@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.DataMerge" Version="0.11.0-alpha.52" />
+    <PackageReference Include="TcOpen.Inxton.DataMerge" Version="0.11.0-alpha.54" />
   </ItemGroup>
 
   <ItemGroup>

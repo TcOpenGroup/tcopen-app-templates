@@ -133,6 +133,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close Application.
         /// </summary>
         public static string CloseApplication {
@@ -394,6 +403,33 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login/Logout.
+        /// </summary>
+        public static string LogInOut {
+            get {
+                return ResourceManager.GetString("LogInOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAIN MENU.
         /// </summary>
         public static string MainMenu {
@@ -598,6 +634,33 @@ namespace x_template_xHmi.Wpf.Properties {
         public static string ShowTopology {
             get {
                 return ResourceManager.GetString("ShowTopology", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutdown application.
+        /// </summary>
+        public static string Shutdown {
+            get {
+                return ResourceManager.GetString("Shutdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure to close application?.
+        /// </summary>
+        public static string ShutdownApplicationMessageBox {
+            get {
+                return ResourceManager.GetString("ShutdownApplicationMessageBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close application.
+        /// </summary>
+        public static string ShutdownApplicationMessageBoxCaption {
+            get {
+                return ResourceManager.GetString("ShutdownApplicationMessageBoxCaption", resourceCulture);
             }
         }
         

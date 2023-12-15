@@ -9,7 +9,7 @@ using TcOpen.Inxton.Local.Security.Wpf;
 using x_template_xHmi.Wpf;
 using x_template_xHmi.Wpf.Views.Diagnostics;
 using x_template_xOp.Data;
-using x_template_xOp.Properties;
+using x_template_xHmi.Wpf.Properties;
 using x_template_xOp.Views.Operator;
 using x_template_xPlc;
 
@@ -32,7 +32,22 @@ namespace x_template_xOp.Views.MainView
 
         private void ClloseApplication()
         {
-            Application.Current.Shutdown();
+            TcoAppDomain.Current.Dispatcher.Invoke(
+             (Action)(() =>
+             {
+                 var win = new ShutdownView();
+                 var viewInstance = Activator.CreateInstance((Type)win.GetType());
+
+                 win = viewInstance as ShutdownView;
+                 if (win != null)
+                 {
+                     win.DataContext = App.AppShutdownModel;
+                     win.ShowDialog();
+
+
+                 }
+             })
+           );
         }
 
         public TcOpen.Inxton.Input.RelayCommand CloseApplicationCommand { get; private set; }
@@ -48,12 +63,7 @@ namespace x_template_xOp.Views.MainView
            (Action)(() =>
            {
 
-               /* Unmerged change from project 'x_template_xOp (net5.0-windows)'
-               Before:
-                              var win = new CultureWindowView();
-               After:
-                              var win = new Wpf.CultureWindowView();
-               */
+            
                var win = new LanguageSelectionView();
                var viewInstance = Activator.CreateInstance((Type)win.GetType());
 

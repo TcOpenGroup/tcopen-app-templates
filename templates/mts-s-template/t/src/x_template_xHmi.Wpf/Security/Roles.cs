@@ -19,7 +19,9 @@ namespace x_template_xHmi.Wpf
             SecurityManager.Manager.GetOrCreateRole(new Role(station_details, "Maintenance"));
             SecurityManager.Manager.GetOrCreateRole(new Role(sequencer_step, "Maintenance"));            
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_ground_all, "Maintenance"));
-            SecurityManager.Manager.GetOrCreateRole(new Role(technology_automat_all, "Maintenance"));                        
+            SecurityManager.Manager.GetOrCreateRole(new Role(technology_automat_all, "Maintenance"));
+            SecurityManager.Manager.GetOrCreateRole(new Role(can_user_change_localization, "Operator"));
+            SecurityManager.Manager.GetOrCreateRole(new Role(can_user_close_application, "Operator"));
         }
         public const string instructor_access = nameof(instructor_access);
         public const string process_settings_access = nameof(process_settings_access);
@@ -34,7 +36,8 @@ namespace x_template_xHmi.Wpf
         public const string sequencer_step = nameof(sequencer_step);       
         public const string technology_automat_all = nameof(technology_automat_all);
         public const string technology_ground_all = nameof(technology_ground_all);
-
+        public const string can_user_close_application = nameof(can_user_close_application);
+        public const string can_user_change_localization = nameof(can_user_change_localization);
         private static Roles _roles;
 
         public static void Create()
