@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="___AUTOMAT__" xml:space="preserve">
-    <value>Upravit automat</value>
+    <value>AUTOMAT</value>
   </data>
   <data name="___GROUND__" xml:space="preserve">
-    <value>UZEMNĚNÍ</value>
+    <value>RESET</value>
   </data>
   <data name="___MANUAL__" xml:space="preserve">
-    <value>PŘÍRUČKA</value>
+    <value>MANUAL</value>
   </data>
   <data name="___IDLE__" xml:space="preserve">
-    <value>VOLNOBĚH</value>
+    <value>NEAKTIVNI</value>
   </data>
   <data name="___Process_data_not_selected__" xml:space="preserve">
-    <value>Data zpracování nebyla vybrána</value>
+    <value>Precesní nastaveni nebyla vybrána</value>
   </data>
   <data name="___Would_you_like_to_load_default_settings___" xml:space="preserve">
     <value>Chcete načíst výchozí nastavení?</value>
@@ -145,19 +145,19 @@
     <value>AUTOMAT VŠECHNO</value>
   </data>
   <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>Ukostření</value>
+    <value>RESET VSETKY</value>
   </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
-    <value>Další jestli prošel</value>
+    <value>Další prošel</value>
   </data>
   <data name="___Next_on_Failed__" xml:space="preserve">
-    <value>Další jestli chyba</value>
+    <value>Další chyba</value>
   </data>
   <data name="___Cycle_time__" xml:space="preserve">
     <value>Doba cyklu</value>
   </data>
   <data name="___Clean_loop_time__" xml:space="preserve">
-    <value>Čas na čistou smyčku</value>
+    <value>Čistý cas cyklu</value>
   </data>
   <data name="___Operation_started__" xml:space="preserve">
     <value>Operace začala</value>
@@ -169,10 +169,10 @@
     <value>Operátor</value>
   </data>
   <data name="___Entity_header__" xml:space="preserve">
-    <value>Záhlaví entity</value>
+    <value>Hlavička kusu</value>
   </data>
   <data name="___Carrier__" xml:space="preserve">
-    <value>Dopravce</value>
+    <value>Nosiš</value>
   </data>
   <data name="___Reset__" xml:space="preserve">
     <value>Reset</value>
@@ -196,10 +196,10 @@
     <value>Výsledky</value>
   </data>
   <data name="___Last_Rework_Name__" xml:space="preserve">
-    <value>Jméno posledního přepracování</value>
+    <value>Jméno posledního reworku</value>
   </data>
   <data name="___ID__" xml:space="preserve">
-    <value>Občanský průkaz</value>
+    <value>ID</value>
   </data>
   <data name="___Created__" xml:space="preserve">
     <value>Vytvořeno</value>
@@ -223,9 +223,9 @@
     <value>Upravený recept</value>
   </data>
   <data name="___Reworked__" xml:space="preserve">
-    <value>Přepracované stránky</value>
+    <value>Reworkované</value>
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
-    <value>Počet přepracování</value>
+    <value>Počet reworkovani</value>
   </data>
 </root>

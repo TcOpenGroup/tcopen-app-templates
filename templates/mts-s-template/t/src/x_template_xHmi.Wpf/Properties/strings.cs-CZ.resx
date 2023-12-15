@@ -352,4 +352,28 @@ HLAVNÍ SEKVENCE!</value>
   <data name="Topology" xml:space="preserve">
     <value>Topológie Ecat</value>
   </data>
+  <data name="CloseApplication" xml:space="preserve">
+    <value>Vypnutí aplikace</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Prihlásit</value>
+  </data>
+  <data name="LogInOut" xml:space="preserve">
+    <value>Prihlásit/Odhlasit</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Odhlásit</value>
+  </data>
+  <data name="Shutdown" xml:space="preserve">
+    <value>Vypnút</value>
+  </data>
+  <data name="ShutdownApplicationMessageBox" xml:space="preserve">
+    <value>Prajete si vypnút aplikáci?</value>
+  </data>
+  <data name="ShutdownApplicationMessageBoxCaption" xml:space="preserve">
+    <value>Vypnút aplikaci</value>
+  </data>
 </root>

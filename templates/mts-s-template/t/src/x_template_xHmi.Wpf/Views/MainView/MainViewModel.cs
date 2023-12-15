@@ -10,6 +10,7 @@ using TcOpen.Inxton.Local.Security.Wpf;
 using x_template_xPlc;
 using x_template_xHmi.Wpf.Views.Diagnostics;
 using TcOpen.Inxton;
+using System.Windows;
 
 namespace x_template_xHmi.Wpf.Views.MainView
 {
@@ -25,8 +26,30 @@ namespace x_template_xHmi.Wpf.Views.MainView
             OpenLoginWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLoginWindow());
             LogOutWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => TcOpen.Inxton.TcoAppDomain.Current.AuthenticationService.DeAuthenticateCurrentUser() );
             OpenLanguageCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLanguageWindow());
+            CloseApplicationCommand = new TcOpen.Inxton.Input.RelayCommand(a => CloseApplication());
         }
 
+        private void CloseApplication()
+        {
+            TcoAppDomain.Current.Dispatcher.Invoke(
+              (Action)(() =>
+              {
+                  var win = new ShutdownView();
+                  var viewInstance = Activator.CreateInstance((Type)win.GetType());
+
+                  win = viewInstance as ShutdownView;
+                  if (win != null)
+                  {
+                      win.DataContext = App.AppShutdownModel;
+                      win.ShowDialog();
+
+
+                  }
+              })
+            );
+        }
+
+        public TcOpen.Inxton.Input.RelayCommand CloseApplicationCommand { get; private set; }
         public TcOpen.Inxton.Input.RelayCommand OpenLoginWindowCommand { get; private set; }
         public TcOpen.Inxton.Input.RelayCommand LogOutWindowCommand { get; private set; }
         public TcOpen.Inxton.Input.RelayCommand OpenLanguageCommand { get; private set; }
@@ -39,12 +62,7 @@ namespace x_template_xHmi.Wpf.Views.MainView
            (Action)(() =>
            {
 
-/* Unmerged change from project 'x_template_xHmi.Wpf (net5.0-windows)'
-Before:
-               var win = new CultureWindowView();
-After:
-               var win = new Wpf.CultureWindowView();
-*/
+
                var win = new LanguageSelectionView();
                var viewInstance = Activator.CreateInstance((Type)win.GetType());
 

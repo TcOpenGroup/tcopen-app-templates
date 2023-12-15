@@ -13,7 +13,7 @@ namespace x_template_xPlcConnector
 
 
     
-        private static  x_template_xPlcTwinController plc;
+        private static  x_template_xPlcTwinController plc =  new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, true));
         private static ApplicationSettings _settings;
 
 
@@ -35,7 +35,7 @@ namespace x_template_xPlcConnector
         /// Load specific parameters stored in json file stored in 'x_template_xPlcConnector.Properties.Settings.Default.SettingsLocation'
         /// </summary>
         /// <param name="setId">Name for set</param>
-        public static void LoadAppSettings(string setId)
+        public static void LoadAppSettings(string setId,bool inDevelopingMode)
         {
 
             RepositoryDataSetHandler<ApplicationSettings> _settings = RepositoryDataSetHandler<ApplicationSettings>.CreateSet(new JsonRepository<EntitySet<ApplicationSettings>>(new JsonRepositorySettings<EntitySet<ApplicationSettings>>(Properties.Settings.Default.SettingsLocation)));//todo tco adresar
@@ -43,11 +43,16 @@ namespace x_template_xPlcConnector
             var set = new EntitySet<ApplicationSettings>();
             set._Modified = DateTime.Now;
             set._EntityId = setId;
+
             if (result == null)
             {
                 set._Created = DateTime.Now;
-              
+
                 _settings.Create(setId, set);
+            }
+            else if (inDevelopingMode)
+            {
+                _settings.Repository.Update(setId, set);
             }
 
             Entry._settings = _settings.Read(setId).Item;

@@ -5,28 +5,42 @@
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
-		{attribute addProperty Name "GROUP 1"}
-		Group1 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 2"}
-		Group2 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 3"}
-		Group3 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 4"}
-		Group4 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 5"}
-		Group5 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 6"}
-		Group6 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 7"}
-		Group7 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 8"}
-		Group8 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 9"}
-		Group9 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "GROUP 10"}
-		Group10 : TemplateComponents:= (Parent := THISSTRUCT);  
-		{attribute addProperty Name "Pair Tags"}
+				
+		{attribute wpf [Container(Layout.Stack)]}
+		{attribute addProperty Name "Supplu TTI QL"}
+     	Supply : TcoAimTtiPowerSupply.TcoQl355P_v_1_x_x (THISSTRUCT);
+		{attribute wpf [Container(Layout.Stack)]}
 		PairTagTask: PairTagTask(THISSTRUCT);
+		{attribute wpf [Container(Layout.Stack,"DRIVES AND MANIPULATORS")]}	
+		{attribute addProperty Name "MultiAxis"}
+     	MultiAxis : TcoDrivesBeckhoff.TcoMultiAxis (THISSTRUCT);
+		{attribute addProperty Name "Single Axis"}
+     	SingleAxis : TcoDrivesBeckhoff.TcoSingleAxis (THISSTRUCT);
+		{attribute addProperty Name "Simple drive"}
+     	SimpleDrive : TcoDrivesBeckhoff.TcoDriveSimple (THISSTRUCT);
+
+
+	
+		{attribute wpf [Container(Layout.Stack,"ROBOTICS")]}	
+		{attribute addProperty Name "Abb IRC 5"}
+     	AbbIrc5 : TcoAbbRobotics.TcoIrc5_v_1_x_x (THISSTRUCT);
+		{attribute addProperty Name "Abb Omnicore"}
+     	AbbOmnicore : TcoAbbRobotics.TcoOmnicore_v_1_x_x (THISSTRUCT);
+		
+		{attribute addProperty Name "Mitshubishi Cr series"}
+     	MitshubishiCr: TcoMitsubishiRobotics.TcoCr800_v_1_x_x (THISSTRUCT);
+		{attribute addProperty Name "UR CB series"}
+     	UrCb3:  TcoUrRobotics.TcoUrCb3_v_3_x_x(THISSTRUCT);
+		{attribute addProperty Name "Ur E series"}
+     	UrEseries: TcoUrRobotics.TcoUrEseries_v_5_x_x (THISSTRUCT);
+		
+
+		{attribute addProperty Name "GROUP 1"}
+		Group1 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT);  
+		{attribute addProperty Name "GROUP 2"}
+		Group2 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT); 
+ 
+		
     END_STRUCT
 END_TYPE
 ]]></Declaration>

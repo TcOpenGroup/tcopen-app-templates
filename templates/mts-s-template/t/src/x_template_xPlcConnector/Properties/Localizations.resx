@@ -150,6 +150,9 @@
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
   </data>
+  <data name="___START_MEASURE_CT_TRIGGER__" xml:space="preserve">
+    <value>START MEASURE CT TRIGGER</value>
+  </data>
   <data name="___Process_data_not_selected__" xml:space="preserve">
     <value>Process data not selected</value>
   </data>
@@ -186,6 +189,9 @@
   <data name="____is_not_founded___Would_you_like_assign_right_now____" xml:space="preserve">
     <value> is not founded ! Would you like assign right now? </value>
   </data>
+  <data name="____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____" xml:space="preserve">
+    <value> is not founded due collection is empty ! Would you like assign right now? </value>
+  </data>
   <data name="___ADD_NEW_TAG__EXAMPLE__" xml:space="preserve">
     <value>ADD NEW TAG  EXAMPLE</value>
   </data>
@@ -198,6 +204,12 @@
   <data name="____was_not_founnd__Would_you_like_still_like_to_continue____" xml:space="preserve">
     <value> was not founnd! Would you like still like to continue? </value>
   </data>
+  <data name="___Pick_Position__" xml:space="preserve">
+    <value>Pick Position</value>
+  </data>
+  <data name="___Place__Position__" xml:space="preserve">
+    <value>Place  Position</value>
+  </data>
   <data name="___Start_manual_Service_mode__" xml:space="preserve">
     <value>Start manual/Service mode</value>
   </data>
@@ -206,6 +218,12 @@
   </data>
   <data name="___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence___" xml:space="preserve">
     <value>Starts automatic sequence. Before start you need to perform grounding sequence.</value>
+  </data>
+  <data name="___Test_positions__" xml:space="preserve">
+    <value>Test positions</value>
+  </data>
+  <data name="___Test_multi_positions__" xml:space="preserve">
+    <value>Test multi positions</value>
   </data>
   <data name="___AUTOMAT_ALL__" xml:space="preserve">
     <value>AUTOMAT ALL</value>
@@ -233,9 +251,6 @@
   </data>
   <data name="___Operation_ended__" xml:space="preserve">
     <value>Operation ended</value>
-  </data>
-  <data name="___Operator__" xml:space="preserve">
-    <value>Operator</value>
   </data>
   <data name="___Nominal__" xml:space="preserve">
     <value>Nominal</value>
@@ -350,9 +365,6 @@
   </data>
   <data name="___Average_cycle_time_filter_constant__" xml:space="preserve">
     <value>Average cycle time filter constant</value>
-  </data>
-  <data name="___ID__" xml:space="preserve">
-    <value>ID</value>
   </data>
   <data name="___Created__" xml:space="preserve">
     <value>Created</value>

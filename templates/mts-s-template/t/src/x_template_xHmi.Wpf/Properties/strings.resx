@@ -361,4 +361,28 @@ MAIN SEQUENCE</value>
   <data name="Topology" xml:space="preserve">
     <value>Topolgy of Ecat</value>
   </data>
+  <data name="CloseApplication" xml:space="preserve">
+    <value>Close Application</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LogInOut" xml:space="preserve">
+    <value>Login/Logout</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Shutdown" xml:space="preserve">
+    <value>Shutdown application</value>
+  </data>
+  <data name="ShutdownApplicationMessageBox" xml:space="preserve">
+    <value>Are you sure to close application?</value>
+  </data>
+  <data name="ShutdownApplicationMessageBoxCaption" xml:space="preserve">
+    <value>Close application</value>
+  </data>
 </root>

@@ -1,0 +1,65 @@
+<UserControl
+    x:Class="x_template_xOp.Views.MainView.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:x_template_xOp.Views.MainView"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vortex="http://vortex.mts/xaml" 
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties;assembly=x_template_xHmi.Wpf"
+    xmlns:wpf="clr-namespace:x_template_xHmi.Wpf;assembly=x_template_xHmi.Wpf" xmlns:x_template_xplc1="clr-namespace:x_template_xPlc;assembly=x_template_xHmi.Wpf" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignWidth="800">
+    <UserControl.DataContext>
+        <local:MainViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"  MinHeight="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Viewbox Grid.Row="0" Grid.RowSpan="1">
+            <x_template_xplc1:NotificationPanelView  ModelObject="{Binding x_template_xPlc.MAIN._technology._notificationPanel}" />
+        </Viewbox>
+        <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="2">
+            <Menu 
+                materialDesign:MenuAssist.TopLevelMenuItemHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Card}}, Path=ActualHeight}">
+                <MenuItem Header="{x:Static p:strings.LogInOut}"  Icon="{materialDesign:PackIcon Kind=UserLock}">
+                    <MenuItem
+                        Command="{Binding OpenLoginWindowCommand}"
+                        Header="{x:Static p:strings.Login}"
+                        Icon="{materialDesign:PackIcon Kind=Login}"/>
+
+
+                    <MenuItem
+                        Command="{Binding LogOutWindowCommand}"
+                        Header="{x:Static p:strings.Logout}"
+                        Icon="{materialDesign:PackIcon Kind=Logout}"/>
+
+                </MenuItem>
+                <MenuItem Header="{x:Static p:strings.LangSelector}" 
+                          Icon="{materialDesign:PackIcon Kind=Language}"
+                          Command="{Binding OpenLanguageCommand}"
+                          IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+
+
+                <MenuItem Header="{x:Static p:strings.CloseApplication}" 
+                           Icon="{materialDesign:PackIcon Kind=ExitToApp}"
+                            Command="{Binding CloseApplicationCommand}"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+
+
+            </Menu>
+        </materialDesign:Card>
+        <wpf:MenuControlView Grid.Column="1"/>
+    </Grid>
+</UserControl>

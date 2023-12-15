@@ -5,17 +5,10 @@
 TYPE
     ProcessData EXTENDS TcoData.TcoEntity :
     STRUCT
-        {attribute clr [Container(Layout.Stack)]}
-        {attribute clr [Group(Layout.GroupBox)]}
-        {attribute addProperty Name "<#ID#>"}
-        {attribute clr [RenderIgnore()]}
-        {attribute 'qlik_association_field'}
-        {attribute 'qlik_load:Id'}
-        {attribute 'qlik_select:_Id_1'}
-        qlikId : STRING(254);
+
+  
         {attribute clr [RenderIgnore("Control", "ShadowControl")]}
         {attribute addProperty Name "<#Created#>"}
-        {attribute 'qlik_time_partition:Shift:[Morning]06:00:00-14:00:00;[Afternoon]14:00:00-22:00:00;[Night]22:00:00-06:00:00'}
         _Created : DT;
         {attribute clr [RenderIgnore("Control", "ShadowControl")]}
         {attribute addProperty Name "<#Modified#>"}
@@ -25,48 +18,7 @@ TYPE
 		{attribute addProperty Name "<#CU00x#>"}
 		{attribute clr [Container(Layout.Stack)]}
         CU00x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU01x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU02x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU03x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU04x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU05x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU06x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU07x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU08x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU09x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU10x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU11x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU12x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU13x : CU00xProcessData := (Parent := THISSTRUCT);
-		{attribute addProperty Name "<#CU00x#>"}
-		{attribute clr [Container(Layout.Stack)]}
-        CU14x : CU00xProcessData := (Parent := THISSTRUCT);
+
     END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -18,6 +18,12 @@ VAR
     {attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
     _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
   	
+	{attribute addProperty Name "<#Test positions#>"}
+	_positions : Cu00xTestPositions(THIS^);
+
+
+	{attribute addProperty Name "<#Test multi positions#>"}
+	 _positionsMulti : CU00xTestMultiPositions(THIS^);
 
 END_VAR
 ]]></Declaration>
@@ -108,7 +114,7 @@ END_VAR
 *)
 
 
-_automatTask.Task.Enabled := _groundTask.GroundDone AND THIS^.Technology.AllowAutomat();
+_automatTask.Task.Enabled := (_groundTask.GroundDone OR  _automatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
 
 (*
 	Invokes `groundTask` from technology object.
@@ -173,7 +179,7 @@ END_VAR
 	]
 *)
 
-_groundTask.Task.Enabled := NOT _groundTask.Task.Done AND THIS^.Technology.AllowGround();
+_groundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
 
 (*
 	Invokes `groundTask` from technology object.
@@ -181,11 +187,15 @@ _groundTask.Task.Enabled := NOT _groundTask.Task.Done AND THIS^.Technology.Allow
 
 IF(Technology.GroundAllTask.Execute()) THEN _groundTask.Task.Invoke(); END_IF;
 
+
+IF _groundTask.GroundDone AND _groundTask.Task.Execute() THEN _groundTask.Restore();_groundTask.Task.Invoke();END_IF;
+
 (*
 
 	Executes sequence of groundTask.
 
 *)
+
 _groundTask();]]></ST>
       </Implementation>
     </Method>
@@ -226,7 +236,25 @@ components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Chan
 							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
 							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
 							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
-]]></ST>
+Components.SingleAxis.Config.InfoTime:=T#4S;
+Components.SingleAxis.Config.ErrorTime:=T#10S;
+		
+	
+Components.SingleAxis(inEnable := ,
+    inEnablePositive := ,
+    inEnableNegative := ,
+    inCalibrationCam := ,
+    refAxis := GVL_iXlinker.Axis1,
+	inoPositions:= _positions);
+	
+	
+		
+Components.MultiAxis(inEnableAxis1 := ,
+    inEnablePositiveAxis1 := ,
+    inEnableNegativeAxis1 := ,
+    inCalibrationCamAxis1 := ,
+    refAxis1 := GVL_iXlinker.Axis1,
+	inoPositions:= _positionsMulti);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Manual" Id="{f43c6193-c9c5-0244-248c-08c5ef114438}" FolderPath="Modes\">

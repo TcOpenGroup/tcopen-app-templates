@@ -5,15 +5,15 @@ namespace x_template_xPlcConnector
     public class ApplicationSettings
     {
 
-        public DeployMode DepoyMode{ get; set; } = DeployMode.Plc;
-        public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
+        public DeployMode DepoyMode{ get; set; } = DeployMode.Local;
+        public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.RavenDbEmbded;
         public string PlcAmsId =Environment.GetEnvironmentVariable("Tc3Target");
-        public bool ShowConsoleOutput { get; set; } = false;
+        public bool ShowConsoleOutput { get; set; } = true;
 
         public int ReadWriteCycleDelay { get; set; } = 100;
 
         public string DbName { get; set; } = "tcomtsx_template_x";
-        public string MongoPath {get;set;} = @"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe";
+        public string MongoPath {get;set;} = @"C:\Program Files\MongoDB\Server\7.0\bin\mongod.exe";
         public string MongoArgs { get; set; } = "--dbpath D:\\DATA\\DB\\ --bind_ip_all";
         public bool MongoDbRun { get; set; } = true;
         private string MongoDbLocal { get; set; } = @"mongodb://localhost:27017";

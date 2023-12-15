@@ -126,6 +126,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  is not founded due collection is empty ! Would you like assign right now? .
+        /// </summary>
+        public static string ____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____ {
+            get {
+                return ResourceManager.GetString("____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  was not founnd! Would you like still like to continue? .
         /// </summary>
         public static string ____was_not_founnd__Would_you_like_still_like_to_continue____ {
@@ -387,15 +396,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID.
-        /// </summary>
-        public static string ___ID__ {
-            get {
-                return ResourceManager.GetString("___ID__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to IDLE.
         /// </summary>
         public static string ___IDLE__ {
@@ -549,15 +549,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operator.
-        /// </summary>
-        public static string ___Operator__ {
-            get {
-                return ResourceManager.GetString("___Operator__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PAIR TAG WITH ASSIGNED VALUE EXAMPLE.
         /// </summary>
         public static string ___PAIR_TAG_WITH_ASSIGNED_VALUE_EXAMPLE__ {
@@ -572,6 +563,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Pairing_Tag__ {
             get {
                 return ResourceManager.GetString("___Pairing_Tag__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick Position.
+        /// </summary>
+        public static string ___Pick_Position__ {
+            get {
+                return ResourceManager.GetString("___Pick_Position__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place  Position.
+        /// </summary>
+        public static string ___Place__Position__ {
+            get {
+                return ResourceManager.GetString("___Place__Position__", resourceCulture);
             }
         }
         
@@ -729,6 +738,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to START MEASURE CT TRIGGER.
+        /// </summary>
+        public static string ___START_MEASURE_CT_TRIGGER__ {
+            get {
+                return ResourceManager.GetString("___START_MEASURE_CT_TRIGGER__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Starts automatic sequence. Before start you need to perform grounding sequence..
         /// </summary>
         public static string ___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence___ {
@@ -780,6 +798,24 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Technology_data__ {
             get {
                 return ResourceManager.GetString("___Technology_data__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test multi positions.
+        /// </summary>
+        public static string ___Test_multi_positions__ {
+            get {
+                return ResourceManager.GetString("___Test_multi_positions__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test positions.
+        /// </summary>
+        public static string ___Test_positions__ {
+            get {
+                return ResourceManager.GetString("___Test_positions__", resourceCulture);
             }
         }
         

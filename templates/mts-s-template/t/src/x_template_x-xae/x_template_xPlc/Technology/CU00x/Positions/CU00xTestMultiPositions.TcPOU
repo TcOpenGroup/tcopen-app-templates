@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CU00xTestMultiPositions" Id="{cd7dbda4-d274-4cdf-b1b2-8d207511c762}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CU00xTestMultiPositions EXTENDS TcoDrivesBeckhoff.TcoMultiAxisPositionsRootContainer
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute addProperty Name "<#Pick Position#>"}
+	PickPosition:TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Place  Position#>"}
+	PlacePosition:TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="PickPos" Id="{d5f22fa6-de95-492c-a977-aa26e0a454b8}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PickPos : REFERENCE TO TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{1bf33f6e-5e82-4ef2-b34c-6b3b63ac4f06}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PickPos REF=PickPosition;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PlacePos" Id="{07ab9d01-eeaf-4668-b9bb-2b28cd21fa1c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PlacePos : REFERENCE TO TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{1ef2bda8-305a-4c84-8cae-d55120fc8fd6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PlacePos REF=PlacePosition;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

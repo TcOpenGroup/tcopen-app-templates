@@ -11,12 +11,15 @@ VAR
 	_cycleTimeAnalitics:CycleTimeAnalitics;	
 	_startCleanCycleTime: TIME;
 	_stopCleanCycleTime: TIME;
+	_timer_1: TON;
+	_timer_2: TON;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[Run();]]></ST>
     </Implementation>
     <Folder Name="CycleTimeAnalitics" Id="{86c02bf1-155c-0d73-2b05-d09e4bb07f43}" />
     <Folder Name="TaskRelay" Id="{afc41ea2-70b7-46a4-8ba7-73e4b0574c74}" />
+    <Folder Name="Timers" Id="{2af6797e-8e04-46b1-9884-5deb625c01f4}" />
     <Property Name="AverageCleanCycleTime" Id="{2856e096-2c70-0832-3dad-a64ad95dfd66}" FolderPath="CycleTimeAnalitics\">
       <Declaration><![CDATA[PROPERTY PUBLIC AverageCleanCycleTime : TIME]]></Declaration>
       <Get Name="Get" Id="{77b100c9-2a8f-0c53-036a-faa56cf15504}">
@@ -39,6 +42,32 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="Await" Id="{12e57bae-9ee5-410f-b614-026e886ed168}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Completes the actually running step, when the `inCondition` parameter is `TRUE`.
+			Method is typically called inside a step as the transition method.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED FINAL Await
+VAR_INPUT
+    (*~
+	<docu>
+		<summary>
+			The condition under which the step is completed.
+		</summary>			
+	</docu>	
+~*)
+    inCondition : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[i_StepCompleteWhen(inCondition := inCondition);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="CompleteSequence" Id="{e660dda5-e822-0795-15da-43df1875907c}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -112,7 +141,7 @@ END_VAR
 		</summary>
 	</docu>
 ~*)
-METHOD PROTECTED ABSTRACT Main : BOOL
+METHOD PROTECTED  Main : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
@@ -264,6 +293,16 @@ END_VAR
 _cycleTimeAnalitics.Average:=T#0S;
 _cycleTimeAnalitics.AverageCleanCycle:=T#0S;
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetTimers" Id="{c0e378a0-09f3-4f5d-8221-03bde2a0ef7b}" FolderPath="Timers\">
+      <Declaration><![CDATA[METHOD PRIVATE ResetTimers
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_timer_1.IN:=FALSE;
+_timer_2.IN:=FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Restore" Id="{a3c44169-c865-41a7-b04d-fb6593fd4c0f}">
@@ -445,5 +484,29 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="Timer_1" Id="{1124a7d8-f03e-48d1-8410-80f26add3bdf}" FolderPath="Timers\">
+      <Declaration><![CDATA[METHOD PUBLIC FINAL Timer_1 : BOOL
+VAR_INPUT
+	Condition : BOOL;
+	PT : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_timer_1(IN:= Condition  and  not IsFreshState, PT:=PT);
+Timer_1 := _timer_1.Q;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Timer_2" Id="{ba7678b2-3bdc-4bb3-9f5e-196bf9a8fe98}" FolderPath="Timers\">
+      <Declaration><![CDATA[METHOD PUBLIC FINAL Timer_2 : BOOL
+VAR_INPUT
+	Condition : BOOL;
+	PT : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_timer_2(IN:= Condition and not IsFreshState, PT:=PT);
+Timer_2 := _timer_2.Q;]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

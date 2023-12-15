@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UserSecretsId>898a9847-9e04-4830-849d-662011ed5f2e</UserSecretsId>
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Splash\splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\CulturalFlags\cz.png" />
+    <Resource Include="Assets\CulturalFlags\sk.png" />
+    <Resource Include="Assets\CulturalFlags\us.png" />
+ 
+  </ItemGroup>
+</Project>

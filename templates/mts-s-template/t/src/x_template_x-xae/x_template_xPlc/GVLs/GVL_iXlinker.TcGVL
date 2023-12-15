@@ -4,6 +4,8 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 		EC1 : EC1_53109142;
+		Axis1	:	TcoDrivesBeckhoff.TcoAxisRef;
+		Axis2	:	TcoDrivesBeckhoff.TcoAxisRef;	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -361,4 +361,28 @@ HLAVNÁ SEKVENCIA</value>
   <data name="Topology" xml:space="preserve">
     <value>Topológia Ecat</value>
   </data>
+  <data name="CloseApplication" xml:space="preserve">
+    <value>Vypnutie aplikácie</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Zrušiť</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Prihlásiť</value>
+  </data>
+  <data name="LogInOut" xml:space="preserve">
+    <value>Prihlásiť/Odhlasiť</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Odhlásiť</value>
+  </data>
+  <data name="Shutdown" xml:space="preserve">
+    <value>Vypnúť</value>
+  </data>
+  <data name="ShutdownApplicationMessageBox" xml:space="preserve">
+    <value>Prajete si vypnúť aplikáciu?</value>
+  </data>
+  <data name="ShutdownApplicationMessageBoxCaption" xml:space="preserve">
+    <value>Vypnúť aplickaciu</value>
+  </data>
 </root>
