@@ -19,12 +19,12 @@ namespace x_template_xOp.Views.Operator
         {
             x_template_xPlc.MAIN._technology._automatAllTask.ExecuteDialog = () =>
             {
-                return MessageBox.Show(x_template_xOp.Properties.strings.AutomatAllWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.AutomatAllWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
             };
 
             x_template_xPlc.MAIN._technology._groundAllTask.ExecuteDialog = () =>
             {
-                return MessageBox.Show(x_template_xOp.Properties.strings.GroundAllWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.GroundAllWarning, "Ground", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
             };
 
             x_template_xPlc.MAIN._technology._automatAllTask.Roles = Roles.technology_automat_all;

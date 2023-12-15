@@ -10,7 +10,7 @@ using x_template_xHmi.Wpf.Views.Data.ProcessSettings;
 using x_template_xHmi.Wpf.Views.Data.ProcessTraceability;
 using x_template_xHmi.Wpf.Views.Data.ReworkSettings;
 using x_template_xHmi.Wpf.Views.Data.TechnologicalSettings;
-using x_template_xOp.Properties;
+using x_template_xHmi.Wpf.Properties;
 
 
 namespace x_template_xOp.Data

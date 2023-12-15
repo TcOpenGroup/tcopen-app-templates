@@ -506,6 +506,8 @@ namespace x_template_xHmi.Wpf
         public static StatisticsDataController CuxStatistic { get; private set; }
         public static TagsPairingController CuxTagsPairing { get; private set; }
         public static LanguageSelectionViewModel LanguageSelectionModel { get; private set; }
+        public static ShutdownViewModel AppShutdownModel { get; private set; } = new ShutdownViewModel();
+
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

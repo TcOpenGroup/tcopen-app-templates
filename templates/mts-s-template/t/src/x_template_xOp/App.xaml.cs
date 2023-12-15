@@ -25,8 +25,8 @@ using Vortex.Connector;
 using Vortex.Presentation.Wpf;
 using x_template_xDataMerge.Rework;
 using x_template_xHmi.Wpf;
+using x_template_xHmi.Wpf.Properties;
 using x_template_xInstructor.TcoSequencer;
-using x_template_xOp.Properties;
 using x_template_xPlc;
 using x_template_xPlcConnector;
 using x_template_xProductionPlaner.Planer;
@@ -56,7 +56,6 @@ namespace x_template_xOp
         {
             SetCulture();
             Entry.LoadAppSettings("defaultOP", true);
-
 
             GeAssembliesVersion("Tc");
             GeAssembliesVersion("Vortex");
@@ -491,6 +490,8 @@ namespace x_template_xOp
         public static StatisticsDataController CuxStatistic { get; private set; }
         public static TagsPairingController CuxTagsPairing { get; private set; }
         public static LanguageSelectionViewModel LanguageSelectionModel { get; private set; }
+        public static ShutdownViewModel AppShutdownModel { get; private set; } = new ShutdownViewModel();
+
 
         /// <summary>
         /// Determines whether the application at design time. (true when at design, false at runtime)

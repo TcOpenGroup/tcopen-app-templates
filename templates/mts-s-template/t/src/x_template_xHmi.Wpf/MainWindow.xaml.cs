@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using x_template_xPlcConnector;
 
 namespace x_template_xHmi.Wpf
 {
@@ -25,6 +26,10 @@ namespace x_template_xHmi.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            if (Debugger.IsAttached /*|| Entry.Settings.DepoyMode == DeployMode.Local*/ || Entry.Settings.DepoyMode == DeployMode.Dummy)
+            { this.WindowStyle = WindowStyle.SingleBorderWindow; }
+            else
+                this.WindowStyle = WindowStyle.None;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

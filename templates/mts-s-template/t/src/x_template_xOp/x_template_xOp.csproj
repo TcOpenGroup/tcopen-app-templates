@@ -14,38 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\x_template_xHmi.Wpf\x_template_xHmi.Wpf.csproj" />
   </ItemGroup>
-
-
-	<ItemGroup>
-		<Compile Update="Properties\NotificationPanel.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>NotificationPanel.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Properties\Settings.Designer.cs">
-		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>Settings.settings</DependentUpon>
-		</Compile>
-		<Compile Update="Properties\strings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>strings.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\NotificationPanel.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>NotificationPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Properties\strings.cs-CZ.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Properties\strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Splash\splash.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -56,11 +24,5 @@
     <Resource Include="Assets\CulturalFlags\sk.png" />
     <Resource Include="Assets\CulturalFlags\us.png" />
  
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>

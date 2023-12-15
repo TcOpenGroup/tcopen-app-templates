@@ -9,7 +9,7 @@
     mc:Ignorable="d"
 
     d:DesignHeight="450"
-    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
+    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties" xmlns:vortexs="http://vortex.security.mts/xaml" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     d:DesignWidth="800">
     <UserControl.DataContext>
         <local:MainViewModel />
@@ -17,7 +17,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="50" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -28,37 +28,40 @@
         <Viewbox Grid.Row="0" Grid.RowSpan="1">
             <x_template_xplc:NotificationPanelView  ModelObject="{Binding x_template_xPlc.MAIN._technology._notificationPanel}" />
         </Viewbox>
-        <Expander Grid.Row="1" Grid.ColumnSpan="2">
-            
-            <Expander.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Button
-                        Command="{Binding OpenLoginWindowCommand}"
-                        Content="LOGIN"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"/>
-                    <Button
-                        Command="{Binding LogOutWindowCommand}"
-                        Content="LOGOUT"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"/>
-                    <Button
-                        Margin="20,0"
-                        Command="{Binding OpenLanguageCommand}"
-                        Content="{x:Static p:strings.LangSelector}"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"/>
-                    <Button
-                        HorizontalAlignment="Right"
-                        Margin="20,0"
-                        Command="{Binding CloseApplicationCommand}"
-                        Content="{x:Static p:strings.CloseApplication}"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"/>
-                </StackPanel>
 
-            </Expander.Header>
-        </Expander>
+
+        <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="2">
+            <Menu 
+                materialDesign:MenuAssist.TopLevelMenuItemHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Card}}, Path=ActualHeight}">
+                <MenuItem Header="{x:Static p:strings.LogInOut}"  Icon="{materialDesign:PackIcon Kind=UserLock}">
+                    <MenuItem
+                        Command="{Binding OpenLoginWindowCommand}"
+                        Header="{x:Static p:strings.Login}"
+                        Icon="{materialDesign:PackIcon Kind=Login}"/>
+            
+                   
+                    <MenuItem
+                        Command="{Binding LogOutWindowCommand}"
+                        Header="{x:Static p:strings.Logout}"
+                        Icon="{materialDesign:PackIcon Kind=Logout}"/>
+
+                </MenuItem>
+                <MenuItem Header="{x:Static p:strings.LangSelector}" 
+                          Icon="{materialDesign:PackIcon Kind=Language}"
+                          Command="{Binding OpenLanguageCommand}"
+                          IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+
+
+                <MenuItem Header="{x:Static p:strings.CloseApplication}" 
+                           Icon="{materialDesign:PackIcon Kind=ExitToApp}"
+                            Command="{Binding CloseApplicationCommand}"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+                
+       
+      
+            </Menu>
+        </materialDesign:Card>
         <wpf:MenuControlView Grid.Column="1"/>
     </Grid>
 </UserControl>

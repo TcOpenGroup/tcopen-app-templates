@@ -13,7 +13,6 @@ VAR
 	_stopCleanCycleTime: TIME;
 	_timer_1: TON;
 	_timer_2: TON;
-	_AllertMsg:string;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Run();]]></ST>
@@ -406,9 +405,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);
 
-IF IsFreshState THEN
-	_AllertMsg:='';
-END_IF
+
 ]]></ST>
       </Implementation>
     </Method>
