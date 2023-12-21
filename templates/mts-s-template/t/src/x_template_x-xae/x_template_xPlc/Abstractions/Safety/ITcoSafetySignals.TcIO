@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoSafetySignals" Id="{09f09e0c-75b1-4347-bd74-974be1821d01}">
+    <Declaration><![CDATA[INTERFACE ITcoSafetySignals
+]]></Declaration>
+    <Property Name="AllKeysAuto" Id="{abebcd61-9d16-4680-908c-879298cb6197}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AllKeysAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0c9c7b75-1873-4ee1-819e-5f0b90269d55}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AllKeysNormal" Id="{d67bac49-e277-48c2-ba54-9c1e54add6b8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AllKeysNormal : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e51a74eb-37af-47f8-8f4c-d46e69d3c0d3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AnyDeadman" Id="{574e36d1-762a-4029-a603-3a970f29e339}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AnyDeadman : BOOL]]></Declaration>
+      <Get Name="Get" Id="{edd3bdaa-e636-44bb-abc8-3717b9ba566a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AnyKeyManual" Id="{69eb2418-3091-4c47-9298-e0655b8180cc}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AnyKeyManual : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9870cbe0-67b8-4bae-9160-9bef87100de0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AnyKeyService" Id="{6c11b35b-039e-471d-98c8-7ab7ebe51841}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AnyKeyService : BOOL]]></Declaration>
+      <Get Name="Get" Id="{791d0b2f-c96c-4443-bdc5-c2f954507d49}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AnyKeyStep" Id="{46cfefee-aa6d-4e96-a445-d5aae557ccc0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY AnyKeyStep : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0af6154d-7bc2-47b5-980a-4cf332211bc3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsAirPressureOk" Id="{8dcb80a2-2114-46bf-abaa-a96f6892b8a0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsAirPressureOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{770c1924-2f84-40e4-93e0-573d766b1d10}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsDoorsOk" Id="{63564c8d-5970-4f09-b7fa-3fd04fc00fc7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsDoorsOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{46b334ee-47df-4170-9548-f108c3b74678}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsEstopOk" Id="{fef9d1c2-10a4-4048-b1ba-8414e00b6ed0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsEstopOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ec5d71a1-2551-4369-89d1-54b5709b2f35}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsGlobalVoltageOK" Id="{d857c7ff-c99d-41ea-b8c1-648945fda4b4}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsGlobalVoltageOK : BOOL]]></Declaration>
+      <Get Name="Get" Id="{392c5000-48b0-4616-8ded-e8e7a2dc1bc8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsLocalVoltageOk" Id="{a842c2ea-2c91-482e-9cfc-14a2150aba5a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsLocalVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ae6de065-b0e0-4efd-89d9-950dfa483ff8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

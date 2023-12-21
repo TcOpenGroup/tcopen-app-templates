@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoDoor" Id="{9ce8399f-b572-4d38-920f-7e58b0c9ce1c}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoDoor EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoDoorLock
+VAR_IN_OUT
+    inoIsOpen : BOOL;
+    inoIsLocked : BOOL;
+    inoLock : BOOL;
+END_VAR
+VAR
+    {attribute addProperty Name "<#Opened#>"}
+    _isOpen : TcoElements.TcoDi(THIS^);
+
+    {attribute addProperty Name "<#Locked#>"}
+    _isLocked : TcoElements.TcoDi(THIS^);
+
+    {attribute addProperty Name "<#Lock#>"}
+    _lock : TcoElements.TcoDo(THIS^);
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[THIS^._isLocked(inoSignal :=  inoIsLocked);                    
+THIS^._isOpen(inoSignal :=  inoIsOpen);                    
+THIS^._lock(inoSignal   :=  inoLock);                        
+
+
+]]></ST>
+    </Implementation>
+    <Property Name="IsClosed" Id="{92199df2-fdc3-4a20-b98f-2a2b6f3fc647}">
+      <Declaration><![CDATA[PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{6e63724b-ab8e-456e-ba12-e37287c3c066}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsClosed := THIS^._isOpen.IsFalse;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsLocked" Id="{2be8febe-191a-41ff-868b-ec3c2c82acb4}">
+      <Declaration><![CDATA[PROPERTY IsLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{2524aa82-06c9-4835-80f9-105e58ef4c0e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsLocked := THIS^._isOpen.IsFalse and THIS^._isLocked.IsTrue ;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsOpen" Id="{98b819b2-e2c3-40a5-ad00-0f54c1064163}">
+      <Declaration><![CDATA[PROPERTY IsOpen : BOOL]]></Declaration>
+      <Get Name="Get" Id="{8abeda15-a6e3-488c-8a7a-5b11b2469dd9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOpen := THIS^._isOpen.IsTrue;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Lock" Id="{2f6c419d-07f8-43d2-b213-d85628e6883c}">
+      <Declaration><![CDATA[METHOD Lock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Lock := FALSE;
+
+THIS^._lock.Set();
+
+IF	THIS^._isOpen.IsFalse THEN 
+		
+	IF THIS^._isLocked.IsTrue THEN 
+		Lock := TRUE;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Restore" Id="{4f7bad87-7060-4350-8504-8df413b6f77b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Unlock();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{27b1f781-c1bc-4474-b6db-2e6e98699307}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UnLock" Id="{8213b87e-87a1-408e-9a19-d9a09d05dac0}">
+      <Declaration><![CDATA[METHOD UnLock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+UnLock := FALSE;
+
+THIS^._lock.Reset();
+		
+IF THIS^._isLocked.IsFalse THEN 
+	UnLock := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

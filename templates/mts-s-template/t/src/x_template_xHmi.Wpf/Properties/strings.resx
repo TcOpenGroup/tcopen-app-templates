@@ -385,4 +385,7 @@ MAIN SEQUENCE</value>
   <data name="ShutdownApplicationMessageBoxCaption" xml:space="preserve">
     <value>Close application</value>
   </data>
+  <data name="Technology" xml:space="preserve">
+    <value>Technology</value>
+  </data>
 </root>

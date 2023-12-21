@@ -13,10 +13,22 @@ STRUCT
 	{attribute addProperty PreviousPort "A1 : B"}
 	{attribute addProperty SyncUnit "default"}
 	A1_1 : EL1008_78E8D3DD;
+	
+
+	
 	{attribute addProperty Name "A1-2"}
 	{attribute addProperty PreviousPort "A1-1 : B"}
 	{attribute addProperty SyncUnit "default"}
 	A1_2 : EL2008_E2806B95;
+	
+	{attribute addProperty PreviousPort "A1 : B"}
+	{attribute addProperty SyncUnit "default"}
+	A1_3 : EL1008_78E8D3DD;
+	
+	{attribute addProperty Name "A1-2"}
+	{attribute addProperty PreviousPort "A1-1 : B"}
+	{attribute addProperty SyncUnit "default"}
+	A1_4 : EL2008_E2806B95;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

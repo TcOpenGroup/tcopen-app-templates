@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoDoorCircuit" Id="{73082c89-b7a7-4202-b3e8-7a6b095baf55}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoDoorCircuit EXTENDS TcoCore.TcoObject IMPLEMENTS ITcoDoorCircuit
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	
+	{attribute addProperty Name "<#Status#>"}
+    {attribute clr [ReadOnly()]}
+    _status : TcoDoorCircuit_Status;
+
+	{attribute addProperty Name "<#Config#>"}
+    _config : TcoDoorCircuit_Config;
+
+	
+	{attribute clr [RenderIgnore()]}
+	_doors              : ARRAY [0..12] OF ITcoDoorLock;
+		
+
+	
+	{attribute clr [RenderIgnore()]}
+	_localDoorsVoltage  : ARRAY [0..4] OF ITcoControlVoltage;
+	
+	{attribute clr [RenderIgnore()]}
+	_localVoltage  : ARRAY [0..4] OF ITcoControlVoltage;
+	
+	{attribute clr [RenderIgnore()]}
+	_globalVoltage : ARRAY [0..4] OF ITcoControlVoltage;
+	
+	
+	
+    {attribute addProperty Name "<#Closed#>"}
+    _isClosed : BOOL;
+    
+    {attribute addProperty Name "<#Locked#>"}
+    _isLocked : BOOL;
+    
+    {attribute addProperty Name "<#Unlocked#>"}
+    _isUnLocked : BOOL;
+    
+    {attribute addProperty Name "<#Global votage#>"}
+    _isGlobalVoltageOk : BOOL;
+    
+    {attribute addProperty Name "<#Local voltage#>"}
+    _isLocalVoltageOk : BOOL;
+    
+	 {attribute addProperty Name "<#Local Doors#>"}
+    _isLocalDoorsVoltageOk : BOOL;
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Initialize();]]></ST>
+    </Implementation>
+    <Method Name="AddDoors" Id="{67485f30-a42f-4851-ad0e-22da5e378194}">
+      <Declaration><![CDATA[METHOD AddDoors : BOOL
+VAR_INPUT
+	inDoor : ITcoDoorLock;
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddDoors := FALSE;
+FOR i := 0 TO _config.MaxDoors DO
+	IF _doors[i] = inDoor THEN
+		AddDoors := TRUE;
+		RETURN;
+	END_IF
+	
+	IF _doors[i] = 0 THEN
+		_doors[i] := inDoor;
+		AddDoors := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddGlobalVoltage" Id="{ccb8c6c6-0ed0-4992-99d4-6666ea63673e}">
+      <Declaration><![CDATA[METHOD AddGlobalVoltage : BOOL
+VAR_INPUT
+ 	inVoltage : ITcoControlVoltage;
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddGlobalVoltage := FALSE;
+
+IF inVoltage = 0 THEN
+	RETURN;
+END_IF
+
+FOR i := 0 TO _config.MaxGlobalVoltage DO
+	IF _globalVoltage[i] = inVoltage THEN
+		addGlobalVoltage := TRUE;
+		RETURN;
+	END_IF
+	
+	IF 	_globalVoltage[i] = 0 THEN
+		_globalVoltage[i] := inVoltage;
+		addGlobalVoltage    := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLocalDoorsVoltage" Id="{a0ac8e3f-a72a-49ce-a2ea-058ee1e8fa9a}">
+      <Declaration><![CDATA[METHOD AddLocalDoorsVoltage : BOOL
+VAR_INPUT
+ 	inVoltage : ITcoControlVoltage;
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddLocalDoorsVoltage := FALSE;
+
+IF inVoltage = 0 THEN
+	RETURN;
+END_IF
+
+FOR i := 0 TO _config.MaxLocalVoltage DO
+	IF _localDoorsVoltage[i] = inVoltage THEN
+		AddLocalDoorsVoltage := TRUE;
+		RETURN;
+	END_IF
+	
+	IF 	_localDoorsVoltage[i] = 0 THEN
+		_localDoorsVoltage[i] := inVoltage;
+		AddLocalDoorsVoltage    := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLocalVoltage" Id="{4e3e2766-414e-43a1-8fea-517e18bdf8db}">
+      <Declaration><![CDATA[METHOD AddLocalVoltage : BOOL
+VAR_INPUT
+ 	inVoltage : ITcoControlVoltage;
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[addLocalVoltage := FALSE;
+
+IF inVoltage = 0 THEN
+	RETURN;
+END_IF
+
+FOR i := 0 TO _config.MaxLocalVoltage DO
+	IF _localVoltage[i] = inVoltage THEN
+		addLocalVoltage := TRUE;
+		RETURN;
+	END_IF
+	
+	IF 	_localVoltage[i] = 0 THEN
+		_localVoltage[i] := inVoltage;
+		addLocalVoltage    := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Config" Id="{2354fca6-11a8-4a80-bfd7-5d275e2c45c4}">
+      <Declaration><![CDATA[PROPERTY Config :REFERENCE TO TcoDoorCircuit_Config]]></Declaration>
+      <Get Name="Get" Id="{8868207c-1d0d-4d60-9426-b9a71364972b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config ref=_config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Initialize" Id="{b35c3fff-a359-4b4b-afe7-38d483a48be4}">
+      <Declaration><![CDATA[METHOD Initialize : BOOL
+VAR
+	d       : UINT;
+	gv      : UINT;
+	lv      : UINT;
+	ldoors      : UINT;
+	setOnce : BOOL;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// ------------------------------------------------------------- 
+// 						GLOBAL VOLTAGE
+// ------------------------------------------------------------- 
+_isGlobalVoltageOk := FALSE;
+setOnce            := FALSE;
+
+FOR gv := 0 TO _config.MaxGlobalVoltage DO
+	IF _globalVoltage[gv] <> 0 THEN
+		IF NOT setOnce THEN
+			_isGlobalVoltageOk := TRUE;
+			setOnce := TRUE;
+		END_IF
+		
+		IF _globalVoltage[gv].IsOff THEN
+			_isGlobalVoltageOk := FALSE;
+			EXIT;
+		END_IF
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+// ------------------------------------------------------------- 
+// 						LOCAL VOLTAGE
+// ------------------------------------------------------------- 
+_isLocalVoltageOk := FALSE;
+setOnce           := FALSE;
+
+FOR lv := 0 TO _config.MaxLocalVoltage DO
+	IF _localVoltage[lv] <> 0 THEN
+		IF NOT setOnce THEN
+			_isLocalVoltageOk := TRUE;
+			setOnce := TRUE;
+		END_IF
+		
+		IF _localVoltage[lv].IsOff THEN
+			_isLocalVoltageOk := false;
+			EXIT;
+		END_IF
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+// ------------------------------------------------------------- 
+// 						LOCAL DOORS VOLTAGE OK
+// ------------------------------------------------------------- 
+_isLocalDoorsVoltageOk := FALSE;
+setOnce           := FALSE;
+
+FOR ldoors := 0 TO _config.MaxLocalDoorsVoltage DO
+	IF _localDoorsVoltage[ldoors] <> 0 THEN
+		IF NOT setOnce THEN
+			_isLocalDoorsVoltageOk := TRUE;
+			setOnce := TRUE;
+		END_IF
+		
+		IF _localDoorsVoltage[ldoors].IsOff THEN
+			_isLocalDoorsVoltageOk := FALSE;
+			EXIT;
+		END_IF
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+// ------------------------------------------------------------- 
+// 							DOORS
+// ------------------------------------------------------------- 
+_isClosed      := FALSE;
+_isLocked      := FALSE;
+_isUnLocked    := FALSE;
+setOnce        := FALSE;
+FOR d := 0 TO _config.MaxDoors DO
+	IF _doors[d] <> 0 THEN
+		IF NOT setOnce THEN
+			setOnce        := TRUE;
+			_isClosed      := TRUE;
+			_isLocked      := TRUE;
+			_isUnLocked    := TRUE;
+		END_IF
+
+		// Return TRUE only if all doors are Closed
+		_isClosed   := _isClosed AND (_doors[d].IsClosed); // OR _doors[d].Deactivate);
+		// Return TRUE only if all doors are Locked
+		_isLocked   := _isLocked AND (_doors[d].IsLocked); //OR _doors[d].Deactivate);
+		// Return TRUE only if all doors are Unlocked
+		_isUnLocked := _isUnLocked AND NOT _doors[d].IsLocked;
+
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsClosed" Id="{af5ea3a0-6bdf-41e8-b234-9a560d2305c7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ebf6967f-9be8-45ec-aa6b-4f792a1f0a88}">
+        <Declaration><![CDATA[VAR
+	d : UINT;
+	setOnce : BOOL;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsClosed := _isClosed ;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsGlobalVoltageOk" Id="{8dc91d3e-27fc-4fe8-b81e-57bf452b6915}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsGlobalVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ca0ae814-6622-41c9-8543-d00515f8e430}">
+        <Declaration><![CDATA[VAR
+	gv : UINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsGlobalVoltageOk := _isGlobalVoltageOk;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsLocalDoorsVoltageOk" Id="{4dca19b6-a34b-4cd9-9d04-d68853019a4b}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsLocalDoorsVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5c44c4c5-391a-4b61-ba9a-8122ee61ef68}">
+        <Declaration><![CDATA[VAR
+	lv : UINT;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsLocalDoorsVoltageOk := _isLocalDoorsVoltageOk;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsLocalVoltageOk" Id="{7b8b3723-4c76-40aa-a81b-26c12135098c}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsLocalVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9a6da6a8-2c49-4b0e-9ccc-358395e1ebfb}">
+        <Declaration><![CDATA[VAR
+	lv : UINT;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsLocalVoltageOk := _isLocalVoltageOk;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsLocked" Id="{2f01f034-a5af-4b86-8185-d2721deca0ed}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7e99ac68-193d-420f-a1f3-9bfe6df4a29a}">
+        <Declaration><![CDATA[VAR
+	d : UINT;
+	setOnce : BOOL;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsLocked := _isLocked ;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsUnLocked" Id="{dce07779-bd74-417a-a6c5-74258d0dd7f4}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY IsUnLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7d2fb05b-aa6e-458e-a2fb-0fd06f5a6b0c}">
+        <Declaration><![CDATA[VAR
+	d : UINT;
+	setOnce : BOOL;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsUnLocked := _isUnLocked;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Lock" Id="{61208692-0229-473b-8970-2d35c6092bb2}">
+      <Declaration><![CDATA[METHOD Lock : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	d : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Lock := FALSE;
+
+IF NOT IsClosed THEN
+	// we can't lock doors which are not closed
+	RETURN;
+END_IF
+
+FOR d := 0 TO _config.MaxDoors DO
+	IF _doors[d] <> 0 THEN
+			_doors[d].Lock();
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+Lock := THIS^.IsLocked;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveAllDoors" Id="{34f695cb-e2b9-4cf2-b03d-b8415b441716}">
+      <Declaration><![CDATA[METHOD RemoveAllDoors
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO _config.MaxDoors DO
+	_doors[i] := 0;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveDoors" Id="{d06bb510-4db5-424e-8db0-a54b5ff58bb8}">
+      <Declaration><![CDATA[METHOD RemoveDoors : BOOL
+VAR_INPUT
+	inDoorLock : ITcoDoorLock;
+END_VAR
+VAR
+	i : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RemoveDoors := FALSE;
+
+FOR i := 0 TO _config.MaxDoors DO 
+	IF _doors[i] = inDoorLock THEN
+		_doors[i] := 0;
+		RemoveDoors :=  TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Restore" Id="{9025b3de-8592-4d44-8702-498cf7e44e34}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+VAR
+	i : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RemoveAllDoors();
+
+FOR i := 0 TO _config.MaxGlobalVoltage DO
+	_globalVoltage[i] := 0;
+END_FOR
+
+FOR i := 0 TO _config.MaxLocalVoltage DO
+	_localVoltage[i] := 0;
+END_FOR
+FOR i := 0 TO _config.MaxLocalDoorsVoltage DO
+	_localDoorsVoltage[i] := 0;
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{4b42fc2c-5f85-433e-9f4a-f151ee84d0c9}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Status" Id="{b5359157-c674-43e2-ae3a-3ae512b9af00}">
+      <Declaration><![CDATA[PROPERTY Status : REFERENCE TO TcoDoorCircuit_Status]]></Declaration>
+      <Get Name="Get" Id="{496830e9-4b54-4761-8e5e-6963207e1bc3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF=_status;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="UnLock" Id="{e9b12ab1-7993-48d3-97e3-deb4e96a6ef6}">
+      <Declaration><![CDATA[METHOD UnLock : BOOL
+VAR
+	d 		: UINT;
+	setOnce : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[UnLock := FALSE;
+
+FOR d := 0 TO _config.MaxDoors DO
+	IF _doors[d] <> 0 THEN
+		_doors[d].Unlock();
+	ELSE
+		exit;
+	END_IF
+END_FOR
+
+
+FOR d := 0 TO _config.MaxDoors DO
+	IF _doors[d] <> 0 THEN
+		IF NOT setOnce THEN
+			setOnce := TRUE;
+			UnLock := TRUE;
+		END_IF
+		
+		// return TRUE only if all doors are unlocked
+		UnLock := Unlock AND NOT _doors[d].IsLocked;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

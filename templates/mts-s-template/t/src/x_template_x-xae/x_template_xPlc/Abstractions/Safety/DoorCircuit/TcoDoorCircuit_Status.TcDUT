@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoDoorCircuit_Status" Id="{51b0cdf3-df8a-4206-bfe4-4d657a00b449}">
+    <Declaration><![CDATA[TYPE TcoDoorCircuit_Status :
+STRUCT
+	ActionDescription : STRING(100);	
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

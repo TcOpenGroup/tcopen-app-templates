@@ -20,7 +20,8 @@ namespace x_template_xHmi.Wpf.Views.MainView
         {
             Title = "TECHNOLOGY";
             OpenCommand(this.AddCommand(typeof(OperatorView), strings.Operator));
-            AddCommand(typeof(DataView), strings.Data); 
+            AddCommand(typeof(DataView), strings.Data);
+            AddCommand(typeof(TechnologyView), strings.Technology);
             AddCommand(typeof(UserManagementGroupManagementView), strings.UserManagement);
             AddCommand(typeof(DiagnosticsView), strings.Diagnostics);
             OpenLoginWindowCommand = new TcOpen.Inxton.Input.RelayCommand(a => OpenLoginWindow());

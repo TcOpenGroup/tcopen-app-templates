@@ -1,0 +1,19 @@
+<UserControl
+    x:Class="x_template_xHmi.Wpf.Views.TechnologyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vortex="http://vortex.mts/xaml" 
+    xmlns:technologyview="clr-namespace:x_template_xHmi.Wpf.Views"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <UserControl.DataContext>
+        <technologyview:TechnologyViewModel />
+    </UserControl.DataContext>
+    <Grid>
+
+        <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._components}" PresentationType="Service-ControlSlim-Base-Display"/>
+    </Grid>
+</UserControl>

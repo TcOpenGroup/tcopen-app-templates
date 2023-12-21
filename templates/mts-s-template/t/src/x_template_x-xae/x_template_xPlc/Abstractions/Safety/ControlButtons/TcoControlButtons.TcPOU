@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoControlButtons" Id="{48959623-996d-47ac-84b8-cb797c359e83}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoControlButtons EXTENDS TcoCore.TcoObject IMPLEMENTS ITcoControlButtons
+VAR_IN_OUT
+    {attribute clr [RenderIgnore()]}
+    inoButtonRecover : bool;
+    {attribute clr [RenderIgnore()]}
+    inoButtonSuspend : BOOL;
+	{attribute clr [RenderIgnore()]}
+    inoButtonGround : BOOL;
+    {attribute clr [RenderIgnore()]}
+    inoButtonAuto : BOOL;
+    {attribute clr [RenderIgnore()]}
+    inoButtonStartLight : BOOL;
+    {attribute clr [RenderIgnore()]}
+    inoButtonStopLight : BOOL;
+    {attribute clr [RenderIgnore()]}
+    inoButtonGroundLight : BOOL;
+    {attribute clr [RenderIgnore()]}
+    inoButtonAutoLight : BOOL;
+
+END_VAR
+VAR
+
+
+    {attribute addProperty Name "<#ButtonRecover#>"}
+    _buttonRecover : TcoElements.TcoDi(THIS^);
+
+    {attribute addProperty Name "<#ButtonSuspend#>"}
+    _buttonSuspend : TcoElements.TcoDi(THIS^);
+
+    {attribute addProperty Name "<#ButtonGround #>"}
+    _buttonGround : TcoElements.TcoDi(THIS^);
+
+    {attribute addProperty Name "<#ButtonAuto #>"}
+    _buttonAuto : TcoElements.TcoDi(THIS^);
+
+
+
+    {attribute addProperty Name "<#ButtonStartLight#>"}
+    _buttonRecoverLight : TcoElements.TcoDo(THIS^);
+
+    {attribute addProperty Name "<#ButtonStopLight#>"}
+    _buttonSuspendLight : TcoElements.TcoDo(THIS^);
+
+    {attribute addProperty Name "<#ButtonGroundLight#>"}
+    _buttonGroundLight : TcoElements.TcoDo(THIS^);
+    {attribute addProperty Name "<#ButtonAutoLight#>"}
+    _buttonAutoLight : TcoElements.TcoDo(THIS^);
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_buttonRecover(inoSignal:= inoButtonRecover);
+_buttonSuspend(inoSignal:= inoButtonSuspend);
+_buttonGround(inoSignal:= inoButtonGround);
+_buttonAuto(inoSignal:= inoButtonAuto);
+
+
+
+_buttonGroundLight(inoSignal:= inoButtonGroundLight);
+_buttonSuspendLight(inoSignal:= inoButtonStopLight);
+_buttonRecoverLight(inoSignal:= inoButtonStartLight);
+_buttonAutoLight(inoSignal:= inoButtonAutoLight);
+]]></ST>
+    </Implementation>
+    <Property Name="ButtonAuto" Id="{7975322c-2ce8-4a76-b3ee-77f01bf097d2}">
+      <Declaration><![CDATA[PROPERTY ButtonAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a285b5d2-7367-41b9-967b-bdffba1ea5ec}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ButtonAuto :=  _buttonAuto._signal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7c081f7a-9837-49d7-8576-bec7571aaf4f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// Light up illumination of button
+IF ButtonAuto THEN
+	_buttonAutoLight.Set();
+ELSE
+	_buttonAutoLight.Reset();
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ButtonGround" Id="{4a7abc53-ca82-4fca-b1e6-aafbe15c9ac8}">
+      <Declaration><![CDATA[PROPERTY ButtonGround : BOOL]]></Declaration>
+      <Get Name="Get" Id="{33a64e81-f6ea-44f5-8089-e16e9057e9bf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ButtonGround :=  _buttonGround._signal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{48d2c62b-5cfb-4bce-8d5c-ce5cfd0b6da6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// Light up illumination of button
+IF ButtonGround THEN
+	_buttonGroundLight.Set();
+ELSE
+	_buttonGroundLight.Reset();
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ButtonRecover" Id="{06abbd46-4230-47a9-a16b-67f17df19696}">
+      <Declaration><![CDATA[PROPERTY ButtonRecover : BOOL]]></Declaration>
+      <Get Name="Get" Id="{92a36b7d-f482-4277-bbf6-2bb6090254f3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ButtonRecover := _buttonRecover._signal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3f550278-53fe-4749-b8b8-0a686c2eca70}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// Light up illumination of button
+IF ButtonRecover THEN
+	_buttonRecoverLight.Set();
+ELSE
+	_buttonRecoverLight.Reset();
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ButtonSuspend" Id="{39f237e3-a2cd-4f6d-bcbb-c87bdf8bb8ef}">
+      <Declaration><![CDATA[PROPERTY ButtonSuspend : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f2880eb8-4250-4163-8d89-2bdaf21ee42a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ButtonSuspend := _buttonSuspend._signal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{089af771-69a4-48b4-b324-6d877ea98964}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// Light up illumination of button
+IF ButtonSuspend THEN
+	_buttonSuspendLight.Set();
+ELSE
+	_buttonSuspendLight.Reset();
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Restore" Id="{3501296b-7184-4b16-8b10-5e616c764470}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_buttonAutoLight.Reset();
+_buttonGroundLight.Reset();
+_buttonSuspendLight.Reset();
+_buttonRecoverLight.Reset();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{0e952a2d-a358-46bb-bfec-8725974e6a1c}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^._buttonRecoverLight.Service();
+THIS^._buttonSuspendLight.Service();
+THIS^._buttonGroundLight.Service();
+THIS^._buttonAutoLight.Service();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

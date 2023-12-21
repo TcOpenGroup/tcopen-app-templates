@@ -8,6 +8,8 @@ VAR
     _technologySettings  : TechnologicalDataManager(THIS^);		//a.k.a machine settings
     _processTraceability : ProcessDataManager(THIS^);			//the same structure as process setting but filled with actual production data (measurements, inspection results, etc)
 	
+	
+	fbGetCurTaskIndex            : GETCURTASKINDEX;
 	_notificationPanel      : NotificationPanel(THIS^);				//provide technology state signals to side baner in visualisation
     {attribute addProperty Name "<#AUTOMAT ALL#>"}
     _automatAllTask : TcoCore.TcoTask(THIS^);					// Commmand-like taks to execute automation mode on whole technology. Handled in controlled units.
@@ -17,8 +19,9 @@ VAR
 	{attribute addProperty Name "<#_cu00x#>"}					
     _cu00x         : CU00x(THIS^);
 	
+	{attribute addProperty Name "<#Technology Components#>"}	
+	_components : TechnologyComponents:= (Parent := THIS^);
 
-	
 	{attribute addProperty Name "Device 1 (EtherCAT)"}
 	Device_1 : TcoIo.TcoEthercatMasterDevice(THIS^);
 END_VAR
@@ -26,6 +29,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="Initialize" Id="{759d33f3-fcf6-4559-9700-8095d2ab3e7e}" />
     <Folder Name="Stations" Id="{f0ad222a-fb7f-4f66-a9ed-d5267740cf2e}" />
     <Method Name="AllowAutomat" Id="{0aa54757-4c4d-0cde-13e5-b7414e695af4}">
       <Declaration><![CDATA[METHOD AllowAutomat : BOOL
@@ -95,6 +99,75 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="InitializeComponents" Id="{fc888b5c-689c-415f-91b8-3adb52477a53}" FolderPath="Initialize\">
+      <Declaration><![CDATA[METHOD InitializeComponents
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.ControlButtons(
+	inoButtonRecover:=GVL_iXlinker.EC1.A1.A1_3.Channel_1.Input , 
+	inoButtonSuspend:=GVL_iXlinker.EC1.A1.A1_3.Channel_2.Input , 
+	inoButtonGround:=GVL_iXlinker.EC1.A1.A1_3.Channel_3.Input , 
+	inoButtonAuto:=GVL_iXlinker.EC1.A1.A1_3.Channel_4.Input , 
+	inoButtonStartLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_1.Output , 
+	inoButtonStopLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_2.Output , 
+	inoButtonGroundLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_3.Output , 
+	inoButtonAutoLight:= GVL_iXlinker.EC1.A1.A1_4.Channel_4.Output);
+	
+_components.ModeKey(inoKeyState1:=GVL_iXlinker.EC1.A1.A1_3.Channel_5.Input,
+					inoKeyState2:=GVL_iXlinker.EC1.A1.A1_3.Channel_6.Input);
+
+_components.GlobalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_5.Input);
+_components.LocalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input);
+_components.LocalDoorVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_7.Input);
+
+_components.EmergencyStop(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_8.Input);
+
+_components.Door(inoIsLocked := GVL_iXlinker.EC1.A1.A1_1.Channel_3.Input,
+    inoIsOpen := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
+    inoLock := GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output);
+	
+_components.DoorKey(inoIsClosed := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
+     inoLock := GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output);
+
+
+
+_components.DoorCicuit();
+
+_components.Zone(inDoorCircuit:=_components.DoorCicuit,
+				inEstopActive:=_components.EmergencyStop._signal,
+				inAirPressureOK:= _components.AirPresureOk._signal);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitializeComponentsOnce" Id="{78fe5985-ea43-49bb-a2ff-319ea6fb4a1a}" FolderPath="Initialize\">
+      <Declaration><![CDATA[METHOD InitializeComponentsOnce
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.DoorCicuit.Restore();
+_components.Zone.Restore();
+
+
+
+_components.DoorCicuit.AddDoors(inDoor:=_components.Door);
+_components.DoorCicuit.AddDoors(inDoor:=_components.DoorKey);
+_components.DoorCicuit.AddGlobalVoltage(inVoltage:=_components.GlobalControlVoltage);
+_components.DoorCicuit.AddLocalVoltage(inVoltage:=_components.LocalControlVoltage);
+_components.DoorCicuit.AddLocalDoorsVoltage(inVoltage:=_components.LocalDoorVoltage);
+
+
+_components.Zone.AddControlledUnit(inControlledUnit:=_cu00x);
+_components.Zone.AddControlButtons(inControlButtons:=_components.ControlButtons);
+_components.Zone.AddKeyMode(inKeyMode:=_components.ModeKey);
+_components.Zone.AddKeyNormalService(inKeyNormalService:=_components.NormalServiceKey);
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Main" Id="{d1d0e200-21d1-4642-b4c8-2fd801b60f39}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -128,6 +201,26 @@ THIS^.RtcSynchronize(TRUE,
 _settings.Messaging.MessageDigestMethod := eMessageDigestMethod.CRC32;
 _settings.Messaging.MessengerLoggingMethod := eMessengerLogMethod.OnEventRisen;
 
+
+_components.DoorCicuit.Config.MaxDoors:=12;
+_components.DoorCicuit.Config.MaxGlobalVoltage:=2;
+_components.DoorCicuit.Config.MaxLocalVoltage:=2;
+_components.DoorCicuit.Config.MaxLocalDoorsVoltage:=2;
+
+
+_components.Zone.Config.MaxControlButtons:=2;
+_components.Zone.Config.MaxControledUnits:=10;
+_components.Zone.Config.MaxKeyMode:=2;
+_components.Zone.Config.MaxKeyNormalService:=2;
+
+
+
+THIS^.InitializeComponents();
+fbGetCurTaskIndex();
+IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
+    // The code that you want to be executed at the first cycle of  PLC only 
+	THIS^.InitializeComponentsOnce();
+END_IF
 
 //notification panel
  Context.Environment.Messaging.Suspend();

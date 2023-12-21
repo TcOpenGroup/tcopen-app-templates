@@ -2,7 +2,8 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="CUBase" Id="{7de2193c-318e-4c64-a9a6-ba23fb2e4da1}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute addProperty ShortName ""}
-FUNCTION_BLOCK ABSTRACT CUBase EXTENDS TcoCore.TcoObject IMPLEMENTS ICuBase
+FUNCTION_BLOCK ABSTRACT CUBase EXTENDS TcoCore.TcoObject IMPLEMENTS ICUBase
+
 VAR
     _cuId        : eStations;
     _processData : ProcessDataManager(THIS^);
@@ -18,13 +19,54 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="Modes" Id="{d650a7bf-6367-4a6c-a191-a985e54df897}" />
     <Folder Name="ProcessData" Id="{1a8aa84b-31e4-41aa-b103-fbb20e0c7128}">
       <Folder Name="CrudTaskState" Id="{3cbcef83-2f8f-092f-1642-2d5bb3f25f3f}" />
       <Folder Name="DataFlaging" Id="{aed3d7b3-4fd1-0c13-2eed-417fc6b5b252}" />
       <Folder Name="ExternalData" Id="{8389998d-539c-07b7-2bed-035331c1a0d8}" />
     </Folder>
     <Folder Name="RecurringFailures" Id="{aea7587e-0f13-0992-2127-c34de6e860fe}" />
-    <Property Name="AutomatTask" Id="{9a1989f3-7511-4b12-80ce-78bb1add06c6}">
+    <Folder Name="Tasks" Id="{522e67de-7340-4416-b0c7-f54a63e10aed}" />
+    <Method Name="Automat" Id="{a2102426-ef76-401d-8346-4b915f2c9694}" FolderPath="Modes\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Controls `automatic` mode of `CU00x`.
+		</summary>
+	</docu>
+~*)
+METHOD  Automat
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+	Enable condition to start `automatTask`.
+	Modify according your needs.
+	[! 
+	THIS IS NOT SAFETY CONDITION. THE SAFETY OF PRESONNEL AND EQUIPMENT MUST BE ENSURED BY ADDITIONAL MEANS 
+	TO COMPLY WITH REGULATIONS
+	]
+*)
+
+
+AutomatTask.Task.Enabled := (GroundTask.GroundDone OR  AutomatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
+
+(*
+	Invokes `groundTask` from technology object.
+*)
+
+IF(Technology.AutomatAllTask.Execute()) THEN AutomatTask.Task.Invoke(); END_IF;
+
+IF(Technology.ForceStepMode()) THEN
+ 	AutomatTask.ModeController.Mode := eSequencerMode.StepMode;
+END_IF 
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="AutomatTask" Id="{9a1989f3-7511-4b12-80ce-78bb1add06c6}" FolderPath="Tasks\">
       <Declaration><![CDATA[PROPERTY ABSTRACT AutomatTask : REFERENCE TO CUBaseAutomat]]></Declaration>
       <Get Name="Get" Id="{86426d31-47b7-4512-bf28-f740d21d447d}">
         <Declaration><![CDATA[VAR
@@ -258,7 +300,44 @@ END_VAR
 END_IF;	]]></ST>
       </Implementation>
     </Method>
-    <Property Name="GroundTask" Id="{6cf29f50-dec8-49c6-a97a-8a93927ca757}">
+    <Method Name="Ground" Id="{6ef710e9-01db-4ecc-94fc-dcc146d80f72}" FolderPath="Modes\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Controls `ground` mode of `CU00x`.
+		</summary>
+	</docu>
+~*)
+METHOD Ground : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+	Enable condition to start `groundTask`.
+	Modify according your needs.
+	[! 
+	THIS IS NOT SAFETY CONDITION. THE SAFETY OF PRESONNEL AND EQUIPMENT MUST BE ENSURED BY ADDITIONAL MEANS 
+	TO COMPLY WITH REGULATIONS
+	]
+*)
+
+GroundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
+
+(*
+	Invokes `groundTask` from technology object.
+*)
+
+IF(Technology.GroundAllTask.Execute()) THEN GroundTask.Task.Invoke(); END_IF;
+
+
+IF GroundTask.GroundDone AND GroundTask.Task.Execute() THEN GroundTask.Restore();GroundTask.Task.Invoke();END_IF;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="GroundTask" Id="{6cf29f50-dec8-49c6-a97a-8a93927ca757}" FolderPath="Tasks\">
       <Declaration><![CDATA[PROPERTY ABSTRACT GroundTask : REFERENCE TO CUBaseGround]]></Declaration>
       <Get Name="Get" Id="{41f5a2de-fade-47b5-8a6c-d888d0eac9c5}">
         <Declaration><![CDATA[VAR
@@ -269,7 +348,50 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="ManualTask" Id="{a2025997-47b5-45e1-80f0-0c1e8cce860d}">
+    <Method Name="Idle" Id="{e87c0f97-9703-4da3-9774-ed86bd6184b7}" FolderPath="Modes\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Code to be called cylically when `CU00x` idle; no other mode is active.
+		</summary>
+	</docu>
+~*)
+METHOD Idle : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Manual" Id="{ca59dfc2-4891-4382-ac63-95609aefa41f}" FolderPath="Modes\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Controls `manual` mode of `CU00x`.
+		</summary>
+	</docu>
+~*)
+METHOD Manual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+	Enable condition to start `automatTask`.
+	Modify according your needs.
+	[! 
+	THIS IS NOT SAFETY CONDITION. THE SAFETY OF PRESONNEL AND EQUIPMENT MUST BE ENSURED BY ADDITIONAL MEANS 
+	TO COMPLY WITH REGULATIONS
+	]
+*)
+
+ManualTask.Task.Enabled := THIS^.Technology.AllowManual();
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ManualTask" Id="{a2025997-47b5-45e1-80f0-0c1e8cce860d}" FolderPath="Tasks\">
       <Declaration><![CDATA[PROPERTY ABSTRACT ManualTask : REFERENCE TO TcoTaskedService]]></Declaration>
       <Get Name="Get" Id="{c93ae827-0df1-40b0-b0fa-7bfc00959641}">
         <Declaration><![CDATA[VAR
@@ -302,6 +424,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="RecoverTask" Id="{3e03c8f5-0e6a-4257-b8ec-f05883753522}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ABSTRACT RecoverTask : REFERENCE TO CUBaseRecover ]]></Declaration>
+      <Get Name="Get" Id="{b652b901-2fff-46c7-8e8d-0292570c5ddc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="RecurringFails" Id="{c6ba4858-160c-006e-34fa-84af07e0038f}" FolderPath="RecurringFailures\">
       <Declaration><![CDATA[PROPERTY RecurringFails : REFERENCE TO CuBaseRecurringFailures]]></Declaration>
       <Get Name="Get" Id="{95d834e8-2609-0f13-155a-8ef6c95bef05}">
@@ -310,6 +443,42 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[RecurringFails REF= _recurringFails;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="StatusInfo" Id="{8869b0c0-1b6b-4ea5-bfe7-ba8752959d51}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT StatusInfo : REFERENCE TO CUBaseStatusInfo]]></Declaration>
+      <Get Name="Get" Id="{6df77d60-346a-4f90-8a89-5b3120d43b1f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SuspendTask" Id="{304bee79-70a6-4794-aa3f-17793994512b}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ABSTRACT SuspendTask : REFERENCE TO CUBaseSuspend]]></Declaration>
+      <Get Name="Get" Id="{a51ffe0f-2bc2-47f1-94e4-a1c50b8b115a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Technology" Id="{9acc4c59-d4d2-4ccd-a7ca-7b094f3f86e5}">
+      <Declaration><![CDATA[PROPERTY Technology : REFERENCE TO Technology]]></Declaration>
+      <Get Name="Get" Id="{a26286e4-0ce6-43b9-8eee-d2e9be8bc503}">
+        <Declaration><![CDATA[VAR
+    _technology : POINTER TO Technology;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF __QUERYPOINTER(Parent, _technology) THEN // Check if _Parent is Station001
+    Technology REF= _technology^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
+END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -372,6 +541,7 @@ ELSIF THIS^.ManualTask.Busy THEN
     _statusInfo.Mode := eCUMode.ManualMode;
 	_statusInfo.CurrentTaskDescription := '<#MANUAL#>';
 	_statusInfo.State := eCUState.None;
+	_statusInfo.CurrentIsInStepMode    := FALSE;
 
 ELSIF THIS^.GroundTask.Task.Done THEN
 	_statusInfo.CurrentTaskDescription := '<#READY TO START#>';

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CUBaseRecover" Id="{e006a17f-44a4-43bc-87d5-ecf203c4df32}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT CUBaseRecover EXTENDS TcoTaskedSequencer
+VAR
+	_dialog : TcoCore.TcoDialog(THIS^);
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="StationBase" Id="{0a4be739-8dd2-4f22-a128-787c0d93f5c6}">
+      <Declaration><![CDATA[PROPERTY StationBase : REFERENCE TO CuBase]]></Declaration>
+      <Get Name="Get" Id="{84e11766-a233-4391-9805-c35ec9df8ceb}">
+        <Declaration><![CDATA[VAR
+    _station : POINTER TO CuBase;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF __QUERYPOINTER(Parent, _station) THEN // Check if _Parent is Station001
+    StationBase REF= _station^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>
