@@ -4,11 +4,11 @@
     <Declaration><![CDATA[TYPE
     TcoControlledZone_Config :
     STRUCT
-        MaxControledUnits : USINT:=12;
-		MaxControlButtons : USINT:=4;
-		MaxKeyMode: USINT:=4;
-		MaxKeyNormalService: USINT:=4;
-	
+        MaxControledUnits : USINT := 12;
+        MaxControlButtons : USINT := 4;
+        MaxKeyMode : USINT := 4;
+        MaxKeyNormalService : USINT := 4;
+        DoorsLocked : TIME := T#1S;
     END_STRUCT
 END_TYPE
 ]]></Declaration>

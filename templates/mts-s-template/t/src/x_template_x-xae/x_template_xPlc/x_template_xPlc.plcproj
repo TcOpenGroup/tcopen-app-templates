@@ -116,6 +116,9 @@
     <Compile Include="Abstractions\Safety\ControlButtons\ITcoControlButtons.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Safety\ControlButtons\TcoControledZone_Info.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZoneActionTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -149,16 +152,13 @@
     <Compile Include="Abstractions\Safety\Doors\ITcoDoorLock.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\Doors\TcoDoor.TcPOU">
+    <Compile Include="Abstractions\Safety\Doors\TcoStandartDoor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\Doors\TcoKeyDoor.TcPOU">
+    <Compile Include="Abstractions\Safety\Doors\TcoBasicDoor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Safety\Estop\TcoEmergencyStop.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Safety\ITcoSafetySignals.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Safety\KeyMode\TcoKeyMode_Config.TcDUT">

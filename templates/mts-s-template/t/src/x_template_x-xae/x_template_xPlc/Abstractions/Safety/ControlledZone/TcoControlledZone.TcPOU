@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TcoControlledZone" Id="{f9946378-cf59-4928-83ba-d7fc1c602387}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
-FUNCTION_BLOCK TcoControlledZone EXTENDS TcoCore.TcoObject //IMPLEMENTS ITcoSafetySignals
+FUNCTION_BLOCK TcoControlledZone EXTENDS TcoCore.TcoObject
 VAR_INPUT
 	{attribute clr [RenderIgnore()]}
 	inDoorCircuit        : ITcoDoorCircuit;
@@ -37,76 +37,7 @@ VAR
 	_controlKeyNormalService      : ARRAY [0..2] OF ITcoKeyNormalSevice;
 	
 	// group states
-	{attribute addProperty Name "<#Group#> - <#In automatic#>"}
-	_allInAuto            : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Is grounding#>"}
-	_allInGrounding       : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#In manual#>"}
-	_allInManual          : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Idle#>"}
-	_allIdle          : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Grounded#>"}
-	_allGrounded          : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#In step mode#>"}
-	_allInStepMode        : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Holding process#>"}
-	_allHolding           : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#In Inactive or Manual or Grounded#>"}
-	_allInactiveOrManualOrGrounded  : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Any station in automatic mode#>"}
-	_anyInAuto            : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Any station in manual mode#>"}
-	_anyInManual          : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Any station in step mode#>"}
-	_anyInStepMode        : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Any station is grounding#>"}
-	_anyGrounding         : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Any station is holded#>"}
-	_anyInHolding         : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#All keys in automatic#>"}
-	_allKeysAuto          : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#All keys in normal#>"}
-	_allKeysNormal        : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any key in manual#>"}
-	_anyKeyManual         : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any key in step#>"}
-	_anyKeyStep           : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any key in service#>"}
-	_anyKeyService        : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Start#>"}
-	_anyButtonStart       : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Stop#>"}
-	_anyButtonStop        : BOOL;
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Ground#>"}
-	_anyButtonGround      : BOOL;
-	
-	
-	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Auto#>"}
-	_anyButtonAuto     : BOOL;
-	
-	
-	{attribute addProperty Name "<#Deadman#> - <#Any present#>"}
-	_anyDeadmanPresent    : BOOL;
+
 	{attribute clr [RenderIgnore()]}
 	_blinker              : TcoUtilities.TcoBlinker(THIS^);
 	
@@ -121,7 +52,7 @@ VAR
 	 {attribute addProperty Name "<#Suspend task#>"}
 	_suspendTask             : TcoControlledZoneActionTask(THIS^);
 	
-	 {attribute addProperty Name "<#Suspend task#>"}
+	 {attribute addProperty Name "<#Key Auto task#>"}
 	_keyAutoTask          : TcoControlledZoneActionTask(THIS^);
 	
 	{attribute addProperty Name "<#Key Manual task#>"}
@@ -135,9 +66,8 @@ VAR
 	
 	{attribute clr [RenderIgnore()]}
 	_tonDoorsLocked       : TON;
-	
-	{attribute clr [RenderIgnore()]}
-	_tDoorsLocked         : TIME := T#1S;
+
+
 	
 	{attribute clr [RenderIgnore()]}
 	_serviceKeyRising 	  : R_Trig;
@@ -148,9 +78,7 @@ VAR
 	
 
     
-   
-	_groundProgress: INT;
-	cu: INT;
+  
 END_VAR
 
 
@@ -193,8 +121,8 @@ IF THIS^.inEstopActive THEN
     THIS^.Messenger.Error('<#Emergency stop active: Unlocking doors!#>');
 END_IF
 
-//Voltage monitoring
-_tonDoorsLocked(IN := IsDoorsOk, PT := _tDoorsLocked);
+//Voltage monitoring todo
+_tonDoorsLocked(IN := inDoorCircuit.IsClosed AND inDoorCircuit.IsLocked AND  inDoorCircuit.IsLocalDoorsVoltageOk, PT := _config.DoorsLocked);
 
 IF _tonDoorsLocked.Q THEN
     IF NOT inDoorCircuit.IsLocalVoltageOk THEN
@@ -233,23 +161,20 @@ THIS^._buttonGround();
 THIS^._buttonAuto();
 
 // Handling of key 1
-THIS^._keyAuto();
+THIS^.KeyAuto();
 THIS^.KeyManual();
-THIS^._keyStep();
+THIS^.KeyStep();
 
 // Handling of Key Normal/Service
-THIS^._keyService();
+THIS^.KeyService();
 //THIS^.KeyNormalService();
 ]]></ST>
     </Implementation>
     <Folder Name="Add" Id="{66e64777-0133-4b9b-b641-cb76104e11cd}" />
-    <Folder Name="GroupStates" Id="{e8ad31d0-7ea3-46a4-a82a-273f90c73721}" />
     <Folder Name="Internal" Id="{cc26c71b-2af0-4d2e-9d5b-f123de945649}">
       <Folder Name="Buttons" Id="{5e223960-d1fd-48fd-9eed-d1c06058798d}" />
       <Folder Name="Keys" Id="{7167b411-0738-4368-99d6-e05385888f18}" />
     </Folder>
-    <Folder Name="ITcoButtons" Id="{6a4c7bdd-06f3-40bf-b144-40a1b9dcfda6}" />
-    <Folder Name="ITcoSafetySignals" Id="{71aaa25f-6181-4a6b-908d-c06980646528}" />
     <Method Name="_buttonAuto" Id="{dbeedad8-edf8-4104-aade-c6214b251a6c}" FolderPath="Internal\Buttons\">
       <Declaration><![CDATA[METHOD _buttonAuto : BOOL
 VAR
@@ -752,255 +677,6 @@ END_IF
 *)]]></ST>
       </Implementation>
     </Method>
-    <Method Name="_keyAuto" Id="{1a21dd51-7a6e-450a-859b-11ec81cd202f}" FolderPath="Internal\Keys\">
-      <Declaration><![CDATA[METHOD _keyAuto : BOOL
-VAR
-	cu : UINT;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[(*_keyAuto := FALSE;
-
-IF NOT AllKeysAuto THEN
-	_tierKeyAuto.Progress := 0;
-	_tierKeyAuto.ForceNewTierOnNextCall();
-	RETURN;
-END_IF
-
-IF _tierKeyAuto.IsNewTierOrMultipleCalls('_keyAuto',THIS^) THEN
-	RETURN;
-END_IF
-
-IF _tierKeyAuto.Run(0,'<#Initialization#>',T#5S,THIS^) THEN
-	
-	_tierKeyAuto.Progress:=1;
-	
-END_IF
-
-IF _tierKeyAuto.Run(1,'<#Waiting for all keys in position: automatic#>',T#5S,THIS^) THEN
-
-	IF 	AllKeysAuto THEN
-		_tierKeyAuto.Progress := _tierKeyAuto.Progress + 1;
-	END_IF
-END_IF
-
-IF _tierKeyAuto.Run(2,'<#Checking position of other relevant key#>',T#5S,THIS^) THEN
-	IF 	AnyKeyService OR NOT AllKeysNormal THEN
-		_tierKeyAuto.Progress := _tierKeyAuto.Progress + 1;
-		SetAlertMessageConditionally(Condition := TRUE, Message := '<#Automatic mode is not allowed while any kontrol key is in Service mode!#> <#Setting step mode!#>');
-	ELSE
-		// all auto + all normal
-		_tierKeyAuto.Progress := 10;
-	END_IF
-END_IF
-
-IF _tierKeyAuto.Run(3,'<#Checking active state of stations#>',T#5S,THIS^) THEN
-	IF AllStepMode OR AllManual THEN
-		_tierKeyAuto.Progress := 0;
-		_tierKeyAuto.ForceNewTierOnNextCall();
-	ELSE
-		_tierKeyAuto.Progress := _tierKeyAuto.Progress + 1;
-	END_IF
-END_IF	
-
-IF _tierKeyAuto.Run(4,'<#Wrong combination of keys! Setting step mode!#>',T#5S,THIS^) THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			_controlledUnits[cu].itfSequencer.ForceStepMode();
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-	
-	IF AllStepMode THEN
-		_tierKeyAuto.Progress := 0;
-		_tierKeyAuto.ForceNewTierOnNextCall();
-	END_IF
-END_IF
-
-IF _tierKeyAuto.Run(10,'<#Checking if any station is in step mode#>',T#5S,THIS^) THEN
-	IF AllKeysNormal THEN
-		IF AnyStepMode THEN
-			_tierKeyAuto.Progress := _tierKeyAuto.Progress + 1;
-		ELSE
-			_tierKeyAuto.Progress := 20;
-		END_IF
-	END_IF
-END_IF
-
-IF _tierKeyAuto.Run(11,'<#Unforce of step mode#>',T#5S,THIS^) THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			_controlledUnits[cu].itfSequencer.UnforceStepMode();
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-	
-	IF NOT AllStepMode THEN
-		_tierKeyAuto.Progress := 20;
-		_tierKeyAuto.ForceNewTierOnNextCall();
-	END_IF
-END_IF
-
-IF _tierKeyAuto.Run(20,'<#done#>',T#49D,THIS^) THEN
-	_keyAuto := TRUE;		
-END_IF
-*)]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="_keyService" Id="{0fb9734a-5320-4ef6-9a81-1d401829940b}" FolderPath="Internal\Keys\">
-      <Declaration><![CDATA[METHOD _keyService : BOOL
-VAR
-	cu : UINT;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[(*_keyService:= FALSE;
-
-_serviceKeyRising( CLK := AnyKeyService);
-_serviceKeyFalling(CLK := AnyKeyService);
-
-
-IF NOT AnyKeyService THEN
-	_tierKey2.Progress := 0;
-	_tierKey2.ForceNewTierOnNextCall();
-	RETURN;
-END_IF
-
-IF _tierKey2.IsNewTierOrMultipleCalls('_keyService',THIS^) THEN
-	RETURN;
-END_IF
-
-IF _tierKey2.Run(0,'<#Initialization#>',T#5S,THIS^) THEN
-	
-	// direct switch to Service
-	IF _allInactiveOrManualOrGrounded THEN
-		_tierKey2.Progress := 10;
-		RETURN;
-	END_IF
-	
-	// improper combination of states
-	_tierKey2.Progress := 20;
-
-END_IF
-
-//----------------------------------------------
-//            Set service mode to doors locks
-//----------------------------------------------
-
-IF _tierKey2.Run(10,'<#Setting service mode#>',T#5S,THIS^) THEN
-	IF NOT THIS^.itfDoorCircuit.ServiceMode THEN
-		THIS^.itfDoorCircuit.ServiceMode := TRUE;
-	END_IF
-	_tierKey2.Progress := 100;
-END_IF
-
-//------------------------------------------------------------------------------
-//            Improper combination of active working state - force manual
-//------------------------------------------------------------------------------
-
-IF _tierKey2.Run(20,'<#Setting manual mode#>',T#5S,THIS^) THEN
-	IF NOT THIS^.itfDoorCircuit.ServiceMode THEN
-		THIS^.itfDoorCircuit.ServiceMode := FALSE;
-	END_IF
-	
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			_controlledUnits[cu].itfSelector.RequestState(enumControlledUnitModes.ManualMode);
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-
-	IF _allInactiveOrManualOrGrounded THEN
-		_tierKey2.Progress := 100;
-	END_IF
-END_IF
-
-//----------------------------------------------
-//            Done
-//----------------------------------------------
-
-IF _tierKey2.Run(100,'<#done#>',T#49D,THIS^) THEN
-	_keyService := TRUE;		
-END_IF
-
-*)
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="_keyStep" Id="{48e24f30-65e8-40f7-bd66-7e0cf0d33df6}" FolderPath="Internal\Keys\">
-      <Declaration><![CDATA[METHOD _keyStep : BOOL
-VAR
-	cu : UINT;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[(*_keyStep:= FALSE;
-IF AnyKeyStep THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			IF _stationHelper.IsStationInAuto(_controlledUnits[cu]) OR _stationHelper.IsStationInGrounding(_controlledUnits[cu]) THEN
-				_controlledUnits[cu].itfSequencer.ForceStepMode();
-			END_IF;
-		END_IF
-	END_FOR
-
-END_IF;
-_keyStep:=TRUE;		
-	
-//	
-//IF NOT AnyKeyStep THEN
-//	_tierKeyStep.Progress := 0;
-//	_tierKeyStep.ForceNewTierOnNextCall();
-//	RETURN;
-//END_IF
-//
-//IF _tierKeyStep.IsNewTierOrMultipleCalls('_keyStep',THIS^) THEN
-//	RETURN;
-//END_IF
-//
-//IF _tierKeyStep.Run(0,'<#Initialization#>',T#5S,THIS^) THEN
-//	
-//	_tierKeyStep.Progress:=1;
-//	
-//END_IF
-//
-//IF _tierKeyStep.Run(1,'<#Waiting for key in step mode!#>',T#5S,THIS^) THEN
-//	IF AnyKeyStep THEN
-//		IF NOT AllStepMode THEN
-//			_tierKeyStep.Progress := _tierKeyStep.Progress + 1;
-//		ELSE
-//			_tierKeyStep.Progress := 10;
-//		END_IF
-//	END_IF
-//END_IF
-//
-//IF _tierKeyStep.Run(2,'<#Setting step mode#>',T#5S,THIS^) THEN
-//	FOR cu := 0 TO C_MaxCu DO
-//		IF _controlledUnits[cu] <> 0 THEN
-//			//IF NOT _controlledUnits[cu].InCriticalOperation THEN
-//				_controlledUnits[cu].itfSequencer.ForceStepMode();
-//			//END_IF
-//		END_IF
-//	END_FOR
-//
-//	IF AllStepMode THEN
-//		_tierKeyStep.Progress := 10;
-//	END_IF
-//END_IF
-//
-//IF _tierKeyStep.Run(10,'<#done#>',T#5S,THIS^) THEN
-//	//IF NOT AllStepMode THEN
-////		_tierKeyStep.Progress := 0;
-////	END_IF
-//	_keyStep:=TRUE;		
-//END_IF
-
-*)]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="AddControlButtons" Id="{675a11c6-86fb-4ffa-81d8-9c1f1ef4a4e9}" FolderPath="Add\">
       <Declaration><![CDATA[METHOD AddControlButtons : BOOL
 VAR_INPUT
@@ -1117,339 +793,6 @@ FOR i := 0 TO _config.MaxKeyNormalService DO
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Property Name="AllAuto" Id="{8cbb321c-5ccc-4527-b68f-c770151742f2}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllAuto : BOOL]]></Declaration>
-      <Get Name="Get" Id="{6360434e-83ef-41ba-80b1-9bb6f0e0c3aa}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllAuto := _allInAuto;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllGrounded" Id="{02790f3b-8cfe-47dc-a749-579145ea3b30}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllGrounded : BOOL]]></Declaration>
-      <Get Name="Get" Id="{b96a9610-f196-4f66-a0ba-9fb057f1b910}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllGrounded := _allGrounded;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllGrounding" Id="{7a1dac86-7ebc-4155-89ad-5a70143daa11}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllGrounding : BOOL]]></Declaration>
-      <Get Name="Get" Id="{2bdc03e4-26c2-4785-97ff-7a756db4739a}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllGrounding := _allInGrounding;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllHolding" Id="{14d39a48-50cd-4713-9792-d32ddf945eb1}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[PROPERTY AllHolding : BOOL]]></Declaration>
-      <Get Name="Get" Id="{b4f82543-b931-4cdf-9d25-ce081d1c4dfa}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllHolding := _allHolding;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllInactive" Id="{39babc6b-e19c-4b1d-b80f-e663a6f3f779}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllInactive : BOOL]]></Declaration>
-      <Get Name="Get" Id="{4c44581d-7c05-4663-a2c5-456588568786}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllInactive := _allIdle;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllInactiveOrManualOrGrounded" Id="{0632a98f-f796-4ad9-a3ec-1e3e4b9db746}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[PROPERTY AllInactiveOrManualOrGrounded : BOOL]]></Declaration>
-      <Get Name="Get" Id="{bcc383d2-8bce-497c-9ae9-88eaad843e04}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllInactiveOrManualOrGrounded := _allInactiveOrManualOrGrounded;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllKeysAuto" Id="{682b92fe-f4ac-4704-a568-0cdd140e5811}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllKeysAuto : BOOL]]></Declaration>
-      <Get Name="Get" Id="{32d47de3-b018-49f0-89d5-a5e2c631dd29}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllKeysAuto := _allKeysAuto;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllKeysNormal" Id="{9a0d4c15-90ac-4189-a491-10c5975efbac}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllKeysNormal : BOOL]]></Declaration>
-      <Get Name="Get" Id="{aa7f9754-cd81-44f8-9d75-8cf2e2d09216}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllKeysNormal := _allKeysNormal;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllManual" Id="{423b1754-06ec-4918-9c43-ad7acd2f69a9}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllManual : BOOL]]></Declaration>
-      <Get Name="Get" Id="{51516719-6843-4fac-bf64-4d8a7a4560c9}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllManual := _allInManual;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AllStepMode" Id="{00708459-d2f0-4d58-8275-2b34c23d8265}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AllStepMode : BOOL]]></Declaration>
-      <Get Name="Get" Id="{6dff660c-0731-4910-abb1-594a6e34a4dc}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AllStepMode := _allInStepMode;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyAuto" Id="{2655cbd8-5902-4045-ac82-97b8542db9c6}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyAuto : BOOL]]></Declaration>
-      <Get Name="Get" Id="{25d44b93-cd8a-463e-84db-03ac4d4071be}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyAuto := _anyInAuto;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyButtonAuto" Id="{5d195888-623e-4946-87be-af7333f9e65a}" FolderPath="ITcoButtons\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyButtonAuto : BOOL]]></Declaration>
-      <Get Name="Get" Id="{7cfb9e13-6543-4db9-bda8-8efc4c37cc7f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyButtonAuto := _anyButtonAuto;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{c88f0691-71f8-4b65-9003-eef15f36f3a8}">
-        <Declaration><![CDATA[VAR
-	button : UINT;
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
-	IF _controlButtons[button] <> 0 THEN
-		_controlButtons[button].ButtonGround := AnyButtonGround;
-	ELSE
-		EXIT;
-	END_IF
-END_FOR]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="AnyButtonGround" Id="{283521cf-8553-4a29-a93c-d18856641b5d}" FolderPath="ITcoButtons\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyButtonGround : BOOL]]></Declaration>
-      <Get Name="Get" Id="{00dc0595-45e1-4b68-a99a-c91a9f1f92e4}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyButtonGround := _anyButtonGround;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{4287a934-f9f5-46dc-9b04-a069b21c3c5b}">
-        <Declaration><![CDATA[VAR
-	button : UINT;
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
-	IF _controlButtons[button] <> 0 THEN
-		_controlButtons[button].ButtonGround := AnyButtonGround;
-	ELSE
-		EXIT;
-	END_IF
-END_FOR]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="AnyButtonRecover" Id="{fec9d85a-d212-4303-a5c1-992380c9e54e}" FolderPath="ITcoButtons\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyButtonRecover : BOOL]]></Declaration>
-      <Get Name="Get" Id="{e0d3dc0d-c16f-409f-8907-baccc3e3cda2}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyButtonRecover := _anyButtonStart;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{d4aa1318-9bec-4b44-a0c2-843f29950c6c}">
-        <Declaration><![CDATA[VAR
-	button : UINT;
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
-	IF _controlButtons[button] <> 0 THEN
-		_controlButtons[button].ButtonRecover := AnyButtonRecover;
-	ELSE
-		EXIT;
-	END_IF
-END_FOR]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="AnyButtonSuspend" Id="{a43607a3-f39e-4011-895b-2cb63cd7c8ec}" FolderPath="ITcoButtons\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyButtonSuspend : BOOL]]></Declaration>
-      <Get Name="Get" Id="{ffc2ca7e-b4fc-419f-a454-030cc5ecbcd7}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyButtonSuspend := _anyButtonStop;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{7e5dc2fc-c68b-4ae8-842b-a8e25eac5742}">
-        <Declaration><![CDATA[VAR
-	button : UINT;
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
-	IF _controlButtons[button] <> 0 THEN
-		_controlButtons[button].ButtonSuspend := AnyButtonSuspend;
-	ELSE
-		EXIT;
-	END_IF
-END_FOR]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="AnyDeadman" Id="{7439317a-7e1f-4f35-9a29-63d7dd6fa2a4}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[PROPERTY AnyDeadman : BOOL]]></Declaration>
-      <Get Name="Get" Id="{4164e68b-ccdb-456f-a753-d2e0361f4a7b}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyDeadman := _anyDeadmanPresent;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyGrounding" Id="{ce7ec437-c293-4797-8875-7971e7de36dd}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyGrounding : BOOL]]></Declaration>
-      <Get Name="Get" Id="{c36ca1ba-23a0-467b-9a2a-1e34f1bbbfdf}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyGrounding := _anyGrounding;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyInHolding" Id="{6b30fb99-1603-4a9f-87b8-d60fad150e3a}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyInHolding : BOOL]]></Declaration>
-      <Get Name="Get" Id="{3baf5b60-1d66-43e0-a647-c6802d84b544}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyInHolding := _anyInHolding;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyKeyManual" Id="{e9b5a7b8-bc5b-453f-aed7-6cb6d58cd4ac}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyKeyManual : BOOL]]></Declaration>
-      <Get Name="Get" Id="{04f92121-2670-4c25-a298-aa442498088c}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyKeyManual := _anyKeyManual;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyKeyService" Id="{bbe78d00-d01f-4405-8aca-78a2de95aeae}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyKeyService : BOOL]]></Declaration>
-      <Get Name="Get" Id="{b239d35e-f649-441a-9355-fb0cce6b2ff4}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyKeyService := _anyKeyService;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyKeyStep" Id="{7c94ff36-f992-4b4d-84fe-0a89c9baeb87}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyKeyStep : BOOL]]></Declaration>
-      <Get Name="Get" Id="{7d9517b0-1a72-45a7-9fe5-6258fff0b927}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyKeyStep := _anyKeyStep;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyManual" Id="{ece48aea-d682-491b-ab7a-3b2c83ab02e5}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyManual : BOOL]]></Declaration>
-      <Get Name="Get" Id="{39d87513-0969-4c52-b236-6e383760c8b9}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyManual := _anyInManual;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="AnyStepMode" Id="{78ea3879-5eb5-4a8b-9df6-790c013b9003}" FolderPath="GroupStates\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY AnyStepMode : BOOL]]></Declaration>
-      <Get Name="Get" Id="{3333c80f-299d-407a-99f1-cc158ab5c937}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AnyStepMode := _anyInStepMode;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Property Name="Config" Id="{25a32748-877d-4f40-ad59-b4a093072908}">
       <Declaration><![CDATA[PROPERTY Config :REFERENCE TO TcoControlledZone_Config]]></Declaration>
       <Get Name="Get" Id="{8d055fd6-8274-4693-875b-2e0a05580d38}">
@@ -1469,45 +812,44 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_allInAuto := TRUE;
-_allInGrounding := TRUE;
-_allInManual := TRUE;
-_allIdle := TRUE;
-_allGrounded := TRUE;
-_allInStepMode := TRUE;
-_allInactiveOrManualOrGrounded := TRUE;
-_anyInAuto := FALSE;
-_anyInManual := FALSE;
-_anyGrounding := FALSE;
-_anyInStepMode := FALSE;
+        <ST><![CDATA[_status.State.AllInAuto := TRUE;
+_status.State.AllInGrounding := TRUE;
+_status.State.AllInManual := TRUE;
+_status.State.AllIdle := TRUE;
+_status.State.AllGrounded := TRUE;
+_status.State.AllInStepMode := TRUE;
+_status.State.AnyInAuto := FALSE;
+_status.State.AnyInManual := FALSE;
+_status.State.AnyGrounding := FALSE;
+_status.State.AnyInStepMode := FALSE;
 
 i := 0;
 
 FOR i := 0 TO _config.MaxControledUnits DO
     IF _controlledUnits[i] <> 0 THEN
-        _allInAuto := _allInAuto AND _controlledUnits[cu].StatusInfo.Mode= eCUMode.AutomatMode;
+        _status.State.AllInAuto := _status.State.AllInAuto AND _controlledUnits[i].StatusInfo.Mode= eCUMode.AutomatMode;
 		
-        _allInManual := _allInManual AND _controlledUnits[cu].StatusInfo.Mode= eCUMode.ManualMode;
+        _status.State.AllInManual := _status.State.AllInManual AND _controlledUnits[i].StatusInfo.Mode= eCUMode.ManualMode;
 		
-        _allIdle := _allIdle AND _controlledUnits[cu].StatusInfo.Mode = eCUMode.NoMode;
+        _status.State.AllIdle := _status.State.AllIdle AND _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode;
 		
-        _allInGrounding := _allInGrounding AND (_controlledUnits[cu].StatusInfo.Mode= eCUMode.GroundModeDone OR
-            _controlledUnits[cu].StatusInfo.Mode= eCUMode.GroundMode);
+        _status.State.AllInGrounding := _status.State.AllInGrounding AND (_controlledUnits[i].StatusInfo.Mode= eCUMode.GroundModeDone OR
+            _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode);
 
-        _allGrounded := _allGrounded AND _controlledUnits[cu].StatusInfo.Mode= eCUMode.GroundMode;
+        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode;
 		
-        _allInStepMode := _allInStepMode AND _controlledUnits[cu].StatusInfo.CurrentIsInStepMode;
+        _status.State.AllInStepMode := _status.State.AllInStepMode AND _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
 
         //_allInactiveOrManualOrGrounded := _allInactiveOrManualOrGrounded AND (_stationHelper.IsStationInManual(_controlledUnits[cu]) OR _stationHelper.IsStationInIddle(_controlledUnits[cu]) OR (_controlledUnits[cu].IsGroundDone AND NOT _stationHelper.IsStationInAuto(_controlledUnits[cu])));
 
-        _anyInAuto := _anyInAuto OR _controlledUnits[cu].StatusInfo.Mode= eCUMode.AutomatMode;
+        _status.State.AnyInAuto := _status.State.AnyInAuto OR _controlledUnits[i].StatusInfo.Mode= eCUMode.AutomatMode;
 		
-        _anyInManual := _anyInManual OR _controlledUnits[cu].StatusInfo.Mode= eCUMode.ManualMode;
+        _status.State.AnyInManual := _status.State.AnyInManual OR _controlledUnits[i].StatusInfo.Mode= eCUMode.ManualMode;
 		
-        _anyInStepMode := _anyInStepMode OR _controlledUnits[cu].StatusInfo.CurrentIsInStepMode;
+        _status.State.AnyInStepMode := _status.State.AnyInStepMode OR _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
 
-        _anyGrounding := _anyGrounding OR (_controlledUnits[cu].StatusInfo.Mode= eCUMode.GroundModeDone OR
-            _controlledUnits[cu].StatusInfo.Mode= eCUMode.GroundMode);
+        _status.State.AnyGrounding := _status.State.AnyGrounding OR (_controlledUnits[i].StatusInfo.Mode= eCUMode.GroundModeDone OR
+            _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode);
 
     ELSE
         EXIT;
@@ -1515,48 +857,48 @@ FOR i := 0 TO _config.MaxControledUnits DO
 END_FOR
 
 // update states of buttons
-_anyButtonStart := FALSE;
-_anyButtonStop := FALSE;
-_anyButtonGround := FALSE;
-_anyButtonAuto := FALSE;
+_status.State.AnyButtonRecover := FALSE;
+_status.State.AnyButtonSuspend := FALSE;
+_status.State.AnyButtonGround := FALSE;
+_status.State.AnyButtonAuto := FALSE;
 i := 0;
 
 FOR i := 0 TO _config.MaxControlButtons DO
     IF _controlButtons[i] <> 0 THEN
-        _anyButtonStart := _anyButtonStart OR _controlButtons[i].ButtonRecover;
-        _anyButtonGround := _anyButtonGround OR _controlButtons[i].ButtonGround;
-        _anyButtonAuto := _anyButtonAuto OR _controlButtons[i].ButtonAuto;
-        _anyButtonStop := _anyButtonStop OR _controlButtons[i].ButtonSuspend;
+        _status.State.AnyButtonRecover := _status.State.AnyButtonRecover OR _controlButtons[i].ButtonRecover;
+        _status.State.AnyButtonGround := _status.State.AnyButtonGround OR _controlButtons[i].ButtonGround;
+        _status.State.AnyButtonAuto := _status.State.AnyButtonAuto OR _controlButtons[i].ButtonAuto;
+        _status.State.AnyButtonSuspend := _status.State.AnyButtonSuspend OR _controlButtons[i].ButtonSuspend;
     ELSE
         EXIT;
     END_IF
 END_FOR
 
 // update states of keys
-_allKeysNormal := TRUE;
-_anyKeyService := FALSE;
+_status.State.AllKeysNormal := TRUE;
+_status.State.AnyKeyService := FALSE;
 i := 0;
 
 FOR i := 0 TO _config.MaxKeyNormalService DO
     IF _controlKeyNormalService[i] <> 0 THEN
-        _allKeysNormal := _allKeysNormal AND _controlKeyNormalService[i].KeyInNormal;
-        _anyKeyService := _anyKeyService OR _controlKeyNormalService[i].KeyInService;
+        _status.State.AllKeysNormal := _status.State.AllKeysNormal AND _controlKeyNormalService[i].KeyInNormal;
+        _status.State.AnyKeyService := _status.State.AnyKeyService OR _controlKeyNormalService[i].KeyInService;
     ELSE
         EXIT;
     END_IF
 END_FOR
 
 // update states of keys
-_allKeysAuto := TRUE;
-_anyKeyManual := FALSE;
-_anyKeyStep := FALSE;
+_status.State.AllKeysAuto := TRUE;
+_status.State.AnyKeyManual := FALSE;
+_status.State.AnyKeyStep := FALSE;
 i := 0;
 
 FOR i := 0 TO _config.MaxKeyMode DO
     IF _controlKeyMode[i] <> 0 THEN
-        _allKeysAuto := _allKeysAuto AND _controlKeyMode[i].KeyInAuto;
-        _anyKeyManual := _anyKeyManual OR _controlKeyMode[i].KeyInManual;
-        _anyKeyStep := _anyKeyStep OR _controlKeyMode[i].KeyInStep;
+        _status.State.AllKeysAuto := _status.State.AllKeysAuto AND _controlKeyMode[i].KeyInAuto;
+        _status.State.AnyKeyManual := _status.State.AnyKeyManual OR _controlKeyMode[i].KeyInManual;
+        _status.State.AnyKeyStep := _status.State.AnyKeyStep OR _controlKeyMode[i].KeyInStep;
     ELSE
         EXIT;
     END_IF
@@ -1564,67 +906,59 @@ END_FOR
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="IsAirPressureOk" Id="{a82b5e13-9bb2-463c-96e9-75557c58753f}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY IsAirPressureOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{80c8ba65-65ea-4853-b4f6-a4a98565a512}">
-        <Declaration><![CDATA[VAR
+    <Method Name="KeyAuto" Id="{1a21dd51-7a6e-450a-859b-11ec81cd202f}" FolderPath="Internal\Keys\">
+      <Declaration><![CDATA[METHOD KeyAuto 
+VAR
+	cu : UINT;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsAirPressureOk := inAirPressureOK;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="IsDoorsOk" Id="{06806600-e660-4ce1-b5c3-094ab98208f0}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY IsDoorsOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{8af7208e-dbdc-4c40-8963-0b115f6c1558}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsDoorsOk := (inDoorCircuit.IsLocked AND inDoorCircuit.IsClosed and inDoorCircuit.IsLocalDoorsVoltageOk) OR AnyKeyService;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="IsEstopOk" Id="{b40e4ec0-cc54-45ac-9393-7014d49f35ac}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY IsEstopOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{6b838da6-f619-4043-8175-29d9a4f187e1}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsEstopOk := NOT inEstopActive;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="IsGlobalVoltageOK" Id="{f44dffdb-a9f5-4917-be5d-2c6c9e43ee52}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
-PROPERTY IsGlobalVoltageOK : BOOL]]></Declaration>
-      <Get Name="Get" Id="{c4527189-0f4e-4c0c-a672-62d69082ae41}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsGlobalVoltageOK := inDoorCircuit.IsGlobalVoltageOk;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="IsLocalVoltageOk" Id="{56d654c7-42c1-4191-82cf-2603bb0bfdc2}" FolderPath="ITcoSafetySignals\">
-      <Declaration><![CDATA[PROPERTY IsLocalVoltageOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{9249590f-7168-44a1-83a1-943c068a07fa}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsLocalVoltageOk := inDoorCircuit.IsLocalVoltageOk;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[IF _keyAutoTask.Execute() THEN
+	
+
+	IF 	_status.State.AnyInStepMode OR NOT _status.State.AllKeysNormal  THEN
+		_status.ActionDescription:= '<#Cyclic mode is not allowed while any control key is in Service mode!#> <#Setting step mode!#>';
+		FOR cu := 0 TO _config.MaxControledUnits DO
+		IF _controlledUnits[cu] <> 0 THEN
+				IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+					_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+				ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+					_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+				END_IF
+		ELSE
+			EXIT;
+		END_IF
+		END_FOR
+	ELSE
+		_status.ActionDescription:= '<#Automatic mode is set(Step mode is disabled)!#>';
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+					_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+				ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+					_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+				END_IF
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+	END_IF;
+	
+
+
+	IF NOT _status.State.AnyInStepMode THEN
+		_keyAutoTask.DoneWhen(TRUE);
+	END_IF;
+	
+	IF _status.ActionDescription<>'' THEN
+		THIS^._keyAutoTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;	
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="KeyManual" Id="{7daab3f1-fdd8-4eab-96f6-f2b13f02e4ca}" FolderPath="Internal\Keys\">
-      <Declaration><![CDATA[METHOD KeyManual : BOOL
+      <Declaration><![CDATA[METHOD KeyManual 
 VAR
 	cu : UINT;
 END_VAR
@@ -1633,10 +967,14 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _keyManualTask.Execute() THEN
+	IF NOT _status.State.AnyKeyManual THEN 
+		_status.ActionDescription:='<#Manual mode is required but mode key is not in required position!#>';
+	END_IF;
+	
 	IF _keyManualTask.Progress =0 THEN
-		IF AnyKeyManual THEN
-			IF NOT AllManual THEN
-			_keyManualTask.Progress := _keyManualTask.Progress + 1;// all to manual
+		IF _status.State.AnyKeyManual THEN
+			IF NOT _status.State.AllInManual THEN
+				_keyManualTask.Progress := _keyManualTask.Progress + 1;// all to manual
 			ELSE
 				_keyManualTask.Progress := _keyManualTask.Progress + 2;
 			END_IF
@@ -1646,19 +984,19 @@ IF _keyManualTask.Execute() THEN
 
 	IF _keyManualTask.Progress =1 THEN
 		
-		_status.ActionDescription:='<#Waiting for key in manual mode#>';
+		_status.ActionDescription:='<#Manual mode is starting#>';
 		
 		FOR cu := 0 TO _config.MaxControledUnits DO
 			IF _controlledUnits[cu] <> 0 THEN
-			IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.ManualMode THEN
-				_controlledUnits[cu].ManualTask.Invoke();
+				IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.ManualMode THEN
+					_controlledUnits[cu].ManualTask.Invoke();
 				END_IF			
 			ELSE
 				EXIT;
 			END_IF
 		END_FOR
 
-		IF AllManual THEN
+		IF _status.State.AllInManual THEN
 			_keyManualTask.Progress := _keyManualTask.Progress + 1;
 		END_IF
 		
@@ -1678,7 +1016,7 @@ IF _keyManualTask.Execute() THEN
 			END_IF
 		END_FOR
 
-		IF AllManual THEN
+		IF _status.State.AllInManual THEN
 			_keyManualTask.Progress := _keyManualTask.Progress + 1;
 		END_IF
 		
@@ -1688,8 +1026,99 @@ IF _keyManualTask.Execute() THEN
 		_keyManualTask.DoneWhen(TRUE);	
 	END_IF
 
+	IF _status.ActionDescription<>'' THEN
+		THIS^._keyManualTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;
+END_IF;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="KeyService" Id="{0fb9734a-5320-4ef6-9a81-1d401829940b}" FolderPath="Internal\Keys\">
+      <Declaration><![CDATA[METHOD KeyService
+VAR
+	cu : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _keyServiceTask.Execute() THEN
+	
+
+	IF 	_status.State.AnyInManual  AND _status.State.AnyKeyService  THEN
+		_status.ActionDescription:='<#Manual mode is starting due service key combination (Manual / Service)#>';
+		
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.ManualMode THEN
+					_controlledUnits[cu].ManualTask.Invoke();
+				END_IF			
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+	ELSE
+		_status.ActionDescription:='<#Step mode is required because Service key position is set!#>';
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+					END_IF
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+	END_IF;
+	
 
 
+	IF  _status.State.AllInStepMode OR _status.State.AllInManual THEN
+		_keyServiceTask.DoneWhen(TRUE);
+	END_IF;
+	
+	IF _status.ActionDescription<>'' THEN
+		THIS^._keyServiceTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;	
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="KeyStep" Id="{48e24f30-65e8-40f7-bd66-7e0cf0d33df6}" FolderPath="Internal\Keys\">
+      <Declaration><![CDATA[METHOD KeyStep 
+VAR
+	cu : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF _keyStepTask.Execute() THEN
+	IF NOT _status.State.AnyKeyStep THEN 
+		_status.ActionDescription:='<#Step mode is required but mode key is not in required position!#>';
+	END_IF;
+	IF _status.State.AnyKeyStep THEN
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+					_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+				ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+					_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+				END_IF
+			ELSE
+				EXIT;
+			END_IF
+		
+		END_FOR
+	END_IF;
+	
+	IF _status.State.AllInStepMode THEN
+		_keyStepTask.DoneWhen(TRUE);
+	END_IF;
+	
+	IF _status.ActionDescription<>'' THEN
+		THIS^._keyStepTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;	
 END_IF;
 
 ]]></ST>

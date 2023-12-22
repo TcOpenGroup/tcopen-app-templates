@@ -1014,55 +1014,11 @@ External Setpoint Generation:
 		</System>
 		<Plc>
 			<Project GUID="{1F826822-78EF-46D2-B0C2-A803A090596D}" Name="x_template_xPlc" PrjFilePath="x_template_xPlc\x_template_xPlc.plcproj" TmcFilePath="x_template_xPlc\x_template_xPlc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{BAF4074A-26E0-1D73-4C5E-1371EBE942B1}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{0D943DD6-B97F-870A-B9DA-BAA812D936ED}">
 					<Name>x_template_xPlc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.SlaveCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.DevState</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0State</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0WcState</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Inputs.Frm0InputToggle</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.ChangeCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DevId</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.AmsNetId</Name>
-							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.CfgSlaveCount</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DcToTcTimeOffset</Name>
-							<Type>LINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.InfoData.DcToExtTimeOffset</Name>
-							<Type>LINT</Type>
-						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.A1.InfoData.State</Name>
 							<Type>UINT</Type>
@@ -1255,21 +1211,53 @@ External Setpoint Generation:
 							<Name>GVL_iXlinker.Axis2.NcToPlc</Name>
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.SlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.DevState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0State</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0WcState</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Inputs.Frm0InputToggle</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.ChangeCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DevId</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.AmsNetId</Name>
+							<Type GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo">TcoAmsNetId</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.CfgSlaveCount</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToTcTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.InfoData.DcToExtTimeOffset</Name>
+							<Type>LINT</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.Frm0Ctrl</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN._technology.Device_1.Outputs.Frm0WcCtrl</Name>
-							<Type>UINT</Type>
-						</Var>
 						<Var>
 							<Name>GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output</Name>
 							<Type>BOOL</Type>
@@ -1353,6 +1341,18 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_iXlinker.Axis2.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0Ctrl</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology.Device_1.Outputs.Frm0WcCtrl</Name>
+							<Type>UINT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2023-03-27T10:36:05">

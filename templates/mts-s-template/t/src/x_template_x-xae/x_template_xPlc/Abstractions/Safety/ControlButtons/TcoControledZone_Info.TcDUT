@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoControledZone_Info" Id="{aa141ebf-52fb-44f0-a6cb-185795382c0f}">
+    <Declaration><![CDATA[TYPE TcoControledZone_Info :
+STRUCT
+	{attribute addProperty Name "<#Group#> - <#In automatic#>"}
+	AllInAuto            : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Is grounding#>"}
+	AllInGrounding       : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#In manual#>"}
+	AllInManual          : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Idle#>"}
+	AllIdle          : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Grounded#>"}
+	AllGrounded          : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#In step mode#>"}
+	AllInStepMode        : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Holding process#>"}
+	AllHolding           : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#In Inactive or Manual or Grounded#>"}
+	AllInactiveOrManualOrGrounded  : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station in automatic mode#>"}
+	AnyInAuto            : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station in manual mode#>"}
+	AnyInManual          : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station in step mode#>"}
+	AnyInStepMode        : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station is grounding#>"}
+	AnyGrounding         : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station is holded#>"}
+	AnyInHolding         : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#All keys in automatic#>"}
+	AllKeysAuto          : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#All keys in normal#>"}
+	AllKeysNormal        : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any key in manual#>"}
+	AnyKeyManual         : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any key in step#>"}
+	AnyKeyStep           : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any key in service#>"}
+	AnyKeyService        : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Recover#>"}
+	AnyButtonRecover       : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Suspend#>"}
+	AnyButtonSuspend        : BOOL;
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Ground#>"}
+	AnyButtonGround      : BOOL;
+	
+	
+	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Auto#>"}
+	AnyButtonAuto     : BOOL;
+	
+	
+	{attribute addProperty Name "<#Deadman#> - <#Any present#>"}
+	AnyDeadmanPresent    : BOOL;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

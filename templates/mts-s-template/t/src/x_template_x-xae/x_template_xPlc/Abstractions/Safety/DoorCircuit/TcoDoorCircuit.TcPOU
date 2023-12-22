@@ -18,8 +18,6 @@ VAR
 	
 	{attribute clr [RenderIgnore()]}
 	_doors              : ARRAY [0..12] OF ITcoDoorLock;
-		
-
 	
 	{attribute clr [RenderIgnore()]}
 	_localDoorsVoltage  : ARRAY [0..4] OF ITcoControlVoltage;
@@ -56,7 +54,9 @@ END_VAR
     <Implementation>
       <ST><![CDATA[Initialize();]]></ST>
     </Implementation>
-    <Method Name="AddDoors" Id="{67485f30-a42f-4851-ad0e-22da5e378194}">
+    <Folder Name="Add" Id="{3c49a7ff-844f-4f62-b2b0-4bdfb5dcbc54}" />
+    <Folder Name="Remove" Id="{687d09f9-7a03-4201-922b-5ca461e262da}" />
+    <Method Name="AddDoors" Id="{67485f30-a42f-4851-ad0e-22da5e378194}" FolderPath="Add\">
       <Declaration><![CDATA[METHOD AddDoors : BOOL
 VAR_INPUT
 	inDoor : ITcoDoorLock;
@@ -80,7 +80,7 @@ FOR i := 0 TO _config.MaxDoors DO
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Method Name="AddGlobalVoltage" Id="{ccb8c6c6-0ed0-4992-99d4-6666ea63673e}">
+    <Method Name="AddGlobalVoltage" Id="{ccb8c6c6-0ed0-4992-99d4-6666ea63673e}" FolderPath="Add\">
       <Declaration><![CDATA[METHOD AddGlobalVoltage : BOOL
 VAR_INPUT
  	inVoltage : ITcoControlVoltage;
@@ -109,7 +109,7 @@ FOR i := 0 TO _config.MaxGlobalVoltage DO
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Method Name="AddLocalDoorsVoltage" Id="{a0ac8e3f-a72a-49ce-a2ea-058ee1e8fa9a}">
+    <Method Name="AddLocalDoorsVoltage" Id="{a0ac8e3f-a72a-49ce-a2ea-058ee1e8fa9a}" FolderPath="Add\">
       <Declaration><![CDATA[METHOD AddLocalDoorsVoltage : BOOL
 VAR_INPUT
  	inVoltage : ITcoControlVoltage;
@@ -138,7 +138,7 @@ FOR i := 0 TO _config.MaxLocalVoltage DO
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Method Name="AddLocalVoltage" Id="{4e3e2766-414e-43a1-8fea-517e18bdf8db}">
+    <Method Name="AddLocalVoltage" Id="{4e3e2766-414e-43a1-8fea-517e18bdf8db}" FolderPath="Add\">
       <Declaration><![CDATA[METHOD AddLocalVoltage : BOOL
 VAR_INPUT
  	inVoltage : ITcoControlVoltage;
@@ -389,7 +389,7 @@ END_FOR
 Lock := THIS^.IsLocked;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="RemoveAllDoors" Id="{34f695cb-e2b9-4cf2-b03d-b8415b441716}">
+    <Method Name="RemoveAllDoors" Id="{34f695cb-e2b9-4cf2-b03d-b8415b441716}" FolderPath="Remove\">
       <Declaration><![CDATA[METHOD RemoveAllDoors
 VAR
 	i : UINT;
@@ -400,7 +400,7 @@ END_VAR]]></Declaration>
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Method Name="RemoveDoors" Id="{d06bb510-4db5-424e-8db0-a54b5ff58bb8}">
+    <Method Name="RemoveDoors" Id="{d06bb510-4db5-424e-8db0-a54b5ff58bb8}" FolderPath="Remove\">
       <Declaration><![CDATA[METHOD RemoveDoors : BOOL
 VAR_INPUT
 	inDoorLock : ITcoDoorLock;
@@ -450,21 +450,6 @@ FOR i := 0 TO _config.MaxLocalDoorsVoltage DO
 END_FOR
 
 ]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ServiceMode" Id="{4b42fc2c-5f85-433e-9f4a-f151ee84d0c9}">
-      <Declaration><![CDATA[(*~
-	<docu>
-		<summary>
-		    Custom service (manual, maintenance) logic.
-			This method must be implemented in derived class.
-		</summary>			
-	</docu>	
-~*)
-METHOD PROTECTED  ServiceMode
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="Status" Id="{b5359157-c674-43e2-ae3a-3ae512b9af00}">

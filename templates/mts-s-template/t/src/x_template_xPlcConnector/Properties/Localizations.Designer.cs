@@ -351,11 +351,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automatic mode is not allowed while any kontrol key is in Service mode!.
+        ///   Looks up a localized string similar to Automatic mode is set(Step mode is disabled)!.
         /// </summary>
-        public static string ___Automatic_mode_is_not_allowed_while_any_kontrol_key_is_in_Service_mode___ {
+        public static string ___Automatic_mode_is_set_Step_mode_is_disabled____ {
             get {
-                return ResourceManager.GetString("___Automatic_mode_is_not_allowed_while_any_kontrol_key_is_in_Service_mode___", resourceCulture);
+                return ResourceManager.GetString("___Automatic_mode_is_set_Step_mode_is_disabled____", resourceCulture);
             }
         }
         
@@ -523,38 +523,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checking active state of stations.
-        /// </summary>
-        public static string ___Checking_active_state_of_stations__ {
-            get {
-                return ResourceManager.GetString("___Checking_active_state_of_stations__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Checking actual conditions.
         /// </summary>
         public static string ___Checking_actual_conditions__ {
             get {
                 return ResourceManager.GetString("___Checking_actual_conditions__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Checking if any station is in step mode.
-        /// </summary>
-        public static string ___Checking_if_any_station_is_in_step_mode__ {
-            get {
-                return ResourceManager.GetString("___Checking_if_any_station_is_in_step_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Checking position of other relevant key.
-        /// </summary>
-        public static string ___Checking_position_of_other_relevant_key__ {
-            get {
-                return ResourceManager.GetString("___Checking_position_of_other_relevant_key__", resourceCulture);
             }
         }
         
@@ -672,6 +645,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Cycle_time__ {
             get {
                 return ResourceManager.GetString("___Cycle_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cyclic mode is not allowed while any control key is in Service mode!.
+        /// </summary>
+        public static string ___Cyclic_mode_is_not_allowed_while_any_control_key_is_in_Service_mode___ {
+            get {
+                return ResourceManager.GetString("___Cyclic_mode_is_not_allowed_while_any_control_key_is_in_Service_mode___", resourceCulture);
             }
         }
         
@@ -955,6 +937,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key Auto task.
+        /// </summary>
+        public static string ___Key_Auto_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Auto_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key door.
         /// </summary>
         public static string ___Key_door__ {
@@ -964,11 +955,38 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key Manual task.
+        /// </summary>
+        public static string ___Key_Manual_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Manual_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key service task.
+        /// </summary>
+        public static string ___Key_service_task__ {
+            get {
+                return ResourceManager.GetString("___Key_service_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key state.
         /// </summary>
         public static string ___Key_state__ {
             get {
                 return ResourceManager.GetString("___Key_state__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Step task.
+        /// </summary>
+        public static string ___Key_Step_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Step_task__", resourceCulture);
             }
         }
         
@@ -1104,6 +1122,33 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___MANUAL__ {
             get {
                 return ResourceManager.GetString("___MANUAL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is required but mode key is not in required position!.
+        /// </summary>
+        public static string ___Manual_mode_is_required_but_mode_key_is_not_in_required_position___ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_required_but_mode_key_is_not_in_required_position___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is starting.
+        /// </summary>
+        public static string ___Manual_mode_is_starting__ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_starting__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is starting due service key combination (Manual / Service).
+        /// </summary>
+        public static string ___Manual_mode_is_starting_due_service_key_combination__Manual___Service___ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_starting_due_service_key_combination__Manual___Service___", resourceCulture);
             }
         }
         
@@ -1443,6 +1488,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recover.
+        /// </summary>
+        public static string ___Recover__ {
+            get {
+                return ResourceManager.GetString("___Recover__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RECOVER ANY COMPONETS.
         /// </summary>
         public static string ___RECOVER_ANY_COMPONETS__ {
@@ -1524,24 +1578,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setting manual mode.
-        /// </summary>
-        public static string ___Setting_manual_mode__ {
-            get {
-                return ResourceManager.GetString("___Setting_manual_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting service mode.
-        /// </summary>
-        public static string ___Setting_service_mode__ {
-            get {
-                return ResourceManager.GetString("___Setting_service_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Setting stations to Auto&gt;&apos;,T#5S,THIS^) THEN
         ///	FOR cu := 0 TO C_MaxCu DO
         ///		IF _controlledUnits[cu] &lt;&gt; 0 THEN
@@ -1582,15 +1618,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setting step mode.
-        /// </summary>
-        public static string ___Setting_step_mode__ {
-            get {
-                return ResourceManager.GetString("___Setting_step_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Setting step mode!.
         /// </summary>
         public static string ___Setting_step_mode___ {
@@ -1605,15 +1632,6 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Setting_up_machine_operation_mode__ {
             get {
                 return ResourceManager.GetString("___Setting_up_machine_operation_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start.
-        /// </summary>
-        public static string ___Start__ {
-            get {
-                return ResourceManager.GetString("___Start__", resourceCulture);
             }
         }
         
@@ -1700,6 +1718,24 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Step mode is required because Service key position is set!.
+        /// </summary>
+        public static string ___Step_mode_is_required_because_Service_key_position_is_set___ {
+            get {
+                return ResourceManager.GetString("___Step_mode_is_required_because_Service_key_position_is_set___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step mode is required but mode key is not in required position!.
+        /// </summary>
+        public static string ___Step_mode_is_required_but_mode_key_is_not_in_required_position___ {
+            get {
+                return ResourceManager.GetString("___Step_mode_is_required_but_mode_key_is_not_in_required_position___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Step time.
         /// </summary>
         public static string ___Step_time__ {
@@ -1709,11 +1745,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop.
+        ///   Looks up a localized string similar to Suspend.
         /// </summary>
-        public static string ___Stop__ {
+        public static string ___Suspend__ {
             get {
-                return ResourceManager.GetString("___Stop__", resourceCulture);
+                return ResourceManager.GetString("___Suspend__", resourceCulture);
             }
         }
         
@@ -1790,15 +1826,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unforce of step mode.
-        /// </summary>
-        public static string ___Unforce_of_step_mode__ {
-            get {
-                return ResourceManager.GetString("___Unforce_of_step_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Unlocked.
         /// </summary>
         public static string ___Unlocked__ {
@@ -1835,15 +1862,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting for all keys in position: automatic.
-        /// </summary>
-        public static string ___Waiting_for_all_keys_in_position__automatic__ {
-            get {
-                return ResourceManager.GetString("___Waiting_for_all_keys_in_position__automatic__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Waiting for all stations in auto / ground mode to enter holding step.
         /// </summary>
         public static string ___Waiting_for_all_stations_in_auto___ground_mode_to_enter_holding_step__ {
@@ -1858,24 +1876,6 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Waiting_for_grounding_to_finish__ {
             get {
                 return ResourceManager.GetString("___Waiting_for_grounding_to_finish__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waiting for key in manual mode.
-        /// </summary>
-        public static string ___Waiting_for_key_in_manual_mode__ {
-            get {
-                return ResourceManager.GetString("___Waiting_for_key_in_manual_mode__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waiting for key in step mode!.
-        /// </summary>
-        public static string ___Waiting_for_key_in_step_mode___ {
-            get {
-                return ResourceManager.GetString("___Waiting_for_key_in_step_mode___", resourceCulture);
             }
         }
         
@@ -1903,15 +1903,6 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Would_you_like_to_load_default_settings___ {
             get {
                 return ResourceManager.GetString("___Would_you_like_to_load_default_settings___", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wrong combination of keys! Setting step mode!.
-        /// </summary>
-        public static string ___Wrong_combination_of_keys__Setting_step_mode___ {
-            get {
-                return ResourceManager.GetString("___Wrong_combination_of_keys__Setting_step_mode___", resourceCulture);
             }
         }
         

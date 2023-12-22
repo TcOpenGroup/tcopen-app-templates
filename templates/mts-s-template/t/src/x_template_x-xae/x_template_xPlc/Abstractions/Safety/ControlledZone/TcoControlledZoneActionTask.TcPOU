@@ -6,14 +6,11 @@ VAR_IN_OUT
 	inoStatus:TcoControlledZone_Status;
 END_VAR
 VAR
-	_errorMessage:TcoCore.TcoMessenger(THIS^);
     _progress : INT := 0;
     {attribute 'hide'} 
 	_infoTimer :  TON;
     {attribute 'hide'} 
 	_errorTimer :  TON;
-	{attribute 'hide'} 
-	_timer :  TON;
     {attribute 'hide'} 
 	_varInfo : __SYSTEM.VAR_INFO;
     {attribute 'hide'} 
@@ -50,9 +47,7 @@ METHOD Restore : TcoCore.ITcoRestorable]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Restore();
 _progress := 0;
-_timer(In:=FALSE);
-Messenger.UnPin();
-_errorMessage.UnPin();]]></ST>
+Messenger.UnPin();]]></ST>
       </Implementation>
     </Method>
   </POU>

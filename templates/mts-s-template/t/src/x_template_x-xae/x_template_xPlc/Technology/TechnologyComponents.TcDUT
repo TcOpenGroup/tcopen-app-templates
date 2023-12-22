@@ -38,10 +38,10 @@ TYPE
 		
 		
 		{attribute addProperty Name "<#Door#>"}
-        Door : TcoDoor(THISSTRUCT);
+        Door : TcoStandartDoor(THISSTRUCT);
 
 		{attribute addProperty Name "<#Key door#>"}
-        DoorKey : TcoKeyDoor(THISSTRUCT);
+        DoorKey : TcoBasicDoor(THISSTRUCT);
 
 		
 		
