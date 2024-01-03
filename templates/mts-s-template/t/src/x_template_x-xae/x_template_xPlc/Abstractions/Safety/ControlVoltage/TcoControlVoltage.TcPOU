@@ -12,7 +12,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[SUPER^(inoSignal:=inoSignal);
 IF NOT inoSignal THEN
-	Messenger.Warning('<#Control Voltage is Off#>');
+	Messenger.Error('<#Voltage is Off!#>');
 END_IF;]]></ST>
     </Implementation>
     <Property Name="IsOff" Id="{eab858d0-60f4-40dc-9363-46da2e0a7161}">

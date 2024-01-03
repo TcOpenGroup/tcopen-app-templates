@@ -117,12 +117,16 @@ END_VAR
 	
 _components.ModeKey(inoKeyState1:=GVL_iXlinker.EC1.A1.A1_3.Channel_5.Input,
 					inoKeyState2:=GVL_iXlinker.EC1.A1.A1_3.Channel_6.Input);
+					
+_components.NormalServiceKey(inoSignal:=GVL_iXlinker.EC1.A1.A1_3.Channel_7.Input);
 
 _components.GlobalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_5.Input);
 _components.LocalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input);
 _components.LocalDoorVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_7.Input);
 
 _components.EmergencyStop(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_8.Input);
+_components.AirPresureOk(inoSignal:= GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input);
+
 
 _components.Door(inoIsLocked := GVL_iXlinker.EC1.A1.A1_1.Channel_3.Input,
     inoIsOpen := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
@@ -132,12 +136,11 @@ _components.DoorKey(inoIsClosed := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
      inoLock := GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output);
 
 
-
 _components.DoorCicuit();
 
 _components.Zone(inDoorCircuit:=_components.DoorCicuit,
 				inEstopActive:=_components.EmergencyStop._signal,
-				inAirPressureOK:= _components.AirPresureOk._signal);]]></ST>
+				inAirPressureOK:= _components.AirPresureOk.IsTrue);]]></ST>
       </Implementation>
     </Method>
     <Method Name="InitializeComponentsOnce" Id="{78fe5985-ea43-49bb-a2ff-319ea6fb4a1a}" FolderPath="Initialize\">
