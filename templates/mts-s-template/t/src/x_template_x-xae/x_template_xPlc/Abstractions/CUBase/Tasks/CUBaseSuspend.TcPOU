@@ -3,13 +3,33 @@
   <POU Name="CUBaseSuspend" Id="{186121a4-6f79-4bd8-9c72-9cb4d29ea7ca}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT CUBaseSuspend EXTENDS TcoTaskedSequencer
 VAR
-	_dialog : TcoCore.TcoDialog(THIS^);
+	_done:BOOL;
 
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="Done" Id="{5a22d587-5150-4d6f-a4dd-4eb67fd1aa1b}">
+      <Declaration><![CDATA[PROPERTY Done : UINT]]></Declaration>
+      <Get Name="Get" Id="{1450861f-0942-49e9-a6a4-490ac06bb997}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := _done;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="OnStart" Id="{b57d8d71-ae82-45fe-9fe9-f07ca10c4c78}">
+      <Declaration><![CDATA[METHOD PUBLIC OnStart
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_done:=FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="StationBase" Id="{b74542a3-cffc-49be-bea0-b126e11ecbb7}">
       <Declaration><![CDATA[PROPERTY StationBase : REFERENCE TO CuBase]]></Declaration>
       <Get Name="Get" Id="{9e31189c-64d9-4e24-84e1-c3db17654050}">

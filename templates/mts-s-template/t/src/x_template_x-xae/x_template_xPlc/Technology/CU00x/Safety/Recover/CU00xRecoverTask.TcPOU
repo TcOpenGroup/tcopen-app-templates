@@ -58,7 +58,7 @@ END_IF
 IF (Step(30000, TRUE, 'LAST STEP')) THEN
     //-------------------------------------
 		
-        
+        this^._done:=true;
 		THIS^.Task.DoneWhen(TRUE);
 		
    
@@ -72,7 +72,8 @@ END_IF
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Station.SuspendTask.Restore();
+        <ST><![CDATA[SUPER^.OnStart();
+Station.SuspendTask.Restore();
 
 ]]></ST>
       </Implementation>

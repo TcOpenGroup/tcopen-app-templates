@@ -12,6 +12,10 @@ VAR_INPUT
 	
 	{attribute clr [RenderIgnore()]}
 	inEstopActive		      : BOOL;
+	
+	{attribute clr [RenderIgnore()]}
+	inAirPressureTimeWindow		      : TIME :=T#5S;
+	
 END_VAR
 
 VAR
@@ -65,7 +69,9 @@ VAR
 	_keyServiceTask             : TcoControlledZoneActionTask(THIS^);
 	
 	{attribute clr [RenderIgnore()]}
-	_tonDoorsLocked       : TON;
+	_timerDoorsLocked       : TON;
+	{attribute clr [RenderIgnore()]}
+	_timerAirPressureMonitor       : TON;
 
 
 	
@@ -104,8 +110,9 @@ _blinker(inOffTime := T#500MS, inOnTime := T#500MS);
 THIS^.Initialize();
 
 //presure monitoring
-IF not inAirPressureOK THEN //todo define time when pressure is not sufficient
-    THIS^.Messenger.Error('<#Air pressure is not sufficient!#>');
+_timerAirPressureMonitor(IN:=NOT inAirPressureOK,PT:=inAirPressureTimeWindow);
+IF _timerAirPressureMonitor.Q THEN
+    THIS^.Messenger.Error('<#Air pressure is not sufficient!#>').Pin();
 END_IF;
 
 //Estop monitoring
@@ -115,9 +122,9 @@ IF THIS^.inEstopActive THEN
 END_IF
 
 //Voltage monitoring todo
-_tonDoorsLocked(IN := inDoorCircuit.IsClosed AND inDoorCircuit.IsLocked AND  inDoorCircuit.IsLocalDoorsVoltageOk, PT := _config.DoorsLocked);
+_timerDoorsLocked(IN := inDoorCircuit.IsClosed AND inDoorCircuit.IsLocked AND  inDoorCircuit.IsLocalDoorsVoltageOk, PT := _config.DoorsLocked);
 
-IF _tonDoorsLocked.Q THEN
+IF _timerDoorsLocked.Q THEN
     IF NOT inDoorCircuit.IsLocalVoltageOk THEN
         // unlock doors in case that control voltage goes down and it shouldn't
         inDoorCircuit.UnLock();
@@ -134,10 +141,10 @@ END_IF
 _recoverTask(inoStatus:=_status);
 _suspendTask(inoStatus:=_status);
 
-_groundTask.Enabled:=TRUE OR inAirPressureOK AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
+_groundTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
 _groundTask(inoStatus:=_status);
 
-_autoTask.Enabled:=TRUE OR inAirPressureOK AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
+_autoTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
 _autoTask(inoStatus:=_status);
 
 _keyManualTask(inoStatus:=_status);
@@ -370,7 +377,97 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[(*_buttonStart:= FALSE;
+        <ST><![CDATA[
+IF _recoverTask.Execute() THEN
+	
+	IF _recoverTask.Progress =0 THEN
+		_status.ActionDescription:='<#Waiting to release recover button#>';
+		IF NOT _status.State.AnyButtonRecover THEN
+				_recoverTask.Progress := _recoverTask.Progress + 1;	
+			END_IF
+		END_IF;
+	
+	END_IF
+	
+	IF _recoverTask.Progress =1 THEN
+		_status.ActionDescription:='<#Waiting to close and lock  all doors!#>';
+		
+		THIS^.inDoorCircuit.Lock();
+		
+		IF inDoorCircuit.IsLocked
+			AND inDoorCircuit.IsLocked
+			AND inDoorCircuit.IsLocalDoorsVoltageOk THEN
+			_recoverTask.Progress := _recoverTask.Progress + 1;
+	
+		END_IF;
+	
+	END_IF
+
+	IF _recoverTask.Progress =2 THEN
+		
+		_status.ActionDescription:= '<#Setup Cyclic or Step mode. It depends on key position#>';
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				IF _status.State.AllKeysAuto THEN	
+					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+					END_IF
+				END_IF;
+				IF _status.State.AnyKeyStep THEN
+					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+					END_IF
+				END_IF
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+
+		IF _status.State.AllInManual THEN
+			_recoverTask.Progress := 100;
+		END_IF
+		
+		
+		_recoverTask.Progress := _recoverTask.Progress + 1;
+		
+	END_IF
+	
+	
+	IF _recoverTask.Progress =3 THEN
+		
+		_status.ActionDescription:='<#Clear step mode#>';
+		
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				_controlledUnits[cu].AutomatTask.ModeController.Mode := eSequencerMode.CyclicMode;
+				_controlledUnits[cu].GroundTask.ModeController.Mode := eSequencerMode.CyclicMode;		
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+
+		IF _status.State.AllInManual THEN
+			_recoverTask.Progress := _recoverTask.Progress + 1;
+		END_IF
+		
+	END_IF
+
+	IF _recoverTask.Progress = 100 THEN
+		_recoverTask.DoneWhen(TRUE);
+	END_IF;	
+
+
+	IF _status.ActionDescription<>'' THEN
+		THIS^._recoverTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;
+END_IF;
+
+
+_buttonStart:= FALSE;
 
 // button illumination based on doors status (closed + locked)
 AnyButtonStart := IsDoorsOk;
@@ -572,7 +669,7 @@ IF _tierStart.Run(100,'<#Done#>',T#5S,THIS^) THEN
 END_IF
 *)
 
-*)]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="ButtonSuspend" Id="{87df9ae8-1568-453f-88c3-1dca058dce20}" FolderPath="Internal\Buttons\">
@@ -724,29 +821,20 @@ i := 0;
 
 FOR i := 0 TO _config.MaxControledUnits DO
     IF _controlledUnits[i] <> 0 THEN
-        _status.State.AllInAuto := _status.State.AllInAuto AND _controlledUnits[i].StatusInfo.Mode= eCUMode.AutomatMode;
-		
-        _status.State.AllInManual := _status.State.AllInManual AND _controlledUnits[i].StatusInfo.Mode= eCUMode.ManualMode;
-		
+        _status.State.AllInAuto := _status.State.AllInAuto AND _controlledUnits[i].StatusInfo.Mode = eCUMode.AutomatMode;
+        _status.State.AllInManual := _status.State.AllInManual AND _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
         _status.State.AllIdle := _status.State.AllIdle AND _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode;
-		
-        _status.State.AllInGrounding := _status.State.AllInGrounding AND (_controlledUnits[i].StatusInfo.Mode= eCUMode.GroundModeDone OR
-            _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode);
-
-        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode;
-		
+        _status.State.AllInGrounding := _status.State.AllInGrounding AND
+            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone OR
+            _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
+        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode;
         _status.State.AllInStepMode := _status.State.AllInStepMode AND _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
-
-        //_allInactiveOrManualOrGrounded := _allInactiveOrManualOrGrounded AND (_stationHelper.IsStationInManual(_controlledUnits[cu]) OR _stationHelper.IsStationInIddle(_controlledUnits[cu]) OR (_controlledUnits[cu].IsGroundDone AND NOT _stationHelper.IsStationInAuto(_controlledUnits[cu])));
-
-        _status.State.AnyInAuto := _status.State.AnyInAuto OR _controlledUnits[i].StatusInfo.Mode= eCUMode.AutomatMode;
-		
-        _status.State.AnyInManual := _status.State.AnyInManual OR _controlledUnits[i].StatusInfo.Mode= eCUMode.ManualMode;
-		
+        _status.State.AnyInAuto := _status.State.AnyInAuto OR _controlledUnits[i].StatusInfo.Mode = eCUMode.AutomatMode;
+        _status.State.AnyInManual := _status.State.AnyInManual OR _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
         _status.State.AnyInStepMode := _status.State.AnyInStepMode OR _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
-
-        _status.State.AnyGrounding := _status.State.AnyGrounding OR (_controlledUnits[i].StatusInfo.Mode= eCUMode.GroundModeDone OR
-            _controlledUnits[i].StatusInfo.Mode= eCUMode.GroundMode);
+        _status.State.AnyGrounding := _status.State.AnyGrounding OR
+            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone OR
+            _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
 
     ELSE
         EXIT;

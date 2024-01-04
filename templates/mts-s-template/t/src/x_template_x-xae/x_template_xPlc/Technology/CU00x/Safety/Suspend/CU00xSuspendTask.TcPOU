@@ -48,7 +48,7 @@ END_IF
 //HERE  YOU CAN WRITE  WHAT IS NECESSARY 
 //TO SUPSEND  PROCESS..... TO INTERUPT SAFETY
 
-IF (Step(100, TRUE, '<#RECOVER ANY COMPONETS#>')) THEN
+IF (Step(1000, TRUE, '<#RECOVER ANY COMPONETS#>')) THEN
     //-------------------------------------    
 
     StepCompleteWhen(TRUE);
@@ -58,7 +58,7 @@ END_IF
 IF (Step(30000, TRUE, 'LAST STEP')) THEN
     //-------------------------------------
 		
-        
+        THIS^._done:=TRUE;
 		THIS^.Task.DoneWhen(TRUE);
 		
    
@@ -72,7 +72,9 @@ END_IF
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Station.RecoverTask.Restore();
+        <ST><![CDATA[SUPER^.OnStart();
+Station.RecoverTask.Restore();
+
 ]]></ST>
       </Implementation>
     </Method>
