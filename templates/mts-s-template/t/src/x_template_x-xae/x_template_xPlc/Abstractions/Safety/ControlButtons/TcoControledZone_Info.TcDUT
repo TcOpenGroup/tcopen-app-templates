@@ -21,6 +21,12 @@ STRUCT
 	{attribute addProperty Name "<#Group#> - <#In step mode#>"}
 	AllInStepMode        : BOOL;
 	
+	{attribute addProperty Name "<#Group#> - <#Recovered#>"}
+	AllRecovered        : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Suspended#>"}
+	AllSuspended        : BOOL;
+	
 	{attribute addProperty Name "<#Group#> - <#Holding process#>"}
 	AllHolding           : BOOL;
 	

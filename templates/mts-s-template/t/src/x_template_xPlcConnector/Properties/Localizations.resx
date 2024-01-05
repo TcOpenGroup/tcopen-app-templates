@@ -180,15 +180,6 @@
   <data name="___Missing_link_to_control_panel_components__Buttons__Mode_Keys__Normal_Service___No_function_is_being_executed___" xml:space="preserve">
     <value>Missing link to control panel components (Buttons, Mode Keys, Normal/Service)! No function is being executed!</value>
   </data>
-  <data name="___Switch_key_to_position_Normal_to_start_automatic_mode___" xml:space="preserve">
-    <value>Switch key to position Normal to start automatic mode!</value>
-  </data>
-  <data name="___Please_close_doors_in_order_to_work_safe___" xml:space="preserve">
-    <value>Please close doors in order to work safe!</value>
-  </data>
-  <data name="___Please_press_Start_button_to_Lock_doors___" xml:space="preserve">
-    <value>Please press Start button to Lock doors!</value>
-  </data>
   <data name="___Air_pressure_is_not_sufficient___" xml:space="preserve">
     <value>Air pressure is not sufficient!</value>
   </data>
@@ -198,8 +189,8 @@
   <data name="___Local_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
     <value>Local voltage interrupted: Unlocking doors!</value>
   </data>
-  <data name="___Control_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
-    <value>Control voltage interrupted: Unlocking doors!</value>
+  <data name="___Global_control_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
+    <value>Global control voltage interrupted: Unlocking doors!</value>
   </data>
   <data name="___Status__" xml:space="preserve">
     <value>Status</value>
@@ -231,6 +222,27 @@
   <data name="___Key_service_task__" xml:space="preserve">
     <value>Key service task</value>
   </data>
+  <data name="___Automat_mode_is_set___" xml:space="preserve">
+    <value>Automat mode is set.</value>
+  </data>
+  <data name="___Mode_keys_are_not_in_correct_position___" xml:space="preserve">
+    <value>Mode keys are not in correct position.</value>
+  </data>
+  <data name="___Grounding_mode_is_set___" xml:space="preserve">
+    <value>Grounding mode is set.</value>
+  </data>
+  <data name="___Waiting_to_release_recover_button__" xml:space="preserve">
+    <value>Waiting to release recover button</value>
+  </data>
+  <data name="___Waiting_to_close_and_lock__all_doors___" xml:space="preserve">
+    <value>Waiting to close and lock  all doors!</value>
+  </data>
+  <data name="___Setup_Cyclic_or_Step_mode__It_depends_on_key_position__" xml:space="preserve">
+    <value>Setup Cyclic or Step mode. It depends on key position</value>
+  </data>
+  <data name="___Clear_step_mode__" xml:space="preserve">
+    <value>Clear step mode</value>
+  </data>
   <data name="___Initialization__" xml:space="preserve">
     <value>Initialization</value>
   </data>
@@ -242,43 +254,6 @@
   </data>
   <data name="___button_release__" xml:space="preserve">
     <value>button release</value>
-  </data>
-  <data name="___Checking_actual_conditions__" xml:space="preserve">
-    <value>Checking actual conditions</value>
-  </data>
-  <data name="___Setting_stations_to_Auto___T_5S_THIS___THEN__FOR_cu____0_TO_C_MaxCu_DO___IF__controlledUnits_cu_____0_THEN_____controlledUnits_cu__itfSelector_RequestState_enumControlledUnitModes_Automat__________IF_AllKeysAuto_THEN______controlledUnits_cu__itfSequencer_UnforceStepMode____________ELSIF_AnyKeyStep_THEN______controlledUnits_cu__itfSequencer_ForceStepMode_______END_IF___ELSE____EXIT____END_IF__END_FOR____IF_AllAuto_THEN____tierAuto_Progress____10___END_IF_END_IF___IF__tierAuto_Run_10____done__" xml:space="preserve">
-    <value>Setting stations to Auto&gt;',T#5S,THIS^) THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] &lt;&gt; 0 THEN
-			_controlledUnits[cu].itfSelector.RequestState(enumControlledUnitModes.Automat);
-			
-			IF AllKeysAuto THEN
-				_controlledUnits[cu].itfSequencer.UnforceStepMode();
-				
-			ELSIF AnyKeyStep THEN
-				_controlledUnits[cu].itfSequencer.ForceStepMode();
-			END_IF
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-	
-	IF AllAuto THEN
-		_tierAuto.Progress := 10;
-	END_IF
-END_IF
-
-
-IF _tierAuto.Run(10,'done</value>
-  </data>
-  <data name="___Setting_stations_to_grounding__" xml:space="preserve">
-    <value>Setting stations to grounding</value>
-  </data>
-  <data name="___Waiting_for_grounding_to_finish__" xml:space="preserve">
-    <value>Waiting for grounding to finish</value>
-  </data>
-  <data name="___done__" xml:space="preserve">
-    <value>done</value>
   </data>
   <data name="___Checking_prerequisites_in_order_to_execute_proper_action__" xml:space="preserve">
     <value>Checking prerequisites in order to execute proper action</value>
@@ -304,6 +279,9 @@ IF _tierAuto.Run(10,'done</value>
   <data name="___Please_return_all_keys_from_Service_back_to_Normal_in_order_to_resume_Holding_mode___" xml:space="preserve">
     <value>Please return all keys from Service back to Normal in order to resume Holding mode!</value>
   </data>
+  <data name="___Done__" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="___Unlocking_doors__" xml:space="preserve">
     <value>Unlocking doors</value>
   </data>
@@ -319,23 +297,20 @@ IF _tierAuto.Run(10,'done</value>
   <data name="___Station_is_not_yet_in_holding_step___" xml:space="preserve">
     <value>Station is not yet in holding step!</value>
   </data>
+  <data name="___Automatic_mode_is_set_Step_mode_is_disabled____" xml:space="preserve">
+    <value>Automatic mode is set(Step mode is disabled)!</value>
+  </data>
   <data name="___Cyclic_mode_is_not_allowed_while_any_control_key_is_in_Service_mode___" xml:space="preserve">
     <value>Cyclic mode is not allowed while any control key is in Service mode!</value>
   </data>
   <data name="___Setting_step_mode___" xml:space="preserve">
     <value>Setting step mode!</value>
   </data>
-  <data name="___Automatic_mode_is_set_Step_mode_is_disabled____" xml:space="preserve">
-    <value>Automatic mode is set(Step mode is disabled)!</value>
-  </data>
   <data name="___Manual_mode_is_required_but_mode_key_is_not_in_required_position___" xml:space="preserve">
     <value>Manual mode is required but mode key is not in required position!</value>
   </data>
   <data name="___Manual_mode_is_starting__" xml:space="preserve">
     <value>Manual mode is starting</value>
-  </data>
-  <data name="___Clear_step_mode__" xml:space="preserve">
-    <value>Clear step mode</value>
   </data>
   <data name="___Manual_mode_is_starting_due_service_key_combination__Manual___Service___" xml:space="preserve">
     <value>Manual mode is starting due service key combination (Manual / Service)</value>
@@ -346,8 +321,8 @@ IF _tierAuto.Run(10,'done</value>
   <data name="___Step_mode_is_required_but_mode_key_is_not_in_required_position___" xml:space="preserve">
     <value>Step mode is required but mode key is not in required position!</value>
   </data>
-  <data name="___Control_Voltage_is_Off__" xml:space="preserve">
-    <value>Control Voltage is Off</value>
+  <data name="___Voltage_is_Off___" xml:space="preserve">
+    <value>Voltage is Off!</value>
   </data>
   <data name="___Closed__" xml:space="preserve">
     <value>Closed</value>

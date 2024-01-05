@@ -51,7 +51,7 @@ END_IF
 IF (Step(1000, TRUE, '<#RECOVER ANY COMPONETS#>')) THEN
     //-------------------------------------    
 
-    StepCompleteWhen(TRUE);
+    StepCompleteWhen( CurrentStep.Duration >= T#3000MS);
     //-------------------------------------
 END_IF
 

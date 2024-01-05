@@ -82,8 +82,17 @@ VAR
 	_serviceKeyFalling 	  : F_Trig;
 	
 	
+	{attribute clr [RenderIgnore()]}
+	_recoverTaskInvokeFalling 	  : F_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_suspendTaskInvokeFalling 	  : F_Trig;
+	{attribute clr [RenderIgnore()]}
+	_groundTaskInvokeFalling 	  : F_Trig;
 
-    
+    {attribute clr [RenderIgnore()]}
+	_autoTaskInvokeFalling 	  : F_Trig;
+
   
 END_VAR
 
@@ -138,12 +147,32 @@ IF NOT inDoorCircuit.IsGlobalVoltageOk THEN
 END_IF
 
 
+
+_recoverTaskInvokeFalling(CLK:=_status.State.AnyButtonRecover);
+IF _recoverTaskInvokeFalling.Q THEN
+	_recoverTask.Invoke();
+END_IF
+
 _recoverTask(inoStatus:=_status);
+_suspendTaskInvokeFalling(CLK:=_status.State.AnyButtonSuspend);
+IF _suspendTaskInvokeFalling.Q THEN
+	_suspendTask.Invoke();
+END_IF
 _suspendTask(inoStatus:=_status);
 
+
+_groundTaskInvokeFalling(CLK:=_status.State.AnyButtonGround);
+IF _groundTaskInvokeFalling.Q THEN
+	_groundTask.Invoke();
+END_IF
 _groundTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
 _groundTask(inoStatus:=_status);
 
+
+_autoTaskInvokeFalling(CLK:=_status.State.AnyButtonGround);
+IF _autoTaskInvokeFalling.Q THEN
+	_autoTask.Invoke();
+END_IF
 _autoTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
 _autoTask(inoStatus:=_status);
 
@@ -163,7 +192,10 @@ _keyServiceTask(inoStatus:=_status);
 THIS^.ButtonRecover();
 THIS^.ButtonSuspend();
 THIS^.ButtonGround();
+
+
 THIS^.ButtonAuto();
+
 
 // Handling of key 1
 THIS^.KeyAuto();
@@ -302,7 +334,10 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _autoTask.Execute() THEN
+        <ST><![CDATA[
+
+IF _autoTask.Execute() THEN
+	
 	
 	IF 	_status.State.AllKeysAuto AND _status.State.AllKeysNormal  THEN
 
@@ -321,7 +356,7 @@ END_VAR
 	END_IF;
 
 	
-	_autoTask.DoneWhen(_status.State.AllInAuto);	
+	_autoTask.DoneWhen(_status.State.AllInAuto AND NOT _status.State.AnyButtonAuto);	
 	
 	IF _status.ActionDescription<>'' THEN
 		THIS^._autoTask.Messenger.Notify(_status.ActionDescription);
@@ -361,7 +396,7 @@ IF _groundTask.Execute() THEN
 	
 	
 	
-	_groundTask.DoneWhen(_status.State.AllGrounded);	
+	_groundTask.DoneWhen(_status.State.AllGrounded AND NOT _status.State.AnyButtonGround);	
 	
 	IF _status.ActionDescription<>'' THEN
 		THIS^._groundTask.Messenger.Notify(_status.ActionDescription);
@@ -384,12 +419,24 @@ IF _recoverTask.Execute() THEN
 		_status.ActionDescription:='<#Waiting to release recover button#>';
 		IF NOT _status.State.AnyButtonRecover THEN
 				_recoverTask.Progress := _recoverTask.Progress + 1;	
-			END_IF
 		END_IF;
 	
 	END_IF
 	
 	IF _recoverTask.Progress =1 THEN
+		_status.ActionDescription:='<#Check general condition to recover zone (ControlVoltage,EStops,Presure...)!#>';
+				
+		IF inDoorCircuit.IsGlobalVoltageOk
+			AND inDoorCircuit.IsLocalVoltageOk
+			AND inAirPressureOK
+			AND NOT inEstopActive THEN
+			_recoverTask.Progress := _recoverTask.Progress + 1;
+	
+		END_IF;
+	
+	END_IF
+	
+	IF _recoverTask.Progress =2 THEN
 		_status.ActionDescription:='<#Waiting to close and lock  all doors!#>';
 		
 		THIS^.inDoorCircuit.Lock();
@@ -403,7 +450,34 @@ IF _recoverTask.Execute() THEN
 	
 	END_IF
 
-	IF _recoverTask.Progress =2 THEN
+
+	
+	
+	IF _recoverTask.Progress =3 THEN
+		
+		_status.ActionDescription:='<#Invoke restore sequences on each stations#>';
+		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
+			_recoverTask.Progress := 100;
+			RETURN;
+		END_IF
+		
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				_controlledUnits[cu].RecoverTask.ModeController.Mode := eSequencerMode.CyclicMode;
+				_controlledUnits[cu].RecoverTask.Task.Invoke();
+
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+
+		IF _status.State.AllRecovered THEN
+			_recoverTask.Progress :=_recoverTask.Progress+1 ;
+		END_IF
+		
+	END_IF
+	
+	IF _recoverTask.Progress =4 THEN
 		
 		_status.ActionDescription:= '<#Setup Cyclic or Step mode. It depends on key position#>';
 		FOR cu := 0 TO _config.MaxControledUnits DO
@@ -414,45 +488,23 @@ IF _recoverTask.Execute() THEN
 					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
 						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
 					END_IF
-				END_IF;
-				IF _status.State.AnyKeyStep THEN
+				ELSE
 					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
 						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
 					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
 						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
 					END_IF
 				END_IF
+	
 			ELSE
 				EXIT;
 			END_IF
 		END_FOR
 
-		IF _status.State.AllInManual THEN
-			_recoverTask.Progress := 100;
-		END_IF
-		
-		
-		_recoverTask.Progress := _recoverTask.Progress + 1;
-		
-	END_IF
-	
-	
-	IF _recoverTask.Progress =3 THEN
-		
-		_status.ActionDescription:='<#Clear step mode#>';
-		
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].AutomatTask.ModeController.Mode := eSequencerMode.CyclicMode;
-				_controlledUnits[cu].GroundTask.ModeController.Mode := eSequencerMode.CyclicMode;		
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
 
-		IF _status.State.AllInManual THEN
-			_recoverTask.Progress := _recoverTask.Progress + 1;
-		END_IF
+		
+		
+		_recoverTask.Progress := 100;
 		
 	END_IF
 
@@ -464,210 +516,10 @@ IF _recoverTask.Execute() THEN
 	IF _status.ActionDescription<>'' THEN
 		THIS^._recoverTask.Messenger.Notify(_status.ActionDescription);
 	END_IF;
+	
 END_IF;
 
 
-_buttonStart:= FALSE;
-
-// button illumination based on doors status (closed + locked)
-AnyButtonStart := IsDoorsOk;
-
-IF 		NOT IsAirPressureOk
-	OR	NOT IsEstopOk
-	OR  AnyButtonStop 
-	THEN
-	_tierStart.ForceNewTierOnNextCall();
-	_tierStart.Progress := 0;
-	RETURN;
-END_IF
-
-IF _tierStart.IsNewTierOrMultipleCalls('_buttonStart',THIS^) THEN
-	RETURN;
-END_IF
-
-IF _tierStart.Run(0,'<#Initialization#>',T#5S,THIS^) THEN
-	
-	_tierStart.Progress := 1;
-	
-END_IF
-
-IF _tierStart.Run(1,'<#Waiting for#> <#button press#>',T#49D,THIS^) THEN
-	IF AnyButtonStart THEN
-		_tierStart.Progress := _tierStart.Progress + 1;
-	END_IF
-END_IF
-
-IF _tierStart.Run(2,'<#Waiting for#> <#button release#>',T#49D,THIS^) THEN
-	IF NOT AnyButtonStart THEN
-		_tierStart.Progress := _tierStart.Progress + 1;
-	END_IF
-END_IF
-
-IF _tierStart.Run(3,'<#Checking prerequisites in order to execute proper action#>',T#5S,THIS^) THEN
-
-	// only lock doors
-	IF 		AllKeysNormal
-		OR NOT THIS^.itfDoorCircuit.IsLocked THEN	
-		_tierStart.Progress := 10;
-		RETURN;
-	END_IF
-
-	
-	
-	IF 	AllKeysNormal
-		OR NOT THIS^.itfDoorCircuit.IsLocalDoorsVoltageOk THEN	
-		_tierStart.Progress := 1;
-		RETURN;
-	END_IF
-	// start automatic mode
-	//IF 		AllGrounded
-//		AND NOT AnyKeyService
-//		AND NOT AnyInHolding
-//		AND THIS^.itfDoorCircuit.IsClosed
-//		AND THIS^.itfDoorCircuit.IsLocked
-//	THEN
-//		_tierStart.Progress := 20;
-//		RETURN;
-//	END_IF
-	
-	// resume Holding state
-	IF 		AnyInHolding
-		AND NOT AnyKeyService
-		AND THIS^.itfDoorCircuit.IsClosed
-		AND THIS^.itfDoorCircuit.IsLocked
-		AND THIS^.itfDoorCircuit.IsLocalDoorsVoltageOk
-	
-	THEN
-		_tierStart.Progress := 30;
-		RETURN;
-	END_IF
-	
-	//_tierStart.Progress := 1;
-END_IF
-
-//----------------------------------------------
-//            Lock sequence
-//----------------------------------------------
-
-IF _tierStart.Run(10,'<#Locking doors#>',T#5S,THIS^) THEN
-	IF 	NOT IsEstopOk
-	THEN
-		FOR cu := 0 TO C_MaxCu DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Can not lock doors! Please check emergency buttons!#>');
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
-		
-		RETURN;
-	END_IF
-
-	IF AnyKeyService THEN
-		FOR cu := 0 TO C_MaxCu DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Can not lock doors during service mode! Please remove key from Service position!#>');
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
-		
-		RETURN;
-	END_IF	
-
-	IF NOT THIS^.itfDoorCircuit.IsClosed THEN
-		FOR cu := 0 TO C_MaxCu DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Please close all doors in order to lock doors!#>');
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
-	END_IF
-
-	THIS^.itfDoorCircuit.Lock();
-	
-	// Light
-	AnyButtonStart := THIS^._blinker.Q;
-		
-	IF 		IsEstopOk
-		AND THIS^.itfDoorCircuit.IsLocked
-		AND THIS^.itfDoorCircuit.IsClosed
-	THEN
-		//_tierStart.Progress := 100;todo
-		_tierStart.Progress := 20;
-
-	END_IF
-END_IF
-
-//----------------------------------------------
-//            Start automatic mode
-//----------------------------------------------
-(*
-IF _tierStart.Run(20,'<#Setting up machine operation mode#>',T#5S,THIS^) THEN	
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			
-			IF AllKeysAuto THEN
-				//_controlledUnits[cu].itfSelector.RequestState(enumControlledUnitModes.Automat);
-				_controlledUnits[cu].itfSequencer.UnforceStepMode();
-				
-			ELSIF AnyKeyStep THEN
-				//_controlledUnits[cu].itfSelector.RequestState(enumControlledUnitModes.Automat);
-				_controlledUnits[cu].itfSequencer.ForceStepMode();
-				
-			ELSIF AnyKeyManual THEN
-				//_controlledUnits[cu].itfSelector.RequestState(enumControlledUnitModes.ManualMode);
-				_controlledUnits[cu].itfSequencer.UnforceStepMode();
-			END_IF
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-	_tierStart.Progress := 30;
-
-	//
-//	IF AllAuto OR AllManual THEN
-//		IF AnyInHolding THEN
-//			_tierStart.Progress := 30;
-//		ELSE
-//			_tierStart.Progress := 100;
-//		END_IF
-//	END_IF
-END_IF
-
-//----------------------------------------------
-//            Resume holding
-//----------------------------------------------
-
-IF _tierStart.Run(30,'<#Waiting for all doors to close#>',T#5S,THIS^) THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			IF NOT AnyKeyService THEN
-				_controlledUnits[cu].HoldRequest := FALSE;
-			ELSE
-				_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Please return all keys from Service back to Normal in order to resume Holding mode!#>');
-			END_IF
-		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-	
-	IF NOT AnyInHolding THEN
-		_tierStart.Progress := 100;
-	END_IF
-END_IF
-
-//----------------------------------------------
-//            Done
-//----------------------------------------------
-
-IF _tierStart.Run(100,'<#Done#>',T#5S,THIS^) THEN
-	// Light
-	_tierStart.ForceNewTierOnNextCall();
-	_buttonStart:=TRUE;		
-END_IF
-*)
 
 ]]></ST>
       </Implementation>
@@ -680,111 +532,112 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-(*_buttonStop:= FALSE;
-
-// button illumination (doors opened or unlocked)
-AnyButtonStop := NOT IsDoorsOk ;
-
-IF _tierStop.IsNewTierOrMultipleCalls('_buttonStop',THIS^) THEN
-	RETURN;
-END_IF
-
-IF AnyButtonStart THEN
-	_tierStop.Progress := 0;
-	_tierStop.ForceNewTierOnNextCall();
-	RETURN;
-END_IF
-
-IF _tierStop.Run(0,'<#Initialization#>',T#5S,THIS^) THEN
+        <ST><![CDATA[IF _suspendTask.Execute() THEN
 	
-	_tierStop.Progress := 1;
+	IF _recoverTask.Progress =0 THEN
+		_status.ActionDescription:='<#Waiting to release recover button#>';
+		IF NOT _status.State.AnyButtonRecover THEN
+				_suspendTask.Progress := _suspendTask.Progress + 1;	
+		END_IF;
 	
-END_IF
-
-IF _tierStop.Run(1,'<#Waiting for#> <#button press#>',T#49D,THIS^) THEN
-	IF 	AnyButtonStop THEN
-		_tierStop.Progress := _tierStop.Progress + 1;			
 	END_IF
-END_IF
-
-IF _tierStop.Run(2,'<#Waiting for#> <#button release#>',T#49D,THIS^) THEN
-	IF NOT AnyButtonStop THEN
-		_tierStop.Progress := _tierStop.Progress + 1;
-	END_IF
-END_IF
-IF _tierStop.Run(3,'<#Waiting for#> <#button press#>',T#5S,THIS^) THEN
-
-	// unlock doors
-	IF 		(THIS^.itfDoorCircuit.IsLocked AND _allInactiveOrManualOrGrounded OR _allInStepMode)
-		OR	AllHolding
-	THEN
-		_tierStop.Progress := 10;
-		RETURN;
-	END_IF
-
-	// hold request handling
-	IF AnyAuto OR AnyGrounding  THEN
-		_tierStop.Progress := 20;
-		RETURN;
-	END_IF
-
-	_tierStop.Progress := 1;
 	
-
-END_IF
-
-
-//----------------------------------------------
-//            UnLock sequence
-//----------------------------------------------
-
-IF _tierStop.Run(10,'<#Unlocking doors#>',T#5S,THIS^) THEN
-	THIS^.itfDoorCircuit.Unlock();
-
-	IF THIS^.itfDoorCircuit.IsUnLocked THEN
-		_tierStop.Progress := 100;
-	END_IF
-END_IF
-
-
-//----------------------------------------------
-//            Hold request handling
-//----------------------------------------------
-
-IF _tierStop.Run(20,'<#Waiting for all stations in auto / ground mode to enter holding step#>',T#5S,THIS^) THEN
-	FOR cu := 0 TO C_MaxCu DO
-		IF _controlledUnits[cu] <> 0 THEN
-			//_controlledUnits[cu].HoldRequest := TRUE;
-			_controlledUnits[cu].itfSequencer.ForceStepMode();
-			IF _stationHelper.IsStationInAuto(_controlledUnits[cu]) OR _stationHelper.IsStationInGrounding(_controlledUnits[cu]) THEN
-				IF _controlledUnits[cu].IsHolding THEN
-					_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Station is on hold!#> <#Awaiting for other stations to unlock doors.#>');
-				
-				ELSE
-					_controlledUnits[cu].itfSequencer.SetAlertMessage('<#Station is not yet in holding step!#>');
-				END_IF	
-			END_IF
+	IF _suspendTask.Progress =1 THEN
+		_status.ActionDescription:='<#Check general condition to suspned zone (ControlVoltage,EStops,Presure...)!#>';
+		
+		IF NOT inDoorCircuit.IsGlobalVoltageOk
+			OR NOT inDoorCircuit.IsLocalVoltageOk
+			OR NOT inAirPressureOK
+			OR inEstopActive THEN
+			_suspendTask.Progress := 100;
+			
+			THIS^.inDoorCircuit.Unlock();
 		ELSE
-			EXIT;
-		END_IF
-	END_FOR
-
-	IF AllHolding  Or AllStepMode THEN
-		_tierStop.Progress := 10;
+			_suspendTask.Progress := _suspendTask.Progress + 1;	
+		END_IF;
+	
 	END_IF
-END_IF
+	
+	IF _suspendTask.Progress =2 THEN
+		
+		_status.ActionDescription:= '<#Force  step mode.#>';
+		
+		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
+			_suspendTask.Progress := 100;
+			RETURN;
+		END_IF
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+			
 
-//----------------------------------------------
-//            Done
-//----------------------------------------------
+				IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+					_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+				ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+					_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+				END_IF
+		
+	
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
 
-IF _tierStop.Run(100,'<#Done#>',T#5S,THIS^) THEN
-	_tierStop.ForceNewTierOnNextCall();
-	_buttonStop:=TRUE;		
-END_IF
 
-*)]]></ST>
+		
+		IF _status.State.AllInStepMode THEN
+			_suspendTask.Progress := _suspendTask.Progress + 1;
+		END_IF;
+			
+	END_IF
+	
+	IF _suspendTask.Progress =3 THEN
+		
+		_status.ActionDescription:='<#Invoke suspend sequences on each stations#>';
+		
+		
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				_controlledUnits[cu].SuspendTask.ModeController.Mode := eSequencerMode.CyclicMode;
+				_controlledUnits[cu].SuspendTask.Task.Invoke();
+
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+
+		IF _status.State.AllSuspended THEN
+			_suspendTask.Progress := _suspendTask.Progress+1;
+		END_IF
+		
+	END_IF
+	
+	
+	
+	IF _suspendTask.Progress =4 THEN
+		_status.ActionDescription:='<#Waiting to unlock  all doors!#>';
+		
+		THIS^.inDoorCircuit.UnLock();
+		
+		IF inDoorCircuit.IsUnLocked THEN
+			_suspendTask.Progress := 100;
+	
+		END_IF;
+	
+	END_IF
+
+
+	IF _suspendTask.Progress = 100 THEN
+		_suspendTask.DoneWhen(TRUE);
+	END_IF;	
+
+
+	IF _status.ActionDescription<>'' THEN
+		THIS^._suspendTask.Messenger.Notify(_status.ActionDescription);
+	END_IF;
+	
+END_IF;
+
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Config" Id="{25a32748-877d-4f40-ad59-b4a093072908}">
@@ -812,6 +665,8 @@ _status.State.AllInManual := TRUE;
 _status.State.AllIdle := TRUE;
 _status.State.AllGrounded := TRUE;
 _status.State.AllInStepMode := TRUE;
+_status.State.AllSuspended := TRUE;
+_status.State.AllRecovered := TRUE;
 _status.State.AnyInAuto := FALSE;
 _status.State.AnyInManual := FALSE;
 _status.State.AnyGrounding := FALSE;
@@ -829,6 +684,13 @@ FOR i := 0 TO _config.MaxControledUnits DO
             _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
         _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode;
         _status.State.AllInStepMode := _status.State.AllInStepMode AND _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
+        _status.State.AllSuspended := _status.State.AllSuspended AND _controlledUnits[i].SuspendTask.Done;
+		_status.State.AllRecovered := _status.State.AllRecovered AND _controlledUnits[i].RecoverTask.Done;
+		_status.State.AllInactiveOrManualOrGrounded := _status.State.AllInactiveOrManualOrGrounded 
+											AND (_controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode 
+												OR _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode 
+												OR _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone );
+		
         _status.State.AnyInAuto := _status.State.AnyInAuto OR _controlledUnits[i].StatusInfo.Mode = eCUMode.AutomatMode;
         _status.State.AnyInManual := _status.State.AnyInManual OR _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
         _status.State.AnyInStepMode := _status.State.AnyInStepMode OR _controlledUnits[i].StatusInfo.CurrentIsInStepMode;

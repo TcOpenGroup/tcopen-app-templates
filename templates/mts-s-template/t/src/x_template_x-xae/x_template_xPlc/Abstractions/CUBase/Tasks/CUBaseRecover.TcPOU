@@ -11,7 +11,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Property Name="Done" Id="{4a5db63b-4748-4d0d-bd22-5ad13c376fc1}">
-      <Declaration><![CDATA[PROPERTY Done : UINT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY Done : bool]]></Declaration>
       <Get Name="Get" Id="{cb2e1802-86f0-404c-9d76-f77b32d91f6a}">
         <Declaration><![CDATA[VAR
 END_VAR

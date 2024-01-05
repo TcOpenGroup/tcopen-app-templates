@@ -20,6 +20,20 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="OnDone" Id="{126497d0-7038-46a0-aa9c-a6c7976d8510}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Executes when task reaches the ```Done``` state .
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED OnDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress := 0;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="Progress" Id="{f6d93d3a-f839-4e7f-a1db-bd1472960ba1}">
       <Declaration><![CDATA[PROPERTY PUBLIC Progress : REFERENCE TO INT
 ]]></Declaration>
