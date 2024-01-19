@@ -352,7 +352,15 @@ IF AutomatTask.Task.Busy THEN
     _statusInfo.Mode                   := eCUMode.AutomatMode;
     _statusInfo.CurrentTaskDescription := '<#AUTOMAT#>';
     _statusInfo.CurrentCycleTime       := AutomatTask._SequenceElapsedTime;
-	_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+
+    IF AutomatTask._startCleanCycleTime <> T#0S THEN 
+	IF AutomatTask._stopCleanCycleTime = T#0S THEN
+		_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-AutomatTask._startCleanCycleTime;
+     	END_IF
+     ELSE
+     	_statusInfo.CurrentCleanCycleTime := T#0S;
+     END_IF
+	
 	_statusInfo.AverageCycleTime	   := AutomatTask.AverageCycleTime;
 	_statusInfo.AverageCleanCycleTime  := AutomatTask.AverageCleanCycleTime;
     _statusInfo.CurrentUid             := AutomatTask.CurrentStep.ID;
