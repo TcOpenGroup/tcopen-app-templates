@@ -466,8 +466,8 @@ IF _cycleTimeAnalitics.FilterConstant = 0 THEN;
 END_IF;
 
 
-IF _cycleTimeAnalitics.Average = T#0S THEN
-	_cycleTimeAnalitics.Average:=_LastCycleTime;
+IF _cycleTimeAnalitics.AverageCleanCycle = T#0S THEN
+	_cycleTimeAnalitics.AverageCleanCycle:=cleanCycleTime;
 END_IF
 _cycleTimeAnalitics.AverageCleanCycle:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.AverageCleanCycle)+cleanCycleTime)/_cycleTimeAnalitics.FilterConstant;
 ]]></ST>
