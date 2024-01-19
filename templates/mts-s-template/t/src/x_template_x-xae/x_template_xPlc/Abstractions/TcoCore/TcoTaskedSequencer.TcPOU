@@ -93,7 +93,9 @@ IF _cycleTimeAnalitics.Average = T#0S THEN
 	_cycleTimeAnalitics.Average:=_LastCycleTime;
 END_IF
 _cycleTimeAnalitics.Average:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.Average)+_LastCycleTime)/_cycleTimeAnalitics.FilterConstant;
-]]></ST>
+
+_stopCleanCycleTime := T#0S;
+_startCleanCycleTime := T#0S;]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteStep" Id="{16b3254b-2a28-0fb6-2f25-afa0bf333f87}">
@@ -320,7 +322,9 @@ METHOD PUBLIC Restore : ITcoRestorable
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Restore();
-Task.Restore();]]></ST>
+Task.Restore();
+_stopCleanCycleTime := T#0S;
+_startCleanCycleTime := T#0S;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Run" Id="{18d5420d-14f4-0ac5-255d-8d8a78d1e1c6}">
@@ -508,5 +512,103 @@ END_VAR
 Timer_2 := _timer_2.Q;]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="TcoTaskedSequencer">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.AverageCleanCycleTime.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.AverageCycleTime.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Await">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.CompleteSequence">
+      <LineId Id="3" Count="10" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.CompleteStep">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.CycleTimeFilterConstant.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.CycleTimeFilterConstant.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Main">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.OnAbort">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.OnDone">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.OnError">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.OnStart">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.pr_Close">
+      <LineId Id="3" Count="14" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.pr_Open">
+      <LineId Id="3" Count="28" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.RequestStep">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.ResetCycleTime">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.ResetTimers">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Restore">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Run">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.StartCleanCycleTime">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Step">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.StepCompleteWhen">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.StopCleanCycleTime">
+      <LineId Id="3" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Task.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Timer_1">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="TcoTaskedSequencer.Timer_2">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
