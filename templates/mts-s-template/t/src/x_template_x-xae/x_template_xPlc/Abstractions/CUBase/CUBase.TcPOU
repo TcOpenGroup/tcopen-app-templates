@@ -521,7 +521,16 @@ IF AutomatTask.Task.Busy THEN
     _statusInfo.Mode                   := eCUMode.AutomatMode;
     _statusInfo.CurrentTaskDescription := '<#AUTOMAT#>';
     _statusInfo.CurrentCycleTime       := AutomatTask._SequenceElapsedTime;
-	_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+	_statusInfo.CurrentCleanCycleTime  := T#0S;
+
+	IF AutomatTask._startCleanCycleTime<>T#0S AND AutomatTask._stopCleanCycleTime=T#0S  THEN
+		_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-AutomatTask._startCleanCycleTime;
+	ELSIF AutomatTask._stopCleanCycleTime<>T#0S  THEN
+		_statusInfo.CurrentCleanCycleTime  := AutomatTask._stopCleanCycleTime;
+	ELSE
+		_statusInfo.CurrentCleanCycleTime :=AutomatTask._startCleanCycleTime;
+	END_IF;
+	
 	_statusInfo.AverageCycleTime	   := AutomatTask.AverageCycleTime;
 	_statusInfo.AverageCleanCycleTime  := AutomatTask.AverageCleanCycleTime;
     _statusInfo.CurrentUid             := AutomatTask.CurrentStep.ID;
@@ -531,9 +540,9 @@ ELSIF GroundTask.Task.Busy THEN
     _statusInfo.Mode := eCUMode.GroundMode;
 	_statusInfo.CurrentTaskDescription := '<#GROUND#>';
     _statusInfo.CurrentCycleTime       := GroundTask._SequenceElapsedTime;
-	_statusInfo.CurrentCleanCycleTime := GroundTask._SequenceElapsedTime-GroundTask._startCleanCycleTime;
+	_statusInfo.CurrentCleanCycleTime := T#0S;
 	_statusInfo.AverageCycleTime	   := GroundTask.AverageCycleTime;
-	_statusInfo.AverageCleanCycleTime  := GroundTask.AverageCleanCycleTime;
+	_statusInfo.AverageCleanCycleTime  := T#0S;
     _statusInfo.CurrentUid             := GroundTask.CurrentStep.ID;
     _statusInfo.CurrentOperation       := GroundTask.CurrentStep.Description;
     _statusInfo.CurrentIsInStepMode    := GroundTask._modeController._mode = eSequencerMode.StepMode;

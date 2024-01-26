@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TcoControlledZone" Id="{f9946378-cf59-4928-83ba-d7fc1c602387}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
-FUNCTION_BLOCK TcoControlledZone EXTENDS TcoCore.TcoObject
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoControlledZone EXTENDS TcoCore.TcoComponent
 VAR_INPUT
 	{attribute clr [RenderIgnore()]}
 	inDoorCircuit        : ITcoDoorCircuit;
@@ -13,8 +12,6 @@ VAR_INPUT
 	{attribute clr [RenderIgnore()]}
 	inEstopActive		      : BOOL;
 	
-	{attribute clr [RenderIgnore()]}
-	inAirPressureTimeWindow		      : TIME :=T#5S;
 	
 END_VAR
 
@@ -44,6 +41,8 @@ VAR
 
 	{attribute clr [RenderIgnore()]}
 	_blinker              : TcoUtilities.TcoBlinker(THIS^);
+	{attribute clr [RenderIgnore()]}
+	_blinkerSlow              : TcoUtilities.TcoBlinker(THIS^);
 	
 	 {attribute addProperty Name "<#Ground task#>"}
 	_groundTask           : TcoControlledZoneActionTask(THIS^);
@@ -87,13 +86,48 @@ VAR
 	
 	{attribute clr [RenderIgnore()]}
 	_suspendTaskInvokeFalling 	  : F_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_recoverTaskInvokeRising 	  : R_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_suspendTaskInvokeRising 	  : R_Trig;
+	
 	{attribute clr [RenderIgnore()]}
 	_groundTaskInvokeFalling 	  : F_Trig;
 
     {attribute clr [RenderIgnore()]}
 	_autoTaskInvokeFalling 	  : F_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_groundTaskInvokeRising 	  : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+	_autoTaskInvokeRising 	  : F_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_keyAutoTaskInvokeFalling 	  : F_Trig;
+	{attribute clr [RenderIgnore()]}
+	_keyAutoTaskInvokeRising 	  : R_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_keyManualTaskInvokeFalling 	  : F_Trig;
+	{attribute clr [RenderIgnore()]}
+	_keyManualTaskInvokeRising 	  : R_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_keyStepTaskInvokeFalling 	  : F_Trig;
+	{attribute clr [RenderIgnore()]}
+	_keyStepTaskInvokeRising 	  : R_Trig;
+	
+	{attribute clr [RenderIgnore()]}
+	_keyServiceTaskInvokeFalling 	  : F_Trig;
+	{attribute clr [RenderIgnore()]}
+	_keyServiceTaskInvokeRising 	  : R_Trig;
 
   
+	_airPressureOk: BOOL;
+	_conditionToRunAreSufficient: BOOL;
 END_VAR
 
 
@@ -114,20 +148,28 @@ END_IF
 
 
 
-_blinker(inOffTime := T#500MS, inOnTime := T#500MS);
+_blinker(inOffTime := T#500MS, inOnTime := T#500MS);		//2 Hz
+_blinkerSlow(inOffTime := T#1250MS, inOnTime := T#1250MS);	//0.8 Hz
 
 THIS^.Initialize();
 
 //presure monitoring
-_timerAirPressureMonitor(IN:=NOT inAirPressureOK,PT:=inAirPressureTimeWindow);
+_airPressureOk:=TRUE;
+_timerAirPressureMonitor(IN:=NOT inAirPressureOK,PT:=_config.AirPressureErrorTime);
 IF _timerAirPressureMonitor.Q THEN
+	_airPressureOk:=FALSE;
     THIS^.Messenger.Error('<#Air pressure is not sufficient!#>').Pin();
 END_IF;
 
 //Estop monitoring
 IF THIS^.inEstopActive THEN
     inDoorCircuit.UnLock();
-    THIS^.Messenger.Error('<#Emergency stop active: Unlocking doors!#>');
+    THIS^.Messenger.Error('<#Emergency stop active: Unlocking doors!#>').Pin();
+END_IF
+// Global Voltage monitoring
+IF NOT inDoorCircuit.IsGlobalVoltageOk THEN
+    inDoorCircuit.UnLock();
+    THIS^.Messenger.Error('<#Global control voltage interrupted: Unlocking doors!#>').Pin();
 END_IF
 
 //Voltage monitoring todo
@@ -141,47 +183,123 @@ IF _timerDoorsLocked.Q THEN
     END_IF
 END_IF
 
-IF NOT inDoorCircuit.IsGlobalVoltageOk THEN
-    inDoorCircuit.UnLock();
-    THIS^.Messenger.Error('<#Global control voltage interrupted: Unlocking doors!#>');
-END_IF
+
+_conditionToRunAreSufficient:=(inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive  AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk;
+ 
 
 
-
+_recoverTaskInvokeRising(CLK:=_status.State.AnyButtonRecover);
 _recoverTaskInvokeFalling(CLK:=_status.State.AnyButtonRecover);
+IF _recoverTaskInvokeRising.Q THEN
+	_recoverTask.Restore();
+END_IF
 IF _recoverTaskInvokeFalling.Q THEN
 	_recoverTask.Invoke();
+	_suspendTask.Restore();
 END_IF
 
-_recoverTask(inoStatus:=_status);
+
+
+_suspendTaskInvokeRising(CLK:=_status.State.AnyButtonSuspend);
 _suspendTaskInvokeFalling(CLK:=_status.State.AnyButtonSuspend);
+IF _suspendTaskInvokeRising.Q THEN
+	_suspendTask.Restore();
+END_IF
 IF _suspendTaskInvokeFalling.Q THEN
 	_suspendTask.Invoke();
+	_recoverTask.Restore();
 END_IF
-_suspendTask(inoStatus:=_status);
 
 
+
+
+
+_groundTaskInvokeRising(CLK:=_status.State.AnyButtonGround);
+IF _groundTaskInvokeRising.Q THEN
+	_groundTask.Restore();
+END_IF
 _groundTaskInvokeFalling(CLK:=_status.State.AnyButtonGround);
 IF _groundTaskInvokeFalling.Q THEN
 	_groundTask.Invoke();
 END_IF
-_groundTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
-_groundTask(inoStatus:=_status);
+_groundTask.Enabled:= (_conditionToRunAreSufficient
+						AND inDoorCircuit.IsLocalDoorsVoltageOk 
+						AND _status.State.AllKeysAuto 
+						AND _status.State.AllKeysNormal) ;
 
+IF _groundTask.Busy THEN
+	_autoTask.Restore();
+END_IF						
+						
+_autoTaskInvokeRising(CLK:=_status.State.AnyButtonAuto);
+IF _autoTaskInvokeRising.Q THEN
+	_autoTask.Restore();
+END_IF
 
-_autoTaskInvokeFalling(CLK:=_status.State.AnyButtonGround);
+_autoTaskInvokeFalling(CLK:=_status.State.AnyButtonAuto);
 IF _autoTaskInvokeFalling.Q THEN
 	_autoTask.Invoke();
 END_IF
-_autoTask.Enabled:=TRUE OR (inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive AND inDoorCircuit.IsClosed AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inDoorCircuit.IsLocalDoorsVoltageOk ;
-_autoTask(inoStatus:=_status);
 
-_keyManualTask(inoStatus:=_status);
-_keyStepTask(inoStatus:=_status);
-_keyServiceTask(inoStatus:=_status);
-
+_autoTask.Enabled:= (_conditionToRunAreSufficient 
+					AND inDoorCircuit.IsLocalDoorsVoltageOk 
+					AND _status.State.AllKeysAuto 
+					AND _status.State.AllKeysNormal) ;
 
 
+
+
+
+//----------keys -----------
+
+// key auto
+_keyAutoTaskInvokeFalling(CLK:= _status.State.AllKeysAuto);
+_keyAutoTaskInvokeRising(CLK:=_status.State.AllKeysAuto);
+
+IF _keyAutoTaskInvokeRising.Q THEN
+	_keyAutoTask.Invoke();
+END_IF
+IF _keyAutoTaskInvokeFalling.Q THEN
+	_keyAutoTask.Restore();
+END_IF
+
+
+// key manual
+_keyManualTaskInvokeRising(CLK:= _status.State.AnyKeyManual);
+_keyManualTaskInvokeFalling(CLK:=_status.State.AnyKeyManual);
+
+IF _keyManualTaskInvokeRising.Q THEN
+	_keyManualTask.Invoke();
+END_IF
+IF _keyManualTaskInvokeFalling.Q THEN
+	_keyManualTask.Restore();
+END_IF
+
+
+IF _status.State.AnyKeyStep AND _keyStepTask.Ready THEN
+	_keyStepTask.Invoke();
+END_IF
+IF _status.State.AnyKeyStep AND _keyStepTask.Done THEN
+	_keyStepTask.Restore();
+END_IF
+
+_keyStepTaskInvokeFalling(CLK:=_status.State.AnyKeyStep);
+
+IF _keyStepTaskInvokeFalling.Q THEN
+	_keyStepTask.Restore();
+END_IF
+
+
+// key service
+_keyServiceTaskInvokeRising(CLK:= _status.State.AnyKeyService);
+_keyServiceTaskInvokeFalling(CLK:=_status.State.AnyKeyService);
+
+IF _keyServiceTaskInvokeRising.Q THEN
+	_keyServiceTask.Invoke();
+END_IF
+IF _keyServiceTaskInvokeFalling.Q THEN
+	_keyServiceTask.Restore();
+END_IF
 
 
 
@@ -192,8 +310,6 @@ _keyServiceTask(inoStatus:=_status);
 THIS^.ButtonRecover();
 THIS^.ButtonSuspend();
 THIS^.ButtonGround();
-
-
 THIS^.ButtonAuto();
 
 
@@ -207,6 +323,7 @@ THIS^.KeyService();
 ]]></ST>
     </Implementation>
     <Folder Name="Add" Id="{66e64777-0133-4b9b-b641-cb76104e11cd}" />
+    <Folder Name="Buttons" Id="{9d17cc64-0e5e-48e4-91f3-5ea00c2fb084}" />
     <Folder Name="Internal" Id="{cc26c71b-2af0-4d2e-9d5b-f123de945649}">
       <Folder Name="Buttons" Id="{5e223960-d1fd-48fd-9eed-d1c06058798d}" />
       <Folder Name="Keys" Id="{7167b411-0738-4368-99d6-e05385888f18}" />
@@ -327,6 +444,125 @@ FOR i := 0 TO _config.MaxKeyNormalService DO
 END_FOR]]></ST>
       </Implementation>
     </Method>
+    <Property Name="AirPressureOk" Id="{eaaf1577-1a85-4918-9375-1b7947f53859}">
+      <Declaration><![CDATA[PROPERTY PUBLIC AirPressureOk : bool]]></Declaration>
+      <Get Name="Get" Id="{b8952be8-c6bf-47fe-96d9-9eb2a11b36f2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AirPressureOk:=_airPressureOk;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AnyButtonAuto" Id="{5d195888-623e-4946-87be-af7333f9e65a}" FolderPath="Buttons\">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY AnyButtonAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7cfb9e13-6543-4db9-bda8-8efc4c37cc7f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnyButtonAuto := _status.State.AnyButtonAuto;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c88f0691-71f8-4b65-9003-eef15f36f3a8}">
+        <Declaration><![CDATA[VAR
+	button : UINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
+	IF _controlButtons[button] <> 0 THEN
+		_controlButtons[button].ButtonAuto := AnyButtonAuto;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="AnyButtonGround" Id="{283521cf-8553-4a29-a93c-d18856641b5d}" FolderPath="Buttons\">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY AnyButtonGround : BOOL]]></Declaration>
+      <Get Name="Get" Id="{00dc0595-45e1-4b68-a99a-c91a9f1f92e4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnyButtonGround := _Status.State.AnyButtonGround;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4287a934-f9f5-46dc-9b04-a069b21c3c5b}">
+        <Declaration><![CDATA[VAR
+	button : UINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
+	IF _controlButtons[button] <> 0 THEN
+		_controlButtons[button].ButtonGround := AnyButtonGround;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="AnyButtonRecover" Id="{fec9d85a-d212-4303-a5c1-992380c9e54e}" FolderPath="Buttons\">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY AnyButtonRecover : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e0d3dc0d-c16f-409f-8907-baccc3e3cda2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnyButtonRecover := _status.State.AnyButtonRecover;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d4aa1318-9bec-4b44-a0c2-843f29950c6c}">
+        <Declaration><![CDATA[VAR
+	button : UINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
+	IF _controlButtons[button] <> 0 THEN
+		_controlButtons[button].ButtonRecover := AnyButtonRecover;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="AnyButtonSuspend" Id="{a43607a3-f39e-4011-895b-2cb63cd7c8ec}" FolderPath="Buttons\">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY AnyButtonSuspend : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ffc2ca7e-b4fc-419f-a454-030cc5ecbcd7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnyButtonSuspend := _status.State.AnyButtonSuspend;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7e5dc2fc-c68b-4ae8-842b-a8e25eac5742}">
+        <Declaration><![CDATA[VAR
+	button : UINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR button := 0 TO _config.MaxControlButtons DO
+	IF _controlButtons[button] <> 0 THEN
+		_controlButtons[button].ButtonSuspend := AnyButtonSuspend;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="ButtonAuto" Id="{dbeedad8-edf8-4104-aade-c6214b251a6c}" FolderPath="Internal\Buttons\">
       <Declaration><![CDATA[METHOD ButtonAuto : BOOL
 VAR
@@ -337,26 +573,42 @@ END_VAR
         <ST><![CDATA[
 
 IF _autoTask.Execute() THEN
-	
-	
-	IF 	_status.State.AllKeysAuto AND _status.State.AllKeysNormal  THEN
+	AnyButtonGround:=FALSE;
+	AnyButtonAuto:=_blinkerSlow.IsOn ;		
 
-		_status.ActionDescription:= '<#Automat mode is set.#>';
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.AutomatMode THEN
-					_controlledUnits[cu].AutomatTask.Task.Invoke();
-				END_IF			
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
+	IF _autoTask.Progress =0 THEN
+	
+		IF 	_status.State.AllKeysAuto AND _status.State.AllKeysNormal  THEN
+	
+			_status.ActionDescription:= '<#Automat mode has been invoked.#>';
+			FOR cu := 0 TO _config.MaxControledUnits DO
+				IF _controlledUnits[cu] <> 0 THEN
+					IF   _controlledUnits[cu].StatusInfo.Mode = eCUMode.GroundModeDone    THEN
+						_controlledUnits[cu].AutomatTask.Task.Invoke();
+					END_IF	
+	
+					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+							_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;	
+					End_if;	
+				ELSE
+					EXIT;
+				END_IF
+			END_FOR
+			_autoTask.Progress := _autoTask.Progress + 1;	
+			RETURN;
+		ELSE
+			_status.ActionDescription:= '<#Mode keys are not in correct position.#>';
+		END_IF;
+			
 	ELSE
-		_status.ActionDescription:= '<#Mode keys are not in correct position.#>';
+		
+		_autoTask.DoneWhen(_status.State.AllInAuto AND NOT _status.State.AnyButtonAuto);	
+		 IF _autoTask.Done THEN
+			 
+		 	_status.ActionDescription:= '<#Automat mode has been done.#>';
+			AnyButtonAuto:=TRUE;
+		END_IF;	
 	END_IF;
-
-	
-	_autoTask.DoneWhen(_status.State.AllInAuto AND NOT _status.State.AnyButtonAuto);	
 	
 	IF _status.ActionDescription<>'' THEN
 		THIS^._autoTask.Messenger.Notify(_status.ActionDescription);
@@ -375,32 +627,46 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _groundTask.Execute() THEN
-	
-	IF 	_status.State.AllKeysAuto AND _status.State.AllKeysNormal  THEN
+	// led signalisation
+	AnyButtonAuto:=FALSE;
+	AnyButtonGround:=_blinkerSlow.IsOn ;	
 
-		_status.ActionDescription:= '<#Grounding mode is set.#>';
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.GroundMode OR _controlledUnits[cu].StatusInfo.Mode<> eCUMode.GroundModeDone THEN
-					_controlledUnits[cu].GroundTask.Task.Invoke();
-				END_IF			
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
+	IF _groundTask.Progress =0 THEN
+		IF 	_status.State.AllKeysAuto AND _status.State.AllKeysNormal  THEN
+	
+			_status.ActionDescription:= '<#Grounding mode has been invoked.#>';
+			FOR cu := 0 TO _config.MaxControledUnits DO
+				IF _controlledUnits[cu] <> 0 THEN
+					IF  _controlledUnits[cu].StatusInfo.Mode<> eCUMode.GroundMode OR _controlledUnits[cu].StatusInfo.Mode<> eCUMode.GroundModeDone THEN
+						_controlledUnits[cu].GroundTask.Task.Invoke();
+					END_IF	
+					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+							_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;	
+					End_if;			
+				ELSE
+					EXIT;
+				END_IF
+			END_FOR
+			
+			_groundTask.Progress := _groundTask.Progress + 1;	
+			RETURN;
+		ELSE
+			_status.ActionDescription:= '<#Mode keys are not in correct position.#>';
+		END_IF;
+		
 	ELSE
-		_status.ActionDescription:= '<#Mode keys are not in correct position.#>';
-	END_IF;
-	
-	
-	
-	
-	
-	_groundTask.DoneWhen(_status.State.AllGrounded AND NOT _status.State.AnyButtonGround);	
-	
+		
+		_groundTask.DoneWhen(_status.State.AllGrounded AND NOT _status.State.AnyButtonGround );	
+		 IF _groundTask.Done THEN
+			 _status.ActionDescription:= '<#Grounding mode has been done.#>';
+			AnyButtonGround:=TRUE;
+		END_IF;	
+	END_IF	
 	IF _status.ActionDescription<>'' THEN
 		THIS^._groundTask.Messenger.Notify(_status.ActionDescription);
 	END_IF;
+	
+
 END_IF;
 ]]></ST>
       </Implementation>
@@ -414,17 +680,32 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _recoverTask.Execute() THEN
-	
+	AnyButtonSuspend:=FALSE;
+
+	IF _recoverTask.Progress = 2 THEN
+		AnyButtonRecover:=_blinker.IsOn ;
+	ELSE
+		AnyButtonRecover:=_blinkerSlow.IsOn ;	
+	END_IF;
 	IF _recoverTask.Progress =0 THEN
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				_controlledUnits[cu].RecoverTask.Restore();
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+
 		_status.ActionDescription:='<#Waiting to release recover button#>';
 		IF NOT _status.State.AnyButtonRecover THEN
 				_recoverTask.Progress := _recoverTask.Progress + 1;	
+				RETURN;
 		END_IF;
 	
 	END_IF
 	
 	IF _recoverTask.Progress =1 THEN
-		_status.ActionDescription:='<#Check general condition to recover zone (ControlVoltage,EStops,Presure...)!#>';
+		_status.ActionDescription:='<#Check general condition to recover zone (ControlVoltage, EStops, Presure...)!#>';
 				
 		IF inDoorCircuit.IsGlobalVoltageOk
 			AND inDoorCircuit.IsLocalVoltageOk
@@ -441,6 +722,7 @@ IF _recoverTask.Execute() THEN
 		
 		THIS^.inDoorCircuit.Lock();
 		
+			
 		IF inDoorCircuit.IsLocked
 			AND inDoorCircuit.IsLocked
 			AND inDoorCircuit.IsLocalDoorsVoltageOk THEN
@@ -455,7 +737,7 @@ IF _recoverTask.Execute() THEN
 	
 	IF _recoverTask.Progress =3 THEN
 		
-		_status.ActionDescription:='<#Invoke restore sequences on each stations#>';
+		_status.ActionDescription:='<#Invoke restore sequences on each stations.#>';
 		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
 			_recoverTask.Progress := 100;
 			RETURN;
@@ -509,7 +791,11 @@ IF _recoverTask.Execute() THEN
 	END_IF
 
 	IF _recoverTask.Progress = 100 THEN
+		
+		_status.ActionDescription:= '<#Recover task has been done.#>';
 		_recoverTask.DoneWhen(TRUE);
+		AnyButtonRecover:=TRUE;
+
 	END_IF;	
 
 
@@ -533,11 +819,22 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _suspendTask.Execute() THEN
-	
-	IF _recoverTask.Progress =0 THEN
-		_status.ActionDescription:='<#Waiting to release recover button#>';
-		IF NOT _status.State.AnyButtonRecover THEN
+	AnyButtonRecover:=FALSE;
+	AnyButtonSuspend:=_blinkerSlow.IsOn ;	
+	IF _suspendTask.Progress =0 THEN
+		FOR cu := 0 TO _config.MaxControledUnits DO
+			IF _controlledUnits[cu] <> 0 THEN
+				_controlledUnits[cu].SuspendTask.Restore();
+
+			ELSE
+				EXIT;
+			END_IF
+		END_FOR
+		_status.ActionDescription:='<#Waiting to release suspend button#>';
+		IF NOT _status.State.AnyButtonSuspend THEN
 				_suspendTask.Progress := _suspendTask.Progress + 1;	
+				RETURN;
+
 		END_IF;
 	
 	END_IF
@@ -560,7 +857,7 @@ END_VAR
 	
 	IF _suspendTask.Progress =2 THEN
 		
-		_status.ActionDescription:= '<#Force  step mode.#>';
+		_status.ActionDescription:= '<#Force step mode.#>';
 		
 		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
 			_suspendTask.Progress := 100;
@@ -592,7 +889,7 @@ END_VAR
 	
 	IF _suspendTask.Progress =3 THEN
 		
-		_status.ActionDescription:='<#Invoke suspend sequences on each stations#>';
+		_status.ActionDescription:='<#Invoke suspend sequences on each stations.#>';
 		
 		
 		FOR cu := 0 TO _config.MaxControledUnits DO
@@ -627,7 +924,9 @@ END_VAR
 
 
 	IF _suspendTask.Progress = 100 THEN
+		_status.ActionDescription:= '<#Suspend task has been done.#>';
 		_suspendTask.DoneWhen(TRUE);
+		AnyButtonSuspend:=TRUE;
 	END_IF;	
 
 
@@ -667,6 +966,7 @@ _status.State.AllGrounded := TRUE;
 _status.State.AllInStepMode := TRUE;
 _status.State.AllSuspended := TRUE;
 _status.State.AllRecovered := TRUE;
+_status.State.AllInactiveOrManualOrGrounded :=true;
 _status.State.AnyInAuto := FALSE;
 _status.State.AnyInManual := FALSE;
 _status.State.AnyGrounding := FALSE;
@@ -680,12 +980,12 @@ FOR i := 0 TO _config.MaxControledUnits DO
         _status.State.AllInManual := _status.State.AllInManual AND _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
         _status.State.AllIdle := _status.State.AllIdle AND _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode;
         _status.State.AllInGrounding := _status.State.AllInGrounding AND
-            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone OR
+            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone XOR
             _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
-        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode;
+        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone;
         _status.State.AllInStepMode := _status.State.AllInStepMode AND _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
-        _status.State.AllSuspended := _status.State.AllSuspended AND _controlledUnits[i].SuspendTask.Done;
-		_status.State.AllRecovered := _status.State.AllRecovered AND _controlledUnits[i].RecoverTask.Done;
+        _status.State.AllSuspended := _status.State.AllSuspended AND _controlledUnits[i].SuspendTask.Task.Done;
+		_status.State.AllRecovered := _status.State.AllRecovered AND _controlledUnits[i].RecoverTask.Task.Done;
 		_status.State.AllInactiveOrManualOrGrounded := _status.State.AllInactiveOrManualOrGrounded 
 											AND (_controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode 
 												OR _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode 
@@ -761,41 +1061,41 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _keyAutoTask.Execute() THEN
+	_status.ActionDescription:= '<#Automatic mode is not possibe to set(All keys must be in NORMAL and AUTO!)#>';
+	IF 	 _status.State.AllKeysNormal  AND _status.State.AllKeysAuto THEN
+		
+//			_status.ActionDescription:= '<#Automatic mode is set(Step mode is disabled)!#>';
+//			FOR cu := 0 TO _config.MaxControledUnits DO
+//				IF _controlledUnits[cu] <> 0 THEN
+//					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+//						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+//					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+//						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
+//					END_IF
+//				ELSE
+//					EXIT;
+//				END_IF
+//			END_FOR
 	
-IF 	NOT _status.State.AnyKeyStep AND _status.State.AllKeysNormal  THEN
-	
-		_status.ActionDescription:= '<#Automatic mode is set(Step mode is disabled)!#>';
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
-					_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;
-				ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
-					_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
-				END_IF
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
-
-	ELSE
+		ELSE
 			_status.ActionDescription:= '<#Cyclic mode is not allowed while any control key is in Service mode!#> <#Setting step mode!#>';
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
-						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
-					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
-						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
-					END_IF
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR	
-	END_IF;
+			FOR cu := 0 TO _config.MaxControledUnits DO
+				IF _controlledUnits[cu] <> 0 THEN
+						IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
+							_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
+						ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
+							_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
+						END_IF
+				ELSE
+					EXIT;
+				END_IF
+			END_FOR	
+		END_IF;
 	
 	
 
 
-	IF NOT _status.State.AnyInStepMode THEN
+	IF  _status.State.AllInAuto THEN
 		_keyAutoTask.DoneWhen(TRUE);
 	END_IF;
 	
@@ -816,12 +1116,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _keyManualTask.Execute() THEN
-	IF NOT _status.State.AnyKeyManual THEN 
-		_status.ActionDescription:='<#Manual mode is required but mode key is not in required position!#>';
-	END_IF;
+	_status.ActionDescription:= '<#Manual mode is not possibe to set(At least one SERVICE and one MANUAL keys must be in position!)#>';
 	
 	IF _keyManualTask.Progress =0 THEN
-		IF _status.State.AnyKeyManual THEN
+		IF _status.State.AnyKeyManual AND _status.State.AnyKeyService THEN
 			IF NOT _status.State.AllInManual THEN
 				_keyManualTask.Progress := _keyManualTask.Progress + 1;// all to manual
 			ELSE
@@ -892,7 +1190,6 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF _keyServiceTask.Execute() THEN
 	
-
 	IF 	_status.State.AnyKeyManual  AND _status.State.AnyKeyService  THEN
 		_status.ActionDescription:='<#Manual mode is starting due service key combination (Manual / Service)#>';
 		
@@ -943,9 +1240,9 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _keyStepTask.Execute() THEN
-	IF NOT _status.State.AnyKeyStep THEN 
-		_status.ActionDescription:='<#Step mode is required but mode key is not in required position!#>';
-	END_IF;
+		
+	_status.ActionDescription:='<#Step mode is required but mode key is not in required position!#>';
+
 	IF _status.State.AnyKeyStep THEN
 		FOR cu := 0 TO _config.MaxControledUnits DO
 			IF _controlledUnits[cu] <> 0 THEN
@@ -962,6 +1259,7 @@ IF _keyStepTask.Execute() THEN
 	END_IF;
 	
 	IF _status.State.AllInStepMode THEN
+		_status.ActionDescription:='<#Step mode is set or all are inactive!#>';
 		_keyStepTask.DoneWhen(TRUE);
 	END_IF;
 	
@@ -1001,7 +1299,7 @@ FOR i := 0 TO _config.MaxKeyMode DO
 END_FOR
 
 
-]]></ST>
+THIS^.Messenger.UnPin();]]></ST>
       </Implementation>
     </Method>
     <Method Name="ServiceMode" Id="{c61b8c8e-57e1-435b-98de-5f8238316029}">
@@ -1017,6 +1315,16 @@ METHOD PROTECTED  ServiceMode
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Signalisation" Id="{eb2b3bce-b891-4087-af26-6aeee32eb1fe}">
+      <Declaration><![CDATA[METHOD Signalisation
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+AnyButtonAuto:=_blinkerSlow.IsOn  AND _autoTask.Busy;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Status" Id="{0de9f1b0-d830-4af8-b38e-04a2b86d90f6}">

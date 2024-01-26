@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="TcoStandartDoor" Id="{9ce8399f-b572-4d38-920f-7e58b0c9ce1c}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
-FUNCTION_BLOCK TcoStandartDoor EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoDoorLock
+  <POU Name="TcoStandardDoor" Id="{9ce8399f-b572-4d38-920f-7e58b0c9ce1c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoStandardDoor EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoDoorLock
 VAR_IN_OUT
     inoIsOpen : BOOL;
     inoIsLocked : BOOL;

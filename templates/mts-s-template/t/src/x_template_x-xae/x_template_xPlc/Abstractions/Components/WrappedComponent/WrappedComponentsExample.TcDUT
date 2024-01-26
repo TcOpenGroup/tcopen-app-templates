@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="WrappedComponentsExample" Id="{19c883c7-9727-43d1-8166-a98c34c3c99b}">
+    <Declaration><![CDATA[TYPE WrappedComponentsExample EXTENDS TcoCore.TcoStruct:
+STRUCT
+	
+		{attribute addProperty Name "Vacuum Reached"}
+		VacuumReached : TcoElements.TcoDi(THISSTRUCT);
+		{attribute addProperty Name "Vacuum On"}
+		VacuumOn : TcoElements.TcoDo(THISSTRUCT);
+		{attribute addProperty Name "Vacuum Push"}
+		VacuumPush : TcoElements.TcoDo(THISSTRUCT);
+		
+		{attribute addProperty Name "Gripper"}
+		Gripper : TcoPneumatics.TcoCylinder(THISSTRUCT);
+  
+		{attribute addProperty Name "Manipulator"}
+		Manipulator : TcoDrivesBeckhoff.TcoMultiAxis(THISSTRUCT);
+
+		{attribute addProperty Name "Component Picked"}
+		PresenceInGripper : TcoElements.TcoDi(THISSTRUCT);
+
+	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

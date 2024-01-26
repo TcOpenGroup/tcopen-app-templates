@@ -148,7 +148,7 @@ END_VAR
 (*
 	or use default behavior from abstraction
 *)
-	SUPER^.Manual();
+	SUPER^.Automat();
 
 (*
 
@@ -265,29 +265,40 @@ METHOD Idle : BOOL
         <ST><![CDATA[
 Components.PairTagTask();
 
-components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
-							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
-							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
-							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
+//components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
+//							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
+//							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
+//							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
 Components.SingleAxis.Config.InfoTime:=T#4S;
 Components.SingleAxis.Config.ErrorTime:=T#10S;
 		
 	
-Components.SingleAxis(inEnable := ,
-    inEnablePositive := ,
-    inEnableNegative := ,
-    inCalibrationCam := ,
-    refAxis := GVL_iXlinker.Axis1,
-	inoPositions:= _positions);
+//Components.SingleAxis(inEnable := ,
+//    inEnablePositive := ,
+//    inEnableNegative := ,
+//    inCalibrationCam := ,
+//    refAxis := GVL_iXlinker.Axis1,
+//	inoPositions:= _positions);
 	
 	
+
+//Components.PickAndPlace();
+//Components.PickAndPlace.Service();
 		
-Components.MultiAxis(inEnableAxis1 := ,
-    inEnablePositiveAxis1 := ,
-    inEnableNegativeAxis1 := ,
-    inCalibrationCamAxis1 := ,
-    refAxis1 := GVL_iXlinker.Axis1,
-	inoPositions:= _positionsMulti);]]></ST>
+//Components.MultiAxis(inEnableAxis1 := ,
+//    inEnablePositiveAxis1 := ,
+//    inEnableNegativeAxis1 := ,
+//    inCalibrationCamAxis1 := ,
+//    refAxis1 := GVL_iXlinker.Axis1,
+//	inoPositions:= _positionsMulti);
+	
+			
+//Components.PickAndPlace.Components.Manipulator(inEnableAxis1 := ,
+//    inEnablePositiveAxis1 := ,
+//    inEnableNegativeAxis1 := ,
+//    inCalibrationCamAxis1 := ,
+//    refAxis1 := GVL_iXlinker.Axis1,
+//	inoPositions:= _positionsMulti);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Manual" Id="{f43c6193-c9c5-0244-248c-08c5ef114438}" FolderPath="Modes\">

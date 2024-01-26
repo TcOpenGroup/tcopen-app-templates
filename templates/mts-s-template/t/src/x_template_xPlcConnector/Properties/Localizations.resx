@@ -186,11 +186,11 @@
   <data name="___Emergency_stop_active__Unlocking_doors___" xml:space="preserve">
     <value>Emergency stop active: Unlocking doors!</value>
   </data>
-  <data name="___Local_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
-    <value>Local voltage interrupted: Unlocking doors!</value>
-  </data>
   <data name="___Global_control_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
     <value>Global control voltage interrupted: Unlocking doors!</value>
+  </data>
+  <data name="___Local_voltage_interrupted__Unlocking_doors___" xml:space="preserve">
+    <value>Local voltage interrupted: Unlocking doors!</value>
   </data>
   <data name="___Status__" xml:space="preserve">
     <value>Status</value>
@@ -222,80 +222,59 @@
   <data name="___Key_service_task__" xml:space="preserve">
     <value>Key service task</value>
   </data>
-  <data name="___Automat_mode_is_set___" xml:space="preserve">
-    <value>Automat mode is set.</value>
+  <data name="___Automat_mode_has_been_invoked___" xml:space="preserve">
+    <value>Automat mode has been invoked.</value>
   </data>
   <data name="___Mode_keys_are_not_in_correct_position___" xml:space="preserve">
     <value>Mode keys are not in correct position.</value>
   </data>
-  <data name="___Grounding_mode_is_set___" xml:space="preserve">
-    <value>Grounding mode is set.</value>
+  <data name="___Automat_mode_has_been_done___" xml:space="preserve">
+    <value>Automat mode has been done.</value>
+  </data>
+  <data name="___Grounding_mode_has_been_invoked___" xml:space="preserve">
+    <value>Grounding mode has been invoked.</value>
+  </data>
+  <data name="___Grounding_mode_has_been_done___" xml:space="preserve">
+    <value>Grounding mode has been done.</value>
   </data>
   <data name="___Waiting_to_release_recover_button__" xml:space="preserve">
     <value>Waiting to release recover button</value>
   </data>
+  <data name="___Check_general_condition_to_recover_zone__ControlVoltage__EStops__Presure_______" xml:space="preserve">
+    <value>Check general condition to recover zone (ControlVoltage, EStops, Presure...)!</value>
+  </data>
   <data name="___Waiting_to_close_and_lock__all_doors___" xml:space="preserve">
     <value>Waiting to close and lock  all doors!</value>
+  </data>
+  <data name="___Invoke_restore_sequences_on_each_stations___" xml:space="preserve">
+    <value>Invoke restore sequences on each stations.</value>
   </data>
   <data name="___Setup_Cyclic_or_Step_mode__It_depends_on_key_position__" xml:space="preserve">
     <value>Setup Cyclic or Step mode. It depends on key position</value>
   </data>
-  <data name="___Clear_step_mode__" xml:space="preserve">
-    <value>Clear step mode</value>
+  <data name="___Recover_task_has_been_done___" xml:space="preserve">
+    <value>Recover task has been done.</value>
   </data>
-  <data name="___Initialization__" xml:space="preserve">
-    <value>Initialization</value>
+  <data name="___Waiting_to_release_suspend_button__" xml:space="preserve">
+    <value>Waiting to release suspend button</value>
   </data>
-  <data name="___Waiting_for__" xml:space="preserve">
-    <value>Waiting for</value>
+  <data name="___Check_general_condition_to_suspned_zone__ControlVoltage_EStops_Presure_______" xml:space="preserve">
+    <value>Check general condition to suspned zone (ControlVoltage,EStops,Presure...)!</value>
   </data>
-  <data name="___button_press__" xml:space="preserve">
-    <value>button press</value>
+  <data name="___Force_step_mode___" xml:space="preserve">
+    <value>Force step mode.</value>
   </data>
-  <data name="___button_release__" xml:space="preserve">
-    <value>button release</value>
+  <data name="___Invoke_suspend_sequences_on_each_stations___" xml:space="preserve">
+    <value>Invoke suspend sequences on each stations.</value>
   </data>
-  <data name="___Checking_prerequisites_in_order_to_execute_proper_action__" xml:space="preserve">
-    <value>Checking prerequisites in order to execute proper action</value>
+  <data name="___Waiting_to_unlock__all_doors___" xml:space="preserve">
+    <value>Waiting to unlock  all doors!</value>
   </data>
-  <data name="___Locking_doors__" xml:space="preserve">
-    <value>Locking doors</value>
+  <data name="___Suspend_task_has_been_done___" xml:space="preserve">
+    <value>Suspend task has been done.</value>
   </data>
-  <data name="___Can_not_lock_doors__Please_check_emergency_buttons___" xml:space="preserve">
-    <value>Can not lock doors! Please check emergency buttons!</value>
-  </data>
-  <data name="___Can_not_lock_doors_during_service_mode__Please_remove_key_from_Service_position___" xml:space="preserve">
-    <value>Can not lock doors during service mode! Please remove key from Service position!</value>
-  </data>
-  <data name="___Please_close_all_doors_in_order_to_lock_doors___" xml:space="preserve">
-    <value>Please close all doors in order to lock doors!</value>
-  </data>
-  <data name="___Setting_up_machine_operation_mode__" xml:space="preserve">
-    <value>Setting up machine operation mode</value>
-  </data>
-  <data name="___Waiting_for_all_doors_to_close__" xml:space="preserve">
-    <value>Waiting for all doors to close</value>
-  </data>
-  <data name="___Please_return_all_keys_from_Service_back_to_Normal_in_order_to_resume_Holding_mode___" xml:space="preserve">
-    <value>Please return all keys from Service back to Normal in order to resume Holding mode!</value>
-  </data>
-  <data name="___Done__" xml:space="preserve">
-    <value>Done</value>
-  </data>
-  <data name="___Unlocking_doors__" xml:space="preserve">
-    <value>Unlocking doors</value>
-  </data>
-  <data name="___Waiting_for_all_stations_in_auto___ground_mode_to_enter_holding_step__" xml:space="preserve">
-    <value>Waiting for all stations in auto / ground mode to enter holding step</value>
-  </data>
-  <data name="___Station_is_on_hold___" xml:space="preserve">
-    <value>Station is on hold!</value>
-  </data>
-  <data name="___Awaiting_for_other_stations_to_unlock_doors___" xml:space="preserve">
-    <value>Awaiting for other stations to unlock doors.</value>
-  </data>
-  <data name="___Station_is_not_yet_in_holding_step___" xml:space="preserve">
-    <value>Station is not yet in holding step!</value>
+  <data name="___Automatic_mode_is_not_possibe_to_set_All_keys_must_be_in_NORMAL_and_AUTO____" xml:space="preserve">
+    <value>Automatic mode is not possibe to set(All keys must be in NORMAL and AUTO!)</value>
   </data>
   <data name="___Automatic_mode_is_set_Step_mode_is_disabled____" xml:space="preserve">
     <value>Automatic mode is set(Step mode is disabled)!</value>
@@ -306,11 +285,14 @@
   <data name="___Setting_step_mode___" xml:space="preserve">
     <value>Setting step mode!</value>
   </data>
-  <data name="___Manual_mode_is_required_but_mode_key_is_not_in_required_position___" xml:space="preserve">
-    <value>Manual mode is required but mode key is not in required position!</value>
+  <data name="___Manual_mode_is_not_possibe_to_set_At_least_one_SERVICE_and_one_MANUAL_keys_must_be_in_position____" xml:space="preserve">
+    <value>Manual mode is not possibe to set(At least one SERVICE and one MANUAL keys must be in position!)</value>
   </data>
   <data name="___Manual_mode_is_starting__" xml:space="preserve">
     <value>Manual mode is starting</value>
+  </data>
+  <data name="___Clear_step_mode__" xml:space="preserve">
+    <value>Clear step mode</value>
   </data>
   <data name="___Manual_mode_is_starting_due_service_key_combination__Manual___Service___" xml:space="preserve">
     <value>Manual mode is starting due service key combination (Manual / Service)</value>
@@ -320,6 +302,9 @@
   </data>
   <data name="___Step_mode_is_required_but_mode_key_is_not_in_required_position___" xml:space="preserve">
     <value>Step mode is required but mode key is not in required position!</value>
+  </data>
+  <data name="___Step_mode_is_set_or_all_are_inactive___" xml:space="preserve">
+    <value>Step mode is set or all are inactive!</value>
   </data>
   <data name="___Voltage_is_Off___" xml:space="preserve">
     <value>Voltage is Off!</value>
@@ -435,8 +420,11 @@
   <data name="___WAITING_FOR_START__" xml:space="preserve">
     <value>WAITING FOR START</value>
   </data>
-  <data name="___RECOVER_ANY_COMPONETS__" xml:space="preserve">
-    <value>RECOVER ANY COMPONETS</value>
+  <data name="___SUSPENDING_COMPONENTS__" xml:space="preserve">
+    <value>SUSPENDING COMPONENTS</value>
+  </data>
+  <data name="___RECOVER_ANY_COMPONENTS__" xml:space="preserve">
+    <value>RECOVER ANY COMPONENTS</value>
   </data>
   <data name="___Start_manual_Service_mode__" xml:space="preserve">
     <value>Start manual/Service mode</value>
@@ -594,8 +582,8 @@
   <data name="___Assigned_Value__" xml:space="preserve">
     <value>Assigned Value</value>
   </data>
-  <data name="___Group__" xml:space="preserve">
-    <value>Group</value>
+  <data name="___All__" xml:space="preserve">
+    <value>All</value>
   </data>
   <data name="___In_automatic__" xml:space="preserve">
     <value>In automatic</value>
@@ -612,11 +600,20 @@
   <data name="___In_step_mode__" xml:space="preserve">
     <value>In step mode</value>
   </data>
+  <data name="___Recovered__" xml:space="preserve">
+    <value>Recovered</value>
+  </data>
+  <data name="___Suspended__" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
   <data name="___Holding_process__" xml:space="preserve">
     <value>Holding process</value>
   </data>
   <data name="___In_Inactive_or_Manual_or_Grounded__" xml:space="preserve">
     <value>In Inactive or Manual or Grounded</value>
+  </data>
+  <data name="___Group__" xml:space="preserve">
+    <value>Group</value>
   </data>
   <data name="___Any_station_in_automatic_mode__" xml:space="preserve">
     <value>Any station in automatic mode</value>
@@ -690,17 +687,17 @@
   <data name="___Presure_OK___" xml:space="preserve">
     <value>Presure OK </value>
   </data>
-  <data name="___Emergency_Stop____" xml:space="preserve">
-    <value>Emergency Stop  </value>
+  <data name="___Emergency_Stop___" xml:space="preserve">
+    <value>Emergency Stop </value>
   </data>
-  <data name="___Global_control_voltage____" xml:space="preserve">
-    <value>Global control voltage  </value>
+  <data name="___Global_control_voltage__" xml:space="preserve">
+    <value>Global control voltage</value>
   </data>
-  <data name="___Local_control_voltage____" xml:space="preserve">
-    <value>Local control voltage  </value>
+  <data name="___Local_control_voltage__" xml:space="preserve">
+    <value>Local control voltage</value>
   </data>
-  <data name="___Local_door_voltage____" xml:space="preserve">
-    <value>Local door voltage  </value>
+  <data name="___Local_door_voltage__" xml:space="preserve">
+    <value>Local door voltage</value>
   </data>
   <data name="___Control_Buttons___" xml:space="preserve">
     <value>Control Buttons </value>
@@ -711,11 +708,11 @@
   <data name="___Normal_Service_key___" xml:space="preserve">
     <value>Normal/Service key </value>
   </data>
-  <data name="___Door__" xml:space="preserve">
-    <value>Door</value>
+  <data name="___Standard_door__" xml:space="preserve">
+    <value>Standard door</value>
   </data>
-  <data name="___Key_door__" xml:space="preserve">
-    <value>Key door</value>
+  <data name="___Basic_door__" xml:space="preserve">
+    <value>Basic door</value>
   </data>
   <data name="___Door_circuit___" xml:space="preserve">
     <value>Door circuit </value>

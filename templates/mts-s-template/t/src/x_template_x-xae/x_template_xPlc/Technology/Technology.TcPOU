@@ -24,6 +24,9 @@ VAR
 
 	{attribute addProperty Name "Device 1 (EtherCAT)"}
 	Device_1 : TcoIo.TcoEthercatMasterDevice(THIS^);
+	
+	_setDummyConditionsSuffisient:BOOL;
+	_dummyBlinker              : TcoUtilities.TcoBlinker(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -103,44 +106,82 @@ END_VAR
       <Declaration><![CDATA[METHOD InitializeComponents
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	controlVolage: BOOL;
+	controlVoltageDoor: BOOL;
+	estop: BOOL;
+	presure: BOOL;
+	locked: BOOL;
+	lock: BOOL;
+	opened: BOOL;
+	closed: BOOL;
+	
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_components.ControlButtons(
-	inoButtonRecover:=GVL_iXlinker.EC1.A1.A1_3.Channel_1.Input , 
-	inoButtonSuspend:=GVL_iXlinker.EC1.A1.A1_3.Channel_2.Input , 
-	inoButtonGround:=GVL_iXlinker.EC1.A1.A1_3.Channel_3.Input , 
-	inoButtonAuto:=GVL_iXlinker.EC1.A1.A1_3.Channel_4.Input , 
-	inoButtonStartLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_1.Output , 
-	inoButtonStopLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_2.Output , 
-	inoButtonGroundLight:=GVL_iXlinker.EC1.A1.A1_4.Channel_3.Output , 
-	inoButtonAutoLight:= GVL_iXlinker.EC1.A1.A1_4.Channel_4.Output);
-	
-_components.ModeKey(inoKeyState1:=GVL_iXlinker.EC1.A1.A1_3.Channel_5.Input,
-					inoKeyState2:=GVL_iXlinker.EC1.A1.A1_3.Channel_6.Input);
+        <ST><![CDATA[controlVolage:=FALSE;
+controlVoltageDoor:=FALSE;
+estop:=FALSE;
+presure:=FALSE;
+
+//_dummyBlinker(inOffTime := T#10000MS, inOnTime := T#10000MS);
+
+closed:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_8.Input;
+locked:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_9.Input;
+
+IF _setDummyConditionsSuffisient THEN
+	controlVolage:=TRUE;
+	controlVoltageDoor:=TRUE;
+	estop:=FALSE;
+	presure:=TRUE;
+
+
+END_IF;
+
+_components.ModeKey(inoKeyState1:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_1.Input ,
+					inoKeyState2:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_2.Input);
 					
-_components.NormalServiceKey(inoSignal:=GVL_iXlinker.EC1.A1.A1_3.Channel_7.Input);
-
-_components.GlobalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_5.Input);
-_components.LocalControlVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input);
-_components.LocalDoorVoltage(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_7.Input);
-
-_components.EmergencyStop(inoSignal := GVL_iXlinker.EC1.A1.A1_1.Channel_8.Input);
-_components.AirPresureOk(inoSignal:= GVL_iXlinker.EC1.A1.A1_1.Channel_6.Input);
-
-
-_components.Door(inoIsLocked := GVL_iXlinker.EC1.A1.A1_1.Channel_3.Input,
-    inoIsOpen := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
-    inoLock := GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output);
+_components.NormalServiceKey(inoSignal:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_3.Input);
+					
+_components.ControlButtons(
+	inoButtonRecover:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_4.Input  , 
+	inoButtonSuspend:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_5.Input  , 
+	inoButtonGround:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_6.Input , 
+	inoButtonAuto:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_7.Input, 
+	inoButtonRecoverLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_1.Output  , 
+	inoButtonSuspendLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_2.Output  , 
+	inoButtonGroundLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_3.Output  , 
+	inoButtonAutoLight:= GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_4.Output );
 	
-_components.DoorKey(inoIsClosed := GVL_iXlinker.EC1.A1.A1_1.Channel_4.Input,
-     inoLock := GVL_iXlinker.EC1.A1.A1_2.Channel_3.Output);
+
+					
+
+_components.GlobalControlVoltage(inoSignal := controlVolage);
+
+_components.LocalControlVoltage(inoSignal := controlVolage);
+_components.LocalDoorVoltage(inoSignal := controlVoltageDoor);
+
+_components.EmergencyStop(inoSignal := estop);
+_components.AirPresureOk(inoSignal:= presure);
+
+
+_components.StandardDoor(inoIsLocked := locked,
+    inoIsOpen := opened,
+    inoLock :=lock);
+	
+	
+_components.BasicDoor(inoIsClosed := closed,
+     inoLock := lock);
 
 
 _components.DoorCicuit();
 
 _components.Zone(inDoorCircuit:=_components.DoorCicuit,
-				inEstopActive:=_components.EmergencyStop._signal,
-				inAirPressureOK:= _components.AirPresureOk.IsTrue);]]></ST>
+				inEstopActive:=_components.EmergencyStop.Signal,
+				inAirPressureOK:= _components.AirPresureOk.Signal);
+		
+				
+_components.Zone.Service();]]></ST>
       </Implementation>
     </Method>
     <Method Name="InitializeComponentsOnce" Id="{78fe5985-ea43-49bb-a2ff-319ea6fb4a1a}" FolderPath="Initialize\">
@@ -154,8 +195,8 @@ _components.Zone.Restore();
 
 
 
-_components.DoorCicuit.AddDoors(inDoor:=_components.Door);
-_components.DoorCicuit.AddDoors(inDoor:=_components.DoorKey);
+_components.DoorCicuit.AddDoors(inDoor:=_components.StandardDoor);
+_components.DoorCicuit.AddDoors(inDoor:=_components.BasicDoor);
 _components.DoorCicuit.AddGlobalVoltage(inVoltage:=_components.GlobalControlVoltage);
 _components.DoorCicuit.AddLocalVoltage(inVoltage:=_components.LocalControlVoltage);
 _components.DoorCicuit.AddLocalDoorsVoltage(inVoltage:=_components.LocalDoorVoltage);

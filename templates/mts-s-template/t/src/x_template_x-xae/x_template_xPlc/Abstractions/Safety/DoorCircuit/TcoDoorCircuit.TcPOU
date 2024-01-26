@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TcoDoorCircuit" Id="{73082c89-b7a7-4202-b3e8-7a6b095baf55}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TcoDoorCircuit EXTENDS TcoCore.TcoObject IMPLEMENTS ITcoDoorCircuit
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoDoorCircuit EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoDoorCircuit
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -450,6 +450,21 @@ FOR i := 0 TO _config.MaxLocalDoorsVoltage DO
 END_FOR
 
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{4da20e16-6127-4895-af91-e1977aeebcc0}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="Status" Id="{b5359157-c674-43e2-ae3a-3ae512b9af00}">

@@ -3,34 +3,34 @@
   <DUT Name="TcoControledZone_Info" Id="{aa141ebf-52fb-44f0-a6cb-185795382c0f}">
     <Declaration><![CDATA[TYPE TcoControledZone_Info :
 STRUCT
-	{attribute addProperty Name "<#Group#> - <#In automatic#>"}
+	{attribute addProperty Name "<#All#> - <#In automatic#>"}
 	AllInAuto            : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#Is grounding#>"}
+	{attribute addProperty Name "<#All#> - <#Is grounding#>"}
 	AllInGrounding       : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#In manual#>"}
+	{attribute addProperty Name "<#All#> - <#In manual#>"}
 	AllInManual          : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#Idle#>"}
+	{attribute addProperty Name "<#All#> - <#Idle#>"}
 	AllIdle          : BOOL;
-	
-	{attribute addProperty Name "<#Group#> - <#Grounded#>"}
+
+	{attribute addProperty Name "<#All#> - <#Grounded#>"}
 	AllGrounded          : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#In step mode#>"}
+	{attribute addProperty Name "<#All#> - <#In step mode#>"}
 	AllInStepMode        : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#Recovered#>"}
+	{attribute addProperty Name "<#All#> - <#Recovered#>"}
 	AllRecovered        : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#Suspended#>"}
+	{attribute addProperty Name "<#All#> - <#Suspended#>"}
 	AllSuspended        : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#Holding process#>"}
+	{attribute addProperty Name "<#All#> - <#Holding process#>"}
 	AllHolding           : BOOL;
 	
-	{attribute addProperty Name "<#Group#> - <#In Inactive or Manual or Grounded#>"}
+	{attribute addProperty Name "<#All#> - <#In Inactive or Manual or Grounded#>"}
 	AllInactiveOrManualOrGrounded  : BOOL;
 	
 	{attribute addProperty Name "<#Group#> - <#Any station in automatic mode#>"}

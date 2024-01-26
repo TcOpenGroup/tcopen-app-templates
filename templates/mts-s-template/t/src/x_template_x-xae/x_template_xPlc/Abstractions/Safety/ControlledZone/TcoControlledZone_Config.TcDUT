@@ -9,6 +9,7 @@
         MaxKeyMode : USINT := 4;
         MaxKeyNormalService : USINT := 4;
         DoorsLocked : TIME := T#1S;
+		AirPressureErrorTime : TIME :=T#5S;
     END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace x_template_xPlc
 {
 
-    public partial class TcoStandartDoorView : UserControl
+    public partial class TcoStandardDoorView : UserControl
     {
-        public TcoStandartDoorView()
+        public TcoStandardDoorView()
         {
             InitializeComponent();
         }

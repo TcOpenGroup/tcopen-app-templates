@@ -343,7 +343,8 @@ _paralellTask();]]></ST>
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Station.GroundTask.Restore();
+        <ST><![CDATA[SUPER^.OnStart();
+Station.GroundTask.Restore();
 Station.ManualTask.Restore();
 Station.GroundTask.CancelGround();
 _paralellTask.Restore();

@@ -5,28 +5,28 @@
 TYPE
     TechnologyComponents EXTENDS TcoCore.TcoStruct :
     STRUCT
-      	{attribute wpf [Container(Layout.Stack)]}
+      	{attribute wpf [Container(Layout.Stack,"PRESURE")]}
         {attribute addProperty Name "<#Presure OK #>"}
         AirPresureOk : TcoElements.TcoDi(THISSTRUCT);  
 	
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Emergency Stop  #>"}
+		{attribute wpf [Container(Layout.Stack,"ESTOPS")]}
+        {attribute addProperty Name "<#Emergency Stop #>"}
         EmergencyStop : TcoEmergencyStop(THISSTRUCT);
 
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Global control voltage  #>"}
+		{attribute wpf [Container(Layout.Stack,"CONTROL VOLTAGE")]}
+        {attribute addProperty Name "<#Global control voltage#>"}
         GlobalControlVoltage : TcoControlVoltage(THISSTRUCT);
 		
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Local control voltage  #>"}
+
+        {attribute addProperty Name "<#Local control voltage#>"}
         LocalControlVoltage : TcoControlVoltage(THISSTRUCT);
 		
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Local door voltage  #>"}
+
+        {attribute addProperty Name "<#Local door voltage#>"}
         LocalDoorVoltage : TcoControlVoltage(THISSTRUCT);
 		
 		
-		{attribute wpf [Container(Layout.Stack)]}
+		{attribute wpf [Container(Layout.Stack,"CONTROLS")]}
         {attribute addProperty Name "<#Control Buttons #>"}
         ControlButtons : TcoControlButtons(THISSTRUCT);
 		
@@ -36,22 +36,20 @@ TYPE
 		{attribute addProperty Name "<#Normal/Service key #>"}
         NormalServiceKey : TcoKeyNormalService(THISSTRUCT);
 		
-		
-		{attribute addProperty Name "<#Door#>"}
-        Door : TcoStandartDoor(THISSTRUCT);
+		{attribute wpf [Container(Layout.Stack,"DOORS")]}
+		{attribute addProperty Name "<#Standard door#>"}
+        StandardDoor : TcoStandardDoor(THISSTRUCT);
 
-		{attribute addProperty Name "<#Key door#>"}
-        DoorKey : TcoBasicDoor(THISSTRUCT);
+		{attribute addProperty Name "<#Basic door#>"}
+        BasicDoor : TcoBasicDoor(THISSTRUCT);
 
 		
-		
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Door circuit #>"}
+		{attribute wpf [Container(Layout.Stack,"DOORCIRUITS AND ZONES")]}
+		{attribute addProperty Name "<#Door circuit #>"}
         DoorCicuit : TcoDoorCircuit(THISSTRUCT);
 
 		
-		{attribute wpf [Container(Layout.Stack)]}
-        {attribute addProperty Name "<#Zone #>"}
+		{attribute addProperty Name "<#Zone #>"}
         Zone : TcoControlledZone(THISSTRUCT);
 
 

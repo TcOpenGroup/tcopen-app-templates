@@ -13,9 +13,9 @@ VAR_IN_OUT
     {attribute clr [RenderIgnore()]}
     inoButtonAuto : BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonStartLight : BOOL;
+    inoButtonRecoverLight : BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonStopLight : BOOL;
+    inoButtonSuspendLight : BOOL;
     {attribute clr [RenderIgnore()]}
     inoButtonGroundLight : BOOL;
     {attribute clr [RenderIgnore()]}
@@ -62,8 +62,8 @@ _buttonAuto(inoSignal:= inoButtonAuto);
 
 
 _buttonGroundLight(inoSignal:= inoButtonGroundLight);
-_buttonSuspendLight(inoSignal:= inoButtonStopLight);
-_buttonRecoverLight(inoSignal:= inoButtonStartLight);
+_buttonSuspendLight(inoSignal:= inoButtonSuspendLight);
+_buttonRecoverLight(inoSignal:= inoButtonRecoverLight);
 _buttonAutoLight(inoSignal:= inoButtonAutoLight);
 ]]></ST>
     </Implementation>

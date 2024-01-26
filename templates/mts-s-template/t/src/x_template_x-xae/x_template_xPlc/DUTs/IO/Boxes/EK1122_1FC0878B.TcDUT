@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.2.0.0">
-  <DUT Name="EK1100_1FC0878B" Id="{78f229f9-049f-4b73-9b32-4fa36003930f}">
-    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EK1100-0000-0018'}
+  <DUT Name="EK1122_1FC0878B" Id="{0dd3a374-3bd1-4bc1-8eb0-7319afd6328d}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EK1122-0000-0018'}
 {attribute addProperty VendorId "#x00000002"}
-{attribute addProperty BoxType "EK1100-0000-0018"}
-{attribute addProperty Description "EK1100 EtherCAT Coupler (2A E-Bus)"}
-{attribute addProperty Physics "YKY"}
+{attribute addProperty BoxType "EK1122-0000-0018"}
+{attribute addProperty Description "EK1122 2 port EtherCAT junction"}
+{attribute addProperty Physics "KYKY"}
 {attribute addProperty Id "InfoDataAT %I*InfoData_6F19DB2B2"}
 {attribute addProperty CRC "532711307"}
 {attribute addProperty Size "2"}
-TYPE EK1100_1FC0878B EXTENDS TcoIo.EtcSlaveBoxBase_77A0E4A7 :
+TYPE EK1122_1FC0878B EXTENDS TcoIo.EtcSlaveTerminalBase_947E5A46 :
 STRUCT
 	{attribute addProperty Name "InfoData"}
 	InfoData : TcoIo.InfoData_6F19DB2B;

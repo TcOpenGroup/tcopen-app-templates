@@ -14,6 +14,6 @@
     </UserControl.DataContext>
     <Grid>
 
-        <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._components}" PresentationType="Service-ControlSlim-Base-Display"/>
+        <vortex:RenderableContentControl DataContext="{Binding x_template_xPlc.MAIN._technology._components}" PresentationType="Base-Service-ControlSlim-Base-Display"/>
     </Grid>
 </UserControl>
