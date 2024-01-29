@@ -58,7 +58,7 @@ IF (Step(200, TRUE, 'STOPPING OTHER MODES')) THEN
 	
 	Messenger.Info('INFO MESSAGE');
 	
-    StepCompleteWhen(THIS^._currentStep.Duration > T#1250MS);
+    StepCompleteWhen(THIS^._currentStep.Duration > T#500MS);
 //	---------------------------------------------------
 END_IF
 
@@ -75,9 +75,11 @@ END_IF]]></ST>
     <Method Name="OnStart" Id="{81ba5eb0-f935-4736-a619-b5f4155759ce}">
       <Declaration><![CDATA[METHOD PUBLIC OnStart]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Station.AutomatTask.Restore();
+        <ST><![CDATA[SUPER^.OnStart();
+Station.AutomatTask.Restore();
 Station.ManualTask.Restore();
 Station.GroundTask.CancelGround();
+
 
 ]]></ST>
       </Implementation>

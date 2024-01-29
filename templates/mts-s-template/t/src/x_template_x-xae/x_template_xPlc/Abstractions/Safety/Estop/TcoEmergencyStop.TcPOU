@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoEmergencyStop" Id="{83bdb684-36b8-4905-8497-ac18239f9927}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoEmergencyStop EXTENDS TcoElements.TcoDi
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^(inoSignal:=inoSignal);
+IF inoSignal THEN
+	Messenger.Error('<#Emergency stop active#>').Pin();
+END_IF;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

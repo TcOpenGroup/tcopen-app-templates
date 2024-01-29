@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.2.0.0">
+  <DUT Name="DCM_Status_Channel_36ED096F" Id="{9eb4a7bb-47cf-48e4-8cd7-b4b64a3eb128}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EL7342-0000-0022'}
+{attribute addProperty BoxType "EL7342-0000-0022"}
+{attribute addProperty Id "StatusAT %I*Status_B679584511"}
+{attribute addProperty CRC "921504111"}
+{attribute addProperty Size "11"}
+TYPE DCM_Status_Channel_36ED096F EXTENDS TcoIo.InputBase_8311D824 :
+STRUCT
+	{attribute addProperty Name "Status"}
+	Status AT %I* : Status_B6795845;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

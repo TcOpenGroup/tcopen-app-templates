@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoDoorCircuit" Id="{5c977ebf-d143-4a1d-af86-7e0c865d113b}">
+    <Declaration><![CDATA[INTERFACE ITcoDoorCircuit
+]]></Declaration>
+    <Property Name="IsClosed" Id="{d88ee396-761e-4092-ba7a-fed7e19f766d}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{03410a06-1561-4c41-be76-b5d9d0cb1905}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsGlobalVoltageOk" Id="{128a1fcf-069f-4dec-872c-34d8079803e8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsGlobalVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7de0b1e8-0f12-46b6-9fdf-1a33d0365744}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsLocalDoorsVoltageOk" Id="{806b6911-d960-4ee7-a26b-d21d53ef3bcb}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsLocalDoorsVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{dbd706b2-1e39-4236-a088-ce62ca38840f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsLocalVoltageOk" Id="{26e9c345-b9ea-4e2a-948b-2cc709e498a8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsLocalVoltageOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9f033ff7-9ef1-4364-8b1f-1479ed367351}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsLocked" Id="{38c4456d-9c42-4303-9e74-71242df9ef2a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{d037bb63-5b4e-44a7-b334-f58ab6995686}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsUnLocked" Id="{5cffd108-0736-459c-9646-721a79d55fbb}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsUnLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ef4ffdc0-cdc8-43a7-84ff-5d86ac874173}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Lock" Id="{80d281cb-ac8f-4233-8ff4-b9be85944670}">
+      <Declaration><![CDATA[METHOD Lock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="UnLock" Id="{b0c2b8c9-b76e-4208-ace2-1e2fb1791f22}">
+      <Declaration><![CDATA[METHOD UnLock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

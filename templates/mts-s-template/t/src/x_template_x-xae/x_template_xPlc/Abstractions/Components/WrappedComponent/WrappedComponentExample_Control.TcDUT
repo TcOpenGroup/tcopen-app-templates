@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="WrappedComponentExample_Control" Id="{7040aa76-9333-4a97-921e-6f0133f845cb}">
+    <Declaration><![CDATA[TYPE WrappedComponentExample_Control EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+		Setpoint:INT;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

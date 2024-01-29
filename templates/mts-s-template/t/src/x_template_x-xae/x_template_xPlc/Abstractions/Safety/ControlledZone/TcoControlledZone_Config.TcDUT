@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoControlledZone_Config" Id="{1a75dab5-4912-4cfc-b5a7-3092971d60ad}">
+    <Declaration><![CDATA[TYPE
+    TcoControlledZone_Config :
+    STRUCT
+        MaxControledUnits : USINT := 12;
+        MaxControlButtons : USINT := 4;
+        MaxKeyMode : USINT := 4;
+        MaxKeyNormalService : USINT := 4;
+        DoorsLocked : TIME := T#1S;
+		AirPressureErrorTime : TIME :=T#5S;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

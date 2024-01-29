@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoKeyMode" Id="{40bf901f-7a96-4bf2-a849-acf0aacd3640}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoKeyMode EXTENDS TcoCore.TcoComponent IMPLEMENTS ITcoKeyMode
+VAR_IN_OUT
+	{attribute clr [RenderIgnore()]}
+	inoKeyState1               : BOOL;
+	
+	{attribute clr [RenderIgnore()]}
+	inoKeyState2               : BOOL;
+END_VAR
+VAR	
+	
+	{attribute addProperty Name "<#Status#>"}
+    {attribute clr [ReadOnly()]}
+    _status : TcoKeyMode_Status;
+
+	{attribute addProperty Name "<#Config#>"}
+    _config : TcoKeyMode_Config;
+	{attribute addProperty Name "<#KeyState1#>"}
+	KeyState1                : TcoElements.TcoDi(THIS^);
+	
+	{attribute addProperty Name "<#KeyState2#>"}
+	KeyState2                : TcoElements.TcoDi(THIS^);
+	
+	//----------------- KEY STATES--------------
+	{attribute addProperty Name "<#Manual#>"}
+	IsKeyInManual            : BOOL; 
+	
+	{attribute addProperty Name "<#Automatic#>"}
+	IsKeyInAuto              : BOOL; 
+	
+	{attribute addProperty Name "<#Step mode#>"}
+	IsKeyInStep              : BOOL; 
+	
+	
+	{attribute clr [RenderIgnore()]}
+	_timer:ton;
+END_VAR
+
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[KeyState1(inoSignal:= inoKeyState1);
+KeyState2(inoSignal:= inoKeyState2);
+_timer(IN:=(NOT KeyState1._signal   AND  KeyState2._signal) XOR (KeyState1._signal   AND  NOT KeyState2._signal),PT:=_config.SwitKeyStanilisiation);
+THIS^.IsKeyInAuto   := KeyState1._signal       AND  KeyState2._signal;
+THIS^.IsKeyInStep   := (NOT KeyState1._signal   AND  KeyState2._signal) XOR (KeyState1._signal   AND  NOT KeyState2._signal) AND _timer.Q;
+THIS^.IsKeyInManual := NOT KeyState1._signal   AND  NOT KeyState2._signal;
+//todo  timer]]></ST>
+    </Implementation>
+    <Property Name="Config" Id="{f70d23ba-8574-4558-95d0-24106142fa04}">
+      <Declaration><![CDATA[PROPERTY Config :REFERENCE TO TcoKeyMode_Config]]></Declaration>
+      <Get Name="Get" Id="{fb6c5bba-ff37-4356-a4be-97f4aedffc2a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config ref=_config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="KeyInAuto" Id="{21bb763a-92bd-4bc8-872c-1943f4091028}">
+      <Declaration><![CDATA[PROPERTY KeyInAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{108c3ee6-6bf0-421c-9d16-2a9db265a3d6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[KeyInAuto := IsKeyInAuto;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="KeyInManual" Id="{7078a957-f02b-489f-b868-2be21b3591cc}">
+      <Declaration><![CDATA[PROPERTY KeyInManual : BOOL]]></Declaration>
+      <Get Name="Get" Id="{aa45b1c6-4ab3-482b-aa78-09c9efb00b51}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[KeyInManual := IsKeyInManual;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="KeyInStep" Id="{fc0d02d0-dc3a-4186-8de9-afde15f7058d}">
+      <Declaration><![CDATA[PROPERTY KeyInStep : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a2f3ea27-b5f5-4125-80ae-e0cea555931c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[KeyInStep := IsKeyInStep;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{3aa8d1b4-de63-433f-8ae7-04df8a03a50d}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{d732058a-2e0e-4c4a-a980-e9e69fc31d56}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Status" Id="{8ed426c1-a183-4bfa-8856-679e1c82f1a3}">
+      <Declaration><![CDATA[PROPERTY Status : REFERENCE TO TcoKeyMode_Status]]></Declaration>
+      <Get Name="Get" Id="{5bbe2f8e-2129-4dfa-ac16-c9228cb3e10f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF=_status;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

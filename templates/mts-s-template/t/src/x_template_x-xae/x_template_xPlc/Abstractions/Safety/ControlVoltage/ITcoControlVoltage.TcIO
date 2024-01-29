@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoControlVoltage" Id="{37533fcd-a138-4914-8d22-78d3f1e02647}">
+    <Declaration><![CDATA[INTERFACE ITcoControlVoltage 
+]]></Declaration>
+    <Property Name="IsOff" Id="{e5e14c33-cc81-420f-9d61-8e40d8609390}">
+      <Declaration><![CDATA[PROPERTY IsOff : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5d08b90e-aa45-4ab0-a9b3-c602cc73cf1b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsOn" Id="{b2a27d1b-2ace-4b88-be87-f0483bcb3c8e}">
+      <Declaration><![CDATA[PROPERTY IsOn : BOOL]]></Declaration>
+      <Get Name="Get" Id="{bd391189-747a-4f0d-b358-940e49182478}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

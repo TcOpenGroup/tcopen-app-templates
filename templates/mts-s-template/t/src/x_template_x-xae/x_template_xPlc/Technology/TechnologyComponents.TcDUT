@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TechnologyComponents" Id="{c8b41d55-fe8d-4b4c-a14b-49ecddfbf052}">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Tabs)]}
+TYPE
+    TechnologyComponents EXTENDS TcoCore.TcoStruct :
+    STRUCT
+      	{attribute wpf [Container(Layout.Stack,"PRESURE")]}
+        {attribute addProperty Name "<#Presure OK #>"}
+        AirPresureOk : TcoElements.TcoDi(THISSTRUCT);  
+	
+		{attribute wpf [Container(Layout.Stack,"ESTOPS")]}
+        {attribute addProperty Name "<#Emergency Stop #>"}
+        EmergencyStop : TcoEmergencyStop(THISSTRUCT);
+
+		{attribute wpf [Container(Layout.Stack,"CONTROL VOLTAGE")]}
+        {attribute addProperty Name "<#Global control voltage#>"}
+        GlobalControlVoltage : TcoControlVoltage(THISSTRUCT);
+		
+
+        {attribute addProperty Name "<#Local control voltage#>"}
+        LocalControlVoltage : TcoControlVoltage(THISSTRUCT);
+		
+
+        {attribute addProperty Name "<#Local door voltage#>"}
+        LocalDoorVoltage : TcoControlVoltage(THISSTRUCT);
+		
+		
+		{attribute wpf [Container(Layout.Stack,"CONTROLS")]}
+        {attribute addProperty Name "<#Control Buttons #>"}
+        ControlButtons : TcoControlButtons(THISSTRUCT);
+		
+        {attribute addProperty Name "<#Mode key #>"}
+        ModeKey : TcoKeyMode(THISSTRUCT);
+		
+		{attribute addProperty Name "<#Normal/Service key #>"}
+        NormalServiceKey : TcoKeyNormalService(THISSTRUCT);
+		
+		{attribute wpf [Container(Layout.Stack,"DOORS")]}
+		{attribute addProperty Name "<#Standard door#>"}
+        StandardDoor : TcoStandardDoor(THISSTRUCT);
+
+		{attribute addProperty Name "<#Basic door#>"}
+        BasicDoor : TcoBasicDoor(THISSTRUCT);
+
+		
+		{attribute wpf [Container(Layout.Stack,"DOORCIRUITS AND ZONES")]}
+		{attribute addProperty Name "<#Door circuit #>"}
+        DoorCicuit : TcoDoorCircuit(THISSTRUCT);
+
+		
+		{attribute addProperty Name "<#Zone #>"}
+        Zone : TcoControlledZone(THISSTRUCT);
+
+
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

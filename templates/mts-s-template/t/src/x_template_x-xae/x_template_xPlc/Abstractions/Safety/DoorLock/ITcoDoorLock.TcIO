@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoDoorLock" Id="{e31e81a9-23a6-4ec0-a9de-53d13304f8f9}">
+    <Declaration><![CDATA[INTERFACE ITcoDoorLock
+]]></Declaration>
+    <Property Name="IsClosed" Id="{dc58be1e-9932-4bc5-a4c3-9c5de040df19}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{28afa32b-63f2-493f-b6df-d1731d233750}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsLocked" Id="{86c0bd4f-8a0a-493e-9e37-4af93e1720f7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsLocked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{51f88c03-2ce8-43e1-a901-bc1e5866bb3b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsOpen" Id="{2872ec8e-80c0-420a-af22-60ff31cc645a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsOpen : BOOL]]></Declaration>
+      <Get Name="Get" Id="{29fb5cc9-a453-4b32-8c00-a5e4e461d0da}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Lock" Id="{de9819e3-e479-47e4-86b1-0481c1da514b}">
+      <Declaration><![CDATA[METHOD Lock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="UnLock" Id="{9671c65f-e54a-4699-b621-54671fc3df5a}">
+      <Declaration><![CDATA[METHOD UnLock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

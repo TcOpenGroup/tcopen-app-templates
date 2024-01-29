@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoDoorCircuit_Config" Id="{6f5eaac0-9438-4a91-b4dc-7bac4a780fdf}">
+    <Declaration><![CDATA[TYPE
+    TcoDoorCircuit_Config :
+    STRUCT
+        InfoTime : TIME := T#2S;
+        ErrorTime : TIME := T#0S;
+		MaxDoors : USINT:=12;
+		MaxLocalDoorsVoltage : USINT:=4;
+		MaxLocalVoltage: USINT:=4;
+		MaxGlobalVoltage: USINT:=4;
+	
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.2.0.0">
+  <DUT Name="DCM_Velocity_Channel_A47A3F41" Id="{7d5812ae-c3eb-4365-bafc-b6dad2f8aa23}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EL7342-0000-0022'}
+{attribute addProperty BoxType "EL7342-0000-0022"}
+{attribute addProperty Id "VelocityAT %Q*INT2"}
+{attribute addProperty CRC "2759475009"}
+{attribute addProperty Size "2"}
+TYPE DCM_Velocity_Channel_A47A3F41 EXTENDS TcoIo.OutputBase_10CEE7DE :
+STRUCT
+	{attribute addProperty Name "Velocity"}
+	Velocity AT %Q* : INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

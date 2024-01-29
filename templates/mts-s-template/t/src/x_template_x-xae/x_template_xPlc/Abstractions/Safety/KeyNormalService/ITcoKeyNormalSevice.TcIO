@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoKeyNormalSevice" Id="{4d3292d3-2bbd-4847-b304-f02ce9ea0edc}">
+    <Declaration><![CDATA[INTERFACE ITcoKeyNormalSevice
+]]></Declaration>
+    <Property Name="KeyInNormal" Id="{c06bb553-1c28-4af4-8591-1c745d4847b9}">
+      <Declaration><![CDATA[PROPERTY KeyInNormal : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a652bfaa-502b-4c47-a7ca-c910d577b3e0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="KeyInService" Id="{1ac2d69d-31f4-46d6-ae52-dea8b0f4da43}">
+      <Declaration><![CDATA[PROPERTY KeyInService : BOOL]]></Declaration>
+      <Get Name="Get" Id="{52ba5769-e7f4-4845-aef5-40ef3d505173}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

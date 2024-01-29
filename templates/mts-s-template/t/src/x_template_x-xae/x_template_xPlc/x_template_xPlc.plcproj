@@ -26,6 +26,21 @@
     <PreserveCompiledLibComments>false</PreserveCompiledLibComments>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentsExample.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\CuBaseRecurringFail.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -80,7 +95,13 @@
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseAutomat.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\CUBase\Tasks\CUBaseSuspend.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseGround.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\CUBase\Tasks\CUBaseRecover.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanel.TcPOU">
@@ -102,6 +123,75 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Generic\TagsPairing\TagsPairing.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlButtons\TcoControlButtons.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlButtons\ITcoControlButtons.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlButtons\TcoControledZone_Info.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZoneActionTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlVoltage\ITcoControlVoltage.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\ControlVoltage\TcoControlVoltage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\DoorCircuit\TcoDoorCircuit_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\DoorCircuit\TcoDoorCircuit_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\DoorCircuit\TcoDoorCircuit.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\DoorCircuit\ITcoDoorCircuit.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\Doors\ITcoDoorLock.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\Doors\TcoStandardDoor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\Doors\TcoBasicDoor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\Estop\TcoEmergencyStop.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyMode\TcoKeyMode_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyMode\TcoKeyMode_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyMode\TcoKeyMode.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyMode\ITcoKeyMode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyNormalService\TcoKeyNormalService.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Safety\KeyNormalService\ITcoKeyNormalSevice.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\TcoCore\CycleTimeAnalitics.TcDUT">
@@ -149,6 +239,12 @@
     <Compile Include="Technology\CU00x\Positions\Cu00xTestPositions.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\CU00x\Safety\Suspend\CU00xSuspendTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Technology\CU00x\Safety\Recover\CU00xRecoverTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Technology\Data\ProcessData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -173,19 +269,88 @@
     <Compile Include="Technology\Technology.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\TechnologyComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Status_3035BE2E.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Status_B6795845.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Control_F189B737.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Control_C948E0F2.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Status_3D84275F.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PdoEntries\Ctrl_71604E86.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\InfoData_8F85596B.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\IO\PDOs\Channel_830843C1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\IO\PDOs\Channel_42CA91F7.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\IO\Boxes\EK1100_1FC0878B.TcDUT">
+    <Compile Include="DUTs\IO\PDOs\AO_Output_Channel_BA7EBB7C.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\IO\Boxes\EL1008_78E8D3DD.TcDUT">
+    <Compile Include="DUTs\IO\PDOs\ENC_Status_compact_Channel_DC559AB0.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\IO\Boxes\EL2008_E2806B95.TcDUT">
+    <Compile Include="DUTs\IO\PDOs\DCM_Status_Channel_36ED096F.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\ENC_Control_compact_Channel_2E82BC43.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\DCM_Control_Channel_5A8B5016.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\DCM_Velocity_Channel_A47A3F41.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\InfoData_FC36B521.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\COM_Inputs_3801C95E.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\PDOs\COM_Outputs_DEF408EC.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EK1200_013D0B49.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EK1122_1FC0878B.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL6631_A0EC075C.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL1809_32157CFD.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL2809_2B6483BD.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL4004_E203F875.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL7342_CEEFFCBE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL6001_0DE01E7E.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO\Boxes\EL9011_D65D3D32.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\IO\Devices\SyncUnitTasks_4BE01469.TcDUT">
@@ -194,10 +359,10 @@
     <Compile Include="DUTs\IO\Devices\SyncUnits_67D36DDA.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\IO\Topology\A1_A967F0EF.TcDUT">
+    <Compile Include="DUTs\IO\Topology\EK1200_319FD71D.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\IO\Topology\EC1_53109142.TcDUT">
+    <Compile Include="DUTs\IO\Topology\EC1_880CB0B9.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\GVL_iXlinker.TcGVL">
@@ -206,6 +371,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstractions" />
+    <Folder Include="Abstractions\Components\WrappedComponent" />
     <Folder Include="Abstractions\CUBase" />
     <Folder Include="Abstractions\CUBase\Data" />
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
@@ -213,6 +379,16 @@
     <Folder Include="Abstractions\Generic" />
     <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
+    <Folder Include="Abstractions\Components" />
+    <Folder Include="Abstractions\Safety" />
+    <Folder Include="Abstractions\Safety\ControlButtons" />
+    <Folder Include="Abstractions\Safety\ControlledZone" />
+    <Folder Include="Abstractions\Safety\DoorCircuit" />
+    <Folder Include="Abstractions\Safety\Estop" />
+    <Folder Include="Abstractions\Safety\Doors" />
+    <Folder Include="Abstractions\Safety\ControlVoltage" />
+    <Folder Include="Abstractions\Safety\KeyMode" />
+    <Folder Include="Abstractions\Safety\KeyNormalService" />
     <Folder Include="Abstractions\Technology" />
     <Folder Include="Abstractions\TcoCore" />
     <Folder Include="DUTs" />
@@ -220,7 +396,10 @@
     <Folder Include="Technology\CU00x\Automat" />
     <Folder Include="Technology\CU00x\Ground" />
     <Folder Include="Technology\CU00x\Manual" />
+    <Folder Include="Technology\CU00x\Safety" />
     <Folder Include="Technology\CU00x\Positions" />
+    <Folder Include="Technology\CU00x\Safety\Suspend" />
+    <Folder Include="Technology\CU00x\Safety\Recover" />
     <Folder Include="Technology\Data" />
     <Folder Include="Technology\CU00x" />
     <Folder Include="Technology\CU00x\Components" />
@@ -248,59 +427,63 @@
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAbbRobotics">
-      <DefaultResolution>TcoAbbRobotics, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAbbRobotics, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAbbRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAbstractions">
-      <DefaultResolution>TcoAbstractions, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAbstractions, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAbstractions</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAimTtiPowerSupply">
-      <DefaultResolution>TcoAimTtiPowerSupply, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAimTtiPowerSupply, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAimTtiPowerSupply</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoCore">
-      <DefaultResolution>TcoCore, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoCore, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoCore</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoData">
-      <DefaultResolution>TcoData, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoData, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoData</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoDrivesBeckhoff">
-      <DefaultResolution>TcoDrivesBeckhoff, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoDrivesBeckhoff, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoDrivesBeckhoff</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoElements">
-      <DefaultResolution>TcoElements, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoElements, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoElements</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoInspectors">
-      <DefaultResolution>TcoInspectors, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoInspectors, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoInspectors</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoIo">
-      <DefaultResolution>TcoIo, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoIo, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoIo</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoMitsubishiRobotics">
-      <DefaultResolution>TcoMitsubishiRobotics, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoMitsubishiRobotics, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoMitsubishiRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoPneumatics">
-      <DefaultResolution>TcoPneumatics, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoPneumatics, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoRexrothPress">
-      <DefaultResolution>TcoRexrothPress, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoRexrothPress, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoRexrothPress</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcoTixonFeeding">
+      <DefaultResolution>TcoTixonFeeding, 0.11.0.59 (Vortex.Library)</DefaultResolution>
+      <Namespace>TcoTixonFeeding</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="TcoUrRobotics">
-      <DefaultResolution>TcoUrRobotics, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoUrRobotics, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoUrRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoUtilities">
-      <DefaultResolution>TcoUtilities, 0.11.0.52 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoUtilities, 0.11.0.59 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoUtilities</Namespace>
     </PlaceholderReference>
   </ItemGroup>
@@ -311,46 +494,49 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="TcoAbbRobotics">
-      <Resolution>TcoAbbRobotics, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoAbbRobotics, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoAbstractions">
-      <Resolution>TcoAbstractions, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoAbstractions, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoAimTtiPowerSupply">
-      <Resolution>TcoAimTtiPowerSupply, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoAimTtiPowerSupply, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoCore">
-      <Resolution>TcoCore, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoCore, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoData">
-      <Resolution>TcoData, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoData, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoDrivesBeckhoff">
-      <Resolution>TcoDrivesBeckhoff, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoDrivesBeckhoff, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoElements">
-      <Resolution>TcoElements, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoElements, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoInspectors">
-      <Resolution>TcoInspectors, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoInspectors, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoIo">
-      <Resolution>TcoIo, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoIo, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoMitsubishiRobotics">
-      <Resolution>TcoMitsubishiRobotics, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoMitsubishiRobotics, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
-      <Resolution>TcoPneumatics, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoPneumatics, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoRexrothPress">
-      <Resolution>TcoRexrothPress, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoRexrothPress, 0.11.0.59 (Vortex.Library)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="TcoTixonFeeding">
+      <Resolution>TcoTixonFeeding, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoUrRobotics">
-      <Resolution>TcoUrRobotics, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoUrRobotics, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoUtilities">
-      <Resolution>TcoUtilities, 0.11.0.52 (Vortex.Library)</Resolution>
+      <Resolution>TcoUtilities, 0.11.0.59 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>

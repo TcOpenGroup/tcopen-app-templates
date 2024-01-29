@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoKeyMode_Status" Id="{5e0c957e-ef4f-47ec-b418-83717285b373}">
+    <Declaration><![CDATA[TYPE TcoKeyMode_Status :
+STRUCT
+	ActionDescription : STRING(100);	
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

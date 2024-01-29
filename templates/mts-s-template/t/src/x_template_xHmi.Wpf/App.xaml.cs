@@ -154,6 +154,7 @@ namespace x_template_xHmi.Wpf
             // initialize custom remote tasks here
             Action assignTagValeAction = () => TagsPairingOperation(x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask);
             x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask.InitializeExclusively(assignTagValeAction);
+            x_template_xPlc.MAIN._technology._cu00x._components.PickAndPlace.SearchComponentsDepth = 3;
 
 
 

@@ -90,10 +90,12 @@ END_IF;
 
 
 IF _cycleTimeAnalitics.Average = T#0S THEN
-	_cycleTimeAnalitics.Average:=_LastCycleTime;
+	_cycleTimeAnalitics.Average:=_SequenceElapsedTime;
 END_IF
 _cycleTimeAnalitics.Average:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.Average)+_LastCycleTime)/_cycleTimeAnalitics.FilterConstant;
-]]></ST>
+
+_startCleanCycleTime:=T#0S;
+_stopCleanCycleTime:=T#0S;]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteStep" Id="{16b3254b-2a28-0fb6-2f25-afa0bf333f87}">
@@ -174,7 +176,8 @@ METHOD PROTECTED  Main : BOOL
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[_startCleanCycleTime:=T#0S;
+_stopCleanCycleTime:=T#0S;]]></ST>
       </Implementation>
     </Method>
     <Method Name="pr_Close" Id="{f8eb2d85-b3ce-4599-b36f-51273583184e}">
@@ -363,7 +366,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_startCleanCycleTime:=_SequenceElapsedTime;
+        <ST><![CDATA[_stopCleanCycleTime:=t#0s;
+_startCleanCycleTime:=_SequenceElapsedTime;
 ]]></ST>
       </Implementation>
     </Method>
@@ -466,8 +470,8 @@ IF _cycleTimeAnalitics.FilterConstant = 0 THEN;
 END_IF;
 
 
-IF _cycleTimeAnalitics.Average = T#0S THEN
-	_cycleTimeAnalitics.Average:=_LastCycleTime;
+IF _cycleTimeAnalitics.AverageCleanCycle = T#0S THEN
+	_cycleTimeAnalitics.AverageCleanCycle:=_stopCleanCycleTime;
 END_IF
 _cycleTimeAnalitics.AverageCleanCycle:= (((_cycleTimeAnalitics.FilterConstant-1)*_cycleTimeAnalitics.AverageCleanCycle)+cleanCycleTime)/_cycleTimeAnalitics.FilterConstant;
 ]]></ST>
