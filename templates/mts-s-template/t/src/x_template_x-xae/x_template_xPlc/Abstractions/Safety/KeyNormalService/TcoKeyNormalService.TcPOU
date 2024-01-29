@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoKeyNormalService" Id="{fd8dbc27-6e45-4e78-8f75-e78a5510e99d}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoKeyNormalService EXTENDS TcoElements.TcoDi IMPLEMENTS ITcoKeyNormalSevice
+
+VAR
+
+	
+	{attribute addProperty Name "<#Key state#> - <#Service#>"}
+	_isKeyInService           : BOOL; 
+
+	{attribute addProperty Name "<#Key state#> - <#Normal#>"}
+	_isKeyInNormal            : BOOL; 
+END_VAR
+
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^(inoSignal:= inoSignal);
+
+
+THIS^._isKeyInNormal :=NOT THIS^._signal ;
+THIS^._isKeyInService := NOT THIS^._isKeyInNormal;]]></ST>
+    </Implementation>
+    <Property Name="KeyInNormal" Id="{ec1426ec-5fce-4c25-9228-d7d73b4c1d65}">
+      <Declaration><![CDATA[PROPERTY KeyInNormal : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0831bc1d-0f68-4b95-897a-ba02076606ba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[KeyInNormal := _isKeyInNormal;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="KeyInService" Id="{72861a8c-56b8-485f-aadb-9e3f4447a674}">
+      <Declaration><![CDATA[PROPERTY KeyInService : BOOL]]></Declaration>
+      <Get Name="Get" Id="{07f6d57f-059a-45ef-bef2-3202005cb8fc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[KeyInService := _isKeyInService;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -30,9 +30,7 @@
                 <Button HorizontalAlignment="Center" Command="{Binding ShowTopologyCommand}" Content="{x:Static p:strings.ShowTopology}"></Button>
    
             </TabItem>
-            <TabItem Header="{x:Static p:strings.Console}">
-                <wpf:SystemMonitor/>
-            </TabItem>
+          
         </TabControl>
     </Grid>
 </UserControl>

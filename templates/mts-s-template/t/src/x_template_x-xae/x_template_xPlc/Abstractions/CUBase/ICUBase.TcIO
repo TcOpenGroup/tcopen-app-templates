@@ -15,9 +15,34 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Property Name="ManualTask" Id="{6e15e50f-dda1-4907-be2f-c73e3cd6490d}">
+      <Declaration><![CDATA[PROPERTY  ManualTask : REFERENCE TO TcoTaskedService]]></Declaration>
+      <Get Name="Get" Id="{f81b0626-30b3-422b-9427-2ad91ea8af77}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Property Name="ProcessDataManager" Id="{a36eb78f-c57b-4cc6-9daa-ad73e6b1ba37}">
       <Declaration><![CDATA[PROPERTY ProcessDataManager : REFERENCE TO ProcessDataManager]]></Declaration>
       <Get Name="Get" Id="{7ae5dbe0-0c01-41d7-9272-ab0df9e64885}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="RecoverTask" Id="{a48486fc-e04e-4a3a-afe9-dac7be323180}">
+      <Declaration><![CDATA[PROPERTY RecoverTask : REFERENCE TO CUBaseRecover]]></Declaration>
+      <Get Name="Get" Id="{139017a5-85b3-49ae-84ee-9e0279b4115e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="StatusInfo" Id="{b09b9df2-c404-481a-a7e9-d29d2da485e5}">
+      <Declaration><![CDATA[PROPERTY StatusInfo :REFERENCE TO CuBaseStatusInfo
+]]></Declaration>
+      <Get Name="Get" Id="{f62307e7-aa53-48d1-873d-f1673377d789}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="SuspendTask" Id="{ad325ad3-fda1-411e-9a82-d90094ec4882}">
+      <Declaration><![CDATA[PROPERTY SuspendTask : REFERENCE TO CUBaseSuspend]]></Declaration>
+      <Get Name="Get" Id="{0f5f179b-9794-4945-8881-f0fe00096457}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>

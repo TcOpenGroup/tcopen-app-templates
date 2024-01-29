@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoKeyMode" Id="{2b49ab04-04e7-41a1-8dcf-5c197e466512}">
+    <Declaration><![CDATA[INTERFACE ITcoKeyMode
+]]></Declaration>
+    <Property Name="KeyInAuto" Id="{fa94d403-8925-424a-8063-e48566c23b37}">
+      <Declaration><![CDATA[PROPERTY KeyInAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{788e2838-1d2b-4f56-9330-21ba66c8e7c5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="KeyInManual" Id="{38cbc47b-948a-4b37-8a4c-a14c7eda2e32}">
+      <Declaration><![CDATA[PROPERTY KeyInManual : BOOL]]></Declaration>
+      <Get Name="Get" Id="{93b02fa6-7dcb-4cb5-abb6-25f6d572dde9}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="KeyInStep" Id="{39dcaa54-a72c-490b-b20f-8d061ddf3d6b}">
+      <Declaration><![CDATA[PROPERTY KeyInStep : BOOL]]></Declaration>
+      <Get Name="Get" Id="{26792d85-6f80-473b-a5c7-7e8a5da8208d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

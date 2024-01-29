@@ -376,4 +376,8 @@ HLAVNÍ SEKVENCE!</value>
   <data name="ShutdownApplicationMessageBoxCaption" xml:space="preserve">
     <value>Vypnút aplikaci</value>
   </data>
+  <data name="Technology" xml:space="preserve">
+    <value>Technológie</value>
+  </data>
+
 </root>

@@ -378,10 +378,10 @@ END_IF
       </Implementation>
     </Method>
     <Property Name="StationBase" Id="{eaca3fe7-35ad-0454-21e6-545016e503be}">
-      <Declaration><![CDATA[PROPERTY StationBase : REFERENCE TO CU00x]]></Declaration>
+      <Declaration><![CDATA[PROPERTY StationBase : REFERENCE TO CuBase]]></Declaration>
       <Get Name="Get" Id="{ade5c0ee-01dd-065a-2c38-d3659e28429b}">
         <Declaration><![CDATA[VAR
-    _station : POINTER TO CU00x;
+    _station : POINTER TO CUBase;
 END_VAR
 ]]></Declaration>
         <Implementation>

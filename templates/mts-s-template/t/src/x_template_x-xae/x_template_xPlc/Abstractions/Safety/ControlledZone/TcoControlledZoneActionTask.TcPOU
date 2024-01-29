@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoControlledZoneActionTask" Id="{0e79de8f-e9bb-4ce4-9120-d7baa2ae0b98}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC  TcoControlledZoneActionTask EXTENDS TcoCore.TcoTask 
+VAR_IN_OUT
+	inoStatus:TcoControlledZone_Status;
+END_VAR
+VAR
+    _progress : INT := 0;
+    {attribute 'hide'} 
+	_infoTimer :  TON;
+    {attribute 'hide'} 
+	_errorTimer :  TON;
+    {attribute 'hide'} 
+	_varInfo : __SYSTEM.VAR_INFO;
+    {attribute 'hide'} 
+	_sb : TcoCore.StringBuilder;
+
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="OnDone" Id="{126497d0-7038-46a0-aa9c-a6c7976d8510}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Executes when task reaches the ```Done``` state .
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED OnDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Progress" Id="{f6d93d3a-f839-4e7f-a1db-bd1472960ba1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Progress : REFERENCE TO INT
+]]></Declaration>
+      <Get Name="Get" Id="{c6725b09-378d-40c9-b9c4-21317218df2a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Progress ref= _progress;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{e11cb92b-39aa-495c-86b3-df25edeed220}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.
+			<para>
+				See also <see cref="PlcDocu.TcoCore.TcoTask.AutoRestorable()"/>
+			</para>
+		</summary>			
+	</docu>	
+~*)
+METHOD Restore : TcoCore.ITcoRestorable]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.Restore();
+_progress := 0;
+Messenger.UnPin();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
