@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="WrappedComponentExample" Id="{bb4def30-cbc6-46bb-9bcc-fe384c9d62a8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK WrappedComponentExample EXTENDS TcoCore.TcoComponent
+
+
+VAR_OUTPUT
+END_VAR
+VAR
+	_config:WrappedComponentExample_Config;
+	_status:WrappedComponentExample_Status;
+	_control:WrappedComponentExample_Control;
+    _components:WrappedComponentsExample:= (Parent := THIS^);
+	_throwTask:TcoCore.TcoTask(THIS^);
+	_restoreTask:TcoCore.TcoTask(THIS^);
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_throwTask();
+_restoreTask.Enabled:=true;
+_restoreTask();
+]]></ST>
+    </Implementation>
+    <Property Name="Components" Id="{bda82270-6e27-4cda-be57-6208b70f70ff}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO WrappedComponentsExample
+]]></Declaration>
+      <Get Name="Get" Id="{4373dc8d-89bd-4ec1-ae7b-02b4f8528f42}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components ref=_components;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{a8f20a69-5727-4e62-b0f2-8a099ded8a50}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{ed721f5f-f140-42d8-a720-a5e55b05821e}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

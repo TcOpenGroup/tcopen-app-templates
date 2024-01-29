@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="ITcoControlButtons" Id="{f15ac3b2-96c5-43d1-a2d1-94da85e49ec4}">
+    <Declaration><![CDATA[INTERFACE ITcoControlButtons
+]]></Declaration>
+    <Property Name="ButtonAuto" Id="{a408a38e-74be-47f0-a38c-eb5bdd69aeef}">
+      <Declaration><![CDATA[PROPERTY ButtonAuto : BOOL]]></Declaration>
+      <Get Name="Get" Id="{98f2fd4e-eb87-47ef-b204-d0a4ae24ed1d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5c8c2cf4-4fdf-459a-a68e-ca3cf3fa3240}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="ButtonGround" Id="{a1023e80-9e96-4ea5-8bce-aa07cb5d5834}">
+      <Declaration><![CDATA[PROPERTY ButtonGround : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9e1d3240-948d-4715-97b3-b34759a71c91}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{4f0805f3-a532-401a-94d8-a07c75420f2b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="ButtonRecover" Id="{c2232935-4877-4680-9b27-1fc2b7a90cfb}">
+      <Declaration><![CDATA[PROPERTY ButtonRecover : BOOL]]></Declaration>
+      <Get Name="Get" Id="{3fe70730-32bd-417e-976b-98a50190016a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{c2898298-62fa-4627-9a9e-2cfa48f662f2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="ButtonSuspend" Id="{10c336b5-fb90-4d90-9983-cc27ae93052a}">
+      <Declaration><![CDATA[PROPERTY ButtonSuspend : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0561f99c-88e3-4f44-b18e-96bde55a8df2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{72331f34-121b-4790-8988-aa81f506c488}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

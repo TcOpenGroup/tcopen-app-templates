@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.2.0.0">
+  <DUT Name="EK1200_319FD71D" Id="{7269f4dc-c048-4ad3-9fbe-473ce2f349d2}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EK1200-1388-0000'}
+{attribute addProperty BoxType "EK1200-1388-0000"}
+{attribute addProperty Id "EC_EK1122EK1122_1FC0878B2PN_EL6631EL6631_A0EC075C2IA1_EL1809EL1809_32157CFD20QA1_EL2809EL2809_2B6483BD19Term_6_EL4004EL4004_E203F87511Term_7_EL7342EL7342_CEEFFCBE78Term_8_EL4004EL4004_E203F87511Term_9_EL6001EL6001_0DE01E7E61Term_13_EL9011EL9011_D65D3D320"}
+{attribute addProperty CRC "832558877"}
+{attribute addProperty Size "204"}
+{attribute addProperty Name " (EK1200)"}
+TYPE EK1200_319FD71D EXTENDS EK1200_013D0B49 :
+STRUCT
+	{attribute addProperty Name "EC (EK1122)"}
+	{attribute addProperty PreviousPort " (EK1200) : B"}
+	{attribute addProperty SyncUnit "default"}
+	EC_EK1122 : EK1122_1FC0878B;
+	{attribute addProperty Name "PN (EL6631)"}
+	{attribute addProperty PreviousPort "EC (EK1122) : C"}
+	{attribute addProperty SyncUnit "default"}
+	PN_EL6631 : EL6631_A0EC075C;
+	{attribute addProperty Name "IA1 (EL1809)"}
+	{attribute addProperty PreviousPort "PN (EL6631) : B"}
+	{attribute addProperty SyncUnit "default"}
+	IA1_EL1809 : EL1809_32157CFD;
+	{attribute addProperty Name "QA1 (EL2809)"}
+	{attribute addProperty PreviousPort "IA1 (EL1809) : B"}
+	{attribute addProperty SyncUnit "default"}
+	QA1_EL2809 : EL2809_2B6483BD;
+	{attribute addProperty Name "Term 6 (EL4004)"}
+	{attribute addProperty PreviousPort "QA1 (EL2809) : B"}
+	{attribute addProperty SyncUnit "default"}
+	Term_6_EL4004 : EL4004_E203F875;
+	{attribute addProperty Name "Term 7 (EL7342)"}
+	{attribute addProperty PreviousPort "Term 6 (EL4004) : B"}
+	{attribute addProperty SyncUnit "default"}
+	Term_7_EL7342 : EL7342_CEEFFCBE;
+	{attribute addProperty Name "Term 8 (EL4004)"}
+	{attribute addProperty PreviousPort "Term 7 (EL7342) : B"}
+	{attribute addProperty SyncUnit "default"}
+	Term_8_EL4004 : EL4004_E203F875;
+	{attribute addProperty Name "Term 9 (EL6001)"}
+	{attribute addProperty PreviousPort "Term 8 (EL4004) : B"}
+	{attribute addProperty SyncUnit "default"}
+	Term_9_EL6001 : EL6001_0DE01E7E;
+	{attribute addProperty Name "Term 13 (EL9011)"}
+	{attribute addProperty PreviousPort "Term 9 (EL6001) : B"}
+	{attribute addProperty SyncUnit "default"}
+	Term_13_EL9011 : EL9011_D65D3D32;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

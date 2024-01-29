@@ -755,6 +755,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Technology.
+        /// </summary>
+        public static string Technology {
+            get {
+                return ResourceManager.GetString("Technology", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TECHNOLOGY.
         /// </summary>
         public static string TechnologyUnit {

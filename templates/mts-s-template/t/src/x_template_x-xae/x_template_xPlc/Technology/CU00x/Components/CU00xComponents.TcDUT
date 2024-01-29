@@ -2,16 +2,19 @@
 <TcPlcObject Version="1.1.0.1">
   <DUT Name="CU00xComponents" Id="{4e1b0472-1d17-48ba-b026-d0be267cd4f2}">
     <Declaration><![CDATA[{attribute wpf [Container(Layout.Tabs)]}
+
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
 				
 		{attribute wpf [Container(Layout.Stack)]}
+		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Supplu TTI QL"}
      	Supply : TcoAimTtiPowerSupply.TcoQl355P_v_1_x_x (THISSTRUCT);
 		{attribute wpf [Container(Layout.Stack)]}
 		PairTagTask: PairTagTask(THISSTRUCT);
 		{attribute wpf [Container(Layout.Stack,"DRIVES AND MANIPULATORS")]}	
+		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "MultiAxis"}
      	MultiAxis : TcoDrivesBeckhoff.TcoMultiAxis (THISSTRUCT);
 		{attribute addProperty Name "Single Axis"}
@@ -22,6 +25,7 @@ TYPE
 
 	
 		{attribute wpf [Container(Layout.Stack,"ROBOTICS")]}	
+		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Abb IRC 5"}
      	AbbIrc5 : TcoAbbRobotics.TcoIrc5_v_1_x_x (THISSTRUCT);
 		{attribute addProperty Name "Abb Omnicore"}
@@ -34,12 +38,33 @@ TYPE
 		{attribute addProperty Name "Ur E series"}
      	UrEseries: TcoUrRobotics.TcoUrEseries_v_5_x_x (THISSTRUCT);
 		
+		{attribute wpf [Container(Layout.Stack,"TIXONS")]}	
+		{attribute wpf [Group(Layout.Scroll)]}
+		{attribute addProperty Name "Tixon Vibro"}
+     	TixonVibro : TcoTixonFeeding.TcoTixonVibro_v_1_x_x (THISSTRUCT);
+		{attribute addProperty Name "Tixon Step"}
+     	TixonStep : TcoTixonFeeding.TcoTixonStep_v_1_x_x(THISSTRUCT);
+		
+		{attribute addProperty Name "Tixon Pick Vibro"}
+     	TixonPickVibro : TcoTixonFeeding.TcoTixonPickVibro_v_1_x_x (THISSTRUCT);
+		{attribute addProperty Name "Tixon Pick Step"}
+     	TixonPickStep : TcoTixonFeeding.TcoTixonPickStep_v_1_x_x(THISSTRUCT);
+				
+
+		
+		{attribute wpf [Container(Layout.Stack,"Wrapped component example")]}	
+		{attribute wpf [Group(Layout.Scroll)]}
+		PickAndPlace:WrappedComponentExample(THISSTRUCT);
+		
+		PickAndPlaceCompoennts:WrappedComponentsExample:= (Parent := THISSTRUCT);  
 
 		{attribute addProperty Name "GROUP 1"}
 		Group1 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT);  
 		{attribute addProperty Name "GROUP 2"}
 		Group2 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT); 
  
+		
+		
 		
     END_STRUCT
 END_TYPE

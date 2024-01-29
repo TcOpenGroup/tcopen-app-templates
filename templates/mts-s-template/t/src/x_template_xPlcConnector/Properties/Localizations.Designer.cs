@@ -171,6 +171,132 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Air pressure is not sufficient!.
+        /// </summary>
+        public static string ___Air_pressure_is_not_sufficient___ {
+            get {
+                return ResourceManager.GetString("___Air_pressure_is_not_sufficient___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string ___All__ {
+            get {
+                return ResourceManager.GetString("___All__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All keys in automatic.
+        /// </summary>
+        public static string ___All_keys_in_automatic__ {
+            get {
+                return ResourceManager.GetString("___All_keys_in_automatic__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All keys in normal.
+        /// </summary>
+        public static string ___All_keys_in_normal__ {
+            get {
+                return ResourceManager.GetString("___All_keys_in_normal__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any button.
+        /// </summary>
+        public static string ___Any_button__ {
+            get {
+                return ResourceManager.GetString("___Any_button__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any key in manual.
+        /// </summary>
+        public static string ___Any_key_in_manual__ {
+            get {
+                return ResourceManager.GetString("___Any_key_in_manual__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any key in service.
+        /// </summary>
+        public static string ___Any_key_in_service__ {
+            get {
+                return ResourceManager.GetString("___Any_key_in_service__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any key in step.
+        /// </summary>
+        public static string ___Any_key_in_step__ {
+            get {
+                return ResourceManager.GetString("___Any_key_in_step__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any present.
+        /// </summary>
+        public static string ___Any_present__ {
+            get {
+                return ResourceManager.GetString("___Any_present__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any station in automatic mode.
+        /// </summary>
+        public static string ___Any_station_in_automatic_mode__ {
+            get {
+                return ResourceManager.GetString("___Any_station_in_automatic_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any station in manual mode.
+        /// </summary>
+        public static string ___Any_station_in_manual_mode__ {
+            get {
+                return ResourceManager.GetString("___Any_station_in_manual_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any station in step mode.
+        /// </summary>
+        public static string ___Any_station_in_step_mode__ {
+            get {
+                return ResourceManager.GetString("___Any_station_in_step_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any station is grounding.
+        /// </summary>
+        public static string ___Any_station_is_grounding__ {
+            get {
+                return ResourceManager.GetString("___Any_station_is_grounding__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any station is holded.
+        /// </summary>
+        public static string ___Any_station_is_holded__ {
+            get {
+                return ResourceManager.GetString("___Any_station_is_holded__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assigned Value.
         /// </summary>
         public static string ___Assigned_Value__ {
@@ -189,6 +315,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string ___Auto__ {
+            get {
+                return ResourceManager.GetString("___Auto__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTOMAT.
         /// </summary>
         public static string ___AUTOMAT__ {
@@ -203,6 +338,60 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___AUTOMAT_ALL__ {
             get {
                 return ResourceManager.GetString("___AUTOMAT_ALL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automat mode has been done..
+        /// </summary>
+        public static string ___Automat_mode_has_been_done___ {
+            get {
+                return ResourceManager.GetString("___Automat_mode_has_been_done___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automat mode has been invoked..
+        /// </summary>
+        public static string ___Automat_mode_has_been_invoked___ {
+            get {
+                return ResourceManager.GetString("___Automat_mode_has_been_invoked___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automat task.
+        /// </summary>
+        public static string ___Automat_task__ {
+            get {
+                return ResourceManager.GetString("___Automat_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string ___Automatic__ {
+            get {
+                return ResourceManager.GetString("___Automatic__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic mode is not possibe to set(All keys must be in NORMAL and AUTO!).
+        /// </summary>
+        public static string ___Automatic_mode_is_not_possibe_to_set_All_keys_must_be_in_NORMAL_and_AUTO____ {
+            get {
+                return ResourceManager.GetString("___Automatic_mode_is_not_possibe_to_set_All_keys_must_be_in_NORMAL_and_AUTO____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic mode is set(Step mode is disabled)!.
+        /// </summary>
+        public static string ___Automatic_mode_is_set_Step_mode_is_disabled____ {
+            get {
+                return ResourceManager.GetString("___Automatic_mode_is_set_Step_mode_is_disabled____", resourceCulture);
             }
         }
         
@@ -234,11 +423,92 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic door.
+        /// </summary>
+        public static string ___Basic_door__ {
+            get {
+                return ResourceManager.GetString("___Basic_door__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Brings the device into basic position..
         /// </summary>
         public static string ___Brings_the_device_into_basic_position___ {
             get {
                 return ResourceManager.GetString("___Brings_the_device_into_basic_position___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonAuto .
+        /// </summary>
+        public static string ___ButtonAuto___ {
+            get {
+                return ResourceManager.GetString("___ButtonAuto___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonAutoLight.
+        /// </summary>
+        public static string ___ButtonAutoLight__ {
+            get {
+                return ResourceManager.GetString("___ButtonAutoLight__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonGround .
+        /// </summary>
+        public static string ___ButtonGround___ {
+            get {
+                return ResourceManager.GetString("___ButtonGround___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonGroundLight.
+        /// </summary>
+        public static string ___ButtonGroundLight__ {
+            get {
+                return ResourceManager.GetString("___ButtonGroundLight__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonRecover.
+        /// </summary>
+        public static string ___ButtonRecover__ {
+            get {
+                return ResourceManager.GetString("___ButtonRecover__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonStartLight.
+        /// </summary>
+        public static string ___ButtonStartLight__ {
+            get {
+                return ResourceManager.GetString("___ButtonStartLight__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonStopLight.
+        /// </summary>
+        public static string ___ButtonStopLight__ {
+            get {
+                return ResourceManager.GetString("___ButtonStopLight__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ButtonSuspend.
+        /// </summary>
+        public static string ___ButtonSuspend__ {
+            get {
+                return ResourceManager.GetString("___ButtonSuspend__", resourceCulture);
             }
         }
         
@@ -252,11 +522,75 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check general condition to recover zone (ControlVoltage, EStops, Presure...)!.
+        /// </summary>
+        public static string ___Check_general_condition_to_recover_zone__ControlVoltage__EStops__Presure_______ {
+            get {
+                return ResourceManager.GetString("___Check_general_condition_to_recover_zone__ControlVoltage__EStops__Presure______" +
+                        "_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check general condition to suspned zone (ControlVoltage,EStops,Presure...)!.
+        /// </summary>
+        public static string ___Check_general_condition_to_suspned_zone__ControlVoltage_EStops_Presure_______ {
+            get {
+                return ResourceManager.GetString("___Check_general_condition_to_suspned_zone__ControlVoltage_EStops_Presure_______", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clean loop time.
         /// </summary>
         public static string ___Clean_loop_time__ {
             get {
                 return ResourceManager.GetString("___Clean_loop_time__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear step mode.
+        /// </summary>
+        public static string ___Clear_step_mode__ {
+            get {
+                return ResourceManager.GetString("___Clear_step_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closed.
+        /// </summary>
+        public static string ___Closed__ {
+            get {
+                return ResourceManager.GetString("___Closed__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config.
+        /// </summary>
+        public static string ___Config__ {
+            get {
+                return ResourceManager.GetString("___Config__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control Buttons .
+        /// </summary>
+        public static string ___Control_Buttons___ {
+            get {
+                return ResourceManager.GetString("___Control_Buttons___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control panel.
+        /// </summary>
+        public static string ___Control_panel__ {
+            get {
+                return ResourceManager.GetString("___Control_panel__", resourceCulture);
             }
         }
         
@@ -297,6 +631,33 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cyclic mode is not allowed while any control key is in Service mode!.
+        /// </summary>
+        public static string ___Cyclic_mode_is_not_allowed_while_any_control_key_is_in_Service_mode___ {
+            get {
+                return ResourceManager.GetString("___Cyclic_mode_is_not_allowed_while_any_control_key_is_in_Service_mode___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deadman.
+        /// </summary>
+        public static string ___Deadman__ {
+            get {
+                return ResourceManager.GetString("___Deadman__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Door circuit .
+        /// </summary>
+        public static string ___Door_circuit___ {
+            get {
+                return ResourceManager.GetString("___Door_circuit___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doors closed.
         /// </summary>
         public static string ___Doors_closed__ {
@@ -320,6 +681,33 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Emergency_stop__ {
             get {
                 return ResourceManager.GetString("___Emergency_stop__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency Stop .
+        /// </summary>
+        public static string ___Emergency_Stop___ {
+            get {
+                return ResourceManager.GetString("___Emergency_Stop___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency stop active.
+        /// </summary>
+        public static string ___Emergency_stop_active__ {
+            get {
+                return ResourceManager.GetString("___Emergency_stop_active__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency stop active: Unlocking doors!.
+        /// </summary>
+        public static string ___Emergency_stop_active__Unlocking_doors___ {
+            get {
+                return ResourceManager.GetString("___Emergency_stop_active__Unlocking_doors___", resourceCulture);
             }
         }
         
@@ -360,11 +748,47 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force step mode..
+        /// </summary>
+        public static string ___Force_step_mode___ {
+            get {
+                return ResourceManager.GetString("___Force_step_mode___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Founded tag .
         /// </summary>
         public static string ___Founded_tag___ {
             get {
                 return ResourceManager.GetString("___Founded_tag___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global control voltage.
+        /// </summary>
+        public static string ___Global_control_voltage__ {
+            get {
+                return ResourceManager.GetString("___Global_control_voltage__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global control voltage interrupted: Unlocking doors!.
+        /// </summary>
+        public static string ___Global_control_voltage_interrupted__Unlocking_doors___ {
+            get {
+                return ResourceManager.GetString("___Global_control_voltage_interrupted__Unlocking_doors___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global votage.
+        /// </summary>
+        public static string ___Global_votage__ {
+            get {
+                return ResourceManager.GetString("___Global_votage__", resourceCulture);
             }
         }
         
@@ -387,11 +811,65 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ground task.
+        /// </summary>
+        public static string ___Ground_task__ {
+            get {
+                return ResourceManager.GetString("___Ground_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grounded.
+        /// </summary>
+        public static string ___Grounded__ {
+            get {
+                return ResourceManager.GetString("___Grounded__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grounding mode has been done..
+        /// </summary>
+        public static string ___Grounding_mode_has_been_done___ {
+            get {
+                return ResourceManager.GetString("___Grounding_mode_has_been_done___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grounding mode has been invoked..
+        /// </summary>
+        public static string ___Grounding_mode_has_been_invoked___ {
+            get {
+                return ResourceManager.GetString("___Grounding_mode_has_been_invoked___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string ___Group__ {
+            get {
+                return ResourceManager.GetString("___Group__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Heart beat.
         /// </summary>
         public static string ___Heart_beat__ {
             get {
                 return ResourceManager.GetString("___Heart_beat__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Holding process.
+        /// </summary>
+        public static string ___Holding_process__ {
+            get {
+                return ResourceManager.GetString("___Holding_process__", resourceCulture);
             }
         }
         
@@ -405,11 +883,137 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In automatic.
+        /// </summary>
+        public static string ___In_automatic__ {
+            get {
+                return ResourceManager.GetString("___In_automatic__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Inactive or Manual or Grounded.
+        /// </summary>
+        public static string ___In_Inactive_or_Manual_or_Grounded__ {
+            get {
+                return ResourceManager.GetString("___In_Inactive_or_Manual_or_Grounded__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In manual.
+        /// </summary>
+        public static string ___In_manual__ {
+            get {
+                return ResourceManager.GetString("___In_manual__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In step mode.
+        /// </summary>
+        public static string ___In_step_mode__ {
+            get {
+                return ResourceManager.GetString("___In_step_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoke restore sequences on each stations..
+        /// </summary>
+        public static string ___Invoke_restore_sequences_on_each_stations___ {
+            get {
+                return ResourceManager.GetString("___Invoke_restore_sequences_on_each_stations___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoke suspend sequences on each stations..
+        /// </summary>
+        public static string ___Invoke_suspend_sequences_on_each_stations___ {
+            get {
+                return ResourceManager.GetString("___Invoke_suspend_sequences_on_each_stations___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is grounding.
+        /// </summary>
+        public static string ___Is_grounding__ {
+            get {
+                return ResourceManager.GetString("___Is_grounding__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Auto task.
+        /// </summary>
+        public static string ___Key_Auto_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Auto_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Manual task.
+        /// </summary>
+        public static string ___Key_Manual_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Manual_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key service task.
+        /// </summary>
+        public static string ___Key_service_task__ {
+            get {
+                return ResourceManager.GetString("___Key_service_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key state.
+        /// </summary>
+        public static string ___Key_state__ {
+            get {
+                return ResourceManager.GetString("___Key_state__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Step task.
+        /// </summary>
+        public static string ___Key_Step_task__ {
+            get {
+                return ResourceManager.GetString("___Key_Step_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key UID.
         /// </summary>
         public static string ___Key_UID__ {
             get {
                 return ResourceManager.GetString("___Key_UID__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KeyState1.
+        /// </summary>
+        public static string ___KeyState1__ {
+            get {
+                return ResourceManager.GetString("___KeyState1__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KeyState2.
+        /// </summary>
+        public static string ___KeyState2__ {
+            get {
+                return ResourceManager.GetString("___KeyState2__", resourceCulture);
             }
         }
         
@@ -441,11 +1045,102 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Local control voltage.
+        /// </summary>
+        public static string ___Local_control_voltage__ {
+            get {
+                return ResourceManager.GetString("___Local_control_voltage__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local door voltage.
+        /// </summary>
+        public static string ___Local_door_voltage__ {
+            get {
+                return ResourceManager.GetString("___Local_door_voltage__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local Doors.
+        /// </summary>
+        public static string ___Local_Doors__ {
+            get {
+                return ResourceManager.GetString("___Local_Doors__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local voltage.
+        /// </summary>
+        public static string ___Local_voltage__ {
+            get {
+                return ResourceManager.GetString("___Local_voltage__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local voltage interrupted: Unlocking doors!.
+        /// </summary>
+        public static string ___Local_voltage_interrupted__Unlocking_doors___ {
+            get {
+                return ResourceManager.GetString("___Local_voltage_interrupted__Unlocking_doors___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lock.
+        /// </summary>
+        public static string ___Lock__ {
+            get {
+                return ResourceManager.GetString("___Lock__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string ___Locked__ {
+            get {
+                return ResourceManager.GetString("___Locked__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MANUAL.
         /// </summary>
         public static string ___MANUAL__ {
             get {
                 return ResourceManager.GetString("___MANUAL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is not possibe to set(At least one SERVICE and one MANUAL keys must be in position!).
+        /// </summary>
+        public static string ___Manual_mode_is_not_possibe_to_set_At_least_one_SERVICE_and_one_MANUAL_keys_must_be_in_position____ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_not_possibe_to_set_At_least_one_SERVICE_and_one_MANUAL_keys_mus" +
+                        "t_be_in_position____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is starting.
+        /// </summary>
+        public static string ___Manual_mode_is_starting__ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_starting__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual mode is starting due service key combination (Manual / Service).
+        /// </summary>
+        public static string ___Manual_mode_is_starting_due_service_key_combination__Manual___Service___ {
+            get {
+                return ResourceManager.GetString("___Manual_mode_is_starting_due_service_key_combination__Manual___Service___", resourceCulture);
             }
         }
         
@@ -473,6 +1168,43 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Max_allowed_number_of_same_recurring_failures__consecutive___ {
             get {
                 return ResourceManager.GetString("___Max_allowed_number_of_same_recurring_failures__consecutive___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing link to control panel components (Buttons, Mode Keys, Normal/Service)! No function is being executed!.
+        /// </summary>
+        public static string ___Missing_link_to_control_panel_components__Buttons__Mode_Keys__Normal_Service___No_function_is_being_executed___ {
+            get {
+                return ResourceManager.GetString("___Missing_link_to_control_panel_components__Buttons__Mode_Keys__Normal_Service__" +
+                        "_No_function_is_being_executed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing link to Controlled unit! No function is being executed!.
+        /// </summary>
+        public static string ___Missing_link_to_Controlled_unit__No_function_is_being_executed___ {
+            get {
+                return ResourceManager.GetString("___Missing_link_to_Controlled_unit__No_function_is_being_executed___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode key .
+        /// </summary>
+        public static string ___Mode_key___ {
+            get {
+                return ResourceManager.GetString("___Mode_key___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode keys are not in correct position..
+        /// </summary>
+        public static string ___Mode_keys_are_not_in_correct_position___ {
+            get {
+                return ResourceManager.GetString("___Mode_keys_are_not_in_correct_position___", resourceCulture);
             }
         }
         
@@ -518,6 +1250,33 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Nominal__ {
             get {
                 return ResourceManager.GetString("___Nominal__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string ___Normal__ {
+            get {
+                return ResourceManager.GetString("___Normal__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal/Service key .
+        /// </summary>
+        public static string ___Normal_Service_key___ {
+            get {
+                return ResourceManager.GetString("___Normal_Service_key___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opened.
+        /// </summary>
+        public static string ___Opened__ {
+            get {
+                return ResourceManager.GetString("___Opened__", resourceCulture);
             }
         }
         
@@ -603,6 +1362,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Presure OK .
+        /// </summary>
+        public static string ___Presure_OK___ {
+            get {
+                return ResourceManager.GetString("___Presure_OK___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process data.
         /// </summary>
         public static string ___Process_data__ {
@@ -684,6 +1452,60 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recover.
+        /// </summary>
+        public static string ___Recover__ {
+            get {
+                return ResourceManager.GetString("___Recover__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RECOVER ANY COMPONENTS.
+        /// </summary>
+        public static string ___RECOVER_ANY_COMPONENTS__ {
+            get {
+                return ResourceManager.GetString("___RECOVER_ANY_COMPONENTS__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RECOVER PROCESS.
+        /// </summary>
+        public static string ___RECOVER_PROCESS__ {
+            get {
+                return ResourceManager.GetString("___RECOVER_PROCESS__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover task.
+        /// </summary>
+        public static string ___Recover_task__ {
+            get {
+                return ResourceManager.GetString("___Recover_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover task has been done..
+        /// </summary>
+        public static string ___Recover_task_has_been_done___ {
+            get {
+                return ResourceManager.GetString("___Recover_task_has_been_done___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recovered.
+        /// </summary>
+        public static string ___Recovered__ {
+            get {
+                return ResourceManager.GetString("___Recovered__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string ___Reset__ {
@@ -729,6 +1551,42 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        public static string ___Service__ {
+            get {
+                return ResourceManager.GetString("___Service__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting step mode!.
+        /// </summary>
+        public static string ___Setting_step_mode___ {
+            get {
+                return ResourceManager.GetString("___Setting_step_mode___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup Cyclic or Step mode. It depends on key position.
+        /// </summary>
+        public static string ___Setup_Cyclic_or_Step_mode__It_depends_on_key_position__ {
+            get {
+                return ResourceManager.GetString("___Setup_Cyclic_or_Step_mode__It_depends_on_key_position__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard door.
+        /// </summary>
+        public static string ___Standard_door__ {
+            get {
+                return ResourceManager.GetString("___Standard_door__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start manual/Service mode.
         /// </summary>
         public static string ___Start_manual_Service_mode__ {
@@ -757,6 +1615,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starts suspend sequence of process(automatic,ground sequence). .
+        /// </summary>
+        public static string ___Starts_suspend_sequence_of_process_automatic_ground_sequence_____ {
+            get {
+                return ResourceManager.GetString("___Starts_suspend_sequence_of_process_automatic_ground_sequence_____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string ___Status__ {
@@ -775,6 +1642,42 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Step mode.
+        /// </summary>
+        public static string ___Step_mode__ {
+            get {
+                return ResourceManager.GetString("___Step_mode__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step mode is required because Service key position is set!.
+        /// </summary>
+        public static string ___Step_mode_is_required_because_Service_key_position_is_set___ {
+            get {
+                return ResourceManager.GetString("___Step_mode_is_required_because_Service_key_position_is_set___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step mode is required but mode key is not in required position!.
+        /// </summary>
+        public static string ___Step_mode_is_required_but_mode_key_is_not_in_required_position___ {
+            get {
+                return ResourceManager.GetString("___Step_mode_is_required_but_mode_key_is_not_in_required_position___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step mode is set or all are inactive!.
+        /// </summary>
+        public static string ___Step_mode_is_set_or_all_are_inactive___ {
+            get {
+                return ResourceManager.GetString("___Step_mode_is_set_or_all_are_inactive___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Step time.
         /// </summary>
         public static string ___Step_time__ {
@@ -784,11 +1687,74 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suspend.
+        /// </summary>
+        public static string ___Suspend__ {
+            get {
+                return ResourceManager.GetString("___Suspend__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUSPEND PROCESS.
+        /// </summary>
+        public static string ___SUSPEND_PROCESS__ {
+            get {
+                return ResourceManager.GetString("___SUSPEND_PROCESS__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspend task.
+        /// </summary>
+        public static string ___Suspend_task__ {
+            get {
+                return ResourceManager.GetString("___Suspend_task__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspend task has been done..
+        /// </summary>
+        public static string ___Suspend_task_has_been_done___ {
+            get {
+                return ResourceManager.GetString("___Suspend_task_has_been_done___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspended.
+        /// </summary>
+        public static string ___Suspended__ {
+            get {
+                return ResourceManager.GetString("___Suspended__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUSPENDING COMPONENTS.
+        /// </summary>
+        public static string ___SUSPENDING_COMPONENTS__ {
+            get {
+                return ResourceManager.GetString("___SUSPENDING_COMPONENTS__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag .
         /// </summary>
         public static string ___Tag___ {
             get {
                 return ResourceManager.GetString("___Tag___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technology Components.
+        /// </summary>
+        public static string ___Technology_Components__ {
+            get {
+                return ResourceManager.GetString("___Technology_Components__", resourceCulture);
             }
         }
         
@@ -820,6 +1786,69 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlocked.
+        /// </summary>
+        public static string ___Unlocked__ {
+            get {
+                return ResourceManager.GetString("___Unlocked__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage is Off!.
+        /// </summary>
+        public static string ___Voltage_is_Off___ {
+            get {
+                return ResourceManager.GetString("___Voltage_is_Off___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WAITING FOR START.
+        /// </summary>
+        public static string ___WAITING_FOR_START__ {
+            get {
+                return ResourceManager.GetString("___WAITING_FOR_START__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting to close and lock  all doors!.
+        /// </summary>
+        public static string ___Waiting_to_close_and_lock__all_doors___ {
+            get {
+                return ResourceManager.GetString("___Waiting_to_close_and_lock__all_doors___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting to release recover button.
+        /// </summary>
+        public static string ___Waiting_to_release_recover_button__ {
+            get {
+                return ResourceManager.GetString("___Waiting_to_release_recover_button__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting to release suspend button.
+        /// </summary>
+        public static string ___Waiting_to_release_suspend_button__ {
+            get {
+                return ResourceManager.GetString("___Waiting_to_release_suspend_button__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting to unlock  all doors!.
+        /// </summary>
+        public static string ___Waiting_to_unlock__all_doors___ {
+            get {
+                return ResourceManager.GetString("___Waiting_to_unlock__all_doors___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
         public static string ___Warning__ {
@@ -834,6 +1863,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Would_you_like_to_load_default_settings___ {
             get {
                 return ResourceManager.GetString("___Would_you_like_to_load_default_settings___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zone .
+        /// </summary>
+        public static string ___Zone___ {
+            get {
+                return ResourceManager.GetString("___Zone___", resourceCulture);
             }
         }
     }

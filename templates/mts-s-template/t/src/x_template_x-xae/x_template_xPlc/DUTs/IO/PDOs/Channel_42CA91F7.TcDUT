@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.2.0.0">
-  <DUT Name="Channel_42CA91F7" Id="{07f681a6-9f9e-48ce-b5a4-89aacff6fdf6}">
-    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EL2008-0000-0018'}
-{attribute addProperty BoxType "EL2008-0000-0018"}
+  <DUT Name="Channel_42CA91F7" Id="{43774f8b-d845-44ae-a270-c1f8e3744f38}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: EL2809-0000-0018'}
+{attribute addProperty BoxType "EL2809-0000-0018"}
 {attribute addProperty Id "OutputAT %Q*BOOL1"}
 {attribute addProperty CRC "1120571895"}
 {attribute addProperty Size "1"}

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoControlVoltage" Id="{6eae052e-6975-4886-b1fa-a2c2d83e4578}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+FUNCTION_BLOCK TcoControlVoltage EXTENDS TcoElements.TcoDi IMPLEMENTS  ITcoControlVoltage
+
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^(inoSignal:=inoSignal);
+IF NOT inoSignal THEN
+	Messenger.Error('<#Voltage is Off!#>');
+END_IF;]]></ST>
+    </Implementation>
+    <Property Name="IsOff" Id="{eab858d0-60f4-40dc-9363-46da2e0a7161}">
+      <Declaration><![CDATA[PROPERTY IsOff : BOOL]]></Declaration>
+      <Get Name="Get" Id="{50982d82-b0fa-4178-a9a5-70ba66579ad1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOff:=not this^._signal;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsOn" Id="{39a9f696-bc19-4831-b729-71e67e01fe3c}">
+      <Declaration><![CDATA[PROPERTY IsOn : BOOL]]></Declaration>
+      <Get Name="Get" Id="{d740a34f-d907-4a76-b38a-f97b3867714d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOn:=this^._signal;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

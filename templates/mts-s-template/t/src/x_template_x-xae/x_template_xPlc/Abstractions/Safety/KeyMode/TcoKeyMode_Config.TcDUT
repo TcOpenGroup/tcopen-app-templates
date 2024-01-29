@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoKeyMode_Config" Id="{e830eafc-2dd6-4e30-a3b3-05d8a78a12e0}">
+    <Declaration><![CDATA[TYPE
+    TcoKeyMode_Config :
+    STRUCT
+        SwitKeyStanilisiation : TIME := T#500mS;
+
+	
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

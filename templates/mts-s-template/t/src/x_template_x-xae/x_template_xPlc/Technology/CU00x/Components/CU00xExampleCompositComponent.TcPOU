@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CU00xExampleCompositComponent" Id="{d583945b-540e-4c57-bcdb-eea455c1874b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CU00xExampleCompositComponent EXTENDS TcoCore.TcoComponent
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

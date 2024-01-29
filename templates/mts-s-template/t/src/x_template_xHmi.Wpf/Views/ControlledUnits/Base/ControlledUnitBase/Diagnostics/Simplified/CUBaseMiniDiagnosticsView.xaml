@@ -26,6 +26,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid
+            MaxHeight="200"
             x:Name="dataGrid"
             Grid.Row="0"
             AutoGenerateColumns="False"

@@ -3,7 +3,7 @@
   <POU Name="CU00x" Id="{c8fb8f62-fa26-41d3-a5d2-3cc70d4e8555}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute addProperty ShortName "CU00x"}
 {attribute addProperty Name "Controlled unit x_tempalte_x"}
-FUNCTION_BLOCK CU00x EXTENDS CUBase
+FUNCTION_BLOCK CU00x EXTENDS CUBase 
 VAR
     _cuProcessDataDisplay       :  CU00xProcessData := (Parent := THIS^);
     _cuTechnologicalDataDisplay :  CU00xTechnologicalData := (Parent := THIS^);
@@ -17,6 +17,14 @@ VAR
     {attribute addProperty Name "<#AUTOMAT#>"}
     {attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
     _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
+	
+	 {attribute addProperty Name "<#SUSPEND PROCESS#>"}
+    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
+    _suspendTask : CU00xSuspendTask(THIS^, TcoCore.eRestoreMode.None);     
+	
+		{attribute addProperty Name "<#RECOVER PROCESS#>"}
+    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
+    _recoverTask : CU00xRecoverTask(THIS^, TcoCore.eRestoreMode.None);     
   	
 	{attribute addProperty Name "<#Test positions#>"}
 	_positions : Cu00xTestPositions(THIS^);
@@ -56,6 +64,15 @@ _productionPlaner();
 Automat();
 Ground();
 Manual();
+
+
+_suspendTask();
+_recoverTask();
+
+
+
+
+
 
 
 (*
@@ -114,17 +131,24 @@ END_VAR
 *)
 
 
-_automatTask.Task.Enabled := (_groundTask.GroundDone OR  _automatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
+//_automatTask.Task.Enabled := (_groundTask.GroundDone OR  _automatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
 
 (*
 	Invokes `groundTask` from technology object.
 *)
 
-IF(Technology.AutomatAllTask.Execute()) THEN _automatTask.Task.Invoke(); END_IF;
+//IF(Technology.AutomatAllTask.Execute()) THEN _automatTask.Task.Invoke(); END_IF;
 
-IF(Technology.ForceStepMode()) THEN
- 	_automatTask.ModeController.Mode := eSequencerMode.StepMode;
-END_IF 
+//IF(Technology.ForceStepMode()) THEN
+ //	_automatTask.ModeController.Mode := eSequencerMode.StepMode;
+//END_IF 
+
+
+
+(*
+	or use default behavior from abstraction
+*)
+	SUPER^.Automat();
 
 (*
 
@@ -179,16 +203,25 @@ END_VAR
 	]
 *)
 
-_groundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
+//_groundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
 
 (*
 	Invokes `groundTask` from technology object.
 *)
 
-IF(Technology.GroundAllTask.Execute()) THEN _groundTask.Task.Invoke(); END_IF;
+//IF(Technology.GroundAllTask.Execute()) THEN _groundTask.Task.Invoke(); END_IF;
 
 
-IF _groundTask.GroundDone AND _groundTask.Task.Execute() THEN _groundTask.Restore();_groundTask.Task.Invoke();END_IF;
+//IF _groundTask.GroundDone AND _groundTask.Task.Execute() THEN _groundTask.Restore();_groundTask.Task.Invoke();END_IF;
+
+
+(*
+	or use default behavior from abstraction
+*)
+	SUPER^.Ground();
+
+
+
 
 (*
 
@@ -232,29 +265,40 @@ METHOD Idle : BOOL
         <ST><![CDATA[
 Components.PairTagTask();
 
-components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
-							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
-							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
-							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
+//components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
+//							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
+//							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
+//							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
 Components.SingleAxis.Config.InfoTime:=T#4S;
 Components.SingleAxis.Config.ErrorTime:=T#10S;
 		
 	
-Components.SingleAxis(inEnable := ,
-    inEnablePositive := ,
-    inEnableNegative := ,
-    inCalibrationCam := ,
-    refAxis := GVL_iXlinker.Axis1,
-	inoPositions:= _positions);
+//Components.SingleAxis(inEnable := ,
+//    inEnablePositive := ,
+//    inEnableNegative := ,
+//    inCalibrationCam := ,
+//    refAxis := GVL_iXlinker.Axis1,
+//	inoPositions:= _positions);
 	
 	
+
+//Components.PickAndPlace();
+//Components.PickAndPlace.Service();
 		
-Components.MultiAxis(inEnableAxis1 := ,
-    inEnablePositiveAxis1 := ,
-    inEnableNegativeAxis1 := ,
-    inCalibrationCamAxis1 := ,
-    refAxis1 := GVL_iXlinker.Axis1,
-	inoPositions:= _positionsMulti);]]></ST>
+//Components.MultiAxis(inEnableAxis1 := ,
+//    inEnablePositiveAxis1 := ,
+//    inEnableNegativeAxis1 := ,
+//    inCalibrationCamAxis1 := ,
+//    refAxis1 := GVL_iXlinker.Axis1,
+//	inoPositions:= _positionsMulti);
+	
+			
+//Components.PickAndPlace.Components.Manipulator(inEnableAxis1 := ,
+//    inEnablePositiveAxis1 := ,
+//    inEnableNegativeAxis1 := ,
+//    inCalibrationCamAxis1 := ,
+//    refAxis1 := GVL_iXlinker.Axis1,
+//	inoPositions:= _positionsMulti);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Manual" Id="{f43c6193-c9c5-0244-248c-08c5ef114438}" FolderPath="Modes\">
@@ -279,8 +323,14 @@ END_VAR
 	]
 *)
 
-_manualTask.Task.Enabled := THIS^.Technology.AllowManual();
+	//_manualTask.Task.Enabled := THIS^.Technology.AllowManual();
 
+	
+(*
+	or use default behavior from abstraction
+*)
+	SUPER^.Manual();
+	
 
 (*
 
@@ -309,6 +359,39 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[ProductionPlanerTask REF= _productionPlaner;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RecoverTask" Id="{09a4e11e-8dff-4ff9-9a83-7a206a8f7bd4}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY RecoverTask : REFERENCE TO CUBaseRecover]]></Declaration>
+      <Get Name="Get" Id="{a6ec31f2-82f9-4a8c-b280-bd0ce9c9f6f5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RecoverTask REF= _recoverTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="StatusInfo" Id="{c1e64466-c2b7-4817-b7eb-dde6593385fb}">
+      <Declaration><![CDATA[PROPERTY StatusInfo : REFERENCE TO CUBaseStatusInfo]]></Declaration>
+      <Get Name="Get" Id="{85699701-4eff-42c1-b40d-a4f2d77266cb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusInfo ref= _statusInfo;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SuspendTask" Id="{74ffab41-6ae7-4647-bbd4-26e8306f6c9e}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY SuspendTask : REFERENCE TO CUBaseSuspend]]></Declaration>
+      <Get Name="Get" Id="{96504ee3-1c5b-4f92-960d-9d00d0414969}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SuspendTask REF= _suspendTask;]]></ST>
         </Implementation>
       </Get>
     </Property>
