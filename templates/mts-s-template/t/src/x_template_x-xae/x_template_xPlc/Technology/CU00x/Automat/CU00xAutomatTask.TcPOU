@@ -4,28 +4,32 @@
     <Declaration><![CDATA[FUNCTION_BLOCK CU00xAutomatTask EXTENDS CUBaseAutomat IMPLEMENTS ICUTask
 VAR
 
-	_missingProcessSettingMessage : TcoCore.TcoMessenger(THIS^);	
-	_paralellTask : CU00xAutomatParalell_1_Task(THIS^, TcoCore.eRestoreMode.None);
-	
-	_sb : TcoCore.StringBuilder;
+    _missingProcessSettingMessage : TcoCore.TcoMessenger(THIS^);
+    _paralellTask : CU00xAutomatParalell_1_Task(THIS^, TcoCore.eRestoreMode.None);
+
+    _sb : TcoCore.StringBuilder;
+
+    _customizedContentInput : CU00xDialogContent(THIS^);
 END_VAR
 
 VAR
-	_dataLoadProcessSettings : BOOL;
-	_dataLoadProcessSettingsByPlaner : BOOL;
-	_dataCreateNew : BOOL;
-	_dataOpen : BOOL;
-	_dataClose : BOOL;
-	_dataFinalize : BOOL;
-	_continueRestore : BOOL;
-	_loop : BOOL;	
-	_inspectionResult:BOOL;
-	_inspectionDimensionResult:REAL;
-	_tagsPairing:BOOL;
-	_reqKey: STRING;
-	_reqAssignedValue: STRING;
+    _dataLoadProcessSettings : BOOL;
+    _dataLoadProcessSettingsByPlaner : BOOL;
+    _dataCreateNew : BOOL;
+    _dataOpen : BOOL;
+    _dataClose : BOOL;
+    _dataFinalize : BOOL;
+    _continueRestore : BOOL;
+    _loop : BOOL;
+    _inspectionResult : BOOL;
+    _inspectionDimensionResult : REAL;
+    _tagsPairing : BOOL;
+    _reqKey : STRING;
+    _reqAssignedValue : STRING;
+    _inspectorSingleExamples : BOOL;
+    _inspectorGroupExamples : BOOL;
+	_dialogExamples : BOOL;
 
-	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -33,6 +37,7 @@ END_VAR
 ]]></ST>
     </Implementation>
     <Folder Name="DataOperations" Id="{d77a8e00-2872-034f-1865-d779c1d38e60}" />
+    <Folder Name="InpspectorExamples" Id="{eb4c6c4d-e976-42e1-9b54-2dc633a8c48e}" />
     <Folder Name="ProductionPlaner" Id="{691cdfd9-0331-4efc-8523-78110e4374bd}" />
     <Folder Name="TagsPairing" Id="{b51b23bb-1645-431d-b66e-3f544bdad45c}" />
     <Method Name="DataLoadProcessSettings" Id="{31612bac-ea85-0141-34e0-d7b2a3994f8e}" FolderPath="DataOperations\">
@@ -75,6 +80,7 @@ END_VAR]]></Declaration>
 		END_IF;	
 	ELSE
 		_ans:=_dialog.Show()
+			.WithImage('d:\MTS\Develop\TcOpenGroup\TcOpen\assets\logo\TcOpenWide.png',400,600)	
 	       .WithCaption('<#Process data not selected#>')
 		   .WithText('<#Would you like to load default settings?#>')
 		   .WithYesNoCancel().Answer;
@@ -149,6 +155,193 @@ END_VAR
 	END_IF		    				
     //-------------------------------------
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DialogExamples" Id="{d8d4f5ba-bd5f-4a6d-9786-138841a2b026}" FolderPath="InpspectorExamples\">
+      <Declaration><![CDATA[METHOD DialogExamples
+VAR_INPUT
+		inStepID : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, TRUE, 'DIALOG EXAMPLE ')) THEN
+//-------------------------------------
+		_dialog.Show()
+            .WithType(eDialogType.Question)
+            .WithYesNo()
+            .WithCaption('Hey')
+            .WithText('Do we go ahead ');
+
+        IF (_dialog.Answer = TcoCore.eDialogAnswer.Yes) THEN
+            CompleteStep();
+        END_IF;
+
+        IF (_dialog.Answer = TcoCore.eDialogAnswer.No) THEN
+            ;
+        END_IF;
+
+//-------------------------------------
+END_IF;
+
+IF (Step(inStepID+10, TRUE, 'DIALOG EXAMPLE WIT IMAGE')) THEN
+//-------------------------------------
+		_dialog.Show()
+            .WithType(eDialogType.Question)
+            .WithYesNo()
+			.WithImage('D:\MTS\Develop\TcOpenGroup\TcOpen\assets\logo\TcOpenLogo.png',400,600)
+            .WithCaption('Hey 1')
+            .WithText('Do we go ahead ?');
+
+        IF (_dialog.Answer = TcoCore.eDialogAnswer.Yes) THEN
+            CompleteStep();
+        END_IF;
+
+        IF (_dialog.Answer = TcoCore.eDialogAnswer.No) THEN
+            ;
+        END_IF;
+
+//-------------------------------------
+END_IF;
+
+
+IF (Step(inStepID+20, TRUE, 'DIALOG EXAMPLE WITH CLOSE FROM PLC')) THEN
+//-------------------------------------
+		_dialog.ShowWithExternalClose(inOkAnswerSignal:=FALSE , inYesAnswerSignal:= CurrentStep.Duration>T#2000MS, inNoAnswerSignal:= FALSE, inCancelAnswerSignal:= FALSE)
+		    .WithType(eDialogType.Info)
+            .WithYesNoCancel()
+            .WithCaption('Hey')
+            .WithText('Do you wana retry it? Yes answer will be set in 4 sec?');
+
+        IF (_dialog.Answer = TcoCore.eDialogAnswer.Yes) THEN
+            CompleteStep();
+        END_IF;
+
+      
+
+//-------------------------------------
+END_IF;
+
+IF (Step(inStepID+30, TRUE, 'CUSTOMIZED DIALOG EXAMPLE WITH CLOSE FROM PLC ')) THEN
+//-------------------------------------
+			 _dialogCustomized.ShowWithExternalClose(inOption1AnswerSignal:=FALSE,inOption2AnswerSignal:=FALSE, inOption3AnswerSignal:=CurrentStep.Duration>T#4000MS,inOption4AnswerSignal:=FALSE)
+            
+            .WithOption1('This is Option1=>retry')
+			  .WithOption2('This is Option2=>first step')
+			    .WithOption3('This is Option3 =>continue and finish in 4s')
+			.WithImage('D:\MTS\Develop\TcOpenGroup\TcOpen\assets\logo\TcOpenWide.png',500,500)
+            .WithCaption('Hey')
+            .WithText('What we are going to do.');
+            
+		
+           
+	
+			IF (_dialogCustomized.Answer = TcoCore.eCustomizedDialogAnswer.Option3) THEN
+				CompleteStep();
+			END_IF;
+
+//-------------------------------------
+END_IF;
+
+IF (Step(inStepID+40, TRUE, 'INPUT DIALOG EXAMPLE  REQURED FIELDS TO INPUT DATA')) THEN
+//-------------------------------------
+		_dialogWithInput.Show(refContent:=_customizedContentInput)
+            .WithType(eDialogType.Question)
+            .WithYesNo()
+            .WithCaption('Hey wana set data')
+            .WithText('Do you realy want to sent data to ....?');
+                
+		IF (_dialogWithInput.Answer = TcoCore.eInputDialogAnswer.Yes) THEN
+				CompleteStep();
+			//by yes or (ok) option data are confirmed and transfered to plc (_customizedContentInput)
+		ELSIF (_dialogWithInput.Answer = TcoCore.eInputDialogAnswer.No) THEN
+			// data in struct '_customizedContentInput' remains same as before
+ 		END_IF;
+		
+
+//-------------------------------------
+END_IF;
+IF (Step(inStepID+50, TRUE, 'INPUT DIALOG EXAMPLE WITH WEB CONTENT AND REQURED FIELDS TO INPUT DATA')) THEN
+//-------------------------------------
+		_dialogWithInput.Show(refContent:=_customizedContentInput)
+            .WithType(eDialogType.Question)
+            .WithOk()
+			.WithImage('https://github.com/TcOpenGroup',400,600)
+            .WithCaption('Hey wana set data')
+            .WithText('Do you realy want to sent data to ....?');
+			
+                
+		IF (_dialogWithInput.Answer = TcoCore.eInputDialogAnswer.OK) THEN
+			CompleteStep();
+			
+		END_IF;
+
+//-------------------------------------
+END_IF;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GroupedExample" Id="{9f5d9039-708d-426d-84e4-5d4b8edcb51d}" FolderPath="InpspectorExamples\">
+      <Declaration><![CDATA[METHOD GroupedExample
+VAR_INPUT
+		inStepID : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (Step(inStepID, TRUE, 'MULTI ANALOGUE INSPECTIONS PART 1 WITH WEB CONTENT')) THEN
+//-------------------------------------
+		Station.GroupInspection
+		.WithCoordinator(THIS^)
+		.Act();
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_1.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_2.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_3.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_4.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_5.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_6.WithCoordinator(THIS^).Inspect(1));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_7.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_8.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_9.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_10.WithCoordinator(THIS^).Inspect(0));	
+	
+		
+		Station.GroupInspection.UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)	
+		.Instruct('Something is wrong 1')
+		.InstructWithImage('https://github.com/TcOpenGroup/TcOpen/blob/dev/README.md',400,600)	
+		.OnFail()
+		.Dialog(inStepID+10);			
+//-------------------------------------
+END_IF;
+IF (Step(inStepID+10, TRUE, 'MULTI ANALOGUE INSPECTIONS PART 2 WITH INSTRUCTION AND DESCRIPTION')) THEN
+//-------------------------------------
+		Station.GroupInspection
+		.WithCoordinator(THIS^)
+		.Act();
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_11.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_12.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_13.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_14.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_15.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_16.WithCoordinator(THIS^).Inspect(1));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_17.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_18.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_19.WithCoordinator(THIS^).Inspect(0));	
+		Station.GroupInspection.Inspect(Station.ProcessDataManager.Data.CU00x.Dim_Inspector_20.WithCoordinator(THIS^).Inspect(0));	
+	
+		
+		Station.GroupInspection.UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)	
+		.WithDescription()
+		.Instruct('Something is wrong 2')
+		.OnFail()
+		.Dialog(inStepID+20);			
+//-------------------------------------
+END_IF;
+
+IF (Step(inStepID+20, TRUE, 'DONE')) THEN
+//-------------------------------------
+		CompleteStep();
+//-------------------------------------
+END_IF;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Main" Id="{65c64653-c354-4e9f-878f-19a4b135c641}">
@@ -229,7 +422,10 @@ END_IF;
 		Here we would place steps to perfom the operations of this controlled unit.
 
 *)
-IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
+
+
+
+IF (Step(900, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------    
 	Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.Data.FailureDescription:='BoltPresenceInspector error';
     Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
@@ -239,7 +435,7 @@ IF (Step(1000, TRUE, 'SINGLE INSPECTION')) THEN
     //-------------------------------------
 END_IF
 
-IF (Step(1100, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
+IF (Step(910, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
     //-------------------------------------    
 		Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.Data.FailureDescription:='BoltDimensionPresenceInspector error';
 
@@ -249,6 +445,23 @@ IF (Step(1100, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
         .OnFail().CarryOn();
     //-------------------------------------
 END_IF
+
+
+//dialog usage examples
+IF _dialogExamples THEN
+	DialogExamples(1000);
+END_IF;
+
+//single inspexction usage
+IF _inspectorSingleExamples THEN
+	SingleExample(1100);
+END_IF;
+
+// grouped usage of isnpectors
+IF _inspectorGroupExamples THEN
+	GroupedExample(1200);
+END_IF;
+
 
 IF (Step(2000, true, 'START PARALELL TASK')) THEN
     //-------------------------------------    
@@ -476,6 +689,49 @@ IF (Step(inStepID+10, _tagsPairing AND _addNewTag, '<#ADD NEW TAG  EXAMPLE#>')) 
 	END_IF		    				
     //-------------------------------------
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SingleExample" Id="{8dea1730-ac81-41c4-b704-9a0e4fd1c2fc}" FolderPath="InpspectorExamples\">
+      <Declaration><![CDATA[METHOD SingleExample : BOOL
+VAR_INPUT
+		inStepID : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF (Step(inStepID, TRUE, 'SINGLE INSPECTION')) THEN
+    //-------------------------------------    
+	Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.Data.FailureDescription:='BoltPresenceInspector error';
+    Station.ProcessDataManager.Data.CU00x.BoltPresenceInspector.WithCoordinator(THIS^)
+        .Inspect(_inspectionResult)
+        .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
+        .OnFail().Dialog(inStepID+10);
+    //-------------------------------------
+END_IF
+
+// with checking if specific inspector is overinspected
+IF (Step(inStepID+10, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
+//-------------------------------------
+	Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.Data.FailureDescription:='BoltDimensionPresenceInspector error';
+	Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.Data.NumberOfAllowedRetries:=100;
+	IF NOT Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.OverInspected THEN
+	
+		Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.WithCoordinator(THIS^)
+			.Inspect(_inspectionDimensionResult)
+			.WithDescription()
+			.UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
+			.OnFail().Retry(inStepID+20);
+	ELSE
+	 	RequestStep(RESTORE_STEP_ID);	
+	END_IF
+//-------------------------------------
+END_IF;
+
+IF (Step(inStepID+20, TRUE, 'DONE')) THEN
+//-------------------------------------
+		CompleteStep();
+//-------------------------------------
+END_IF;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Station" Id="{c497129d-26cb-43ef-a7d7-df3034f001ea}">

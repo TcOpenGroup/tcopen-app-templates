@@ -12,8 +12,8 @@ namespace x_template_xPlcConnector
     {
 
 
-    
-        private static  x_template_xPlcTwinController plc =  new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, true));
+
+        private static x_template_xPlcTwinController plc =  new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851,true));
         private static ApplicationSettings _settings;
 
 
@@ -63,6 +63,8 @@ namespace x_template_xPlcConnector
                     ? new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, Settings.ShowConsoleOutput))
                     : new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(Entry._settings.PlcAmsId, 851, Settings.ShowConsoleOutput));
         }
+
+      
     }
 
 }

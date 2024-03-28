@@ -1,0 +1,28 @@
+<UserControl
+    x:Class="x_template_xPlc.SampleArrayToRenderShadowDisplayView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
+    xmlns:plc="clr-namespace:x_template_xPlc"
+    xmlns:vortex="http://vortex.mts/xaml"
+    MaxWidth="500"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+
+    <Grid>
+     
+        <ItemsControl  HorizontalAlignment="Left" ItemsSource="{Binding Component.Data}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <vortex:RenderableContentControl MinWidth="150" DataContext="{Binding}" PresentationType="ShadowDisplay" Margin="5"></vortex:RenderableContentControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+
+</UserControl>

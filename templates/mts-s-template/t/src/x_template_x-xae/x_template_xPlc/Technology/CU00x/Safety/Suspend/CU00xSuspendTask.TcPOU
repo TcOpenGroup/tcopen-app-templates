@@ -52,7 +52,7 @@ IF (Step(1000, TRUE, '<#SUSPENDING COMPONENTS#>')) THEN
  	//-------------------------------------    
 	//StepCompleteWhen(Station.AutomatTask.CurrentStep.Status <> eStepStatus.Running);
 		
-    StepCompleteWhen( CurrentStep.Duration >= T#3000MS);
+  	StepCompleteWhen(CurrentStep.Duration >= T#3000MS);
     //-------------------------------------
 END_IF
 

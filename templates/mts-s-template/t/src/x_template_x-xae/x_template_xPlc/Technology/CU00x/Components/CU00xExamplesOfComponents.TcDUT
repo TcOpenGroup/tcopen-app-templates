@@ -40,6 +40,9 @@ STRUCT
 		{attribute addProperty Name "SETPOINT"}
      	Setpoint : TcoElements.TcoAo(THISSTRUCT);   
 		
+		{attribute addProperty Name "SampleDataToRender"}
+     	ArrayToRender : SampleArrayToRender;   
+		
 		
 
 END_STRUCT

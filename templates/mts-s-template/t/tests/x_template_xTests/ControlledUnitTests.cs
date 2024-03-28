@@ -27,7 +27,7 @@ namespace x_template_xTests
         public void OneTimeSetup()
         {
             var a = x_template_xApp.Get;
-
+            Entry.LoadAppSettings("testing", true);
             Entry.Plc.Connector.BuildAndStart();
 
             var ProcessSettningsRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "ProcessSettings", "", "");
@@ -111,6 +111,10 @@ namespace x_template_xTests
             Entry.Plc.MAIN._technology._cu00x._automatTask._loop.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._automatTask._inspectionResult.Synchron = true;
             Entry.Plc.MAIN._technology._cu00x._automatTask._inspectionDimensionResult.Synchron = 50;
+            Entry.Plc.MAIN._technology._cu00x._automatTask._dialogExamples.Synchron = false;
+            Entry.Plc.MAIN._technology._cu00x._automatTask._inspectorGroupExamples.Synchron = false;
+            Entry.Plc.MAIN._technology._cu00x._automatTask._inspectorSingleExamples.Synchron = false;
+
             Entry.Plc.MAIN._technology._cu00x._recurringFails.AnyRecurringFails.Reached.Synchron = false;
             Entry.Plc.MAIN._technology._cu00x._recurringFails.AnyRecurringFails.Counter.Synchron = 0;
             Entry.Plc.MAIN._technology._cu00x._recurringFails.SameRecurringFails.Reached.Synchron = false;
@@ -527,6 +531,7 @@ namespace x_template_xTests
             automat._inspectionResult.Synchron = false;
 
 
+
             cu._manualTask.Execute(); // Reset other tasks
 
             while ((eTaskState)cu._manualTask._taskState.Synchron != eTaskState.Busy) ;
@@ -570,6 +575,7 @@ namespace x_template_xTests
             automat._dataCreateNew.Synchron = true;
             automat._dataOpen.Synchron = true;
             automat._continueRestore.Synchron = true;
+
 
 
             cu._manualTask.Execute(); // Reset other tasks
@@ -618,6 +624,7 @@ namespace x_template_xTests
             automat._continueRestore.Synchron = true;
             automat._inspectionResult.Synchron = false;
             automat._inspectionDimensionResult.Synchron = 50;
+
 
 
 
@@ -686,6 +693,7 @@ namespace x_template_xTests
 
 
 
+
             foreach (var item in Enumerable.Range(1, noOfFails))
             {
                 cu._manualTask.Execute();  //Reset other tasks
@@ -741,6 +749,7 @@ namespace x_template_xTests
             automat._continueRestore.Synchron = true;
             automat._inspectionResult.Synchron = true;
             automat._inspectionDimensionResult.Synchron = 50;
+
 
 
 

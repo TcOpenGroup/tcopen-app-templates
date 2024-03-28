@@ -22,7 +22,7 @@ VAR
     {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
     _suspendTask : CU00xSuspendTask(THIS^, TcoCore.eRestoreMode.None);     
 	
-		{attribute addProperty Name "<#RECOVER PROCESS#>"}
+	{attribute addProperty Name "<#RECOVER PROCESS#>"}
     {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
     _recoverTask : CU00xRecoverTask(THIS^, TcoCore.eRestoreMode.None);     
   	
@@ -265,32 +265,33 @@ METHOD Idle : BOOL
         <ST><![CDATA[
 Components.PairTagTask();
 
-//components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.A1.A1_1.Channel_1.Input, 
-//							   inoAtWorkPos:=GVL_iXlinker.EC1.A1.A1_1.Channel_2.Input, 
-//							   inoToHomePos:=GVL_iXlinker.EC1.A1.A1_2.Channel_1.Output, 
-//							   inoToWorkPos:=GVL_iXlinker.EC1.A1.A1_2.Channel_2.Output);
+components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_1.Input, 
+							   inoAtWorkPos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_2.Input, 
+							   inoToHomePos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_3.Input, 
+							   inoToWorkPos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_4.Input);
 Components.SingleAxis.Config.InfoTime:=T#4S;
 Components.SingleAxis.Config.ErrorTime:=T#10S;
-		
-	
-//Components.SingleAxis(inEnable := ,
-//    inEnablePositive := ,
-//    inEnableNegative := ,
-//    inCalibrationCam := ,
-//    refAxis := GVL_iXlinker.Axis1,
-//	inoPositions:= _positions);
+
+
+
+Components.SingleAxis(inEnable := ,
+    inEnablePositive := ,
+    inEnableNegative := ,
+    inCalibrationCam := ,
+    refAxis := GVL_iXlinker.Axis1,
+	inoPositions:= _positions);
 	
 	
 
 //Components.PickAndPlace();
 //Components.PickAndPlace.Service();
 		
-//Components.MultiAxis(inEnableAxis1 := ,
-//    inEnablePositiveAxis1 := ,
-//    inEnableNegativeAxis1 := ,
-//    inCalibrationCamAxis1 := ,
-//    refAxis1 := GVL_iXlinker.Axis1,
-//	inoPositions:= _positionsMulti);
+Components.MultiAxis(inEnableAxis1 := ,
+    inEnablePositiveAxis1 := ,
+    inEnableNegativeAxis1 := ,
+    inCalibrationCamAxis1 := ,
+    refAxis1 := GVL_iXlinker.Axis1,
+	inoPositions:= _positionsMulti);
 	
 			
 //Components.PickAndPlace.Components.Manipulator(inEnableAxis1 := ,

@@ -7,6 +7,7 @@ FUNCTION_BLOCK ABSTRACT CUBase EXTENDS TcoCore.TcoObject IMPLEMENTS ICUBase
 VAR
     _cuId        : eStations;
     _processData : ProcessDataManager(THIS^);
+	_groupInspection : TcoInspectors.TcoInspectionGroup(THIS^);
 	{attribute addProperty Name "<#STATUS INFO#>"}
     _statusInfo  : CUBaseStatusInfo := (Parent := THIS^);
 	_operatorInfo : OperatorInfo := (Parent := THIS^);
@@ -328,7 +329,8 @@ GroundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
 	Invokes `groundTask` from technology object.
 *)
 
-IF(Technology.GroundAllTask.Execute()) THEN GroundTask.Task.Invoke(); END_IF;
+
+IF(Technology.GroundAllTask.Execute()) THEN GroundTask.Restore();GroundTask.Task.Invoke(); END_IF;
 
 
 IF GroundTask.GroundDone AND GroundTask.Task.Execute() THEN GroundTask.Restore();GroundTask.Task.Invoke();END_IF;
@@ -345,6 +347,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="GroupInspection" Id="{e13fb714-68d8-429d-a303-f7e6cff57930}">
+      <Declaration><![CDATA[PROPERTY FINAL GroupInspection : REFERENCE TO TcoInspectionGroup]]></Declaration>
+      <Get Name="Get" Id="{3baebd85-3b43-4308-98fa-016c2bb452b8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[GroupInspection REF= _groupInspection;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -526,7 +539,7 @@ IF AutomatTask.Task.Busy THEN
 	IF AutomatTask._startCleanCycleTime<>T#0S AND AutomatTask._stopCleanCycleTime=T#0S  THEN
 		_statusInfo.CurrentCleanCycleTime  := AutomatTask._SequenceElapsedTime-AutomatTask._startCleanCycleTime;
 	ELSIF AutomatTask._stopCleanCycleTime<>T#0S  THEN
-		_statusInfo.CurrentCleanCycleTime  := AutomatTask._stopCleanCycleTime;
+		_statusInfo.CurrentCleanCycleTime  := AutomatTask._stopCleanCycleTime-AutomatTask._startCleanCycleTime;
 	ELSE
 		_statusInfo.CurrentCleanCycleTime :=AutomatTask._startCleanCycleTime;
 	END_IF;

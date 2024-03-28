@@ -78,6 +78,20 @@ namespace x_template_xOp
                     SetUpRepositoriesUsingRavenDb();
                     CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new RavenDbRepository<EntitySet<TagItem>>(new RavenDbRepositorySettings<EntitySet<TagItem>>(new string[] { Entry.Settings.GetConnectionString() }, "TagsDictionary", "", ""))), "TagsCfg"); ;
 
+                    // TcOpen app setup
+                    TcOpen.Inxton.TcoAppDomain.Current.Builder
+                        .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
+                                                .WriteTo.Console()
+                                                .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+                                                .Enrich.WithEnvironmentName()
+                                                .Enrich.WithEnvironmentUserName()
+                                                .Enrich.WithEnrichedProperties()))
+                        .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
+                        .SetSecurity(SecurityManager.Manager.Service)
+                        .SetEditValueChangeLogging(Entry.Plc.Connector)
+                        .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new IVortexObject[] { x_template_xPlc.MAIN._technology._cu00x._processData, x_template_xPlc.MAIN._technology._cu00x._groupInspection, x_template_xPlc.MAIN._technology._cu00x._automatTask, x_template_xPlc.MAIN._technology._cu00x._groundTask }));
+
 
 
                     break;
@@ -87,30 +101,34 @@ namespace x_template_xOp
                     SetUpRepositoriesUsingMongoDb();
                     CuxTagsPairing = new TagsPairingController(RepositoryDataSetHandler<TagItem>.CreateSet(new MongoDbRepository<EntitySet<TagItem>>(new MongoDbRepositorySettings<EntitySet<TagItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TagsDictionary"))), "TagsCfg");
 
+
+                    // TcOpen app setup
+                    TcOpen.Inxton.TcoAppDomain.Current.Builder
+                        .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
+                                                .WriteTo.Console()
+                                                .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
+                                                .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}", "log",
+                                                                     Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
+                                                                    .MinimumLevel.Information()
+                                                .Enrich.WithEnvironmentName()
+                                                .Enrich.WithEnvironmentUserName()
+                                                .Enrich.WithEnrichedProperties()))
+                        .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
+                        .SetSecurity(SecurityManager.Manager.Service)
+                        .SetEditValueChangeLogging(Entry.Plc.Connector)
+                        .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new IVortexObject[] { x_template_xPlc.MAIN._technology._cu00x._processData, x_template_xPlc.MAIN._technology._cu00x._groupInspection, x_template_xPlc.MAIN._technology._cu00x._automatTask, x_template_xPlc.MAIN._technology._cu00x._groundTask }));
+
+
+
+
                     break;
                 default:
                     break;
             }
 
 
-            // TcOpen app setup
-            TcOpen.Inxton.TcoAppDomain.Current.Builder
-                .SetUpLogger(new TcOpen.Inxton.Logging.SerilogAdapter(new LoggerConfiguration()
-                                        .WriteTo.Console()
-                                        //  .WriteTo.File(new Serilog.Formatting.Compact.RenderedCompactJsonFormatter(), "logs\\logs.log")
-                                        //  .WriteTo.MongoDBBson($@"{Entry.Settings.GetConnectionString()}/{Entry.Settings.DbName}", "log",
-                                        //                                                    Entry.Settings.LogRestrictedToMiniummLevel, 50, TimeSpan.FromSeconds(1), Entry.Settings.CappedMaxSizeMb, Entry.Settings.CappedMaxDocuments)
-                                        //            .MinimumLevel.Information()
-                                        .Enrich.WithEnvironmentName()
-                                        .Enrich.WithEnvironmentUserName()
-                                        .Enrich.WithEnrichedProperties()))
-                .SetDispatcher(TcoCore.Wpf.Threading.Dispatcher.Get) // This is necessary for UI operation.  
-                .SetSecurity(SecurityManager.Manager.Service)
-                .SetEditValueChangeLogging(Entry.Plc.Connector)
-                .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
-                .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
-
-
+       
 
             // Otherwise undocumented feature in official IVF, for details refer to internal documentation.
             LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
@@ -139,6 +157,9 @@ namespace x_template_xOp
             Action assignTagValeAction = () => TagsPairingOperation(x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask);
             x_template_xPlc.MAIN._technology._cu00x._components.PairTagTask.InitializeExclusively(assignTagValeAction);
 
+
+            //  service view for this component will be expanded by default
+            x_template_xPlc.MAIN._technology._cu00x._components.MultiAxis.IsExpanded = true;
 
 
         }

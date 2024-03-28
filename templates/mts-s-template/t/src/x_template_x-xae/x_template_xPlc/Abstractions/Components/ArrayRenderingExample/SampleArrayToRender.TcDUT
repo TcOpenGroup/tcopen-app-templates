@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="SampleArrayToRender" Id="{0fdee56a-6183-4123-afd7-208a33986db7}">
+    <Declaration><![CDATA[TYPE SampleArrayToRender :
+STRUCT
+	Data	:	ARRAY  [0..100] OF SampleDataItem;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

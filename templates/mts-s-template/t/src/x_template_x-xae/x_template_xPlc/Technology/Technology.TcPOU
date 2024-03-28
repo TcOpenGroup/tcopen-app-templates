@@ -124,54 +124,11 @@ controlVoltageDoor:=FALSE;
 estop:=FALSE;
 presure:=FALSE;
 
-//_dummyBlinker(inOffTime := T#10000MS, inOnTime := T#10000MS);
-
-closed:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_8.Input;
-locked:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_9.Input;
-
-IF _setDummyConditionsSuffisient THEN
-	controlVolage:=TRUE;
-	controlVoltageDoor:=TRUE;
-	estop:=FALSE;
-	presure:=TRUE;
 
 
-END_IF;
-
-_components.ModeKey(inoKeyState1:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_1.Input ,
-					inoKeyState2:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_2.Input);
-					
-_components.NormalServiceKey(inoSignal:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_3.Input);
-					
-_components.ControlButtons(
-	inoButtonRecover:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_4.Input  , 
-	inoButtonSuspend:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_5.Input  , 
-	inoButtonGround:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_6.Input , 
-	inoButtonAuto:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_7.Input, 
-	inoButtonRecoverLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_1.Output  , 
-	inoButtonSuspendLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_2.Output  , 
-	inoButtonGroundLight:=GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_3.Output  , 
-	inoButtonAutoLight:= GVL_iXlinker.EC1.EK1200.QA1_EL2809.Channel_4.Output );
-	
-
-					
-
-_components.GlobalControlVoltage(inoSignal := controlVolage);
-
-_components.LocalControlVoltage(inoSignal := controlVolage);
-_components.LocalDoorVoltage(inoSignal := controlVoltageDoor);
-
-_components.EmergencyStop(inoSignal := estop);
-_components.AirPresureOk(inoSignal:= presure);
 
 
-_components.StandardDoor(inoIsLocked := locked,
-    inoIsOpen := opened,
-    inoLock :=lock);
-	
-	
-_components.BasicDoor(inoIsClosed := closed,
-     inoLock := lock);
+
 
 
 _components.DoorCicuit();
@@ -320,6 +277,9 @@ _technologySettings();
 
 _cu00x();
 
+
+_automatAllTask();
+_groundAllTask();
 
 Device_1(	SyncUnits		:= ADR(		GVL_iXlinker.EC1.SyncUnits),
 			SyncUnitsSize	:= SIZEOF(	GVL_iXlinker.EC1.SyncUnits),

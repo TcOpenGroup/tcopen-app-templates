@@ -6,7 +6,7 @@
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
-				
+
 		{attribute wpf [Container(Layout.Stack)]}
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Supplu TTI QL"}
@@ -38,6 +38,9 @@ TYPE
 		{attribute addProperty Name "Ur E series"}
      	UrEseries: TcoUrRobotics.TcoUrEseries_v_5_x_x (THISSTRUCT);
 		
+		{attribute addProperty Name "Kuka Krc4"}
+     	KukaKrc4: TcoKukaRobotics.TcoKrc4_v_5_x_x (THISSTRUCT);
+		
 		{attribute wpf [Container(Layout.Stack,"TIXONS")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Tixon Vibro"}
@@ -55,7 +58,7 @@ TYPE
 		{attribute wpf [Container(Layout.Stack,"Wrapped component example")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		PickAndPlace:WrappedComponentExample(THISSTRUCT);
-		
+		{attribute wpf [Container(Layout.Stack,"Wrapped component struct")]}	
 		PickAndPlaceCompoennts:WrappedComponentsExample:= (Parent := THISSTRUCT);  
 
 		{attribute addProperty Name "GROUP 1"}
