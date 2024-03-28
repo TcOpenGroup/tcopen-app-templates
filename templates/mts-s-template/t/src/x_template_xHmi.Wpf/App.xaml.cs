@@ -32,6 +32,7 @@ using MongoDB.Driver;
 using x_template_xTagsDictionary;
 using Vortex.Connector;
 
+
 namespace x_template_xHmi.Wpf
 {
     /// <summary>
@@ -53,6 +54,7 @@ namespace x_template_xHmi.Wpf
 
         public App()
         {
+          
             SetCulture();
             Entry.LoadAppSettings("default",true);
 
@@ -90,7 +92,7 @@ namespace x_template_xHmi.Wpf
                         .SetSecurity(SecurityManager.Manager.Service)
                         .SetEditValueChangeLogging(Entry.Plc.Connector)
                         .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
-                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new IVortexObject[]{ x_template_xPlc.MAIN._technology._cu00x._processData, x_template_xPlc.MAIN._technology._cu00x._groupInspection, x_template_xPlc.MAIN._technology._cu00x._automatTask, x_template_xPlc.MAIN._technology._cu00x._groundTask }));
 
 
 
@@ -117,7 +119,9 @@ namespace x_template_xHmi.Wpf
                         .SetSecurity(SecurityManager.Manager.Service)
                         .SetEditValueChangeLogging(Entry.Plc.Connector)
                         .SetLogin(() => { var login = new LoginWindow(); login.ShowDialog(); })
-                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new[] { x_template_xPlc.MAIN._technology._cu00x._processData }));
+                        .SetPlcDialogs(DialogProxyServiceWpf.Create(new IVortexObject[] { x_template_xPlc.MAIN._technology._cu00x._processData, x_template_xPlc.MAIN._technology._cu00x._groupInspection, x_template_xPlc.MAIN._technology._cu00x._automatTask, x_template_xPlc.MAIN._technology._cu00x._groundTask }));
+
+
 
 
                     break;
@@ -147,7 +151,7 @@ namespace x_template_xHmi.Wpf
 
 
             // Authenticates default user, change this line if you need to authenticate different user.
-            SecurityManager.Manager.Service.AuthenticateUser(Entry.Settings.AutologinUserName, Entry.Settings.AutologinUserPassword);
+           SecurityManager.Manager.Service.AuthenticateUser(Entry.Settings.AutologinUserName, Entry.Settings.AutologinUserPassword);
 
 
 
@@ -157,8 +161,14 @@ namespace x_template_xHmi.Wpf
             x_template_xPlc.MAIN._technology._cu00x._components.PickAndPlace.SearchComponentsDepth = 3;
 
 
+            //  service view for this component will be expanded by default
+            x_template_xPlc.MAIN._technology._cu00x._components.MultiAxis.IsExpanded = true;
+
 
         }
+
+
+
         /// <summary>
         /// this is remontely invoked from plc , 
         /// </summary>

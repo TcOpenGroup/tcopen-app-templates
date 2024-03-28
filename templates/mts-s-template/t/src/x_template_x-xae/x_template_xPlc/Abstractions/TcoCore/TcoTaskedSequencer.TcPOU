@@ -154,7 +154,7 @@ METHOD PROTECTED  Main : BOOL
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[SUPER^.Restore();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnDone" Id="{30fb0e8a-1cb0-4f9e-a2ec-ea455b994447}" FolderPath="TaskRelay\">

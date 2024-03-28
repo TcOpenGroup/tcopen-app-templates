@@ -3,8 +3,9 @@
   <POU Name="CUBaseAutomat" Id="{f34497ee-0ea8-4948-9690-a8151302d35b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT CUBaseAutomat EXTENDS TcoTaskedSequencer
 VAR
-	_dialog : TcoCore.TcoDialog(THIS^);
-
+    _dialog : TcoCore.TcoDialog(THIS^);
+    _dialogCustomized : TcoCore.TcoCustomizedDialog(THIS^);
+    _dialogWithInput : TcoCore.TcoInputDialog(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -207,6 +208,17 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[EntityDoesBelong:=THIS^.StationBase.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.StationBase.CuId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HideAllDialogs" Id="{75efc24e-9984-4450-95c3-ea24b840e259}">
+      <Declaration><![CDATA[METHOD PUBLIC  HideAllDialogs
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_dialog.Restore();
+_dialogWithInput.Restore();
+_dialogCustomized.Restore();]]></ST>
       </Implementation>
     </Method>
     <Method Name="MonitorAnyRecurringFailure" Id="{e0debd7d-76ba-040d-3b8f-a31d168a71a0}" FolderPath="ConsecutiveFailures\">

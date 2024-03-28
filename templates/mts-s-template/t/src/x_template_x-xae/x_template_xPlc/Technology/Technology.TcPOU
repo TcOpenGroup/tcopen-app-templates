@@ -321,6 +321,9 @@ _technologySettings();
 _cu00x();
 
 
+_automatAllTask();
+_groundAllTask();
+
 Device_1(	SyncUnits		:= ADR(		GVL_iXlinker.EC1.SyncUnits),
 			SyncUnitsSize	:= SIZEOF(	GVL_iXlinker.EC1.SyncUnits),
 			Inputs			:=			GVL_iXlinker.EC1.Inputs,

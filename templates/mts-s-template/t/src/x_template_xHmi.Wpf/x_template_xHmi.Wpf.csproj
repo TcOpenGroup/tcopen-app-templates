@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
@@ -7,6 +8,13 @@
     <IsPackable>false</IsPackable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UserSecretsId>898a9847-9e04-4830-849d-662011ed5f2e</UserSecretsId>
+    
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
 
@@ -15,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2365.46" />
     <PackageReference Include="Serilog.Enrichers.EnrichedProperties" Version="1.0.63" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.0.0" />
@@ -33,22 +42,23 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoAimTtiPowerSupply.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoDrivesBeckhoff.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoRexrothPress.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoAbbRobotics.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoMitsubishiRobotics.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoUrRobotics.Wpf" Version="0.11.0-alpha.59" />
-    <PackageReference Include="TcOpen.Inxton.TcoTixonFeeding.Wpf" Version="0.11.0-alpha.59" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoAimTtiPowerSupply.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoDrivesBeckhoff.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoRexrothPress.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoAbbRobotics.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoMitsubishiRobotics.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoUrRobotics.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoKukaRobotics.Wpf" Version="0.11.0-alpha.65" />
 
+    <PackageReference Include="TcOpen.Inxton.TcoTixonFeeding.Wpf" Version="0.11.0-alpha.65" />
 
   </ItemGroup>
   <!--PCKG-END-->
@@ -93,6 +103,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\Components\ArrayRenderingExample\SampleArrayToRenderShadowDisplayView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Components\ArrayRenderingExample\SampleArrayToRenderServiceView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\ControlledUnits\Base\ControlledUnitSpotLite\Spot\CUBaseSpotLiteView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

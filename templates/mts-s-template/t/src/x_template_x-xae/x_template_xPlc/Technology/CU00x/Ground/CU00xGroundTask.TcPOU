@@ -46,7 +46,9 @@ METHOD PROTECTED Main : BOOL
 	Station.AutomatTask.Restore();
 	Station.ManualTask.Restore();
 	Station.ProcessDataManager.Restore();
-    CompleteStep();
+	Station.AutomatTask.HideAllDialogs();
+	Station.GroupInspection.Restore();// hide all dialogs 
+    StepCompleteWhen(TRUE);
 END_IF
 
 IF (Step(200, TRUE, 'STOPPING OTHER MODES')) THEN	

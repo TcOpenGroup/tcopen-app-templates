@@ -6,14 +6,17 @@ using TcoCore;
 
 namespace x_template_xTests
 {
+
     public class TechnologyTests
     {
+        private const int timeOut = 7000;
         [SetUp]
         public void Setup()
         {
-            Entry.Plc.Connector.BuildAndStart();
-        }
+            System.Threading.Thread.Sleep(500);
 
+
+        }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
@@ -25,10 +28,14 @@ namespace x_template_xTests
         public void OneTimeSetUp()
         {
             var a = x_template_xApp.Get;
+            Entry.LoadAppSettings("testing1", true);
+            Entry.Plc.Connector.BuildAndStart();
+         
 
         }
 
         [Test]
+        [Timeout(timeOut)]
         public void run_ground_mode()
         {
             var technology = Entry.Plc.MAIN._technology;
@@ -45,6 +52,7 @@ namespace x_template_xTests
         }
 
         [Test]
+        [Timeout(timeOut)]
         public void run_automat_mode_ground_not_done()
         {
             var technology = Entry.Plc.MAIN._technology;
@@ -63,12 +71,15 @@ namespace x_template_xTests
         }
 
         [Test]
+        [Timeout(timeOut)]
         public void run_automat_mode_ground_done()
         {
             var technology = Entry.Plc.MAIN._technology;
             var technologyTask = technology._automatAllTask;
             var cuTask = technology._cu00x._automatTask;
+            technology._cu00x._manualTask._restoreRequest.Synchron = true; ;
             technology._cu00x._manualTask.Execute();    // This is just to reset all other tasks
+            System.Threading.Thread.Sleep(250);
             while ((eTaskState)technology._cu00x._manualTask._taskState.Synchron != eTaskState.Busy) ;
             technology._groundAllTask.Execute();    // This is just to reset all other tasks                                                        
 
@@ -80,7 +91,7 @@ namespace x_template_xTests
 
             while ((eTaskState)cuTask._task._taskState.Synchron != eTaskState.Busy) ;
 
-          
+
         }
     }
 }

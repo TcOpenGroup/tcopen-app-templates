@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Wpf/Styles/MenuButton.xaml" />
                 <ResourceDictionary Source="Wpf/Styles/Colors.xaml" />
 
+                
 
                 <wpf:TcoResources></wpf:TcoResources>
                 
@@ -30,8 +31,9 @@
 
 
             </ResourceDictionary.MergedDictionaries>
-
-
+            <Style x:Key="CheckSwitch" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                <Setter Property="materialDesign:CheckBoxAssist.CheckBoxSize" Value="30" />
+            </Style>
 
 
 
