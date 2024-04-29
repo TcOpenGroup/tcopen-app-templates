@@ -42,23 +42,24 @@
 
   <!--PCKG-START-->
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoAimTtiPowerSupply.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoDrivesBeckhoff.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoRexrothPress.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoAbbRobotics.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoMitsubishiRobotics.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoUrRobotics.Wpf" Version="0.11.0-alpha.65" />
-    <PackageReference Include="TcOpen.Inxton.TcoKukaRobotics.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.Data.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Readers" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoAimTtiPowerSupply.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoCognexVision.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoCore.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoDrivesBeckhoff.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoElements.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoIo.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoPneumatics.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.Local.Security.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoInspectors.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoRexrothPress.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoAbbRobotics.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoMitsubishiRobotics.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoUrRobotics.Wpf" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.TcoKukaRobotics.Wpf" Version="0.11.0-alpha.68" />
 
-    <PackageReference Include="TcOpen.Inxton.TcoTixonFeeding.Wpf" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.TcoTixonFeeding.Wpf" Version="0.11.0-alpha.68" />
 
   </ItemGroup>
   <!--PCKG-END-->

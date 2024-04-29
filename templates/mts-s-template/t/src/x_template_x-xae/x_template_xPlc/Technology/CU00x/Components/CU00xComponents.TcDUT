@@ -21,7 +21,13 @@ TYPE
      	SingleAxis : TcoDrivesBeckhoff.TcoSingleAxis (THISSTRUCT);
 		{attribute addProperty Name "Simple drive"}
      	SimpleDrive : TcoDrivesBeckhoff.TcoDriveSimple (THISSTRUCT);
-
+		
+		{attribute wpf [Container(Layout.Stack,"VISION")]}	
+		{attribute wpf [Group(Layout.Scroll)]}
+		{attribute addProperty Name "Dataman"}
+     	Dmc : TcoCognexVision.TcoDataman_v_5_x_x (THISSTRUCT);
+		{attribute addProperty Name "Insight"}
+     	Cam : TcoCognexVision.TcoInsight_v_5_x_x (THISSTRUCT);
 
 	
 		{attribute wpf [Container(Layout.Stack,"ROBOTICS")]}	

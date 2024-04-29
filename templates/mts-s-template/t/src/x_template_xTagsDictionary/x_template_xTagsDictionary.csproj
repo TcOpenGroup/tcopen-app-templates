@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.RepositoryDataSet" Version="0.11.0-alpha.65" />
+    <PackageReference Include="TcOpen.Inxton.RepositoryDataSet" Version="0.11.0-alpha.68" />
   </ItemGroup>
 
   <ItemGroup>

@@ -151,7 +151,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{1F826822-78EF-46D2-B0C2-A803A090596D}" Name="x_template_xPlc" PrjFilePath="x_template_xPlc\x_template_xPlc.plcproj" TmcFilePath="x_template_xPlc\x_template_xPlc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{6AC637C3-B497-A965-A329-1F91F0F45D68}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{8A96E269-2937-EC8F-8F54-E01EEC64D034}">
 					<Name>x_template_xPlc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -695,6 +695,26 @@
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN._technology._cu00x._components.Cam._status.SignalStatus.EnableResultsBuffering</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology._cu00x._components.Cam._status.SignalStatus.AcknowledgeInspectionResults</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology._cu00x._components.Cam._status.SignalStatus.ExtendedUserDataSet</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology._cu00x._components.Cam._status.SignalStatus.ExecuteCommand</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN._technology._cu00x._components.Cam._status.SignalStatus.ClearError</Name>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>MAIN._technology.Device_1.Outputs.DevCtrl</Name>
 							<Type>UINT</Type>
@@ -3591,8 +3611,6 @@
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500820000403}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500831000403}" Id="#x02030020"/>
 		<OwnerA Name="TIPC^x_template_xPlc^x_template_xPlc Instance">
 			<OwnerB Name="TIID^EC">
 				<Link VarA="PlcTask Inputs^GVL_iXlinker.EC.InfoData.AmsNetId" VarB="InfoData^AmsNetId"/>
