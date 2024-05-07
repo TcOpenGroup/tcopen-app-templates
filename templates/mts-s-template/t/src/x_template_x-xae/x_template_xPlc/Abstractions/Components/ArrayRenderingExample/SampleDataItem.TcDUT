@@ -3,10 +3,10 @@
   <DUT Name="SampleDataItem" Id="{806db45d-e7c1-4323-b4b1-30a4e6201187}">
     <Declaration><![CDATA[TYPE SampleDataItem :
 STRUCT
- 	Measured:BOOL;
-    Overrided:BOOL;
-    Marginal:BOOL;
-    FinalResults:BOOL;
+ 	Measured : BOOL;
+    Overrided : BOOL;
+    Marginal : BOOL;
+    FinalResults : BOOL;
 END_STRUCT
 END_TYPE
 

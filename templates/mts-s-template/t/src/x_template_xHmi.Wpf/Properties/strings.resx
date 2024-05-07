@@ -181,8 +181,7 @@
     <value>JOURNAL</value>
   </data>
   <data name="MainSequence" xml:space="preserve">
-    <value>MAIN SEQUENCE
-MAIN SEQUENCE</value>
+    <value>MAIN SEQUENCE</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Message</value>
@@ -215,22 +214,22 @@ MAIN SEQUENCE</value>
     <value>ABOUT</value>
   </data>
   <data name="EmailContact" xml:space="preserve">
-    <value>Email :</value>
+    <value>Email:</value>
   </data>
   <data name="ProjectNameCustomer" xml:space="preserve">
-    <value>Project Name at Plant :</value>
+    <value>Project Name at Plant:</value>
   </data>
   <data name="ProjectNameMts" xml:space="preserve">
-    <value>Project Name MTS :</value>
+    <value>Project Name MTS:</value>
   </data>
   <data name="ProjectNumber" xml:space="preserve">
-    <value>Project Number :</value>
+    <value>Project Number:</value>
   </data>
   <data name="TelContact" xml:space="preserve">
-    <value>Tel :</value>
+    <value>Tel:</value>
   </data>
   <data name="WebContact" xml:space="preserve">
-    <value>Web :</value>
+    <value>Web:</value>
   </data>
   <data name="YearOfProduction" xml:space="preserve">
     <value>Year of Production :</value>
@@ -305,7 +304,7 @@ MAIN SEQUENCE</value>
     <value>Time left to complete operations:</value>
   </data>
   <data name="ActualCycleTime" xml:space="preserve">
-    <value>Actual CT </value>
+    <value>Actual CT</value>
   </data>
   <data name="AverageCycleTime" xml:space="preserve">
     <value>Average CT</value>
@@ -335,7 +334,7 @@ MAIN SEQUENCE</value>
     <value>Modified</value>
   </data>
   <data name="ActualCleanCycleTime" xml:space="preserve">
-    <value>Actual Clean CT </value>
+    <value>Actual Clean CT</value>
   </data>
   <data name="AverageCleanCycleTime" xml:space="preserve">
     <value>Average Clean CT</value>

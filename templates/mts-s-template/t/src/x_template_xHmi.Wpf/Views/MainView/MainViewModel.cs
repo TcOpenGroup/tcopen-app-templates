@@ -18,7 +18,7 @@ namespace x_template_xHmi.Wpf.Views.MainView
     {
         public MainViewModel()
         {
-            Title = "TECHNOLOGY";
+            Title = strings.Technology;
             OpenCommand(this.AddCommand(typeof(OperatorView), strings.Operator));
             AddCommand(typeof(DataView), strings.Data);
             AddCommand(typeof(TechnologyView), strings.Technology);

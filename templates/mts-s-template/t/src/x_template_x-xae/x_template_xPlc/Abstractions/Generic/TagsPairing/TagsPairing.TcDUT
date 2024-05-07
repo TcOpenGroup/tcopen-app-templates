@@ -9,7 +9,7 @@ STRUCT
 	AssignedValue : STRING;
 	{attribute addProperty Name "<#Status#>"}
 	Status : eTagPairingStatus;
-	{attribute addProperty Name "<Answer>"}
+	{attribute addProperty Name "<#Answer#>"}
 	Answer : eTagPairingAnswer;
 	
 END_STRUCT

@@ -70,7 +70,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actual Clean CT .
+        ///   Looks up a localized string similar to Actual Clean CT.
         /// </summary>
         public static string ActualCleanCycleTime {
             get {
@@ -79,7 +79,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actual CT .
+        ///   Looks up a localized string similar to Actual CT.
         /// </summary>
         public static string ActualCycleTime {
             get {
@@ -268,7 +268,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email :.
+        ///   Looks up a localized string similar to Email:.
         /// </summary>
         public static string EmailContact {
             get {
@@ -439,8 +439,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAIN SEQUENCE
-        ///MAIN SEQUENCE.
+        ///   Looks up a localized string similar to MAIN SEQUENCE.
         /// </summary>
         public static string MainSequence {
             get {
@@ -539,7 +538,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Name at Plant :.
+        ///   Looks up a localized string similar to Project Name at Plant:.
         /// </summary>
         public static string ProjectNameCustomer {
             get {
@@ -548,7 +547,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Name MTS :.
+        ///   Looks up a localized string similar to Project Name MTS:.
         /// </summary>
         public static string ProjectNameMts {
             get {
@@ -557,7 +556,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Number :.
+        ///   Looks up a localized string similar to Project Number:.
         /// </summary>
         public static string ProjectNumber {
             get {
@@ -782,7 +781,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tel :.
+        ///   Looks up a localized string similar to Tel:.
         /// </summary>
         public static string TelContact {
             get {
@@ -863,7 +862,7 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Web :.
+        ///   Looks up a localized string similar to Web:.
         /// </summary>
         public static string WebContact {
             get {

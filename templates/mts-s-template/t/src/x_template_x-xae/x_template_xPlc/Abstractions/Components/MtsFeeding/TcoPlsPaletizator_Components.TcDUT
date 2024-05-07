@@ -35,7 +35,7 @@ STRUCT
 	{attribute addProperty Name "(P1) <#Vertikalny prisun vstupnych blistrov#>"}
 	P1_VerticalSepareEntryBlisters : TcoPneumatics.TcoCylinder(THISSTRUCT);
 	
-	{attribute addProperty Name "(P2) <#Vertikalny prisun vstupnych blistrov #>"}
+	{attribute addProperty Name "(P2) <#Vertikalny prisun vstupnych blistrov#>"}
 	P2_VerticalSepareEntryBlisters : TcoPneumatics.TcoCylinder(THISSTRUCT);
 	
 	{attribute addProperty Name "(P3) (P3.1) <#Horizontalny prisun vstupnych blistrov#>"}

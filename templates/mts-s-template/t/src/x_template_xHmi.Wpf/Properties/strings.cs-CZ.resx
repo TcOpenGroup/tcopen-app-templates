@@ -136,31 +136,31 @@
     <value>Uživatelské jméno</value>
   </data>
   <data name="ParallelSequencers" xml:space="preserve">
-    <value>Paralelní sekvencery!</value>
+    <value>Paralelní sekvencery</value>
   </data>
   <data name="AutomatWarning" xml:space="preserve">
-    <value>Žádáte o spuštění automatického režimu. Vybrané zařízení spustí sekvenci. Pokud přecházíte z režimu step, ujistěte se, že sekvence jsou ve správném stavu, abyste mohli pokračovat v operacích. Chcete spustit automatickou sekvenci?!</value>
+    <value>Žádáte o spuštění automatického režimu. Vybrané zařízení spustí sekvenci. Pokud přecházíte z režimu step, ujistěte se, že sekvence jsou ve správném stavu, abyste mohli pokračovat v operacích. Chcete spustit automatickou sekvenci?</value>
   </data>
   <data name="AutomatAllWarning" xml:space="preserve">
-    <value>Chystáte se spustit automatický režim na všech stanicích této technologie. Pokud přecházíte z režimu step, ujistěte se, že sekvence jsou ve správném stavu, abyste mohli pokračovat v operacích. Chcete spustit automatický režim na všech stanicích této technologie?!</value>
+    <value>Chystáte se spustit automatický režim na všech stanicích této technologie. Pokud přecházíte z režimu step, ujistěte se, že sekvence jsou ve správném stavu, abyste mohli pokračovat v operacích. Chcete spustit automatický režim na všech stanicích této technologie?</value>
   </data>
   <data name="EnteringStepModeWarning" xml:space="preserve">
     <value>Chystáte se vstoupit do režimu kroků, který vám umožní provádět operace krok za krokem, přeskočit a vrátit se k jednotlivým krokům. Provádění kroků v krokovém režimu musí být prováděno s opatrností; je nutná důkladná znalost procesu. Může dojít k poškození zařízení. KROKOVÝ REŽIM NEPŘEDSTAVUJE BEZPEČNÝ REŽIM. VŠECHNA BEZPEČNOSTNÍ OPATŘENÍ MUSÍ být DODRŽENA!!!</value>
   </data>
   <data name="GroundAllWarning" xml:space="preserve">
-    <value>Chystáte se spustit pozemní polohový režim na všech stanicích této technologie. Chcete spustit režim pozemní polohy na všech stanicích této technologie?!</value>
+    <value>Chystáte se spustit pozemní polohový režim na všech stanicích této technologie. Chcete spustit režim pozemní polohy na všech stanicích této technologie?</value>
   </data>
   <data name="GroundWarning" xml:space="preserve">
-    <value>Žádáte o spuštění režimu pozemní polohy. Vybrané zařízení spustí sekvenci. Chcete spustit sekvenci režimu pozemní polohy?!</value>
+    <value>Žádáte o spuštění režimu pozemní polohy. Vybrané zařízení spustí sekvenci. Chcete spustit sekvenci režimu pozemní polohy?</value>
   </data>
   <data name="LeavingStepModeWarning" xml:space="preserve">
-    <value>Chystáte se opustit režim Step. Sekvence a všechny přiřazené sekvence budou pokračovat v operacích ze současného stavu. Ujistěte se, že jsou všechny sekvence nastaveny ve správném stavu, aby pokračovaly bez poškození zařízení nebo osob. Jste si jisti, že chcete opustit režim Step?!</value>
+    <value>Chystáte se opustit režim Step. Sekvence a všechny přiřazené sekvence budou pokračovat v operacích ze současného stavu. Ujistěte se, že jsou všechny sekvence nastaveny ve správném stavu, aby pokračovaly bez poškození zařízení nebo osob. Jste si jisti, že chcete opustit režim Step?</value>
   </data>
   <data name="ManualWarning" xml:space="preserve">
-    <value>Žádáte o vstup do manuálního režimu. Manuální režim přeruší aktuální stav. Přejete si přejít do manuálního režimu?!</value>
+    <value>Žádáte o vstup do manuálního režimu. Manuální režim přeruší aktuální stav. Přejete si přejít do manuálního režimu?</value>
   </data>
   <data name="StepModeActivationNotAllowedDueMasterSequencer" xml:space="preserve">
-    <value>Tato sekvence nemůže přejít do režimu kroku nebo z něj, protože je spojena s hlavní sekvencí. V této sekvenci můžete přejít z nebo do krokového režimu prostřednictvím hlavní sekvence.!</value>
+    <value>Tato sekvence nemůže přejít do režimu kroku nebo z něj, protože je spojena s hlavní sekvencí. V této sekvenci můžete přejít z nebo do krokového režimu prostřednictvím hlavní sekvence.</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>ÚDAJE</value>
@@ -175,14 +175,13 @@
     <value>Doba trvání</value>
   </data>
   <data name="EvalutatorsList" xml:space="preserve">
-    <value>Vyhodnocovači!</value>
+    <value>Vyhodnotení</value>
   </data>
   <data name="Journal" xml:space="preserve">
     <value>Časopis</value>
   </data>
   <data name="MainSequence" xml:space="preserve">
-    <value>HLAVNÍ SEKVENCE,
-HLAVNÍ SEKVENCE!</value>
+    <value>HLAVNÍ SEKVENCE</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Zpráva</value>
@@ -191,7 +190,7 @@ HLAVNÍ SEKVENCE!</value>
     <value>Tlačítko pro změnu režimu</value>
   </data>
   <data name="ProcessData" xml:space="preserve">
-    <value>PROCESNÍ NASTAVENÍ!</value>
+    <value>PROCESNÍ NASTAVENÍ</value>
   </data>
   <data name="ProductionData" xml:space="preserve">
     <value>Výrobní údaje</value>
@@ -203,10 +202,10 @@ HLAVNÍ SEKVENCE!</value>
     <value>Stav</value>
   </data>
   <data name="TechnologicalSettings" xml:space="preserve">
-    <value>TECHNICKÁ NASTAVENÍ!</value>
+    <value>TECHNICKÁ NASTAVENÍ</value>
   </data>
   <data name="TechData" xml:space="preserve">
-    <value>TECH. DATA!</value>
+    <value>TECH. DATA</value>
   </data>
   <data name="fbCustomControlledUnitSpotView_D" xml:space="preserve">
     <value>PODROBNOSTI</value>
@@ -215,28 +214,28 @@ HLAVNÍ SEKVENCE!</value>
     <value>O PRODUKTU</value>
   </data>
   <data name="EmailContact" xml:space="preserve">
-    <value>E-mail :</value>
+    <value>E-mail:</value>
   </data>
   <data name="ProjectNameCustomer" xml:space="preserve">
-    <value>Název projektu v závodě :!</value>
+    <value>Název projektu v závodě:</value>
   </data>
   <data name="ProjectNameMts" xml:space="preserve">
-    <value>Název projektu</value>
+    <value>Název projektu MTS:</value>
   </data>
   <data name="ProjectNumber" xml:space="preserve">
-    <value>Číslo projektu</value>
+    <value>Číslo projektu:</value>
   </data>
   <data name="TelContact" xml:space="preserve">
-    <value>Tel</value>
+    <value>Tel:</value>
   </data>
   <data name="WebContact" xml:space="preserve">
-    <value>Web</value>
+    <value>Web:</value>
   </data>
   <data name="YearOfProduction" xml:space="preserve">
-    <value>Rok produkce</value>
+    <value>Rok produkce:</value>
   </data>
   <data name="Control" xml:space="preserve">
-    <value>Kontrola</value>
+    <value>Riadenie</value>
   </data>
   <data name="Instructions" xml:space="preserve">
     <value>Instructions</value>
@@ -245,13 +244,13 @@ HLAVNÍ SEKVENCE!</value>
     <value>Přehled</value>
   </data>
   <data name="ReworkData" xml:space="preserve">
-    <value>PŘEPRACOVAT DATA!</value>
+    <value>REWORK</value>
   </data>
   <data name="ReworkOfflineData" xml:space="preserve">
-    <value>PŘEPRACOVAT OFFLINE DATA!</value>
+    <value>REWORK OFFLINE</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Vybrané</value>
+    <value>Vybrané:</value>
   </data>
   <data name="StepMode" xml:space="preserve">
     <value>KROKOVÝ REŽIM</value>
@@ -278,10 +277,10 @@ HLAVNÍ SEKVENCE!</value>
     <value>Složky</value>
   </data>
   <data name="STATION1" xml:space="preserve">
-    <value>Stanoviště 1</value>
+    <value>STANICE 1</value>
   </data>
   <data name="STATION2" xml:space="preserve">
-    <value>Stanice 2.</value>
+    <value>STANICE 2</value>
   </data>
   <data name="ExternalApps" xml:space="preserve">
     <value>Externí</value>
@@ -299,31 +298,31 @@ HLAVNÍ SEKVENCE!</value>
     <value>Zobrazit výběr jazyka</value>
   </data>
   <data name="LanguageMessageBoxText" xml:space="preserve">
-    <value>Přejete si změnit jazyk?!</value>
+    <value>Přejete si změnit jazyk?</value>
   </data>
   <data name="CoutdownDescription" xml:space="preserve">
     <value>Čas do dokončení operací:</value>
   </data>
   <data name="ActualCycleTime" xml:space="preserve">
-    <value>Skutečné CT!</value>
+    <value>Skutečné CT</value>
   </data>
   <data name="AverageCycleTime" xml:space="preserve">
-    <value>Průměrné CT!</value>
+    <value>Průměrné CT</value>
   </data>
   <data name="StepModeOff" xml:space="preserve">
-    <value>REŽIM UVOLNĚNÍ KROKU!</value>
+    <value>ZRUŠENÍ KROKOVÉHO REŽIMU</value>
   </data>
   <data name="StepModeOn" xml:space="preserve">
-    <value>VYNUTIT REŽIM KROKU!</value>
+    <value>ZAPNUTÍ KROKOVÉHO REŽIMU</value>
   </data>
   <data name="Counters" xml:space="preserve">
-    <value>Pulty</value>
+    <value>Počítadla</value>
   </data>
   <data name="ControlNotAllowed" xml:space="preserve">
-    <value>Není povoleno žádné ovládání. Nejprve nastavte manuální režim!!</value>
+    <value>Není povoleno žádné ovládání. Nejprve nastavte manuální režim!</value>
   </data>
   <data name="AppInfo" xml:space="preserve">
-    <value>Informace o aplikaci!</value>
+    <value>Informace o aplikaci</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Nastavení</value>
@@ -335,7 +334,7 @@ HLAVNÍ SEKVENCE!</value>
     <value>Upraveno</value>
   </data>
   <data name="CycleTime" xml:space="preserve">
-    <value> Čas cyklu</value>
+    <value>Čas cyklu</value>
   </data>
   <data name="IoTreeView" xml:space="preserve">
     <value>IO HW </value>
@@ -380,6 +379,15 @@ HLAVNÍ SEKVENCE!</value>
     <value>Technológie</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Úlohy</value>
+    <value>Úkoly</value>
+  </data>
+  <data name="ActualCleanCycleTime" xml:space="preserve">
+    <value>Aktuální čistý CT</value>
+  </data>
+  <data name="AverageCleanCycleTime" xml:space="preserve">
+    <value>Průměrný čistý CT</value>
+  </data>
+  <data name="ReworkEntity" xml:space="preserve">
+    <value>Reworkuj kus</value>
   </data>
 </root>

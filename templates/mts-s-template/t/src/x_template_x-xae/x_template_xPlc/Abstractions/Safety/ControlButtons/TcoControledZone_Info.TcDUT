@@ -72,10 +72,8 @@ STRUCT
 	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Ground#>"}
 	AnyButtonGround      : BOOL;
 	
-	
 	{attribute addProperty Name "<#Control panel#> - <#Any button#> - <#Auto#>"}
 	AnyButtonAuto     : BOOL;
-	
 	
 	{attribute addProperty Name "<#Deadman#> - <#Any present#>"}
 	AnyDeadmanPresent    : BOOL;

@@ -7,7 +7,6 @@ TYPE
     STRUCT
 		{attribute clr [RenderIgnore("Control", "ShadowControl")]}
         {attribute addProperty Name "<#Created#>"}
-        {attribute 'qlik_time_partition:Shift:[Morning]06:00:00-14:00:00;[Afternoon]14:00:00-22:00:00;[Night]22:00:00-06:00:00'}
         _Created : DT;
         {attribute clr [RenderIgnore("Control", "ShadowControl")]}
         {attribute addProperty Name "<#Modified#>"}

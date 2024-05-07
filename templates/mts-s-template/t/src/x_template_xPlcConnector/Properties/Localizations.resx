@@ -240,11 +240,8 @@
   <data name="___Please_acknowledge_recurring_failure___" xml:space="preserve">
     <value>Please acknowledge recurring failure!</value>
   </data>
-  <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached____" xml:space="preserve">
-    <value>(Consecutive failure) The number of same recurring failure count has been reached! </value>
-  </data>
-  <data name="___Please_acknowledge_recurring_failure____" xml:space="preserve">
-    <value>Please acknowledge recurring failure! </value>
+  <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached___" xml:space="preserve">
+    <value>(Consecutive failure) The number of same recurring failure count has been reached!</value>
   </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
@@ -255,11 +252,11 @@
   <data name="___ButtonSuspend__" xml:space="preserve">
     <value>ButtonSuspend</value>
   </data>
-  <data name="___ButtonGround___" xml:space="preserve">
-    <value>ButtonGround </value>
+  <data name="___ButtonGround__" xml:space="preserve">
+    <value>ButtonGround</value>
   </data>
-  <data name="___ButtonAuto___" xml:space="preserve">
-    <value>ButtonAuto </value>
+  <data name="___ButtonAuto__" xml:space="preserve">
+    <value>ButtonAuto</value>
   </data>
   <data name="___ButtonStartLight__" xml:space="preserve">
     <value>ButtonStartLight</value>
@@ -459,11 +456,11 @@
   <data name="___Production_planer__" xml:space="preserve">
     <value>Production planer</value>
   </data>
-  <data name="___Production_planer_is_empty____" xml:space="preserve">
-    <value>Production planer is empty! </value>
+  <data name="___Production_planer_is_empty___" xml:space="preserve">
+    <value>Production planer is empty!</value>
   </data>
-  <data name="___Production_planer_completed_required_plan____" xml:space="preserve">
-    <value>Production planer completed required plan! </value>
+  <data name="___Production_planer_completed_required_plan___" xml:space="preserve">
+    <value>Production planer completed required plan!</value>
   </data>
   <data name="___START_MEASURE_CT_TRIGGER__" xml:space="preserve">
     <value>START MEASURE CT TRIGGER</value>
@@ -474,23 +471,23 @@
   <data name="___Pairing_Tag__" xml:space="preserve">
     <value>Pairing Tag</value>
   </data>
-  <data name="___Founded_tag___" xml:space="preserve">
-    <value>Founded tag </value>
+  <data name="___Founded_tag__" xml:space="preserve">
+    <value>Founded tag</value>
   </data>
-  <data name="____is_inactive____" xml:space="preserve">
-    <value> is inactive! </value>
+  <data name="___is_inactive___" xml:space="preserve">
+    <value>is inactive!</value>
   </data>
-  <data name="___Tag___" xml:space="preserve">
-    <value>Tag </value>
+  <data name="___Tag__" xml:space="preserve">
+    <value>Tag</value>
   </data>
-  <data name="____is_founded_but_assigned_value_is_empty__Would_you_like_continue____" xml:space="preserve">
-    <value> is founded but assigned value is empty! Would you like continue? </value>
+  <data name="___is_founded_but_assigned_value_is_empty__Would_you_like_continue___" xml:space="preserve">
+    <value>is founded but assigned value is empty! Would you like continue?</value>
   </data>
-  <data name="____is_not_founded___Would_you_like_assign_right_now____" xml:space="preserve">
-    <value> is not founded ! Would you like assign right now? </value>
+  <data name="___is_not_founded___Would_you_like_assign_right_now___" xml:space="preserve">
+    <value>is not founded ! Would you like assign right now?</value>
   </data>
-  <data name="____is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now____" xml:space="preserve">
-    <value> is not founded due collection is empty ! Would you like assign right now? </value>
+  <data name="___is_not_founded_due_collection_is_empty___Would_you_like_assign_right_now___" xml:space="preserve">
+    <value>is not founded due collection is empty ! Would you like assign right now?</value>
   </data>
   <data name="___ADD_NEW_TAG__EXAMPLE__" xml:space="preserve">
     <value>ADD NEW TAG  EXAMPLE</value>
@@ -498,11 +495,11 @@
   <data name="___Adding_Tag__" xml:space="preserve">
     <value>Adding Tag</value>
   </data>
-  <data name="____already_exist____" xml:space="preserve">
-    <value> already exist! </value>
+  <data name="___already_exist___" xml:space="preserve">
+    <value>already exist!</value>
   </data>
-  <data name="____was_not_founnd__Would_you_like_still_like_to_continue____" xml:space="preserve">
-    <value> was not founnd! Would you like still like to continue? </value>
+  <data name="___was_not_founnd__Would_you_like_still_like_to_continue___" xml:space="preserve">
+    <value>was not founnd! Would you like still like to continue?</value>
   </data>
   <data name="___Recipe__" xml:space="preserve">
     <value>Recipe</value>
@@ -543,8 +540,8 @@
   <data name="___SUSPEND_PROCESS__" xml:space="preserve">
     <value>SUSPEND PROCESS</value>
   </data>
-  <data name="___Starts_suspend_sequence_of_process_automatic_ground_sequence_____" xml:space="preserve">
-    <value>Starts suspend sequence of process(automatic,ground sequence). </value>
+  <data name="___Starts_suspend_sequence_of_process_automatic_ground_sequence____" xml:space="preserve">
+    <value>Starts suspend sequence of process(automatic,ground sequence).</value>
   </data>
   <data name="___RECOVER_PROCESS__" xml:space="preserve">
     <value>RECOVER PROCESS</value>
@@ -593,9 +590,6 @@
   </data>
   <data name="___Vertikalny_prisun_vstupnych_blistrov__" xml:space="preserve">
     <value>Vertikalny prisun vstupnych blistrov</value>
-  </data>
-  <data name="___Vertikalny_prisun_vstupnych_blistrov___" xml:space="preserve">
-    <value>Vertikalny prisun vstupnych blistrov </value>
   </data>
   <data name="___Horizontalny_prisun_vstupnych_blistrov__" xml:space="preserve">
     <value>Horizontalny prisun vstupnych blistrov</value>
@@ -659,6 +653,9 @@
   </data>
   <data name="___Operation_ended__" xml:space="preserve">
     <value>Operation ended</value>
+  </data>
+  <data name="___Operator__" xml:space="preserve">
+    <value>Operator</value>
   </data>
   <data name="___Nominal__" xml:space="preserve">
     <value>Nominal</value>
@@ -759,6 +756,9 @@
   <data name="___Assigned_Value__" xml:space="preserve">
     <value>Assigned Value</value>
   </data>
+  <data name="___Answer__" xml:space="preserve">
+    <value>Answer</value>
+  </data>
   <data name="___All__" xml:space="preserve">
     <value>All</value>
   </data>
@@ -843,11 +843,11 @@
   <data name="___Any_present__" xml:space="preserve">
     <value>Any present</value>
   </data>
-  <data name="___Average_cycle_time___" xml:space="preserve">
-    <value>Average cycle time </value>
+  <data name="___Average_cycle_time__" xml:space="preserve">
+    <value>Average cycle time</value>
   </data>
-  <data name="___Average_clean_cycle_time___" xml:space="preserve">
-    <value>Average clean cycle time </value>
+  <data name="___Average_clean_cycle_time__" xml:space="preserve">
+    <value>Average clean cycle time</value>
   </data>
   <data name="___Average_cycle_time_filter_constant__" xml:space="preserve">
     <value>Average cycle time filter constant</value>
@@ -861,11 +861,8 @@
   <data name="___CU00x__" xml:space="preserve">
     <value>CU00x</value>
   </data>
-  <data name="___Presure_OK___" xml:space="preserve">
-    <value>Presure OK </value>
-  </data>
-  <data name="___Emergency_Stop___" xml:space="preserve">
-    <value>Emergency Stop </value>
+  <data name="___Presure_OK__" xml:space="preserve">
+    <value>Presure OK</value>
   </data>
   <data name="___Global_control_voltage__" xml:space="preserve">
     <value>Global control voltage</value>
@@ -876,14 +873,14 @@
   <data name="___Local_door_voltage__" xml:space="preserve">
     <value>Local door voltage</value>
   </data>
-  <data name="___Control_Buttons___" xml:space="preserve">
-    <value>Control Buttons </value>
+  <data name="___Control_Buttons__" xml:space="preserve">
+    <value>Control Buttons</value>
   </data>
-  <data name="___Mode_key___" xml:space="preserve">
-    <value>Mode key </value>
+  <data name="___Mode_key__" xml:space="preserve">
+    <value>Mode key</value>
   </data>
-  <data name="___Normal_Service_key___" xml:space="preserve">
-    <value>Normal/Service key </value>
+  <data name="___Normal_Service_key__" xml:space="preserve">
+    <value>Normal/Service key</value>
   </data>
   <data name="___Standard_door__" xml:space="preserve">
     <value>Standard door</value>
@@ -891,10 +888,10 @@
   <data name="___Basic_door__" xml:space="preserve">
     <value>Basic door</value>
   </data>
-  <data name="___Door_circuit___" xml:space="preserve">
-    <value>Door circuit </value>
+  <data name="___Door_circuit__" xml:space="preserve">
+    <value>Door circuit</value>
   </data>
-  <data name="___Zone___" xml:space="preserve">
-    <value>Zone </value>
+  <data name="___Zone__" xml:space="preserve">
+    <value>Zone</value>
   </data>
 </root>

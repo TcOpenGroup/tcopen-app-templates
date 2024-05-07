@@ -5,8 +5,6 @@
 TYPE
     ProcessData EXTENDS TcoData.TcoEntity :
     STRUCT
-
-  
         {attribute clr [RenderIgnore("Control", "ShadowControl")]}
         {attribute addProperty Name "<#Created#>"}
         _Created : DT;
@@ -18,7 +16,6 @@ TYPE
 		{attribute addProperty Name "<#CU00x#>"}
 		{attribute clr [Container(Layout.Stack)]}
         CU00x : CU00xProcessData := (Parent := THISSTRUCT);
-
     END_STRUCT
 END_TYPE
 ]]></Declaration>

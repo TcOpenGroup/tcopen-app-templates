@@ -367,8 +367,8 @@ END_VAR
 									   
 		IF THIS^.StationBase.RecurringFails.SameRecurringFails.Reached THEN
 			IF(_dialog.Show()
-			   .WithCaption('<#(Consecutive failure) The number of same recurring failure count has been reached! #>')
-			   .WithText('<#Please acknowledge recurring failure! #>')
+			   .WithCaption('<#(Consecutive failure) The number of same recurring failure count has been reached!#>')
+			   .WithText('<#Please acknowledge recurring failure!#>')
 			   .WithOk().Answer = TcoCore.eDialogAnswer.Ok) THEN
 			   
 					THIS^.StationBase.RecurringFails.SameRecurringFails.Counter:=0;

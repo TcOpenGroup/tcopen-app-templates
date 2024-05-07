@@ -31,10 +31,10 @@ VAR
     {attribute addProperty Name "<#ButtonSuspend#>"}
     _buttonSuspend : TcoElements.TcoDi(THIS^);
 
-    {attribute addProperty Name "<#ButtonGround #>"}
+    {attribute addProperty Name "<#ButtonGround#>"}
     _buttonGround : TcoElements.TcoDi(THIS^);
 
-    {attribute addProperty Name "<#ButtonAuto #>"}
+    {attribute addProperty Name "<#ButtonAuto#>"}
     _buttonAuto : TcoElements.TcoDi(THIS^);
 
 
