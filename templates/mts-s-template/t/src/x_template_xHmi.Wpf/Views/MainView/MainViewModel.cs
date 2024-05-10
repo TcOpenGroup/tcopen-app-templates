@@ -11,6 +11,7 @@ using x_template_xPlc;
 using x_template_xHmi.Wpf.Views.Diagnostics;
 using TcOpen.Inxton;
 using System.Windows;
+using x_template_xHmi.Wpf.Views.Data.ProcessTraceability;
 
 namespace x_template_xHmi.Wpf.Views.MainView
 {
@@ -20,7 +21,8 @@ namespace x_template_xHmi.Wpf.Views.MainView
         {
             Title = strings.Technology;
             OpenCommand(this.AddCommand(typeof(OperatorView), strings.Operator));
-            AddCommand(typeof(DataView), strings.Data);
+            AddCommand(typeof(DataView), strings.Settings);
+            AddCommand(typeof(ProcessTraceabilityView), strings.ProductionData);
             AddCommand(typeof(TechnologyView), strings.Technology);
             AddCommand(typeof(UserManagementGroupManagementView), strings.UserManagement);
             AddCommand(typeof(DiagnosticsView), strings.Diagnostics);

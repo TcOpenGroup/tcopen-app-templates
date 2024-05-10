@@ -390,4 +390,7 @@
   <data name="ReworkEntity" xml:space="preserve">
     <value>Reworkuj kus</value>
   </data>
+  <data name="OnlineData" xml:space="preserve">
+    <value>ONLINE DATA</value>
+  </data>
 </root>

@@ -484,6 +484,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ONLINE DATA.
+        /// </summary>
+        public static string OnlineData {
+            get {
+                return ResourceManager.GetString("OnlineData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPERATOR.
         /// </summary>
         public static string Operator {

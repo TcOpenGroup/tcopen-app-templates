@@ -19,12 +19,11 @@ namespace x_template_xHmi.Wpf.Data
     {
         public DataViewModel()
         {
-            this.Title = strings.Data;
+            this.Title = strings.Settings;
             this.AddCommand(typeof(ProcessSettingsView), strings.ProcessData);
-            this.AddCommand(typeof(TechnologicalSettingsView), strings.TechData);
+            this.AddCommand(typeof(TechnologicalSettingsView), strings.TechnologicalSettings);
             this.AddCommand(typeof(ReworkSettingsView), strings.ReworkData);
             this.AddCommand(typeof(OfflineReworkDataView), strings.ReworkOfflineData);
-            this.AddCommand(typeof(ProcessTraceabilityView), strings.ProductionData);
         }
     }
 }

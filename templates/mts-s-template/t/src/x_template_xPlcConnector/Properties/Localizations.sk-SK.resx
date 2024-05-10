@@ -148,10 +148,10 @@
     <value>Spustí automatickú sekvenciu. Pred spustením je potrebné vykonať reset sekvenciu .</value>
   </data>
   <data name="___AUTOMAT_ALL__" xml:space="preserve">
-    <value>AUTOMAT ALL</value>
+    <value>AUTOMAT</value>
   </data>
   <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>RESET VŠETKO</value>
+    <value>RESET</value>
   </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
     <value>Ďalšia stanica pri OK</value>

@@ -390,4 +390,7 @@
   <data name="Tasks" xml:space="preserve">
     <value>Úlohy</value>
   </data>
+  <data name="OnlineData" xml:space="preserve">
+    <value>ONLINE DÁTA</value>
+  </data>
 </root>

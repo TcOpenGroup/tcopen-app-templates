@@ -15,7 +15,7 @@ namespace x_template_xPlc
         {
             this.AddCommand(typeof(CUBaseOverviewView), strings.Overview, this);
             this.OpenCommand(this.AddCommand(typeof(CUBaseTasksView), strings.Control, this));
-            this.AddCommand(typeof(CUBaseDataView), strings.Data, this);
+            this.AddCommand(typeof(CUBaseDataView), strings.OnlineData, this);
             this.AddCommand(typeof(CUBaseComponentsView), strings.Components, this);
             this.AddCommand(typeof(CUBaseDiagView), strings.Diagnostics, this);
         

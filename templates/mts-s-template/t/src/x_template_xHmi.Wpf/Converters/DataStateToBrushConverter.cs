@@ -85,15 +85,15 @@ namespace x_template_xPlc
             switch (stateNumber)
             {
                 case TcoInspectors.eOverallResult.NoAction:
-                    return MaterialDesignThemes.Wpf.PackIconKind.None;
+                    return MaterialDesignThemes.Wpf.PackIconKind.File; //None
                 case TcoInspectors.eOverallResult.InProgress:
-                    return MaterialDesignThemes.Wpf.PackIconKind.FileCheck;
+                    return MaterialDesignThemes.Wpf.PackIconKind.FileSync; //FileCheck
                 case TcoInspectors.eOverallResult.Passed:
-                    return MaterialDesignThemes.Wpf.PackIconKind.FileCheck;
+                    return MaterialDesignThemes.Wpf.PackIconKind.FileCheck; //FileCheck
                 case TcoInspectors.eOverallResult.Failed:
-                    return MaterialDesignThemes.Wpf.PackIconKind.FileExcel;
+                    return MaterialDesignThemes.Wpf.PackIconKind.FileRemove; //FileExcel
                 default:
-                    return MaterialDesignThemes.Wpf.PackIconKind.None;
+                    return MaterialDesignThemes.Wpf.PackIconKind.File;      //None
             }
         }
 
