@@ -117,6 +117,9 @@
     <Page Update="Views\ControlledUnits\Base\ControlledUnitSpotLite\Spot\CUBaseSpotLiteView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="Views\DataTraceability\DataTraceabilityView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\Data\ReworkSettings\ReworkSettingsView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

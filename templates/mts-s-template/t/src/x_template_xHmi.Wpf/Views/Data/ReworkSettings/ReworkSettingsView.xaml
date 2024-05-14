@@ -17,6 +17,7 @@
                 <vortex:TcoDataExchangeView.DataListColumns>
                     <DataGridTextColumn Binding="{Binding _Created, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Created}"/>
                     <DataGridTextColumn Binding="{Binding _Modified, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Modified}"/>
+                    <DataGridTextColumn Width="*"/>
                     <!--<DataGridTextColumn
                                         Width="*"
                                         Binding="{Binding EntityHeader.IsMaster}" Header="Master"/>-->
