@@ -12,7 +12,6 @@ VAR_INPUT
 	{attribute clr [RenderIgnore()]}
 	inEstopActive		      : BOOL;
 	
-	
 END_VAR
 
 VAR

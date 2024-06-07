@@ -13,13 +13,14 @@
     </UserControl.DataContext>
     <Grid>
         <vortexs:PermissionBox Grid.Row="1" Permissions="rework_settings_access" SecurityMode="Disabled">
-            <vortex:TcoDataExchangeView DataContext="{Binding Data}" x:Name="fu">
+            <vortex:TcoDataExchangeView DataContext="{Binding Data}">
                 <vortex:TcoDataExchangeView.DataListColumns>
                     <DataGridTextColumn Binding="{Binding _Created, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Created}"/>
                     <DataGridTextColumn Binding="{Binding _Modified, Converter={vortex:HumanizeDateConverter}}" Header="{x:Static s:strings.Modified}"/>
-                    <DataGridTextColumn
+                    <DataGridTextColumn Width="*"/>
+                    <!--<DataGridTextColumn
                                         Width="*"
-                                        Binding="{Binding EntityHeader.IsMaster}" Header="Master"/>
+                                        Binding="{Binding EntityHeader.IsMaster}" Header="Master"/>-->
                 </vortex:TcoDataExchangeView.DataListColumns>
             </vortex:TcoDataExchangeView>
         </vortexs:PermissionBox>

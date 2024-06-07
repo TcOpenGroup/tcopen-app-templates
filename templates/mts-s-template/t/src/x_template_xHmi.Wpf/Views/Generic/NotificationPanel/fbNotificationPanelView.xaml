@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:s="clr-namespace:x_template_xHmi.Wpf.Properties"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:plc="clr-namespace:x_template_xPlc"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:plc="clr-namespace:x_template_xPlc"
     mc:Ignorable="d"
     d:DesignHeight="1500"
     d:DesignWidth="1500">
@@ -97,7 +98,6 @@
                                     <Border Background="{Binding Component._notificationPanelSignals.EmergencyStop.Cyclic,Converter={plc:BooleanToBrushInvertedConverter}}"  Style="{StaticResource iconContainer}">
                                         <materialDesign:PackIcon Kind="Alert" Style="{StaticResource icon}"/>
                                     </Border>
-
                                 </StackPanel>
                             </ListViewItem>
 

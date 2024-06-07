@@ -3,12 +3,11 @@
   <DUT Name="CU00xProcessData" Id="{3cde27d5-efc5-4d61-b268-7d32d11d85fc}">
     <Declaration><![CDATA[TYPE
     CU00xProcessData EXTENDS CUProcessDataBase :
-    STRUCT		
+    STRUCT
 		{attribute wpf [Container(Layout.Stack)]}
         BoltPresenceInspector : TcoInspectors.TcoDigitalInspector(THISSTRUCT);
 		BoltDimensionPresenceInspector : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
-		BoltDatacodePresenceInspector : TcoInspectors.TcoDataInspector(THISSTRUCT);				
-
+		BoltDatacodePresenceInspector : TcoInspectors.TcoDataInspector(THISSTRUCT);
 
 		{attribute addProperty Name "Dimension inspection 1"}
         Dim_Inspector_1 : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
@@ -30,7 +29,6 @@
         Dim_Inspector_9 : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
 		{attribute addProperty Name "Dimension inspection 10"}
         Dim_Inspector_10 : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
-		
 		
 		{attribute addProperty Name "Dimension inspection 11"}
         Dim_Inspector_11 : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);

@@ -1,4 +1,5 @@
 using x_template_xHmi.Wpf;
+using x_template_xHmi.Wpf.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace x_template_xPlc
     {
         public CUBaseViewModel()
         {
-            this.AddCommand(typeof(CUBaseOverviewView), "Overview", this);
-            this.OpenCommand(this.AddCommand(typeof(CUBaseTasksView), "Control", this));       
-            this.AddCommand(typeof(CUBaseDataView), "Data", this);
-            this.AddCommand(typeof(CUBaseComponentsView), "Components", this);
-            this.AddCommand(typeof(CUBaseDiagView), "Diagnostics", this);
+            this.AddCommand(typeof(CUBaseOverviewView), strings.Overview, this);
+            this.OpenCommand(this.AddCommand(typeof(CUBaseTasksView), strings.Control, this));
+            this.AddCommand(typeof(CUBaseDataView), strings.OnlineData, this);
+            this.AddCommand(typeof(CUBaseComponentsView), strings.Components, this);
+            this.AddCommand(typeof(CUBaseDiagView), strings.Diagnostics, this);
         
             this.OpenDetailsCommand = new TcOpen.Inxton.Input.RelayCommand((a) => OpenDetails());
         }

@@ -6,11 +6,11 @@ TYPE
     TechnologyComponents EXTENDS TcoCore.TcoStruct :
     STRUCT
       	{attribute wpf [Container(Layout.Stack,"PRESURE")]}
-        {attribute addProperty Name "<#Presure OK #>"}
+        {attribute addProperty Name "<#Presure OK#>"}
         AirPresureOk : TcoElements.TcoDi(THISSTRUCT);  
 	
 		{attribute wpf [Container(Layout.Stack,"ESTOPS")]}
-        {attribute addProperty Name "<#Emergency Stop #>"}
+        {attribute addProperty Name "<#Emergency Stop#>"}
         EmergencyStop : TcoEmergencyStop(THISSTRUCT);
 
 		{attribute wpf [Container(Layout.Stack,"CONTROL VOLTAGE")]}
@@ -27,13 +27,13 @@ TYPE
 		
 		
 		{attribute wpf [Container(Layout.Stack,"CONTROLS")]}
-        {attribute addProperty Name "<#Control Buttons #>"}
+        {attribute addProperty Name "<#Control Buttons#>"}
         ControlButtons : TcoControlButtons(THISSTRUCT);
 		
-        {attribute addProperty Name "<#Mode key #>"}
+        {attribute addProperty Name "<#Mode key#>"}
         ModeKey : TcoKeyMode(THISSTRUCT);
 		
-		{attribute addProperty Name "<#Normal/Service key #>"}
+		{attribute addProperty Name "<#Normal/Service key#>"}
         NormalServiceKey : TcoKeyNormalService(THISSTRUCT);
 		
 		{attribute wpf [Container(Layout.Stack,"DOORS")]}
@@ -45,11 +45,11 @@ TYPE
 
 		
 		{attribute wpf [Container(Layout.Stack,"DOORCIRUITS AND ZONES")]}
-		{attribute addProperty Name "<#Door circuit #>"}
+		{attribute addProperty Name "<#Door circuit#>"}
         DoorCicuit : TcoDoorCircuit(THISSTRUCT);
 
 		
-		{attribute addProperty Name "<#Zone #>"}
+		{attribute addProperty Name "<#Zone#>"}
         Zone : TcoControlledZone(THISSTRUCT);
 
 

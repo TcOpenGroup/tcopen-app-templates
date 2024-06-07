@@ -3,14 +3,7 @@
   <POU Name="CU00xRecoverTask" Id="{17c9c1d5-2003-4c5d-8cd0-01016f658adf}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK CU00xRecoverTask EXTENDS CUBaseRecover IMPLEMENTS ICUTask
 VAR
-
-	
-	
 	_sb : TcoCore.StringBuilder;
-END_VAR
-
-VAR
-
 END_VAR
 ]]></Declaration>
     <Implementation>

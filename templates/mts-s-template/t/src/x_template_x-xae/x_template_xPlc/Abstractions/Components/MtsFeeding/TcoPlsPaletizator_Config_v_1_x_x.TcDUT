@@ -8,7 +8,7 @@
 	
         {attribute addProperty Name "<#Stabilizacny cas#>"}
 		StabilisationTime : TIME :=T#500MS;
-		{attribute addProperty Name "<#Blink period#> "}
+		{attribute addProperty Name "<#Blink period#>"}
 		BlinkTime : TIME := T#500MS;
 		
         {attribute addProperty Name "<#Zamykanie blistra zhora neaktive (P9)(P9.1)je nepritomne#>"}

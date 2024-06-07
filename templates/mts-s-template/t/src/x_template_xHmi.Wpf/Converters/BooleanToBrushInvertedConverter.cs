@@ -11,7 +11,7 @@ namespace x_template_xPlc
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (!(bool)value)
+            if ((bool)value)
             {
                 return Application.Current.Resources["Alert"];
             }

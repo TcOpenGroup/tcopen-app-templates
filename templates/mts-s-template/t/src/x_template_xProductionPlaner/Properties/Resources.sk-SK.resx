@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActualCount" xml:space="preserve">
-    <value>AKTUALNY POČET</value>
+    <value>AKTUÁLNY POČET</value>
   </data>
   <data name="ActualRecipe" xml:space="preserve">
-    <value>AKTUALNA REFERENCIA</value>
+    <value>AKTUÁLNA REFERENCIA</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Vymazať</value>
@@ -136,13 +136,13 @@
     <value>Dole</value>
   </data>
   <data name="InitializeCounters" xml:space="preserve">
-    <value>Inicializovať počitadla</value>
+    <value>Inicializovať počítadlá</value>
   </data>
   <data name="RefreshRecipeList" xml:space="preserve">
-    <value>Aktualizuj zoznam receptov</value>
+    <value>Aktualizovať zoznam receptov</value>
   </data>
   <data name="RequiredCount" xml:space="preserve">
-    <value>POŽADOVANY POČET</value>
+    <value>POŽADOVANÝ POČET</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Uložiť</value>
