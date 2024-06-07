@@ -27,7 +27,7 @@ namespace x_template_xOp
         {    
 
             InitializeComponent();
-            if (Debugger.IsAttached /*|| Entry.Settings.DepoyMode == DeployMode.Local*/ || Entry.Settings.DepoyMode == DeployMode.Dummy)
+            if (App.IsDebug /*|| Entry.Settings.DepoyMode == DeployMode.Local*/ || Entry.Settings.DeployMode == DeployMode.Dummy)
             { this.WindowStyle = WindowStyle.SingleBorderWindow; }
             else
                 this.WindowStyle = WindowStyle.None;

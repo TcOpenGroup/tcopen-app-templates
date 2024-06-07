@@ -14,7 +14,10 @@ namespace x_template_xPlcConnector
 
 
         private static x_template_xPlcTwinController plc =  new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851,true));
-        private static ApplicationSettings _settings;
+
+     
+
+        private static ApplicationSettings _settings = new ApplicationSettings();
 
 
         public static x_template_xPlc.x_template_xPlcTwinController Plc => plc;
@@ -29,7 +32,7 @@ namespace x_template_xPlcConnector
             }
         }
 
-        public static ApplicationSettings Settings { get { return _settings; } }
+        public static ApplicationSettings Settings { get { return _settings; } } 
 
         /// <summary>
         /// Load specific parameters stored in json file stored in 'x_template_xPlcConnector.Properties.Settings.Default.SettingsLocation'
@@ -37,29 +40,29 @@ namespace x_template_xPlcConnector
         /// <param name="setId">Name for set</param>
         public static void LoadAppSettings(string setId,bool inDevelopingMode)
         {
-
-            RepositoryDataSetHandler<ApplicationSettings> _settings = RepositoryDataSetHandler<ApplicationSettings>.CreateSet(new JsonRepository<EntitySet<ApplicationSettings>>(new JsonRepositorySettings<EntitySet<ApplicationSettings>>(Properties.Settings.Default.SettingsLocation)));//todo tco adresar
-            var result = _settings.Repository.Queryable.FirstOrDefault(p => p._EntityId == setId);
-            var set = new EntitySet<ApplicationSettings>();
-            set._Modified = DateTime.Now;
-            set._EntityId = setId;
-
-            if (result == null)
+            if (!inDevelopingMode)
             {
-                set._Created = DateTime.Now;
 
-                _settings.Create(setId, set);
-            }
-            else if (inDevelopingMode)
-            {
-                _settings.Repository.Update(setId, set);
-            }
+                RepositoryDataSetHandler<ApplicationSettings> _settings = RepositoryDataSetHandler<ApplicationSettings>.CreateSet(new JsonRepository<EntitySet<ApplicationSettings>>(new JsonRepositorySettings<EntitySet<ApplicationSettings>>(Properties.Settings.Default.SettingsLocation)));//todo tco adresar
+                var result = _settings.Repository.Queryable.FirstOrDefault(p => p._EntityId == setId);
+ 
+                var set = new EntitySet<ApplicationSettings>();
+                set._Modified = DateTime.Now;
+                set._EntityId = setId;
+
+                if (result == null)
+                {
+                    set._Created = DateTime.Now;
+
+                    _settings.Create(setId, set);
+                }
+
 
             Entry._settings = _settings.Read(setId).Item;
-
-            plc = Entry._settings.DepoyMode == DeployMode.Dummy
+            }
+            plc = Entry._settings.DeployMode == DeployMode.Dummy
                 ? new x_template_xPlcTwinController(new ConnectorAdapter(typeof(DummyConnector)))
-                : Entry._settings.DepoyMode == DeployMode.Local
+                : Entry._settings.DeployMode == DeployMode.Local
                     ? new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(851, Settings.ShowConsoleOutput))
                     : new x_template_xPlcTwinController(Tc3ConnectorAdapter.Create(Entry._settings.PlcAmsId, 851, Settings.ShowConsoleOutput));
         }

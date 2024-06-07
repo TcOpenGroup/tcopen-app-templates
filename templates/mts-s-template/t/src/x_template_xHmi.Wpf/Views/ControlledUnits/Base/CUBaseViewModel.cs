@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using TcoCore;
 using TcOpen.Inxton.Local.Security;
+using x_template_xPlcConnector;
+
 namespace x_template_xPlc
 {
     public class CUBaseViewModel : MenuRenderableControlViewModel
@@ -23,7 +25,7 @@ namespace x_template_xPlc
 
         private void OpenDetails()
         {
-            if (AuthorizationChecker.HasAuthorization(Roles.station_details))
+            if (AuthorizationChecker.HasAuthorization(DefaultRoles.station_details))
             {
                 var detailsView = Vortex.Presentation.Wpf.LazyRenderer.Get.CreatePresentation("Control", Component, new Grid(), false);
                 NavigableViewModelBase.Current.OpenView(detailsView as FrameworkElement);
@@ -66,6 +68,7 @@ namespace x_template_xPlc
 
         public ProcessData OnlineData { get { return Component.GetChildren<TcoData.TcoDataExchange>().FirstOrDefault()?.GetChildren<TcoData.TcoEntity>().FirstOrDefault() as ProcessData; } }
 
+    
         public EntityHeader EntityHeader { get { return OnlineData.EntityHeader; } }
 
         public object Components { get { return Component.GetChildren<CUComponentsBase>().FirstOrDefault(); } }

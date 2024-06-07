@@ -313,6 +313,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full process  data.
+        /// </summary>
+        public static string FullProcessData {
+            get {
+                return ResourceManager.GetString("FullProcessData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are about to start ground position mode on all station of this technology. Would you like to start ground position mode on all stations of this technology?.
         /// </summary>
         public static string GroundAllWarning {
@@ -679,6 +688,24 @@ namespace x_template_xHmi.Wpf.Properties {
         public static string STATION2 {
             get {
                 return ResourceManager.GetString("STATION2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Station process data.
+        /// </summary>
+        public static string StationProcessData {
+            get {
+                return ResourceManager.GetString("StationProcessData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Station technology data.
+        /// </summary>
+        public static string StationTechnologyData {
+            get {
+                return ResourceManager.GetString("StationTechnologyData", resourceCulture);
             }
         }
         

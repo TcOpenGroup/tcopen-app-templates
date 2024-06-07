@@ -391,4 +391,13 @@ HLAVNÁ SEKVENCIA</value>
   <data name="Tasks" xml:space="preserve">
     <value>Tasky</value>
   </data>
+  <data name="FullProcessData" xml:space="preserve">
+    <value>Kompletné procesné data</value>
+  </data>
+  <data name="StationProcessData" xml:space="preserve">
+    <value>Procesné data stanice</value>
+  </data>
+  <data name="StationTechnologyData" xml:space="preserve">
+    <value>Technologicke dáta stanicer</value>
+  </data>
 </root>

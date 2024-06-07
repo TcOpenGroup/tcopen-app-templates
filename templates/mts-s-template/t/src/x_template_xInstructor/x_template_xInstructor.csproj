@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TcOpen.Inxton.Instructor" Version="0.11.0-alpha.68" />
+    <PackageReference Include="TcOpen.Inxton.Instructor" Version="0.11.0-alpha.71" />
   </ItemGroup>
   <ItemGroup>
 

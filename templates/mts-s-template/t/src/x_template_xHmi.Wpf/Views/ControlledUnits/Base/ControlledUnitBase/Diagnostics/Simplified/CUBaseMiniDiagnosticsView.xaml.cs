@@ -36,7 +36,7 @@ namespace x_template_xPlc
 
         private void MessageUpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-           // UpdateMessages();
+            UpdateMessages();
         }
 
         private TcoDiagnosticsViewModel _context { get { return this.DataContext as TcoDiagnosticsViewModel; } }

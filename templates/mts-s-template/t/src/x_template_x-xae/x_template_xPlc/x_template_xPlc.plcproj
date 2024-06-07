@@ -287,6 +287,9 @@
     <Compile Include="Technology\CU00x\Data\CU00xProcessData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\Data\TcoEntityBase.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Technology\Data\TechnologicalDataManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -426,71 +429,71 @@
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAbbRobotics">
-      <DefaultResolution>TcoAbbRobotics, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAbbRobotics, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAbbRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAbstractions">
-      <DefaultResolution>TcoAbstractions, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAbstractions, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAbstractions</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoAimTtiPowerSupply">
-      <DefaultResolution>TcoAimTtiPowerSupply, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoAimTtiPowerSupply, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoAimTtiPowerSupply</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoCognexVision">
-      <DefaultResolution>TcoCognexVision, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoCognexVision, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoCognexVision</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoCore">
-      <DefaultResolution>TcoCore, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoCore, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoCore</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoData">
-      <DefaultResolution>TcoData, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoData, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoData</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoDrivesBeckhoff">
-      <DefaultResolution>TcoDrivesBeckhoff, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoDrivesBeckhoff, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoDrivesBeckhoff</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoElements">
-      <DefaultResolution>TcoElements, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoElements, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoElements</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoInspectors">
-      <DefaultResolution>TcoInspectors, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoInspectors, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoInspectors</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoIo">
-      <DefaultResolution>TcoIo, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoIo, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoIo</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoKukaRobotics">
-      <DefaultResolution>TcoKukaRobotics, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoKukaRobotics, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoKukaRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoMitsubishiRobotics">
-      <DefaultResolution>TcoMitsubishiRobotics, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoMitsubishiRobotics, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoMitsubishiRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoPneumatics">
-      <DefaultResolution>TcoPneumatics, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoPneumatics, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoPneumatics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoRexrothPress">
-      <DefaultResolution>TcoRexrothPress, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoRexrothPress, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoRexrothPress</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoTixonFeeding">
-      <DefaultResolution>TcoTixonFeeding, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoTixonFeeding, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoTixonFeeding</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoUrRobotics">
-      <DefaultResolution>TcoUrRobotics, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoUrRobotics, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoUrRobotics</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcoUtilities">
-      <DefaultResolution>TcoUtilities, 0.11.0.68 (Vortex.Library)</DefaultResolution>
+      <DefaultResolution>TcoUtilities, 0.11.0.71 (Vortex.Library)</DefaultResolution>
       <Namespace>TcoUtilities</Namespace>
     </PlaceholderReference>
   </ItemGroup>
@@ -501,55 +504,55 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="TcoAbbRobotics">
-      <Resolution>TcoAbbRobotics, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoAbbRobotics, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoAbstractions">
-      <Resolution>TcoAbstractions, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoAbstractions, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoAimTtiPowerSupply">
-      <Resolution>TcoAimTtiPowerSupply, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoAimTtiPowerSupply, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoCognexVision">
-      <Resolution>TcoCognexVision, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoCognexVision, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoCore">
-      <Resolution>TcoCore, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoCore, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoData">
-      <Resolution>TcoData, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoData, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoDrivesBeckhoff">
-      <Resolution>TcoDrivesBeckhoff, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoDrivesBeckhoff, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoElements">
-      <Resolution>TcoElements, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoElements, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoInspectors">
-      <Resolution>TcoInspectors, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoInspectors, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoIo">
-      <Resolution>TcoIo, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoIo, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoKukaRobotics">
-      <Resolution>TcoKukaRobotics, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoKukaRobotics, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoMitsubishiRobotics">
-      <Resolution>TcoMitsubishiRobotics, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoMitsubishiRobotics, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoPneumatics">
-      <Resolution>TcoPneumatics, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoPneumatics, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoRexrothPress">
-      <Resolution>TcoRexrothPress, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoRexrothPress, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoTixonFeeding">
-      <Resolution>TcoTixonFeeding, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoTixonFeeding, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoUrRobotics">
-      <Resolution>TcoUrRobotics, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoUrRobotics, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="TcoUtilities">
-      <Resolution>TcoUtilities, 0.11.0.68 (Vortex.Library)</Resolution>
+      <Resolution>TcoUtilities, 0.11.0.71 (Vortex.Library)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>

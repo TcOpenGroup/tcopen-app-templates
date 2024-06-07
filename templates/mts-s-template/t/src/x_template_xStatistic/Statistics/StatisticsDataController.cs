@@ -228,7 +228,7 @@ namespace x_template_xStatistic.Statistics
 
         }
 
-
+        
 
         public void Count(PlainProcessData data)
         {
@@ -238,7 +238,7 @@ namespace x_template_xStatistic.Statistics
             var isFailed = header.Results.Result == 30;
             var isNormalProduction = !header.IsEmpty && !header.IsMaster ;
 
-            if (isNormalProduction)
+            if (isNormalProduction && (eStations)header.OpenOn != eStations.NONE)
             {
 
 
@@ -405,7 +405,7 @@ namespace x_template_xStatistic.Statistics
                 }
 
             }
-            // entyty type counter
+            // entity type counter
             var isEmpty = nameof(data.EntityHeader.IsEmpty).Split('.').ToList().Last();
             var isRework = nameof(data.EntityHeader.WasReworked).Split('.').ToList().Last();
             var isMaster = nameof(data.EntityHeader.IsMaster).Split('.').ToList().Last();

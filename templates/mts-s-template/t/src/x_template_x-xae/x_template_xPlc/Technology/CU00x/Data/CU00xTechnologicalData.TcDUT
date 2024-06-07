@@ -4,6 +4,8 @@
     <Declaration><![CDATA[TYPE
     CU00xTechnologicalData EXTENDS CUTechnologicalDataBase : 
     STRUCT		
+		{attribute wpf [Container(Layout.Stack,"Station specific data")]}
+		{attribute wpf [Group(Layout.GroupBox)]}
 		{attribute addProperty Name "Axis Home position"}
         ServoHomePosition : LREAL;
 		{attribute addProperty Name "Axis Work position"}

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoEntityBase" Id="{82fa9cb5-c609-474c-9ff9-380ad63bb0af}">
+    <Declaration><![CDATA[TYPE TcoEntityBase EXTENDS TcoData.TcoEntity :
+STRUCT
+	{attribute clr [RenderIgnore("Control", "ShadowControl")]}
+	{attribute addProperty Name "<#Created#>"}
+	_Created : DT;
+	{attribute clr [RenderIgnore("Control", "ShadowControl")]}
+	{attribute addProperty Name "<#Modified#>"}
+	_Modified : DT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

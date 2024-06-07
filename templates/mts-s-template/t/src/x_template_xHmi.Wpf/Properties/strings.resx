@@ -391,4 +391,13 @@ MAIN SEQUENCE</value>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
   </data>
+  <data name="FullProcessData" xml:space="preserve">
+    <value>Full process  data</value>
+  </data>
+  <data name="StationProcessData" xml:space="preserve">
+    <value>Station process data</value>
+  </data>
+  <data name="StationTechnologyData" xml:space="preserve">
+    <value>Station technology data</value>
+  </data>
 </root>

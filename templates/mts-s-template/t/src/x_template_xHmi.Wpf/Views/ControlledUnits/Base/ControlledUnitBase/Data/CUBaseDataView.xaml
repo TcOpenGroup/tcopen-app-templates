@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+               xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
              xmlns:local="clr-namespace:x_template_xPlc" xmlns:vortex="http://vortex.mts/xaml"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -15,13 +16,17 @@
         <vortex:RenderableContentControl DataContext="{Binding Component }" PresentationType="InfoTasks"></vortex:RenderableContentControl>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="{Binding AttributeName}" DataContext="{Binding Component}">
+            <TabItem Header="{x:Static p:strings.StationProcessData}" DataContext="{Binding Component}">
                 <vortex:RenderableContentControl DataContext="{Binding _cuProcessDataDisplay}" PresentationType="ShadowDisplaySlim-ShadowDisplay"></vortex:RenderableContentControl>
             </TabItem>
-            <TabItem Header="Full data">
+            <TabItem Header="{x:Static p:strings.StationTechnologyData}" DataContext="{Binding Component}">
+                <vortex:RenderableContentControl DataContext="{Binding _cuTechnologicalDataDisplay}" PresentationType="ShadowDisplaySlim-ShadowDisplay"></vortex:RenderableContentControl>
+            </TabItem>
+            <TabItem Header="{x:Static p:strings.FullProcessData}">
                  <vortex:RenderableContentControl DataContext="{Binding OnlineData}" PresentationType="ShadowDisplaySlim-ShadowDisplay"></vortex:RenderableContentControl>
 
             </TabItem>
+           
         </TabControl>
     </Grid>
 </UserControl>

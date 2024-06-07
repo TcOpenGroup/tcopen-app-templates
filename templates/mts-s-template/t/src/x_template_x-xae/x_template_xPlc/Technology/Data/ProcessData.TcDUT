@@ -3,16 +3,11 @@
   <DUT Name="ProcessData" Id="{113396d1-0fe0-4862-b140-87fe92cd116d}">
     <Declaration><![CDATA[{attribute clr [Container(Layout.Tabs)]}
 TYPE
-    ProcessData EXTENDS TcoData.TcoEntity :
+    ProcessData EXTENDS TcoEntityBase :
     STRUCT
 
   
-        {attribute clr [RenderIgnore("Control", "ShadowControl")]}
-        {attribute addProperty Name "<#Created#>"}
-        _Created : DT;
-        {attribute clr [RenderIgnore("Control", "ShadowControl")]}
-        {attribute addProperty Name "<#Modified#>"}
-        _Modified : DT;
+       
         {attribute addProperty Name "<#Entity header#>"}
         EntityHeader : EntityHeader     := (Parent := THISSTRUCT);
 		{attribute addProperty Name "<#CU00x#>"}

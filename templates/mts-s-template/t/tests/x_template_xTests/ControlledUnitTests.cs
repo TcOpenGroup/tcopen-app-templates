@@ -28,6 +28,7 @@ namespace x_template_xTests
         {
             var a = x_template_xApp.Get;
             Entry.LoadAppSettings("testing", true);
+            Entry.Settings.DatabaseEngine = DatabaseEngine.RavenDbEmbded;
             Entry.Plc.Connector.BuildAndStart();
 
             var ProcessSettningsRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { @"http://localhost:8080" }, "ProcessSettings", "", "");

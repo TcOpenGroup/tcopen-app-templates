@@ -5,12 +5,15 @@ namespace x_template_xPlcConnector
     public class ApplicationSettings
     {
 
-        public DeployMode DepoyMode{ get; set; } = DeployMode.Local;
-        public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.RavenDbEmbded;
+        public DeployMode DeployMode{ get; set; } = DeployMode.Local;
+        public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
+
         public string PlcAmsId =Environment.GetEnvironmentVariable("Tc3Target");
         public bool ShowConsoleOutput { get; set; } = true;
 
         public int ReadWriteCycleDelay { get; set; } = 100;
+
+        public bool DataExchange { get; set; } = true;
 
         public string DbName { get; set; } = "tcomtsx_template_x";
         public string MongoPath {get;set;} = @"C:\Program Files\MongoDB\Server\7.0\bin\mongod.exe";
@@ -44,7 +47,7 @@ namespace x_template_xPlcConnector
         public  string GetConnectionString()
         {
             var connectionString = DatabaseEngine == DatabaseEngine.MongoDb ? MongoDbProduction : RavenDbProduction;
-            if (DepoyMode == DeployMode.Local)
+            if (DeployMode == DeployMode.Local)
             {
                 connectionString = DatabaseEngine == DatabaseEngine.MongoDb ? MongoDbLocal : RavenDbLocal;
             }

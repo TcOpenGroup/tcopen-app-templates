@@ -40,9 +40,10 @@ namespace x_template_xPlc
             }
         }
 
+
         private ProcessData ProcessData { get; set; }
         private dynamic CuProcessData { get; set; }
-
+        private dynamic CuTechnologyData { get; set; }
         private int c = 0;
         private void UpdateDataTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -60,7 +61,12 @@ namespace x_template_xPlc
                 if (CuProcessData == null) CuProcessData = context?.Component.GetChildren<CUProcessDataBase>().FirstOrDefault();
                                
                 CuProcessData.FlushOnlineToShadow();                
-                ProcessData.FlushOnlineToShadow();               
+                ProcessData.FlushOnlineToShadow();
+
+           
+                if (CuTechnologyData == null) CuTechnologyData = context?.Component.GetChildren<CUTechnologicalDataBase>().FirstOrDefault();
+
+                CuTechnologyData.FlushOnlineToShadow();
             }
         }
     }
