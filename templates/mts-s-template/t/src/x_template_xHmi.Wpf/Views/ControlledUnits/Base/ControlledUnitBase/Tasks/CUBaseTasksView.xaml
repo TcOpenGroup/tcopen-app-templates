@@ -57,13 +57,23 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="1"
+                    <WrapPanel  Grid.Column="1">
+                        <Button ToolTip="{x:Static p:strings.ShowStationInWindow}" Command="{Binding OpenTasksDetailsCommand}"
+                             Style="{StaticResource MaterialDesignIconButton}">
+                            <materialDesign:PackIcon
+                            
+                            Foreground="{StaticResource Primary}"
+                            Kind="ApplicationExport"
+                            Style="{StaticResource icon}" />
+                        </Button>
+                        <TextBlock
+                       
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Margin="5,0,40,0"
                         Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
                         Text="{Binding Component, Converter={vortex:NameOrSymbolConverter}}" />
+                    </WrapPanel>
 
                     <!--Cycle time analitics-->
                     <ScrollViewer 

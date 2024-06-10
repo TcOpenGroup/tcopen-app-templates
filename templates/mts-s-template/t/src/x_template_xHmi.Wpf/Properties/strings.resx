@@ -400,4 +400,7 @@ MAIN SEQUENCE</value>
   <data name="StationTechnologyData" xml:space="preserve">
     <value>Station technology data</value>
   </data>
+  <data name="ShowStationInWindow" xml:space="preserve">
+    <value>Show station data in new window</value>
+  </data>
 </root>

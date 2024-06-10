@@ -12,6 +12,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <local:CUBaseInfoTasksView DataContext="{Binding }" ></local:CUBaseInfoTasksView>
-        <vortex:RenderableContentControl Grid.Row="1" DataContext="{Binding Component}" PresentationType="Diagnostics"></vortex:RenderableContentControl>
+        <ScrollViewer Grid.Row="1">
+            <vortex:RenderableContentControl  DataContext="{Binding Component}" PresentationType="Diagnostics"></vortex:RenderableContentControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

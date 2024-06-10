@@ -638,6 +638,15 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show station data in new window.
+        /// </summary>
+        public static string ShowStationInWindow {
+            get {
+                return ResourceManager.GetString("ShowStationInWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Topology.
         /// </summary>
         public static string ShowTopology {

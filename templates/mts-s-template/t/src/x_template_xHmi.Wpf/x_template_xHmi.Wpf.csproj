@@ -111,6 +111,9 @@
     <Page Update="Views\Components\ArrayRenderingExample\SampleArrayToRenderServiceView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="Views\ControlledUnits\Base\ControlledUnitBase\Tasks\CUBaseInfoDetailsTasksView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\ControlledUnits\Base\ControlledUnitBase\Tasks\CUBaseInfoTasksView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

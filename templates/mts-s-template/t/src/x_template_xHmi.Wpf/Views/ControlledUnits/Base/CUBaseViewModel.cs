@@ -21,8 +21,14 @@ namespace x_template_xPlc
             this.AddCommand(typeof(CUBaseDiagView), "Diagnostics", this);
         
             this.OpenDetailsCommand = new TcOpen.Inxton.Input.RelayCommand((a) => OpenDetails());
+            OpenTasksDetailsCommand = new TcOpen.Inxton.Input.RelayCommand((a) => OpenTasksDetails());
         }
 
+        protected async void OpenTasksDetails()
+        {
+            x_template_xHmi.Wpf.NavigableViewModelBase.Current.ShowInWindow(new CUBaseInfoDetailsTasksView() { DataContext = this });
+
+        }
         private void OpenDetails()
         {
             if (AuthorizationChecker.HasAuthorization(DefaultRoles.station_details))
@@ -57,7 +63,7 @@ namespace x_template_xPlc
                 if (Component != null && Component.GetKids() != null)
                 {
                     _safetyTaskControls = Component.GetKids().Where(p => suffixesToMatch.Any(suffix => p.Symbol.EndsWith(suffix)));
-                    //_taskControls = Component.GetChildren<ITcoTasked>();                    
+                                  
                 }
 
                 return _safetyTaskControls;
@@ -108,7 +114,9 @@ namespace x_template_xPlc
            
         }
 
-        public override object Model { get => Component; set { Component = (CUBase)value; this.Update(); } }        
+        public override object Model { get => Component; set { Component = (CUBase)value; this.Update(); } }
+
+        public TcOpen.Inxton.Input.RelayCommand OpenTasksDetailsCommand { get; private set; }
 
         public TcOpen.Inxton.Input.RelayCommand OpenDetailsCommand { get; }
     }

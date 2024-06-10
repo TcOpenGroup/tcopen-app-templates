@@ -391,4 +391,7 @@ HLAVNÍ SEKVENCE!</value>
   <data name="StationTechnologyData" xml:space="preserve">
     <value>Technologický dáta stanice</value>
   </data>
+  <data name="ShowStationInWindow" xml:space="preserve">
+    <value>Zobrazit stanicu v novem okne.</value>
+  </data>
 </root>

@@ -400,4 +400,7 @@ HLAVNÁ SEKVENCIA</value>
   <data name="StationTechnologyData" xml:space="preserve">
     <value>Technologicke dáta stanicer</value>
   </data>
+  <data name="ShowStationInWindow" xml:space="preserve">
+    <value>Zobraziť stanicu v novom okne.</value>
+  </data>
 </root>
