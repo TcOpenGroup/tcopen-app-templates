@@ -117,115 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="___AUTOMAT__" xml:space="preserve">
-    <value>AUTOMAT</value>
+  <data name="CONFIGURATOR" xml:space="preserve">
+    <value>KONFIGURÁTOR</value>
   </data>
-  <data name="___GROUND__" xml:space="preserve">
-    <value>RESET</value>
+  <data name="KEY" xml:space="preserve">
+    <value>KLÍČ</value>
   </data>
-  <data name="___MANUAL__" xml:space="preserve">
-    <value>MANUAL</value>
+  <data name="REMARK" xml:space="preserve">
+    <value>POPIS</value>
   </data>
-  <data name="___IDLE__" xml:space="preserve">
-    <value>NEAKTIVNI</value>
+  <data name="INSTRUCTION" xml:space="preserve">
+    <value>INSTRUKCE</value>
   </data>
-  <data name="___Process_data_not_selected__" xml:space="preserve">
-    <value>Precesní nastaveni nebyla vybrána</value>
+  <data name="IMAGELOCATION" xml:space="preserve">
+    <value>CESTA K SOUBORU</value>
   </data>
-  <data name="___Would_you_like_to_load_default_settings___" xml:space="preserve">
-    <value>Chcete načíst výchozí nastavení?</value>
+  <data name="Browse" xml:space="preserve">
+    <value>PŘEHLEDÁVAT</value>
   </data>
-  <data name="___Brings_the_device_into_basic_position___" xml:space="preserve">
-    <value>Přivede zařízení do základní polohy.</value>
+  <data name="SAVE" xml:space="preserve">
+    <value>ULOŽIT</value>
   </data>
-  <data name="___Starts_automatic_sequence__Before_start_you_need_to_perform_grounding_sequence___" xml:space="preserve">
-    <value>Spustí automatickou sekvenci. Před spuštěním musíte provést uzemňovací sekvenci.!</value>
+  <data name="UPDATE" xml:space="preserve">
+    <value>OBNOVIT</value>
   </data>
-  <data name="___AUTOMAT_ALL__" xml:space="preserve">
-    <value>AUTOMAT VŠECHNO</value>
+  <data name="REMOVE" xml:space="preserve">
+    <value>ODSTRANIT</value>
   </data>
-  <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>RESET VSETKY</value>
+  <data name="IMAGELOCATIONBROWSE" xml:space="preserve">
+    <value>PŘEHLEDÁVAT CESTU K SOUBORU</value>
   </data>
-  <data name="___Next_on_Passed__" xml:space="preserve">
-    <value>Další prošel</value>
+  <data name="Down" xml:space="preserve">
+    <value>DOLŮ</value>
   </data>
-  <data name="___Next_on_Failed__" xml:space="preserve">
-    <value>Další chyba</value>
-  </data>
-  <data name="___Cycle_time__" xml:space="preserve">
-    <value>Doba cyklu</value>
-  </data>
-  <data name="___Clean_loop_time__" xml:space="preserve">
-    <value>Čistý cas cyklu</value>
-  </data>
-  <data name="___Operation_started__" xml:space="preserve">
-    <value>Operace začala</value>
-  </data>
-  <data name="___Operation_ended__" xml:space="preserve">
-    <value>Operace skončila</value>
-  </data>
-  <data name="___Entity_header__" xml:space="preserve">
-    <value>Hlavička kusu</value>
-  </data>
-  <data name="___Carrier__" xml:space="preserve">
-    <value>Nosiš</value>
-  </data>
-  <data name="___Reset__" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="___Master__" xml:space="preserve">
-    <value>Master</value>
-  </data>
-  <data name="___Empty__" xml:space="preserve">
-    <value>Prázdné</value>
-  </data>
-  <data name="___Last_station__" xml:space="preserve">
-    <value>Stanice</value>
-  </data>
-  <data name="___Next_station__" xml:space="preserve">
-    <value>Další stanice</value>
-  </data>
-  <data name="___Operations_opened__" xml:space="preserve">
-    <value>Operace zahájeny</value>
-  </data>
-  <data name="___Results__" xml:space="preserve">
-    <value>Výsledky</value>
-  </data>
-  <data name="___Last_Rework_Name__" xml:space="preserve">
-    <value>Jméno posledního reworku</value>
-  </data>
-  <data name="___Created__" xml:space="preserve">
-    <value>Vytvořeno</value>
-  </data>
-  <data name="___Modified__" xml:space="preserve">
-    <value>Upraveno</value>
-  </data>
-  <data name="___READY_TO_START__" xml:space="preserve">
-    <value>PŘIPRAVENO KE STARTU</value>
-  </data>
-  <data name="___Start_manual_Service_mode__" xml:space="preserve">
-    <value>Spuštění manuálního/servisního režimu</value>
-  </data>
-  <data name="___Recipe__" xml:space="preserve">
-    <value>Recept</value>
-  </data>
-  <data name="___Recipe_created__" xml:space="preserve">
-    <value>Recept vytvořený</value>
-  </data>
-  <data name="___Recipe_modified__" xml:space="preserve">
-    <value>Recept upravený</value>
-  </data>
-  <data name="___Reworked__" xml:space="preserve">
-    <value>Rework</value>
-  </data>
-  <data name="___Rework_Count__" xml:space="preserve">
-    <value>Počet reworkovani</value>
-  </data>
-  <data name="___Warning__" xml:space="preserve">
-    <value>Upozornení</value>
-  </data>
-  <data name="___Operator__" xml:space="preserve">
-    <value>Obsluha</value>
+  <data name="Up" xml:space="preserve">
+    <value>NAHORU</value>
   </data>
 </root>

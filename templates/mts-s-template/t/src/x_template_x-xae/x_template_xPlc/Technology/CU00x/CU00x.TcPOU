@@ -12,27 +12,23 @@ VAR
     {attribute addProperty ToolTip "<#Start manual/Service mode#>"}	
     _manualTask : CU00xManualTask(THIS^);
 	{attribute addProperty Name "<#GROUND#>"}
-    {attribute addProperty ToolTip "<#Brings the device into basic position.#>"}
-    _groundTask : CU00xGroundTask(THIS^, TcoCore.eRestoreMode.None);
-    {attribute addProperty Name "<#AUTOMAT#>"}
-    {attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
-    _automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
-	
-	 {attribute addProperty Name "<#SUSPEND PROCESS#>"}
-    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
+	{attribute addProperty ToolTip "<#Brings the device into basic position.#>"}
+	_groundTask : CU00xGroundTask(THIS^, TcoCore.eRestoreMode.None);
+	{attribute addProperty Name "<#AUTOMAT#>"}
+	{attribute addProperty ToolTip "<#Starts automatic sequence. Before start you need to perform grounding sequence.#>"}	
+	_automatTask : CU00xAutomatTask(THIS^, TcoCore.eRestoreMode.None);     
+	{attribute addProperty Name "<#SUSPEND PROCESS#>"}
+    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence).#>"}	
     _suspendTask : CU00xSuspendTask(THIS^, TcoCore.eRestoreMode.None);     
-	
 	{attribute addProperty Name "<#RECOVER PROCESS#>"}
-    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence). #>"}	
+    {attribute addProperty ToolTip "<#Starts suspend sequence of process(automatic,ground sequence).#>"}	
     _recoverTask : CU00xRecoverTask(THIS^, TcoCore.eRestoreMode.None);     
   	
 	{attribute addProperty Name "<#Test positions#>"}
 	_positions : Cu00xTestPositions(THIS^);
 
-
 	{attribute addProperty Name "<#Test multi positions#>"}
-	 _positionsMulti : CU00xTestMultiPositions(THIS^);
-
+	_positionsMulti : CU00xTestMultiPositions(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>

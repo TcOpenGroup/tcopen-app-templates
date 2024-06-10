@@ -4,10 +4,10 @@
     <Declaration><![CDATA[TYPE CycleTimeAnalitics :
 STRUCT
 
-	{attribute addProperty Name "<#Average cycle time #>"}
+	{attribute addProperty Name "<#Average cycle time#>"}
 	Average:TIME;
 	
-	{attribute addProperty Name "<#Average clean cycle time #>"}
+	{attribute addProperty Name "<#Average clean cycle time#>"}
 	AverageCleanCycle:TIME;
 	
 	{attribute addProperty Name "<#Average cycle time filter constant#>"}

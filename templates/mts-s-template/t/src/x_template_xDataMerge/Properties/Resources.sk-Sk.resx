@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IncorectReworkInProgress" xml:space="preserve">
-    <value>Neje mozne revorkovat ktory je v procese a nema priznak NOK kus!</value>
+    <value>Nie je možné reworkovať kus, ktorý je v procese a nemá príznak NOK!</value>
   </data>
   <data name="IncorectReworkJumpForward" xml:space="preserve">
-    <value>Nevhodny rework. Nieje mozne reworkovat kus na danu stanicu!</value>
+    <value>Nie je možné reworkovať kus na danú stanicu</value>
   </data>
   <data name="IncorrectReworkPassed" xml:space="preserve">
-    <value>Neje mozne revorkovat OK kus!</value>
+    <value>Nie je možné reworkovať OK kus!</value>
   </data>
   <data name="ReworkPiece" xml:space="preserve">
     <value>Reworkuj kus</value>
   </data>
   <data name="ReworkSuccessfully" xml:space="preserve">
-    <value>Kus bol úspešne revorkovaný.</value>
+    <value>Kus bol úspešne reworkovaný</value>
   </data>
 </root>

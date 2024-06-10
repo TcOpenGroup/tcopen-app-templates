@@ -24,7 +24,7 @@ STRUCT
 	{attribute addProperty Name "<#Step time#> - <#Error#>"}
 	ErrorStepAlarmTime   : TIME;
 	
-	{attribute addProperty Name "<#Energy saving mode - Inactivity time#> "}
+	{attribute addProperty Name "<#Energy saving mode - Inactivity time#>"}
 	TimeToEntryEnergySavingMode : TIME;
 	
 	
@@ -36,7 +36,7 @@ STRUCT
 		</summary>			
 	</docu>	
 	~*)
-	{attribute addProperty Name "<#Max allowed number of any recurring failures (consecutive)#> "}
+	{attribute addProperty Name "<#Max allowed number of any recurring failures (consecutive)#>"}
 	AnyRecurringFailure   : UINT;
 	
 	
@@ -48,7 +48,7 @@ STRUCT
 		</summary>			
 	</docu>	
 	~*)
-	{attribute addProperty Name "<#Max allowed number of same recurring failures (consecutive)#> "}
+	{attribute addProperty Name "<#Max allowed number of same recurring failures (consecutive)#>"}
 	SameRecurringFailure   : UINT;
 	
 	

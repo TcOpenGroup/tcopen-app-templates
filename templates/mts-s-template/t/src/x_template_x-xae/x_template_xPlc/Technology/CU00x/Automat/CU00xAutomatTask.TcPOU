@@ -132,7 +132,7 @@ END_VAR
 	ELSIF  Station.ProductionPlanerTask.ProductionPlanIsEmpty THEN
 		IF (_dialog.Show()
 	       .WithCaption('<#Production planer#>')
-		   .WithText('<#Production planer is empty! #>')
+		   .WithText('<#Production planer is empty!#>')
 			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
 			;// Production plan comleted , here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 	
@@ -143,7 +143,7 @@ END_VAR
 	ELSIF  Station.ProductionPlanerTask.ProductionPlanCompleted THEN
 		IF (_dialog.Show()
 	       .WithCaption('<#Production planer#>')
-		   .WithText('<#Production planer completed required plan! #>')
+		   .WithText('<#Production planer completed required plan!#>')
 			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
 			;// Production plan comleted , here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 	
@@ -603,7 +603,7 @@ END_VAR]]></Declaration>
 		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundInactive THEN
 			IF (_dialog.Show()
 			   .WithCaption('<#Pairing Tag#>')
-			   .WithText(_sb.Clear().Append('<#Founded tag #>').Append(_reqKey).Append('<# is inactive! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			   .WithText(_sb.Clear().Append('<#Founded tag#> ').Append(_reqKey).Append(' <#is inactive!#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 				.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
 				;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 		
@@ -614,7 +614,7 @@ END_VAR]]></Declaration>
 		ELSIF  answer.Answer = eTagPairingAnswer.TagFoundAssignedValueEmpty THEN
 			  IF (_dialog.Show()
 			   .WithCaption('<#Pairing Tag#>')
-			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is founded but assigned value is empty! Would you like continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			   .WithText(_sb.Clear().Append('<#Tag#> ').Append(_reqKey).Append(' <#is founded but assigned value is empty! Would you like continue?#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
 				CompleteStep();
 				Station.Components.PairTagTask.Restore();
@@ -623,7 +623,7 @@ END_VAR]]></Declaration>
 		ELSIF  answer.Answer = eTagPairingAnswer.TagNotFound THEN
 			  IF (_dialog.Show()
 			   .WithCaption('<#Pairing Tag#>')
-			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			   .WithText(_sb.Clear().Append('<#Tag#> ').Append(_reqKey).Append(' <#is not founded ! Would you like assign right now?#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
 				_addNewTag:=TRUE;
 				CompleteStep();
@@ -634,7 +634,7 @@ END_VAR]]></Declaration>
 			ELSIF  answer.Answer = eTagPairingAnswer.EmptyCollection THEN
 			  IF (_dialog.Show()
 			   .WithCaption('<#Pairing Tag#>')
-			   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# is not founded due collection is empty ! Would you like assign right now? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+			   .WithText(_sb.Clear().Append('<#Tag#> ').Append(_reqKey).Append(' <#is not founded due collection is empty ! Would you like assign right now?#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 				.WithYesNo().Answer = TcoCore.eDialogAnswer.Yes) THEN;
 				_addNewTag:=TRUE;
 				CompleteStep();
@@ -665,7 +665,7 @@ IF (Step(inStepID+10, _tagsPairing AND _addNewTag, '<#ADD NEW TAG  EXAMPLE#>')) 
 	ELSIF  answer.Answer = eTagPairingAnswer.TagAlreadyExist THEN
 		IF (_dialog.Show()
 	       .WithCaption('<#Adding Tag#>')
-		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# already exist! #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+		   .WithText(_sb.Clear().Append('<#Tag#> ').Append(_reqKey).Append(' <#already exist!#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 			.WithOk().Answer = TcoCore.eDialogAnswer.OK) THEN;
 			;// Founded tag is Inactive. Probably carier(pallete) was disasbled due produced many errors.Se  here you can write diferent scenario ( leave it with current state , provide ground etc)	 
 	
@@ -676,7 +676,7 @@ IF (Step(inStepID+10, _tagsPairing AND _addNewTag, '<#ADD NEW TAG  EXAMPLE#>')) 
 	ELSIF  answer.Answer = eTagPairingAnswer.TagAddedNotSuccessfuly THEN
 			dialogAnswer := _dialog.Show()
 	       .WithCaption('<#Pairing Tag#>')
-		   .WithText(_sb.Clear().Append('<#Tag #>').Append(_reqKey).Append('<# was not founnd! Would you like still like to continue? #>').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
+		   .WithText(_sb.Clear().Append('<#Tag#> ').Append(_reqKey).Append(' <#was not founnd! Would you like still like to continue?#> ').Append(Station.Components.PairTagTask.AnswerInstruction).ToString() )
 			.WithYesNo().Answer;
 			
 	      IF (dialogAnswer= TcoCore.eDialogAnswer.Yes) THEN;

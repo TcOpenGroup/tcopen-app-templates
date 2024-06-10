@@ -148,10 +148,10 @@
     <value>Spustí automatickú sekvenciu. Pred spustením je potrebné vykonať reset sekvenciu .</value>
   </data>
   <data name="___AUTOMAT_ALL__" xml:space="preserve">
-    <value>AUTOMAT ALL</value>
+    <value>AUTOMAT</value>
   </data>
   <data name="___GROUND_ALL__" xml:space="preserve">
-    <value>RESET VŠETKO</value>
+    <value>RESET</value>
   </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
     <value>Ďalšia stanica pri OK</value>
@@ -163,16 +163,13 @@
     <value>Čas cyklu</value>
   </data>
   <data name="___Clean_loop_time__" xml:space="preserve">
-    <value>Čas čistej slučky</value>
+    <value>Čistý čas cyklu</value>
   </data>
   <data name="___Operation_started__" xml:space="preserve">
-    <value>Operácie  začiatok</value>
+    <value>Začiatok operácií</value>
   </data>
   <data name="___Operation_ended__" xml:space="preserve">
-    <value>Operácie koniec</value>
-  </data>
-  <data name="___Operator__" xml:space="preserve">
-    <value>Operátor</value>
+    <value>Koniec operácií</value>
   </data>
   <data name="___Entity_header__" xml:space="preserve">
     <value>Hlavička kusu</value>
@@ -181,16 +178,16 @@
     <value>Recept</value>
   </data>
   <data name="___Recipe_created__" xml:space="preserve">
-    <value>Vytvorený recept</value>
+    <value>Recept vytvorený</value>
   </data>
   <data name="___Recipe_modified__" xml:space="preserve">
-    <value>Upravený recept</value>
+    <value>Recept upravený</value>
   </data>
   <data name="___Carrier__" xml:space="preserve">
     <value>Nosič</value>
   </data>
   <data name="___Reset__" xml:space="preserve">
-    <value>Resetovanie</value>
+    <value>Resetovaný</value>
   </data>
   <data name="___Master__" xml:space="preserve">
     <value>Master</value>
@@ -205,22 +202,19 @@
     <value>Ďalšia stanica</value>
   </data>
   <data name="___Operations_opened__" xml:space="preserve">
-    <value>Otvorenie operacii</value>
+    <value>Operácie otvorené</value>
   </data>
   <data name="___Results__" xml:space="preserve">
     <value>Výsledky</value>
   </data>
   <data name="___Reworked__" xml:space="preserve">
-    <value>Reworkované</value>
+    <value>Rework</value>
   </data>
   <data name="___Last_Rework_Name__" xml:space="preserve">
-    <value>Posledný použity rework</value>
+    <value>Posledný rework</value>
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
     <value>Počet reworkovaní</value>
-  </data>
-  <data name="___ID__" xml:space="preserve">
-    <value>ID</value>
   </data>
   <data name="___Created__" xml:space="preserve">
     <value>Vytvorené</value>
@@ -229,6 +223,51 @@
     <value>Upravené</value>
   </data>
   <data name="___START_MEASURE_CT_TRIGGER__" xml:space="preserve">
-    <value>START MERANIA ČASU CYKLU</value>
+    <value>ŠTART MERANIA ČASU CYKLU</value>
+  </data>
+  <data name="___Zone__" xml:space="preserve">
+    <value>Zóna</value>
+  </data>
+  <data name="___Warning__" xml:space="preserve">
+    <value>Upozornenie</value>
+  </data>
+  <data name="____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reached___" xml:space="preserve">
+    <value>(Sériová chyba) Počet ľubovoľnej chyby dosiahnutý!</value>
+  </data>
+  <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached___" xml:space="preserve">
+    <value>(Sériová chyba) Počet rovnakej chyby dosiahnutý!</value>
+  </data>
+  <data name="___Please_acknowledge_recurring_failure___" xml:space="preserve">
+    <value>Prosím potvrďte sériovú chybu!</value>
+  </data>
+  <data name="___Config__" xml:space="preserve">
+    <value>Konfigurácia</value>
+  </data>
+  <data name="___Status__" xml:space="preserve">
+    <value>Stav</value>
+  </data>
+  <data name="___Control__" xml:space="preserve">
+    <value>Riadenie</value>
+  </data>
+  <data name="___Components__" xml:space="preserve">
+    <value>Komponenty</value>
+  </data>
+  <data name="___Restore__" xml:space="preserve">
+    <value>Obnoviť</value>
+  </data>
+  <data name="___STATUS_INFO__" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="___Air_pressure_is_not_sufficient___" xml:space="preserve">
+    <value>Príliš slabý tlak vzduchu!</value>
+  </data>
+  <data name="___Automat_mode_has_been_invoked___" xml:space="preserve">
+    <value>Automatický režim bol spustený.</value>
+  </data>
+  <data name="___Automat_mode_has_been_done___" xml:space="preserve">
+    <value>Automatický režim bol dokončený.</value>
+  </data>
+  <data name="___Operator__" xml:space="preserve">
+    <value>Operátor</value>
   </data>
 </root>

@@ -3,14 +3,7 @@
   <POU Name="CU00xSuspendTask" Id="{6dd32787-25bd-4e8d-99a8-0cfb2f9159ea}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK CU00xSuspendTask EXTENDS CUBaseSuspend IMPLEMENTS ICUTask
 VAR
-
-	
-	
 	_sb : TcoCore.StringBuilder;
-END_VAR
-
-VAR
-
 END_VAR
 ]]></Declaration>
     <Implementation>

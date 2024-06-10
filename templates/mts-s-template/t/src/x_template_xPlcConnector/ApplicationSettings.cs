@@ -8,6 +8,7 @@ namespace x_template_xPlcConnector
         public DeployMode DeployMode{ get; set; } = DeployMode.Local;
         public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
 
+
         public string PlcAmsId =Environment.GetEnvironmentVariable("Tc3Target");
         public bool ShowConsoleOutput { get; set; } = true;
 

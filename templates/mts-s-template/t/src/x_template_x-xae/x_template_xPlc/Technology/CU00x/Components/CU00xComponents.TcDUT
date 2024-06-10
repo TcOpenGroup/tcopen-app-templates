@@ -2,7 +2,6 @@
 <TcPlcObject Version="1.1.0.1">
   <DUT Name="CU00xComponents" Id="{4e1b0472-1d17-48ba-b026-d0be267cd4f2}">
     <Declaration><![CDATA[{attribute wpf [Container(Layout.Tabs)]}
-
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
@@ -16,46 +15,46 @@ TYPE
 		{attribute wpf [Container(Layout.Stack,"DRIVES AND MANIPULATORS")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "MultiAxis"}
-     	MultiAxis : TcoDrivesBeckhoff.TcoMultiAxis (THISSTRUCT);
+     	MultiAxis : TcoDrivesBeckhoff.TcoMultiAxis(THISSTRUCT);
 		{attribute addProperty Name "Single Axis"}
-     	SingleAxis : TcoDrivesBeckhoff.TcoSingleAxis (THISSTRUCT);
+     	SingleAxis : TcoDrivesBeckhoff.TcoSingleAxis(THISSTRUCT);
 		{attribute addProperty Name "Simple drive"}
-     	SimpleDrive : TcoDrivesBeckhoff.TcoDriveSimple (THISSTRUCT);
+     	SimpleDrive : TcoDrivesBeckhoff.TcoDriveSimple(THISSTRUCT);
 		
 		{attribute wpf [Container(Layout.Stack,"VISION")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Dataman"}
-     	Dmc : TcoCognexVision.TcoDataman_v_5_x_x (THISSTRUCT);
+     	Dmc : TcoCognexVision.TcoDataman_v_5_x_x(THISSTRUCT);
 		{attribute addProperty Name "Insight"}
-     	Cam : TcoCognexVision.TcoInsight_v_5_x_x (THISSTRUCT);
+     	Cam : TcoCognexVision.TcoInsight_v_5_x_x(THISSTRUCT);
 
 	
 		{attribute wpf [Container(Layout.Stack,"ROBOTICS")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Abb IRC 5"}
-     	AbbIrc5 : TcoAbbRobotics.TcoIrc5_v_1_x_x (THISSTRUCT);
+     	AbbIrc5 : TcoAbbRobotics.TcoIrc5_v_1_x_x(THISSTRUCT);
 		{attribute addProperty Name "Abb Omnicore"}
-     	AbbOmnicore : TcoAbbRobotics.TcoOmnicore_v_1_x_x (THISSTRUCT);
+     	AbbOmnicore : TcoAbbRobotics.TcoOmnicore_v_1_x_x(THISSTRUCT);
 		
 		{attribute addProperty Name "Mitshubishi Cr series"}
-     	MitshubishiCr: TcoMitsubishiRobotics.TcoCr800_v_1_x_x (THISSTRUCT);
+     	MitshubishiCr: TcoMitsubishiRobotics.TcoCr800_v_1_x_x(THISSTRUCT);
 		{attribute addProperty Name "UR CB series"}
      	UrCb3:  TcoUrRobotics.TcoUrCb3_v_3_x_x(THISSTRUCT);
 		{attribute addProperty Name "Ur E series"}
-     	UrEseries: TcoUrRobotics.TcoUrEseries_v_5_x_x (THISSTRUCT);
+     	UrEseries: TcoUrRobotics.TcoUrEseries_v_5_x_x(THISSTRUCT);
 		
 		{attribute addProperty Name "Kuka Krc4"}
-     	KukaKrc4: TcoKukaRobotics.TcoKrc4_v_5_x_x (THISSTRUCT);
+     	KukaKrc4: TcoKukaRobotics.TcoKrc4_v_5_x_x(THISSTRUCT);
 		
 		{attribute wpf [Container(Layout.Stack,"TIXONS")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Tixon Vibro"}
-     	TixonVibro : TcoTixonFeeding.TcoTixonVibro_v_1_x_x (THISSTRUCT);
+     	TixonVibro : TcoTixonFeeding.TcoTixonVibro_v_1_x_x(THISSTRUCT);
 		{attribute addProperty Name "Tixon Step"}
      	TixonStep : TcoTixonFeeding.TcoTixonStep_v_1_x_x(THISSTRUCT);
 		
 		{attribute addProperty Name "Tixon Pick Vibro"}
-     	TixonPickVibro : TcoTixonFeeding.TcoTixonPickVibro_v_1_x_x (THISSTRUCT);
+     	TixonPickVibro : TcoTixonFeeding.TcoTixonPickVibro_v_1_x_x(THISSTRUCT);
 		{attribute addProperty Name "Tixon Pick Step"}
      	TixonPickStep : TcoTixonFeeding.TcoTixonPickStep_v_1_x_x(THISSTRUCT);
 			
@@ -63,22 +62,19 @@ TYPE
 		{attribute wpf [Group(Layout.Scroll)]}
 		PlsPaletizator:TcoPlsPaletizator(THISSTRUCT);	
 		{attribute clr [RenderIgnore()]}
-		PlsPaletizatorComponents:TcoPlsPaletizator_Components:= (Parent := THISSTRUCT);  
+		PlsPaletizatorComponents:TcoPlsPaletizator_Components := (Parent := THISSTRUCT);  
 		
 		{attribute wpf [Container(Layout.Stack,"Wrapped component example")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		PickAndPlace:WrappedComponentExample(THISSTRUCT);
 		{attribute wpf [Container(Layout.Stack,"Wrapped component struct")]}	
-		PickAndPlaceCompoennts:WrappedComponentsExample:= (Parent := THISSTRUCT);  
+		PickAndPlaceCompoennts:WrappedComponentsExample := (Parent := THISSTRUCT);  
 
 		{attribute addProperty Name "GROUP 1"}
-		Group1 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT);  
+		Group1 : CU00xExamplesOfComponents := (Parent := THISSTRUCT);  
 		{attribute addProperty Name "GROUP 2"}
-		Group2 : CU00xExamplesOfComponents:= (Parent := THISSTRUCT); 
+		Group2 : CU00xExamplesOfComponents := (Parent := THISSTRUCT); 
  
-		
-		
-		
     END_STRUCT
 END_TYPE
 ]]></Declaration>
