@@ -39,6 +39,17 @@ namespace x_template_xPlc
             }
         }
 
+        public TcoTaskedService ManualTask 
+        {
+            get
+            {
+                TcoTaskedService task = new TcoTaskedService();
+                if (Component != null)
+                    task = Component.GetType().GetProperty("_manualTask")?.GetValue(Component) as TcoTaskedService;
+                return task;
+            }
+        }
+
         public IEnumerable<object> _taskControls = new List<object>();
         public IEnumerable<object> TaskControls
         {
@@ -71,14 +82,19 @@ namespace x_template_xPlc
             }
         }
 
-        public CUBase Component { get; private set; } = new CUBase();
+        public CUBase Component { get; private set; } 
 
         public ProcessData OnlineData { get { return Component.GetChildren<TcoData.TcoDataExchange>().FirstOrDefault()?.GetChildren<TcoData.TcoEntity>().FirstOrDefault() as ProcessData; } }
 
     
         public EntityHeader EntityHeader { get { return OnlineData.EntityHeader; } }
 
-        public object Components { get { return Component.GetChildren<CUComponentsBase>().FirstOrDefault(); } }
+        public object Components { get {
+                CUComponentsBase components = new CUComponentsBase(); 
+                if (Component != null)
+                    components = Component.GetChildren<CUComponentsBase>().FirstOrDefault();
+               
+                return components;  } }
 
         void Update()
         {
@@ -112,8 +128,10 @@ namespace x_template_xPlc
                         return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.ManualWarning, "Manual", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
                     };
                 }
+         
            
         }
+       
 
         public override object Model { get => Component; set { Component = (CUBase)value; this.Update(); } }
 

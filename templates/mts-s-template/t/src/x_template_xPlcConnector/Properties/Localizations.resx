@@ -861,12 +861,8 @@
   <data name="___Modified__" xml:space="preserve">
     <value>Modified</value>
   </data>
-  <data name="___Presure_OK___" xml:space="preserve">
-    <value>Presure OK </value>
-  </data>
-  <data name="___Emergency_Stop___" xml:space="preserve">
-    <value>Emergency Stop </value>
-
+  <data name="___Presure_OK__" xml:space="preserve">
+    <value>Presure OK</value>
   </data>
   <data name="___Global_control_voltage__" xml:space="preserve">
     <value>Global control voltage</value>

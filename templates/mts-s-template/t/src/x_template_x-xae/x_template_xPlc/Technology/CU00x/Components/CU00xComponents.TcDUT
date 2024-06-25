@@ -5,7 +5,6 @@
 TYPE
     CU00xComponents EXTENDS CUComponentsBase :
     STRUCT
-
 		{attribute wpf [Container(Layout.Stack)]}
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "Supplu TTI QL"}
