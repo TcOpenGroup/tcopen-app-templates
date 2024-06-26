@@ -15,9 +15,7 @@
     MaxHeight="200"
     IsVisibleChanged="UserControl_IsVisibleChanged"
     Visibility="{Binding ActiveMessagesCount, Converter={vortex:ActiveMessagesToVisibilityConverter}}">
-    <UserControl.Resources>
-        <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </UserControl.Resources>
+
     <d:UserControl.DataContext>
         <mainplc:CUBaseMiniDiagnosticsViewModel />
     </d:UserControl.DataContext>

@@ -184,27 +184,40 @@
                     </ItemsControl>
                 </Grid>
             </materialDesign:Card>
-            <!-- Tasks details card -->
+            <!-- Tasks details card -->  
             <materialDesign:Card
                 Grid.Row="2"
                 materialDesign:ShadowAssist.ShadowDepth="Depth1"
                 Padding="2.5">
                 <ScrollViewer>
-                    <ItemsControl ItemsSource="{Binding TaskControls}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ContentControl>
-                                    <vortex:RenderableContentControl DataContext="{Binding }" PresentationType="Sequence-Components" />
-                                </ContentControl>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding TaskControls}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl>
+                                        <vortex:RenderableContentControl DataContext="{Binding }" PresentationType="Sequence" />
+                                    </ContentControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                
                 </ScrollViewer>
+            </materialDesign:Card>
+            <!-- Components card -->
+            <materialDesign:Card
+                  Grid.Row="2"
+                materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                Padding="2.5"
+                Visibility="{Binding  ManualTask._taskState.Cyclic, Converter={local:TaskStateToVisibilityConverter}}">
+
+                <vortex:RenderableContentControl Grid.Row="1" DataContext="{Binding Components}" PresentationType="Base-Service-Manual-Base">
+                </vortex:RenderableContentControl>
+
             </materialDesign:Card>
         </Grid>
         <!-- Diagnostics card -->

@@ -33,7 +33,7 @@
         <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="2">
             <WrapPanel>
             <Menu 
-                materialDesign:MenuAssist.TopLevelMenuItemHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Card}}, Path=ActualHeight}">
+                materialDesign:MenuAssist.TopLevelMenuItemHeight="{Binding ElementName=userInfoDisplayView, Path=ActualHeight}">
 
                 <MenuItem Header="{x:Static p:strings.LangSelector}" 
                           Icon="{materialDesign:PackIcon Kind=Language}"
@@ -50,7 +50,7 @@
        
       
             </Menu>
-                <vortexs:UserInfoDisplayView Grid.Column="0" VerticalContentAlignment="Center" ></vortexs:UserInfoDisplayView>
+                <vortexs:UserInfoDisplayView x:Name="userInfoDisplayView" VerticalContentAlignment="Center"/>
 
             </WrapPanel>
         </materialDesign:Card>
