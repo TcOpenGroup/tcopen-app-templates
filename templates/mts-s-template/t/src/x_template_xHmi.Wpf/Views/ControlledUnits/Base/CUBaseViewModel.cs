@@ -105,7 +105,8 @@ namespace x_template_xPlc
                 var automatTask = Component.GetType().GetProperty("_automatTask")?.GetValue(Component) as TcoTaskedSequencer;
                 if (automatTask != null)
                 {
-                    automatTask._task.ExecuteDialog = () =>
+                automatTask._task.Roles = x_template_xPlcConnector.DefaultRoles.automat_start;
+                automatTask._task.ExecuteDialog = () =>
                     {
                         return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.AutomatWarning, "Automat", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
                     };
@@ -114,7 +115,8 @@ namespace x_template_xPlc
                 var groundTask = Component.GetType().GetProperty("_groundTask")?.GetValue(Component) as TcoTaskedSequencer;
                 if (groundTask != null)
                 {
-                    groundTask._task.ExecuteDialog = () =>
+                groundTask._task.Roles = x_template_xPlcConnector.DefaultRoles.ground_position_start;
+                groundTask._task.ExecuteDialog = () =>
                     {
                         return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.GroundWarning, "Ground", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
                     };
@@ -123,6 +125,7 @@ namespace x_template_xPlc
                 var manualTask = Component.GetType().GetProperty("_manualTask")?.GetValue(Component) as TcoTaskedService;
                 if (manualTask != null)
                 {
+                    manualTask.Roles = x_template_xPlcConnector.DefaultRoles.manual_start;
                     manualTask.ExecuteDialog = () =>
                     {
                         return MessageBox.Show(x_template_xHmi.Wpf.Properties.strings.ManualWarning, "Manual", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;

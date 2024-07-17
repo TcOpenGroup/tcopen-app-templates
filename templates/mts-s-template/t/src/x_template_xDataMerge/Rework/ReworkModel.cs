@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
@@ -137,7 +138,7 @@ namespace x_template_xDataMerge.Rework
             var retVal = new List<string>();
             switch (obj)
             {
-                // here you define  properties witch are relevant for reqired types to change by rework 
+                // here you define  properties witch are relevant for required types to change by rework 
                 case TcoInspectors.PlainTcoDigitalInspectorData c:
                     return PropertyHelper.GetPropertiesNames(c,  p => p.RetryAttemptsCount ,p =>p.IsByPassed,p => p.IsExcluded);
                 case TcoInspectors.PlainTcoAnalogueInspectorData c:
@@ -156,7 +157,7 @@ namespace x_template_xDataMerge.Rework
 
         private bool Exclude(object obj)
         {
-            // some special conditions to exluce
+            // some special conditions to exclude
             return false;
         }
 
@@ -165,8 +166,12 @@ namespace x_template_xDataMerge.Rework
             switch (obj)
             {
                 // here is definitions of  all types and condition witch are relevat to change by rework (source)
-                case TcoInspectors.PlainTcoInspectorData c:
+                case TcoInspectors.PlainTcoDigitalInspectorData c:
+                    return c is TcoInspectors.PlainTcoDigitalInspectorData;
+                case TcoInspectors.PlainTcoAnalogueInspectorData c:
                     return c is TcoInspectors.PlainTcoAnalogueInspectorData;
+                case TcoInspectors.PlainTcoDataInspectorData c:
+                    return c is TcoInspectors.PlainTcoDataInspectorData;
                 case PlainCuHeader c:
                     return c is PlainCuHeader;
                         //&& (c.NextOnPassed != 0

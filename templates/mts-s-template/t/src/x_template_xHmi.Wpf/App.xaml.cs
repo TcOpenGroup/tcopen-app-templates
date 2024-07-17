@@ -34,6 +34,8 @@ using Vortex.Connector;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
+using x_template_xReworkInstructor.Instructor;
+using x_template_xReworkInstructor.Instructor.View;
 
 namespace x_template_xHmi.Wpf
 {
@@ -368,8 +370,6 @@ namespace x_template_xHmi.Wpf
             CuxInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask));
             CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
 
-
-
         }
    
 
@@ -420,9 +420,52 @@ namespace x_template_xHmi.Wpf
             CuxParalellInstructor = new InstructorController(_instructionPlanHandler, new InstructableSequencer(x_template_xPlc.MAIN._technology._cu00x._automatTask._paralellTask));
 
 
-          
+
+            Log.Information(@"Initialize Rework instructor repository...");
+
+
+
+            //Rework Instructor
+            var _reworkInstructionPlanHandler = RepositoryDataSetHandler<ReworkInstructionItem>.CreateSet(new MongoDbRepository<EntitySet<ReworkInstructionItem>>(new MongoDbRepositorySettings<EntitySet<ReworkInstructionItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkInstructions")));
+
+            CuxReworkInstructor = new ReworkInstructorController(_reworkInstructionPlanHandler, new MongoDbRepository<PlainProcessData>(ProcessDataRepoSettings), x_template_xPlc.MAIN._technology._cu00x._processData._data);
+
+            Action getReworkInstruction = () => GetReworkInstruction(x_template_xPlc.MAIN._technology._cu00x._components.ReworkInstructionTask,CuxReworkInstructor);
+            x_template_xPlc.MAIN._technology._cu00x._components.ReworkInstructionTask.InitializeExclusively(getReworkInstruction);
+
+            Log.Information(@"Initialize Rework instructor repository... Done");
+
         }
 
+        private void GetReworkInstruction(ReworkInstructionTask task, ReworkInstructorController reworkInstructor)
+        {
+            try
+            {
+                task.Read();
+                reworkInstructor.FindInsturction(task._data.EntityId.Cyclic);
+                if (string.IsNullOrEmpty(reworkInstructor.CurrentInstruction.ReworkName))
+                {
+                    task._data.ReworkId.Cyclic = "";
+                    task._data .ReworkInstruction.Cyclic = "AUTO REWORK NOT FOUND!";
+                    task._data.ReworkInstructionFound.Cyclic = false;
+
+                }
+                else
+                {
+                    task._data.ReworkId.Synchron = reworkInstructor.CurrentInstruction.ReworkName;
+                    task._data.ReworkInstruction.Cyclic = "AUTO REWORK  FOUND - " + reworkInstructor.CurrentInstruction.ReworkName;
+                    task._data.ReworkInstructionFound.Cyclic = true;
+                    
+                }
+                task.Write();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
         private void GetProductionPlan(ProductionPlaner productionPlaner)
         {
             ProductionItem item;
@@ -459,6 +502,7 @@ namespace x_template_xHmi.Wpf
         public static LanguageSelectionViewModel LanguageSelectionModel { get; private set; }
         public static ShutdownViewModel AppShutdownModel { get; private set; } = new ShutdownViewModel();
         public bool DataExchangeActive { get; private set; } = true;
+        public static ReworkInstructorController CuxReworkInstructor { get; private set; }
 
 
         /// <summary>

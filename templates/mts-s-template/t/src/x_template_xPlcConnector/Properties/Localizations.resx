@@ -636,6 +636,18 @@
   <data name="___Oddelovanie_blistrov_na_vstupe_neaktive__P10__P10_1_je_nepritomne__" xml:space="preserve">
     <value>Oddelovanie blistrov na vstupe neaktive (P10)(P10.1)je nepritomne</value>
   </data>
+  <data name="___Entity_Id__" xml:space="preserve">
+    <value>Entity Id</value>
+  </data>
+  <data name="___ReworkId__" xml:space="preserve">
+    <value>ReworkId</value>
+  </data>
+  <data name="___Rework_Instrukcia__" xml:space="preserve">
+    <value>Rework Instrukcia</value>
+  </data>
+  <data name="___Rework_Instrukcia_najdena__" xml:space="preserve">
+    <value>Rework Instrukcia najdena</value>
+  </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
     <value>Next on Passed</value>
   </data>
@@ -854,6 +866,9 @@
   </data>
   <data name="___CU00x__" xml:space="preserve">
     <value>CU00x</value>
+  </data>
+  <data name="___ReworkInstruction__" xml:space="preserve">
+    <value>ReworkInstruction</value>
   </data>
   <data name="___Created__" xml:space="preserve">
     <value>Created</value>

@@ -29,6 +29,8 @@ VAR
 
 	{attribute addProperty Name "<#Test multi positions#>"}
 	_positionsMulti : CU00xTestMultiPositions(THIS^);
+	
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -266,6 +268,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[
 Components.PairTagTask();
+Components.ReworkInstructionTask();
 (*
 components.Group1.horizontalCylinder(inoAtHomePos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_1.Input, 
 							   inoAtWorkPos:=GVL_iXlinker.EC1.EK1200.IA1_EL1809.Channel_2.Input, 

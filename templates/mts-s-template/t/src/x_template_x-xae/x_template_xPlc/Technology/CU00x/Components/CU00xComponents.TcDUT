@@ -11,6 +11,9 @@ TYPE
      	Supply : TcoAimTtiPowerSupply.TcoQl355P_v_1_x_x (THISSTRUCT);
 		{attribute wpf [Container(Layout.Stack)]}
 		PairTagTask: PairTagTask(THISSTRUCT);
+		{attribute wpf [Container(Layout.Stack)]}
+		{attribute addProperty Name "<#ReworkInstruction#>"}
+		ReworkInstructionTask : ReworkInstructionTask(THISSTRUCT);
 		{attribute wpf [Container(Layout.Stack,"DRIVES AND MANIPULATORS")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		{attribute addProperty Name "MultiAxis"}

@@ -10,6 +10,7 @@ using x_template_xInstructor;
 using x_template_xStatistic.Statistics.View;
 using x_template_xTagsDictionary.View;
 using x_template_xPlcConnector;
+using x_template_xReworkInstructor.Instructor.View;
 
 namespace x_template_xHmi.Wpf.Views.Operator
 {
@@ -35,6 +36,8 @@ namespace x_template_xHmi.Wpf.Views.Operator
             InstructorParalellViewModel = new InstructorViewModel(App.CuxParalellInstructor);
             StatisticViewModel = new StatisticsDataViewModel(App.CuxStatistic);
             TagsPairingViewModel = new TagsPairingViewModel(App.CuxTagsPairing);
+            ReworkInstructorViewModel = new ReworkInstructionViewModel(App.CuxReworkInstructor);
+
 
 
 
@@ -47,5 +50,6 @@ namespace x_template_xHmi.Wpf.Views.Operator
         public InstructorViewModel InstructorParalellViewModel { get; private set; }
         public StatisticsDataViewModel StatisticViewModel { get; private set; }
         public TagsPairingViewModel TagsPairingViewModel { get; private set; }
+        public ReworkInstructionViewModel ReworkInstructorViewModel { get; private set; }
     }
 }

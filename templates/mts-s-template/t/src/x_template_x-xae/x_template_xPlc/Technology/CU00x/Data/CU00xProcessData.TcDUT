@@ -5,8 +5,11 @@
     CU00xProcessData EXTENDS CUProcessDataBase :
     STRUCT
 		{attribute wpf [Container(Layout.Stack)]}
+		{attribute addProperty Name "Bolt present inspection"}
         BoltPresenceInspector : TcoInspectors.TcoDigitalInspector(THISSTRUCT);
+		{attribute addProperty Name "Bolt Dimension inspection"}
 		BoltDimensionPresenceInspector : TcoInspectors.TcoAnalogueInspector(THISSTRUCT);
+		{attribute addProperty Name "Bolt code inspection"}
 		BoltDatacodePresenceInspector : TcoInspectors.TcoDataInspector(THISSTRUCT);
 
 		{attribute addProperty Name "Dimension inspection 1"}
