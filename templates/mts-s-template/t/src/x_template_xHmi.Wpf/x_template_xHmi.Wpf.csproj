@@ -69,6 +69,7 @@
 		<ProjectReference Include="..\x_template_xDataMerge\x_template_xDataMerge.csproj" />
 		<ProjectReference Include="..\x_template_xPlcConnector\x_template_xPlcConnector.csproj" />
 		<ProjectReference Include="..\x_template_xProductionPlaner\x_template_xProductionPlaner.csproj" />
+		<ProjectReference Include="..\x_template_xReworkInstructor\x_template_xReworkInstructor.csproj" />
 		<ProjectReference Include="..\x_template_xStatistic\x_template_xStatistic.csproj" />
 		<ProjectReference Include="..\x_template_xTagsDictionary\x_template_xTagsDictionary.csproj" />
 	

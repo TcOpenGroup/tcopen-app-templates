@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ReworkData" Id="{5d026743-fc1e-4aff-9945-5025b1a556e3}">
+    <Declaration><![CDATA[TYPE ReworkData :
+STRUCT
+	{attribute addProperty Name "<#Entity Id#>"}
+	EntityId: STRING;
+	{attribute addProperty Name "<#ReworkId#>"}
+	ReworkId: STRING;
+	
+	{attribute addProperty Name "<#Rework Instrukcia#>"}
+	ReworkInstruction:STRING;
+	{attribute addProperty Name "<#Rework Instrukcia najdena#>"}
+	ReworkInstructionFound:BOOL;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

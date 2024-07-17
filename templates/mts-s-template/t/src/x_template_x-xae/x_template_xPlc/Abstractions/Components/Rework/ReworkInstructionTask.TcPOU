@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ReworkInstructionTask" Id="{3ef14e60-716c-4442-a5d9-2c2bffc56045}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReworkInstructionTask EXTENDS TcoCore.TcoRemoteTask
+VAR
+	_data:ReworkData;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Property Name="Data" Id="{32b6d340-2bfe-4579-a993-a9b7903ce5f3}">
+      <Declaration><![CDATA[PROPERTY Data : REFERENCE TO ReworkData
+]]></Declaration>
+      <Get Name="Get" Id="{6b950daa-f7da-454b-8ac3-6244534c7457}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Data ref= _data;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Run" Id="{dea1cab6-aaae-41ee-91e0-076daafab7df}">
+      <Declaration><![CDATA[METHOD Run : REFERENCE TO ReworkInstructionTask
+VAR_INPUT
+	inEntityId:STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_data.EntityId:=inEntityId;
+Run REF= THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

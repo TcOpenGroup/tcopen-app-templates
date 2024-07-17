@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="x_template_xReworkInstructor.Instructor.View.InstructionConfiguratorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:view="clr-namespace:x_template_xReworkInstructor.Instructor.View"
+             xmlns:strings="clr-namespace:x_template_xReworkInstructor.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <d:UserControl.DataContext>
+        <view:InstructionViewModel></view:InstructionViewModel>
+    </d:UserControl.DataContext>
+    <UserControl.Resources>
+      
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid                    
+                    Grid.Row="0"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    CanUserSortColumns="False"
+                    ItemsSource="{Binding Controller.CurrentInstructionSet.Items}"
+                    SelectedItem="{Binding SelectedInstructionItem}"
+                    IsReadOnly="false" Margin="5" VerticalAlignment="Top">
+        
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" IsReadOnly="True" Header="{x:Static strings:Resources.Key}" />
+                <DataGridTextColumn Binding="{Binding KeyDescription}" IsReadOnly="True" Header="{x:Static strings:Resources.KeyDescription}" />
+
+                <DataGridTextColumn Binding="{Binding PrimaryDescription}" IsReadOnly="false" Header="{x:Static strings:Resources.PrimaryInstruction}" />
+                <DataGridTextColumn Binding="{Binding SecondaryDescription}" Header="{x:Static strings:Resources.SecondaryInstruction}" />
+                <DataGridComboBoxColumn Header="{x:Static strings:Resources.ReworkSet}" SelectedValueBinding="{Binding ReworkName}" >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Controller.RecipeCollection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Controller.RecipeCollection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Binding="{Binding ContentSource}" Header="{x:Static strings:Resources.ImageLocation}" />
+                <DataGridTemplateColumn Header="IMAGE LOCATION BROWSE">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnBrowse" Content="{x:Static strings:Resources.Browse}" Click="BtnBrowse_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+            <Button Margin="5" Command="{Binding  SaveCommand}" Content="{x:Static strings:Resources.Save}" VerticalAlignment="Top" />
+            <Button Margin="5" Command="{Binding UpdateCommand}" Content="{x:Static strings:Resources.Update}" />
+            <Button Margin="5" Command="{Binding RefreshReworkRecipeCommand}" Content="{x:Static strings:Resources.RefreshRecipes}" />
+            <Button Margin="5" Command="{Binding RemoveCommand}" Content="{x:Static strings:Resources.SetAsDeleted}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

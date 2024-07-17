@@ -50,6 +50,15 @@
     <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator_Status_v_1_x_x.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Components\Rework\eReworkResults.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\Rework\ReworkData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\Rework\ReworkInstructionTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -373,6 +382,7 @@
     <Folder Include="Abstractions" />
     <Folder Include="Abstractions\Components\ArrayRenderingExample" />
     <Folder Include="Abstractions\Components\MtsFeeding" />
+    <Folder Include="Abstractions\Components\Rework" />
     <Folder Include="Abstractions\Components\WrappedComponent" />
     <Folder Include="Abstractions\CUBase" />
     <Folder Include="Abstractions\CUBase\Data" />

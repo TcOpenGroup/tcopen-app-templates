@@ -18,6 +18,7 @@ namespace x_template_xPlcConnector
             SecurityManager.Manager.GetOrCreateRole(new Role(instructor_access));
             SecurityManager.Manager.GetOrCreateRole(new Role(planer_access));
             SecurityManager.Manager.GetOrCreateRole(new Role(statistic_access));
+            SecurityManager.Manager.GetOrCreateRole(new Role(rework_instructor_access));
 
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_automat_all));
             SecurityManager.Manager.GetOrCreateRole(new Role(technology_ground_all));
@@ -48,6 +49,7 @@ namespace x_template_xPlcConnector
         public const string instructor_access = nameof(instructor_access);
         public const string planer_access = nameof(planer_access);
         public const string statistic_access = nameof(planer_access);
+        public const string rework_instructor_access = nameof(rework_instructor_access);
 
 
         public const string technology_automat_all = nameof(technology_automat_all);
@@ -80,7 +82,7 @@ namespace x_template_xPlcConnector
             SecurityManager.RoleGroupManager.AddRolesToGroup(DefaultGroups.Administrator,
              new string[] { "Administrator",
                     process_settings_access, process_settings_change,rework_settings_access,process_traceability_access,technology_settings_access,
-                    instructor_access,planer_access,statistic_access,
+                    instructor_access,planer_access,statistic_access,rework_instructor_access,
                     technology_automat_all,technology_ground_all,
                     ground_position_start,automat_start,manual_start,
                     station_details,sequencer_step,
@@ -90,7 +92,7 @@ namespace x_template_xPlcConnector
             SecurityManager.RoleGroupManager.AddRolesToGroup(DefaultGroups.Maintenance,
                new string[] {
                     //process_settings_access, process_settings_change,rework_settings_access,process_traceability_access,technology_settings_access,
-                    //instructor_access,planer_access,statistic_access,
+                    //instructor_access,planer_access,statistic_access,rework_instructor_access,
                     technology_automat_all,technology_ground_all,
                     ground_position_start,automat_start,manual_start,
                     station_details,sequencer_step,
@@ -99,7 +101,7 @@ namespace x_template_xPlcConnector
             SecurityManager.RoleGroupManager.AddRolesToGroup(DefaultGroups.Operator,
               new string[] {
                     //process_settings_access, process_settings_change,rework_settings_access,process_traceability_access,technology_settings_access,
-                    //instructor_access,planer_access,statistic_access,
+                    //instructor_access,planer_access,statistic_access,rework_instructor_access,
                     //technology_automat_all,technology_ground_all,
                     //ground_position_start,automat_start,manual_start,
                     //station_details,sequencer_step,

@@ -739,6 +739,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entity Id.
+        /// </summary>
+        public static string ___Entity_Id__ {
+            get {
+                return ResourceManager.GetString("___Entity_Id__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string ___Error__ {
@@ -1758,11 +1767,47 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rework Instrukcia.
+        /// </summary>
+        public static string ___Rework_Instrukcia__ {
+            get {
+                return ResourceManager.GetString("___Rework_Instrukcia__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rework Instrukcia najdena.
+        /// </summary>
+        public static string ___Rework_Instrukcia_najdena__ {
+            get {
+                return ResourceManager.GetString("___Rework_Instrukcia_najdena__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reworked.
         /// </summary>
         public static string ___Reworked__ {
             get {
                 return ResourceManager.GetString("___Reworked__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReworkId.
+        /// </summary>
+        public static string ___ReworkId__ {
+            get {
+                return ResourceManager.GetString("___ReworkId__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReworkInstruction.
+        /// </summary>
+        public static string ___ReworkInstruction__ {
+            get {
+                return ResourceManager.GetString("___ReworkInstruction__", resourceCulture);
             }
         }
         

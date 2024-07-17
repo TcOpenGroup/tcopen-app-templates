@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eReworkResults" Id="{d19c3b1f-0111-4597-b007-1c1a1e19722e}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE eReworkResults :
+(
+	None:=0,
+	Pass := 1,
+	FailedEntityInProgress:=4,
+	FailedEntityOk:=3,
+	FailedEntityHasLessProgress:=2
+	
+
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
