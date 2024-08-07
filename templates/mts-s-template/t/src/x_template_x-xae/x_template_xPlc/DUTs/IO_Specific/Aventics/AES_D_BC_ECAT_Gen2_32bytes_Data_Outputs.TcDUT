@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="AES_D_BC_ECAT_Gen2_32bytes_Data_Outputs" Id="{56ca4d4d-dd10-4040-aab2-ad2659db2a90}">
+    <Declaration><![CDATA[{attribute 'GeneratedUsingTerminal: AES-D-BC-ECAT Gen2-0001'}
+{attribute addProperty BoxType "AES-D-BC-ECAT Gen2-0001"}
+{attribute addProperty Id "digital_Data_OAT %Q*ARRAY[0..31] OF ARRAY[0..7] OF BOOL"}
+{attribute addProperty CRC "2024821696"}
+{attribute addProperty Size "32"}
+TYPE AES_D_BC_ECAT_Gen2_32bytes_Data_Outputs EXTENDS TcoIo.OutputBase_10CEE7DE :
+STRUCT
+	{attribute addProperty Name "digital_Data_O"}
+	digital_Data_O AT %Q* : ARRAY[0..31] OF ARRAY[0..7] OF BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

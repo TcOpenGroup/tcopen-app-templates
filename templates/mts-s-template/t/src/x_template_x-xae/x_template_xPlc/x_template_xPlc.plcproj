@@ -242,6 +242,18 @@
     <Compile Include="Abstractions\Technology\eStations.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\IO_Specific\Aventics\AES_D_BC_ECAT_Gen2_32bytes_Data_Inputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO_Specific\Aventics\AES_D_BC_ECAT_Gen2_32bytes_Data_Outputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO_Specific\Aventics\AES_D_BC_ECAT_Gen2_4bytes_Data_Inputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IO_Specific\Aventics\AES_D_BC_ECAT_Gen2_4bytes_Data_Outputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -404,6 +416,8 @@
     <Folder Include="Abstractions\Technology" />
     <Folder Include="Abstractions\TcoCore" />
     <Folder Include="DUTs" />
+    <Folder Include="DUTs\IO_Specific" />
+    <Folder Include="DUTs\IO_Specific\Aventics" />
     <Folder Include="Technology" />
     <Folder Include="Technology\CU00x\Automat" />
     <Folder Include="Technology\CU00x\Ground" />
