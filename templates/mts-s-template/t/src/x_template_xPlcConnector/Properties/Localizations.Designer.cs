@@ -108,11 +108,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Air pressure.
+        ///   Looks up a localized string similar to Air Pressure.
         /// </summary>
-        public static string ___Air_pressure__ {
+        public static string ___Air_Pressure__ {
             get {
-                return ResourceManager.GetString("___Air_pressure__", resourceCulture);
+                return ResourceManager.GetString("___Air_Pressure__", resourceCulture);
             }
         }
         
@@ -270,15 +270,6 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autmatic mode allowed.
-        /// </summary>
-        public static string ___Autmatic_mode_allowed__ {
-            get {
-                return ResourceManager.GetString("___Autmatic_mode_allowed__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
         public static string ___Auto__ {
@@ -302,6 +293,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___AUTOMAT_ALL__ {
             get {
                 return ResourceManager.GetString("___AUTOMAT_ALL__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automat allowed.
+        /// </summary>
+        public static string ___Automat_allowed__ {
+            get {
+                return ResourceManager.GetString("___Automat_allowed__", resourceCulture);
             }
         }
         
@@ -604,11 +604,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control voltage.
+        ///   Looks up a localized string similar to Control Voltage.
         /// </summary>
-        public static string ___Control_voltage__ {
+        public static string ___Control_Voltage__ {
             get {
-                return ResourceManager.GetString("___Control_voltage__", resourceCulture);
+                return ResourceManager.GetString("___Control_Voltage__", resourceCulture);
             }
         }
         
@@ -667,20 +667,20 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Doors closed.
+        ///   Looks up a localized string similar to Door closed.
         /// </summary>
-        public static string ___Doors_closed__ {
+        public static string ___Door_closed__ {
             get {
-                return ResourceManager.GetString("___Doors_closed__", resourceCulture);
+                return ResourceManager.GetString("___Door_closed__", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Doors locked.
+        ///   Looks up a localized string similar to Door locked.
         /// </summary>
-        public static string ___Doors_locked__ {
+        public static string ___Door_locked__ {
             get {
-                return ResourceManager.GetString("___Doors_locked__", resourceCulture);
+                return ResourceManager.GetString("___Door_locked__", resourceCulture);
             }
         }
         
@@ -1135,11 +1135,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Light curtain.
+        ///   Looks up a localized string similar to Light barrier.
         /// </summary>
-        public static string ___Light_curtain__ {
+        public static string ___Light_barrier__ {
             get {
-                return ResourceManager.GetString("___Light_curtain__", resourceCulture);
+                return ResourceManager.GetString("___Light_barrier__", resourceCulture);
             }
         }
         
@@ -1470,6 +1470,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PLC connection.
+        /// </summary>
+        public static string ___PLC_connection__ {
+            get {
+                return ResourceManager.GetString("___PLC_connection__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please acknowledge recurring failure!.
         /// </summary>
         public static string ___Please_acknowledge_recurring_failure___ {
@@ -1551,6 +1560,15 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Printer.
+        /// </summary>
+        public static string ___Printer__ {
+            get {
+                return ResourceManager.GetString("___Printer__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prisun vstupneho blistra.
         /// </summary>
         public static string ___Prisun_vstupneho_blistra__ {
@@ -1587,11 +1605,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process data.
+        ///   Looks up a localized string similar to Process data loaded.
         /// </summary>
-        public static string ___Process_data__ {
+        public static string ___Process_data_loaded__ {
             get {
-                return ResourceManager.GetString("___Process_data__", resourceCulture);
+                return ResourceManager.GetString("___Process_data_loaded__", resourceCulture);
             }
         }
         
@@ -1812,11 +1830,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Safety doors OK.
+        ///   Looks up a localized string similar to Safety door OK.
         /// </summary>
-        public static string ___Safety_doors_OK__ {
+        public static string ___Safety_door_OK__ {
             get {
-                return ResourceManager.GetString("___Safety_doors_OK__", resourceCulture);
+                return ResourceManager.GetString("___Safety_door_OK__", resourceCulture);
             }
         }
         
@@ -2173,11 +2191,11 @@ namespace x_template_xPlcConnector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Technology data.
+        ///   Looks up a localized string similar to Technology data loaded.
         /// </summary>
-        public static string ___Technology_data__ {
+        public static string ___Technology_data_loaded__ {
             get {
-                return ResourceManager.GetString("___Technology_data__", resourceCulture);
+                return ResourceManager.GetString("___Technology_data_loaded__", resourceCulture);
             }
         }
         
@@ -2205,6 +2223,15 @@ namespace x_template_xPlcConnector.Properties {
         public static string ___Timeout__ {
             get {
                 return ResourceManager.GetString("___Timeout__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceability.
+        /// </summary>
+        public static string ___Traceability__ {
+            get {
+                return ResourceManager.GetString("___Traceability__", resourceCulture);
             }
         }
         

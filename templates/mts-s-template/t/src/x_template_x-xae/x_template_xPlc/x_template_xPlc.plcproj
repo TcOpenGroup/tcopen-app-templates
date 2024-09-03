@@ -137,10 +137,13 @@
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseRecover.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanel.TcPOU">
+    <Compile Include="Abstractions\Generic\NotificationPanel\eIconType.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanelInfo.TcDUT">
+    <Compile Include="Abstractions\Generic\NotificationPanel\Icon.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanel.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Generic\TagsPairing\eTagPairingAnswer.TcDUT">
@@ -389,8 +392,8 @@
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
-    <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
+    <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Components" />
     <Folder Include="Abstractions\Safety" />
     <Folder Include="Abstractions\Safety\ControlButtons" />

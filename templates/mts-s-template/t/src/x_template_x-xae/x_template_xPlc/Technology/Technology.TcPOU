@@ -225,7 +225,7 @@ _components.Zone.AddKeyNormalService(inKeyNormalService:=_components.NormalServi
 ~*)
 METHOD PROTECTED Main
 VAR
-	_notificationSourceSignals: NotificationPanelInfo;
+//	_notificationSourceSignals: NotificationPanelInfo;
 	safetyCircuitOk: BOOL;
 	_eStopActive: BOOL;
 	_keysAto: BOOL;
@@ -287,21 +287,7 @@ _closed:=TRUE;
 _keysAto  := TRUE;
 _eStopActive:=0;
 
-
-_notificationSourceSignals.ControlVoltage   := TRUE;//Components.ControlVoltage.Signal.Signal 
-_notificationSourceSignals.AirPressure      := TRUE;//Components.AirPressureOk.Signal.Signal, 
-_notificationSourceSignals.AutomatAllowed   := _keysAto; 
-_notificationSourceSignals.EmergencyStop    := _eStopActive > 0; 
-_notificationSourceSignals.SafetyDoorOk     :=safetyCircuitOk;	
-_notificationSourceSignals.LightCurtain     := TRUE; 	// not used
-_notificationSourceSignals.DoorClosed       := _closed; 
-_notificationSourceSignals.DoorLocked       := _locked; 
-_notificationSourceSignals.ProcessDataOk    := _processSettings._data._EntityId <> '';
-_notificationSourceSignals.TechnologyDataOk := _technologySettings._data._EntityId <> '';  
-	
-_notificationPanel(inBlinkPeriod:=T#500MS , inSignalSource:=_notificationSourceSignals );
-			
- Context.Environment.Messaging.Resume();
+Context.Environment.Messaging.Resume();
 
 (*
 	
@@ -379,5 +365,56 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <LineIds Name="Technology">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowAutomat">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowGround">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AllowManual">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.AutomatAllTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.Cu00x.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ForceStepMode">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.GroundAllTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.InitializeComponents">
+      <LineId Id="3" Count="62" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.InitializeComponentsOnce">
+      <LineId Id="3" Count="18" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.Main">
+      <LineId Id="3" Count="53" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="72" Count="25" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.OnExit">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ProcessSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.ReworkSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Technology.TechnologicalSettings.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

@@ -243,6 +243,9 @@
   <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached___" xml:space="preserve">
     <value>(Consecutive failure) The number of same recurring failure count has been reached!</value>
   </data>
+  <data name="___PLC_connection__" xml:space="preserve">
+    <value>PLC connection</value>
+  </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
   </data>
@@ -552,6 +555,42 @@
   <data name="___Test_multi_positions__" xml:space="preserve">
     <value>Test multi positions</value>
   </data>
+  <data name="___Control_Voltage__" xml:space="preserve">
+    <value>Control Voltage</value>
+  </data>
+  <data name="___Air_Pressure__" xml:space="preserve">
+    <value>Air Pressure</value>
+  </data>
+  <data name="___Emergency_stop__" xml:space="preserve">
+    <value>Emergency stop</value>
+  </data>
+  <data name="___Safety_door_OK__" xml:space="preserve">
+    <value>Safety door OK</value>
+  </data>
+  <data name="___Door_closed__" xml:space="preserve">
+    <value>Door closed</value>
+  </data>
+  <data name="___Door_locked__" xml:space="preserve">
+    <value>Door locked</value>
+  </data>
+  <data name="___Automat_allowed__" xml:space="preserve">
+    <value>Automat allowed</value>
+  </data>
+  <data name="___Process_data_loaded__" xml:space="preserve">
+    <value>Process data loaded</value>
+  </data>
+  <data name="___Technology_data_loaded__" xml:space="preserve">
+    <value>Technology data loaded</value>
+  </data>
+  <data name="___Light_barrier__" xml:space="preserve">
+    <value>Light barrier</value>
+  </data>
+  <data name="___Printer__" xml:space="preserve">
+    <value>Printer</value>
+  </data>
+  <data name="___Traceability__" xml:space="preserve">
+    <value>Traceability</value>
+  </data>
   <data name="___AUTOMAT_ALL__" xml:space="preserve">
     <value>AUTOMAT ALL</value>
   </data>
@@ -731,36 +770,6 @@
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
     <value>Rework Count</value>
-  </data>
-  <data name="___Control_voltage__" xml:space="preserve">
-    <value>Control voltage</value>
-  </data>
-  <data name="___Air_pressure__" xml:space="preserve">
-    <value>Air pressure</value>
-  </data>
-  <data name="___Autmatic_mode_allowed__" xml:space="preserve">
-    <value>Autmatic mode allowed</value>
-  </data>
-  <data name="___Emergency_stop__" xml:space="preserve">
-    <value>Emergency stop</value>
-  </data>
-  <data name="___Safety_doors_OK__" xml:space="preserve">
-    <value>Safety doors OK</value>
-  </data>
-  <data name="___Doors_closed__" xml:space="preserve">
-    <value>Doors closed</value>
-  </data>
-  <data name="___Doors_locked__" xml:space="preserve">
-    <value>Doors locked</value>
-  </data>
-  <data name="___Light_curtain__" xml:space="preserve">
-    <value>Light curtain</value>
-  </data>
-  <data name="___Process_data__" xml:space="preserve">
-    <value>Process data</value>
-  </data>
-  <data name="___Technology_data__" xml:space="preserve">
-    <value>Technology data</value>
   </data>
   <data name="___Key_UID__" xml:space="preserve">
     <value>Key UID</value>

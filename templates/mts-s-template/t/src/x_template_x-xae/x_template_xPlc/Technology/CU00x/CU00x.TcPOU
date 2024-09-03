@@ -30,7 +30,7 @@ VAR
 	{attribute addProperty Name "<#Test multi positions#>"}
 	_positionsMulti : CU00xTestMultiPositions(THIS^);
 	
-
+	_notificationPanel : NotificationPanel(THIS^);	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -395,6 +395,9 @@ GVL_iXlinker.Ec.EC.Ek.PNEU.Modules.Outputs.digital_Data_O[2].2:=tempBoolWork;
 Components.PlsPaletizator(inSafeCondition:=GVL_iXlinker.Ec.EC.IA1.Channel_1.Input);
 Components.PlsPaletizator.Service();
 
+setupIcons();
+_notificationPanel(inBlinkPeriod:=T#500MS);
+
 ]]></ST>
       </Implementation>
     </Method>
@@ -470,6 +473,95 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="setupIcons" Id="{682b7409-a1e1-43e1-ba55-f1658362b07d}">
+      <Declaration><![CDATA[METHOD setupIcons
+VAR
+	_iconParams : Icon;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_NotificationPanel.Clear();
+
+_iconParams.Title := '<#Control Voltage#>';
+_iconParams.IconType := TO_STRING(eIconType.controlVoltage);//'Power';
+_iconParams.Signal := TRUE;
+_iconParams.BlinkEnabled := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+
+_iconParams.Title := '<#Air Pressure#>';
+_iconParams.IconType := TO_STRING(eIconType.airPressure);//'OxygenTank';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Emergency stop#>';
+_iconParams.IconType := TO_STRING(eIconType.emergencyStop);//'Alert';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Safety door OK#>';
+_iconParams.IconType := TO_STRING(eIconType.safetyDoor);//'ShieldCheck';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Door closed#>';
+_iconParams.IconType := TO_STRING(eIconType.doorClosed);//'Door';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Door locked#>';
+_iconParams.IconType := TO_STRING(eIconType.doorLocked);//'DoorClosedLock';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Automat allowed#>';
+_iconParams.IconType := TO_STRING(eIconType.automatAllowed);//'RunFast';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Process data loaded#>';
+_iconParams.IconType := TO_STRING(eIconType.processDataLoaded);//'ClipboardCheckOutline';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Technology data loaded#>';
+_iconParams.IconType := TO_STRING(eIconType.technologyDataLoaded);//'CogOutline';  
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+_iconParams.Title := '<#Light barrier#>';
+_iconParams.IconType := TO_STRING(eIconType.opticBarrier);//'Hand';
+_iconParams.Signal := TRUE;
+_NotificationPanel.addIcon(_iconParams);
+_iconParams := _notificationPanel._iconParamsClear;
+
+//_iconParams.Title := '<#Printer#>';
+//_iconParams.IconType := 'Printer';
+//_iconParams.Signal := TRUE;
+//_NotificationPanel.addIcon(_iconParams);
+//_iconParams := _notificationPanel._iconParamsClear;
+
+//_iconParams.Title := '<#Traceability#>';
+//_iconParams.IconType := 'Database';
+//_iconParams.Signal := FALSE;
+//_iconParams.EnableRedIcon := TRUE;
+//_iconParams.AlertEnabled := TRUE;
+//_NotificationPanel.addIcon(_iconParams);
+//_iconParams := _notificationPanel._iconParamsClear;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="StatusInfo" Id="{c1e64466-c2b7-4817-b7eb-dde6593385fb}">
       <Declaration><![CDATA[PROPERTY StatusInfo : REFERENCE TO CUBaseStatusInfo]]></Declaration>
       <Get Name="Get" Id="{85699701-4eff-42c1-b40d-a4f2d77266cb}">
@@ -506,5 +598,100 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
+    <LineIds Name="CU00x">
+      <LineId Id="3" Count="67" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Automat">
+      <LineId Id="3" Count="34" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.AutomatTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Components.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Ground">
+      <LineId Id="3" Count="34" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.GroundTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Idle">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.InitializeComponents">
+      <LineId Id="3" Count="127" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Manual">
+      <LineId Id="3" Count="22" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.ManualTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.ProductionPlanerTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.RecoverTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.setupIcons">
+      <LineId Id="71" Count="1" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="11" Count="3" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="16" Count="3" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="20" Count="4" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="30" Count="4" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="35" Count="4" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="40" Count="4" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="45" Count="4" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="50" Count="4" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="123" Count="4" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.StatusInfo.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.SuspendTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Technology.Get">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

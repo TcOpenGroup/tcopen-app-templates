@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Icon" Id="{a5ceab7d-2229-477d-b701-571013b76bf8}">
+    <Declaration><![CDATA[TYPE Icon :
+STRUCT
+	Title : STRING;
+	IconType : STRING;
+	Signal : BOOL;
+	SignalBlink : BOOL;
+	BlinkEnabled : BOOL;
+	DisableRedIcon : BOOL := FALSE;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
