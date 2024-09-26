@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="SignalMonitor" Id="{d27db0c7-1514-4978-b992-f3f3bef77a50}" SpecialFunc="None">
+    <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Allows monitoring the change of the status of signals without the need to connect to a PLC. 
+			For each signal to be monitored, it is necessary to create a separate instance. 
+			It can monitor digital and analog signals, as well as STRING, BOOL, REAL variables.
+			
+			Input variables: 
+				-inSignalVal: The value of the input signal being monitored.
+				 -infileName: Name of the file in which the signal records will be saved.
+				 -infilePath: Path to the folder where the log file will be stored.
+				  -inSaveLog: Boolean variable specifying whether the signal should be saved in the log (default value is TRUE).
+				  
+			Basic logic: 
+				It will create file with nameformat: <inFileName>_log_<currentDate>.csv for further analysis. 
+				Whenever inSignalVal changes it will write previous value and actual value to log array with actual time as string in format: hh:mm:ss,000;yyyy-MM-dd;value. 
+				If log array is full(20 entries), it will save the data to .csv file and then log array is cleared. 
+				Saving to file can be disabled by setting variable _inSaveLog to FALSE(default value is TRUE). 
+				
+		</summary>	
+	</docu>	
+~*)
+
+FUNCTION_BLOCK SignalMonitor
+VAR_INPUT
+	inSignalVal : STRING; 
+	infileName : STRING;
+	infilePath : STRING;
+	inSaveLog : BOOL := TRUE;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_logData : ARRAY[0..20] OF LogEntry;	
+	_index : INT;
+	_prevVal : STRING;
+	_logDataClear : ARRAY[0..20] OF LogEntry;	
+	
+	_fileID : SysFile.RTS_IEC_HANDLE;
+	_fileSize :SysFile.RTS_IEC_HANDLE;
+	_writeString : STRING[255];
+	_fileOperationResult : RTS_IEC_RESULT;
+	_CurrentTime : STRING;
+	_CurrentDate : STRING;
+	_fileName : STRING;
+	_filePath : STRING;
+	_DateTime : Tc2_Utilities.TIMESTRUCT;
+	_headerWritten : BOOL;
+	
+	_saveTimer : TON;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//init
+//_filePath := 'C:\Users\jan.takac\Desktop\TCO\';
+_filePath := inFilePath;
+_fileName := infileName;
+
+_saveTimer(IN:=(inSignalVal = _prevVal), PT:=T#10S, Q=>);
+
+// Getting the current date 
+IF MAIN._technology._rtc._localTime.wYear > 1970 THEN  // only record valid dates
+	_CurrentDate := CONCAT(AddLeadingChars(TO_STRING(MAIN._technology._rtc._localTime.wDay), 2, '0'), AddLeadingChars(TO_STRING(MAIN._technology._rtc._localTime.wMonth), 2, '0'));
+	_CurrentDate := CONCAT(_CurrentDate, AddLeadingChars(TO_STRING(MAIN._technology._rtc._localTime.wYear), 4, '0'));
+ELSE
+	RETURN;
+END_IF
+
+// Creating the full file name including path, log, and date
+_fileName := CONCAT(_filePath, _fileName);
+_fileName := CONCAT(_fileName, '_log_');
+_fileName := CONCAT(_fileName, _CurrentDate);
+_fileName := CONCAT(_fileName, '.csv');
+
+// Check if the signal value has changed compared to the previous value
+
+
+IF inSignalVal <> _prevVal THEN
+	_DateTime := MAIN._technology._rtc._localTime;
+	IF _index >= 20 THEN 
+		IF inSaveLog THEN		
+			THIS^.WriteToFile(_fileName); 
+		END_IF
+		_logData := _logDataClear;
+		_index := 0;
+	END_IF
+	
+
+	
+// Creating the time value in the format HH:MM:SS,MS	
+	_CurrentTime := CONCAT(AddLeadingChars(WORD_TO_STRING(_DateTime.wHour), 2, '0'), ':');
+    _CurrentTime := CONCAT(_CurrentTime,AddLeadingChars(WORD_TO_STRING(_DateTime.wMinute), 2, '0'));  
+	_CurrentTime := CONCAT(_CurrentTime,':');
+	_CurrentTime := CONCAT(_CurrentTime,AddLeadingChars(WORD_TO_STRING(_DateTime.wSecond),2, '0'));
+  	_CurrentTime := CONCAT(_CurrentTime,',');
+	_CurrentTime := CONCAT(_CurrentTime,AddLeadingChars(WORD_TO_STRING(_DateTime.wMilliseconds), 3, '0'));
+	
+// Creating the date in the format YYYY-MM-DD	
+	_CurrentDate := CONCAT(AddLeadingChars(WORD_TO_STRING(_DateTime.wYear), 4, '0'), '-');
+    _CurrentDate := CONCAT(_CurrentDate,AddLeadingChars(WORD_TO_STRING(_DateTime.wMonth), 2, '0')); 
+	_CurrentDate := CONCAT(_CurrentDate,'-');
+	_CurrentDate := CONCAT(_CurrentDate,AddLeadingChars(WORD_TO_STRING(_DateTime.wDay), 2, '0'));
+  	
+// Save the previous signal value into the log
+	_logData[_index].Timevalue := _CurrentTime;
+	_logData[_index].Datevalue := _CurrentDate;
+	_logData[_index].Value := _prevVal;
+	_index := _index + 1;
+	
+// Update the previous signal value and log the new one	
+	_prevVal := inSignalVal;
+	_logData[_index].Timevalue := _CurrentTime;
+	_logData[_index].Datevalue := _CurrentDate;
+	_logData[_index].Value := inSignalVal; 
+	_index := _index + 1;
+	
+END_IF
+
+IF _saveTimer.Q AND inSaveLog THEN 
+	THIS^.WriteToFile(_fileName); 
+	_logData := _logDataClear;
+	_index := 0;
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="CheckDirectory" Id="{914a252c-9267-4a38-abe0-a3d3c37a2203}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Checks whether directory is existing and if not, then it creates one. 
+
+			NOTICE - it can create directory only one level above. 		
+		</summary>	
+	</docu>	
+~*)
+METHOD CheckDirectory : BOOL
+VAR_INPUT
+	inFilePath : STRING;
+END_VAR
+
+VAR
+    bBootFolder   : BOOL;
+
+    ePath         : E_OpenPath; (* folders root path *)
+    sPathName     : STRING;
+
+    fbCreateDir   : FB_CreateDir;
+    bCreate       : BOOL;
+    bCreate_Busy  : BOOL;
+    bCreate_Error : BOOL;
+    nCreate_ErrID : UDINT;
+
+    fbRemoveDir   : FB_RemoveDir;
+    bRemove       : BOOL;
+    bRemove_Busy  : BOOL;
+    bRemove_Error : BOOL;
+    nRemove_ErrID : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ePath := SEL( bBootFolder, PATH_GENERIC, PATH_BOOTPATH );
+sPathName := SEL( bBootFolder, infilePath, infilePath );
+
+bCreate := TRUE;
+
+IF bCreate THEN
+    bCreate := FALSE;
+    fbCreateDir( bExecute := FALSE );
+    fbCreateDir(sNetId:= '',
+        sPathName:= sPathName,
+        ePath:= ePath,
+        bExecute:= TRUE,
+        tTimeout:= DEFAULT_ADS_TIMEOUT,
+        bBusy=>bCreate_Busy, bError=>bCreate_Error, nErrId=>nCreate_ErrID );
+ELSE
+    fbCreateDir( bExecute := FALSE, bBusy=>bCreate_Busy, bError=>bCreate_Error, nErrId=>nCreate_ErrID );
+END_IF
+
+IF bRemove THEN
+    bRemove := FALSE;
+    fbRemoveDir( bExecute := FALSE );
+    fbRemoveDir(sNetId:= '',
+        sPathName:= sPathName,
+        ePath:= ePath,
+        bExecute:= TRUE,
+        tTimeout:= DEFAULT_ADS_TIMEOUT,
+        bBusy=>bRemove_Busy, bError=>bRemove_Error, nErrId=>nRemove_ErrID );
+ELSE
+    fbRemoveDir( bExecute := FALSE, bBusy=>bRemove_Busy, bError=>bRemove_Error, nErrId=>nRemove_ErrID );
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WriteToFile" Id="{a2b202de-dc59-4b72-83ae-903f71779af6}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Writes data from log array to .csv file. 
+			
+			If file doesn't exist, it creates new one and add header to it. 
+				
+		</summary>	
+	</docu>	
+~*)
+METHOD WriteToFile
+
+VAR_INPUT
+	inFileName : STRING;
+END_VAR
+
+VAR
+	_writeIndex : INT;
+	_fileOperationResult : INT;
+	_writeString : STRING;
+	
+	_header : STRING := 'Date;Time;Value$R$N'; // Hlavička CSV súboru
+	_headerWritten : BOOL := FALSE;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//kontrola, ci existuje priecinok
+CheckDirectory(THIS^._filePath);
+
+
+//citanie velkosti suboru
+_fileSize := SysFileGetSize(szFileName := inFileName, pResult:= ADR(_fileOperationResult));
+
+//otvorenie alebo vytvorenie noveho suboru
+_fileID := SysFileOpen(szFile:= inFileName, 
+			am := AM_APPEND, 
+			pResult := ADR(_fileOperationResult));
+			
+// Ak je súbor otvorený úspešne			
+IF TO_BOOL(_fileID) THEN 					
+//kontrola velkosti - ak je 0 -> subor bol vytvoreny, ak nie je 0, subor existoval			
+IF NOT (TO_BOOL(_fileSize)) THEN
+    SysFileWrite(hFile := _fileID, 
+    pbyBuffer := ADR(_header), 
+    ulSize := LEN(_header), 
+    pResult := ADR(_fileOperationResult));
+    _headerWritten := TRUE;
+END_IF		
+
+						
+// Zápis dát do súboru
+	FOR _Writeindex := 0 TO (THIS^._index -1) DO
+		IF (THIS^._logData[_writeIndex].Value <> '') THEN
+			THIS^._writeString := CONCAT(TO_STRING(THIS^._logData[_writeIndex].Datevalue), ';');
+			THIS^._writeString := CONCAT(THIS^._writeString,TO_STRING(THIS^._logData[_writeIndex].Timevalue));
+			THIS^._writeString := CONCAT(THIS^._writeString,';');
+			THIS^._writeString := CONCAT(THIS^._writeString, THIS^._logData[_writeIndex].Value);
+			THIS^._writeString := CONCAT(THIS^._writeString, '$R$N');
+			
+			SysFileWrite(hFile := _fileID, 
+						 pbyBuffer := ADR(THIS^._writeString), 
+						 ulSize :=LEN(THIS^._writeString), 
+						 pResult := ADR(_fileOperationResult));
+		END_IF
+	END_FOR
+	// Uzatvorenie súboru po zápise
+	SysFileClose(_fileID);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SignalMonitor">
+      <LineId Id="3" Count="3" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="7" Count="16" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="24" Count="8" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="33" Count="27" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="133" Count="4" />
+      <LineId Id="132" Count="0" />
+    </LineIds>
+    <LineIds Name="SignalMonitor.CheckDirectory">
+      <LineId Id="3" Count="29" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SignalMonitor.WriteToFile">
+      <LineId Id="3" Count="25" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="29" Count="9" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -143,6 +143,12 @@
     <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanelInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Generic\SignalMonitor\LogEntry.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\SignalMonitor\SignalMonitor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\Generic\TagsPairing\eTagPairingAnswer.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -389,6 +395,7 @@
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
+    <Folder Include="Abstractions\Generic\SignalMonitor" />
     <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
     <Folder Include="Abstractions\Components" />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.55">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.44">
 	<DataTypes>
 		<DataType>
 			<Name GUID="{132E66EA-9D48-518D-E919-C407F4B9DB22}" Namespace="TcoIo" AutoDeleteType="true">TcoAmsNetId</Name>
@@ -137,7 +137,7 @@
 		<ImageData Id="1016">424de6000000000000007600000028000000100000000e000000010004000000000070000000c30e0000c30e000010000000100000000000ff00ff00ff00ff000000ffff000000ff000000ffff0000008000800080008000000080800000008000000080800080808000c0c0c000ffffff0000000000111111111111111100ffffffffffffff00fffffffffff00ffffffffffffff00ffff00fff00fffffffff00fff00fffffffffffffffffff44f00fffffffffff44f00ffffffffffffffdddddd1111111111dddddd1111111111dddddd1111111111dddddd1111111111dddddd1111111111</ImageData>
 		<ImageData Id="1017">424de6000000000000007600000028000000100000000e000000010004000000000070000000c30e0000c30e000010000000100000000000ff00ff00ff00ff000000ffff000000ff000000ffff0000008000800080008000000080800000008000000080800080808000c0c0c000ffffff00000000001111111111111111fffffffffffffffffcfcfcfcfffff00ff4f4f4f4fffff00ffffffffffffffffffffffffffffffffffcfcfcfcfffff00ff4f4f4f4fffff00fffffffffffffffff55555511111111115555551111111111555555111111111155555511111111115555551111111111</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{81535540-06FC-4400-AD30-5DF785BB9A0E}" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{81535540-06FC-4400-AD30-5DF785BB9A0E}" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="24" NonWinCpus="1"/>
 			<Tasks>
@@ -151,7 +151,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{1F826822-78EF-46D2-B0C2-A803A090596D}" Name="x_template_xPlc" PrjFilePath="x_template_xPlc\x_template_xPlc.plcproj" TmcFilePath="x_template_xPlc\x_template_xPlc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{EAD70BAD-0C4C-0592-AEDD-56DCCC2D4E2C}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="x_template_xPlc\x_template_xPlc.tmc" TmcHash="{7A9C0F94-C9CB-87DD-007F-E60331BC8A38}">
 					<Name>x_template_xPlc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -833,7 +833,7 @@
 					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
-							<Id>0</Id>
+							<Id NeedCalleeCall="true">0</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>

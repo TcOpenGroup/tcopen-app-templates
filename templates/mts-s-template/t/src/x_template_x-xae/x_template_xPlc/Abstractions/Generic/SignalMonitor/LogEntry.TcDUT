@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="LogEntry" Id="{853052ce-d2a1-496f-bef1-a85516dbf24e}">
+    <Declaration><![CDATA[TYPE LogEntry :
+STRUCT
+	Value : STRING;
+Datevalue : STRING;
+Timevalue : STRING;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

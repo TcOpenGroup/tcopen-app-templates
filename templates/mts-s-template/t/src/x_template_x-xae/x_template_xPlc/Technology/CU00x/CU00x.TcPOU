@@ -30,12 +30,39 @@ VAR
 	{attribute addProperty Name "<#Test multi positions#>"}
 	_positionsMulti : CU00xTestMultiPositions(THIS^);
 	
-
+(*
+	_signalMonitorBool : SignalMonitor;
+	_monitorValueBool   : BOOL;
+	
+	_signalMonitorString : SignalMonitor;
+	_monitorValueString : STRING;
+	
+	_signalMonitorNumber : SignalMonitor;
+	_monitorValueNumber : REAL;
+	
+*)
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[THIS^.CuId := eStations.CU00x;
 
+(*
+INITIALIZATION OF SIGNAL MONITOR - 
+_signalMonitorBool(inSignalVal:= ANY_TO_STRING(_monitorValueBool),
+                   infilePath := 'D:\Logs\',
+		           infileName := 'MonitorValueBool', 
+				   inSaveLog := FALSE);
+						  
+_signalMonitorString(inSignalVal:= ANY_TO_STRING(_monitorValueString),
+                     infilePath := 'D:\Logs\',
+		             infileName := '_monitorValueString', 
+				      inSaveLog := FALSE);	
+		
+_signalMonitorNumber(inSignalVal:= ANY_TO_STRING(_monitorValueNumber),
+                     infilePath := 'D:\Logs\',
+		             infileName := '_monitorValueNumber', 
+				      inSaveLog := FALSE);		
+*)
 
 
 (*
@@ -506,5 +533,68 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
+    <LineIds Name="CU00x">
+      <LineId Id="3" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="168" Count="3" />
+      <LineId Id="134" Count="3" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="138" Count="3" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="7" Count="63" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Automat">
+      <LineId Id="3" Count="34" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.AutomatTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Components.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Ground">
+      <LineId Id="3" Count="34" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.GroundTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Idle">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.InitializeComponents">
+      <LineId Id="3" Count="128" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Manual">
+      <LineId Id="3" Count="22" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.ManualTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.ProductionPlanerTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.RecoverTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.StatusInfo.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.SuspendTask.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CU00x.Technology.Get">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
