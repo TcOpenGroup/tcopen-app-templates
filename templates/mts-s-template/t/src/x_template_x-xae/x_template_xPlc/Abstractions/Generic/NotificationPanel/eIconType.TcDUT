@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eIconType" Id="{a3b8a259-eeeb-48a6-a1d6-fa54ff3436d4}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE 
+	eIconType : 
+(
+	none := 0,
+	controlVoltage := 10,
+	airPressure := 20,
+	emergencyStop := 30,
+	safetyDoor := 40,
+	doorClosed := 50,
+	doorLocked := 60,
+	automatAllowed := 70,
+	processDataLoaded := 80,
+	technologyDataLoaded := 90,
+	opticBarrier := 100,
+	robot := 110,
+	plcConnection := 120
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -12,16 +12,8 @@ VAR_INPUT
 		</docu>
 	~*)
 	inBlinkPeriod:TIME;
-		(*~
-		<docu>
-			<summary>
-				Source inputs for signalisation.
-			</summary>
-		</docu>
-	~*)
-	inSignalSource:NotificationPanelInfo;
-	
 END_VAR
+
 VAR
 	{attribute addProperty Name "<#Heart beat#>"}
   	_heartBeat : BOOL;
@@ -31,28 +23,33 @@ VAR
 
 	{attribute clr [RenderIgnore()]}
     _toggle: TcoUtilities.TcoBlinker(THIS^);
-
-	_notificationPanelSignals: NotificationPanelInfo;
+	
+	_iconSet: ARRAY[0..20] OF Icon; //ak potrebujes zobrazit viac ikon, uprav velkost pola
+	
+	_iconSetClear : ARRAY[0..20] OF Icon; //ak potrebujes zobrazit viac ikon, uprav velkost pola
+	
+	_iconPlcPulse : Icon;
+	
+	_iconParamsClear : Icon;
+	
 END_VAR
 	
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[_toggle(inOffTime:=inBlinkPeriod,inOnTime:=inBlinkPeriod);
-_heartBeat := _toggle.IsOn;
-_notificationPanelSignals:=inSignalSource;
+      <ST><![CDATA[
 
-_badgeValue := 0;
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.ControlVoltage);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.AirPressure);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.AutomatAllowed);
-_badgeValue:=_badgeValue + BOOL_TO_INT(_notificationPanelSignals.EmergencyStop);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.SafetyDoorOk);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.DoorClosed);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.Doorlocked);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.LightCurtain);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.ProcessDataOk);
-_badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.TechnologyDataOk);
+_iconPlcPulse.Title := '<#PLC connection#>';
+_iconPlcPulse.IconType := TO_STRING(eIconType.plcConnection);
+_iconPlcPulse.Signal := _heartBeat;
+_iconPlcPulse.DisableRedIcon := TRUE;
+addIcon(_iconPlcPulse);
+
+//setIconsStyle();
+
+Blink();
+CountSignals();
+
 
 
 
@@ -61,5 +58,175 @@ _badgeValue:=_badgeValue + BOOL_TO_INT(NOT _notificationPanelSignals.TechnologyD
 
 ]]></ST>
     </Implementation>
+    <Method Name="AddIcon" Id="{2a610e16-906a-49b5-9c35-0302376f96c9}">
+      <Declaration><![CDATA[METHOD AddIcon : BOOL
+VAR_INPUT
+	inIcon : Icon;
+END_VAR
+
+VAR 
+	_index : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR  _index := 0 TO 20 DO 
+	IF _IconSet[_index].Title = '' THEN
+		_IconSet[_index] := inIcon;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Blink" Id="{d779bc9b-5ccc-4241-baac-18a7b45cc3d3}">
+      <Declaration><![CDATA[METHOD Blink
+VAR 
+	_index : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_toggle(inOffTime:=inBlinkPeriod,inOnTime:=inBlinkPeriod);
+_heartBeat := _toggle.IsOn;
+	FOR _index := 0 TO 20 DO
+		IF _iconSet[_index].BlinkEnabled AND NOT _iconSet[_index].Signal THEN 
+			_iconSet[_index].SignalBlink := _toggle.IsOn;		
+		ELSE
+			_iconSet[_index].SignalBlink := _iconSet[_index].Signal;
+		END_IF
+	END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clear" Id="{98437acd-3427-45b1-8068-68a3fcbfcb6c}">
+      <Declaration><![CDATA[METHOD Clear 
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iconSet := _iconSetClear;
+_badgeValue := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CountSignals" Id="{cb041011-57e9-48eb-8354-3b0ea9b4ed06}">
+      <Declaration><![CDATA[METHOD CountSignals
+VAR
+	_iconIndex : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iconIndex := 0;
+_badgeValue := 0;
+FOR _iconIndex := 0 TO 20 DO
+	IF _iconSet[_iconIndex].Title <> '' AND  NOT _iconSet[_iconIndex].DisableRedIcon THEN 
+		_badgeValue := _badgeValue + BOOL_TO_INT(NOT _iconSet[_iconIndex].Signal);
+	END_IF
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setIconsStyle" Id="{c2462871-419f-4d9d-b904-af8fc3f6ed34}">
+      <Declaration><![CDATA[METHOD PRIVATE setIconsStyle
+VAR 
+	_index : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//FOR _index := 0 TO 20 DO 
+//	CASE _iconSet[_index].IconType OF 
+//		eIconType.controlVoltage : _iconSet[_index].IconType := 'Power';
+//		eIconType.airPressure : _iconSet[_index].IconType := 'OxygenTank';
+//		eIconType.emergencyStop : _iconSet[_index].IconType := 'Alert';
+//		eIconType.safetyDoor : _iconSet[_index].IconType := 'ShieldCheck';
+//		eIconType.doorClosed : _iconSet[_index].IconType := 'Door';
+//		eIconType.doorLocked : _iconSet[_index].IconType := 'DoorClosedLock';
+//		eIconType.processDataLoaded : _iconSet[_index].IconType := 'CogOutline';
+//		eIconType.technologyDataLoaded : _iconSet[_index].IconType := 'ClipboardCheckOutline';
+//		eIconType.opticBarrier : _iconSet[_index].IconType := 'Hand';
+//		eIconType.robot : _iconSet[_index].IconType := 'RobotIndustrial';
+//		eIconType.plcConnection : _iconSet[_index].IconType := 'HeartPulse';
+//	ELSE
+//		 _iconSet[_index].IconType := _iconSet[_index].IconType;
+//	END_CASE
+//END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSignal" Id="{665d5821-5d96-4799-aa5d-f419e69d82b5}">
+      <Declaration><![CDATA[METHOD SetSignal
+VAR_INPUT
+	inTitle : STRING;
+	inSignal : BOOL;
+END_VAR
+
+VAR
+	_index : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR _index := 0 TO 20 DO 
+	IF _iconSet[_index].Title = inTitle THEN 
+		_iconSet[_index].Signal := inSignal;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="NotificationPanel">
+      <LineId Id="4" Count="0" />
+      <LineId Id="109" Count="3" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="20" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.AddIcon">
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.Blink">
+      <LineId Id="34" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.Clear">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.CountSignals">
+      <LineId Id="7" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.setIconsStyle">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="12" Count="9" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="NotificationPanel.SetSignal">
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
