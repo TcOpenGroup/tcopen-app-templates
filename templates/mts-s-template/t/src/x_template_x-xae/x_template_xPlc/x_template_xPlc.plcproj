@@ -32,22 +32,91 @@
     <Compile Include="Abstractions\Components\ArrayRenderingExample\SampleDataItem.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator_Components.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator_Config_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator_Control_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator_Positions.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plb\TcoPlbPaletizator_Status_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plr\TcoPlrPaletizator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plr\TcoPlrPaletizator_Components.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plr\TcoPlrPaletizator_Config_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plr\TcoPlrPaletizator_Control_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Plr\TcoPlrPaletizator_Status_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Pls\TcoPlsPaletizator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Pls\TcoPlsPaletizator_Components.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Pls\TcoPlsPaletizator_Config_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Pls\TcoPlsPaletizator_Control_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\Pls\TcoPlsPaletizator_Status_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\TcoFeeding_Config_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Blisters\TcoFeeding_Status_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\eTcoOscilatingConveyorOscilationModes.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\eTcoOscilatingConveyorStatus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeederComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_Config_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_Control_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_DesignerSpecificData.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_PcToPlc.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_PlcToPc.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder\TcoOscilatingConveyorFeeder_Status_v_1_x_x.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\Components\MtsFeeding\TcoFeedingSequenceTask.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator_Components.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator_Config_v_1_x_x.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator_Control_v_1_x_x.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Abstractions\Components\MtsFeeding\TcoPlsPaletizator_Status_v_1_x_x.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Components\Rework\eReworkResults.TcDUT">
@@ -57,6 +126,72 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Components\Rework\ReworkInstructionTask.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\eTcoEq2TransferConfiguration.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\eTcoEq2TransferHandlingMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\TcoEq2Transfer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\TcoEq2TransferComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\TcoEq2Transfer_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\TcoEq2Transfer_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\EqTransfer\TcoEq2Transfer_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTrabsferWithLift\TcoLiftingRotaryTransfer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTrabsferWithLift\TcoLiftingRotaryTransferComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTrabsferWithLift\TcoLiftingRotaryTransfer_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTrabsferWithLift\TcoLiftingRotaryTransfer_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTrabsferWithLift\TcoLiftingRotaryTransfer_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTransfer\TcoRotaryTransfer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTransfer\TcoRotaryTransferComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTransfer\TcoRotaryTransfer_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTransfer\TcoRotaryTransfer_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\RotaryTransfer\TcoRotaryTransfer_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\WorkPosition\TcoTransferSystemComponent.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\WorkPosition\TcoTransferSystemComponents.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\WorkPosition\TcoTransferSystem_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\WorkPosition\TcoTransferSystem_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Components\TS\WorkPosition\TcoTransferSystem_Status.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Components\WrappedComponent\WrappedComponentExample.TcPOU">
@@ -90,6 +225,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\CUBase\CUComponentsBase.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\CUBase\Data\BasicCounterData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\CUBase\Data\CuHeader.TcDUT">
@@ -137,6 +275,18 @@
     <Compile Include="Abstractions\CUBase\Tasks\CUBaseRecover.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Abstractions\Generic\LightTower\TcoLightTower.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\LightTower\TcoLightTower_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\LightTower\TcoLightTower_Info.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstractions\Generic\LightTower\TcoLightTower_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Abstractions\Generic\NotificationPanel\NotificationPanel.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -158,19 +308,19 @@
     <Compile Include="Abstractions\Generic\TagsPairing\TagsPairing.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\ControlButtons\TcoControlButtons.TcPOU">
+    <Compile Include="Abstractions\Safety\ControlButtons\ITcoControlButtons.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\ControlButtons\ITcoControlButtons.TcIO">
+    <Compile Include="Abstractions\Safety\ControlButtons\TcoControlButtons.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Safety\ControlButtons\TcoControledZone_Info.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZoneActionTask.TcPOU">
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone.TcPOU">
+    <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZoneActionTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Abstractions\Safety\ControlledZone\TcoControlledZone_Config.TcDUT">
@@ -281,6 +431,9 @@
     <Compile Include="Technology\CU00x\Safety\Recover\CU00xRecoverTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Technology\Data\InternalStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Technology\Data\ProcessData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -382,13 +535,25 @@
     <Folder Include="Abstractions" />
     <Folder Include="Abstractions\Components\ArrayRenderingExample" />
     <Folder Include="Abstractions\Components\MtsFeeding" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Blisters" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Blisters\Plb" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Blisters\Plr" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Blisters\Pls" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Components" />
+    <Folder Include="Abstractions\Components\MtsFeeding\Components\OscilatingConveyorFeeder" />
     <Folder Include="Abstractions\Components\Rework" />
+    <Folder Include="Abstractions\Components\TS" />
+    <Folder Include="Abstractions\Components\TS\EqTransfer" />
+    <Folder Include="Abstractions\Components\TS\RotaryTrabsferWithLift" />
+    <Folder Include="Abstractions\Components\TS\RotaryTransfer" />
+    <Folder Include="Abstractions\Components\TS\WorkPosition" />
     <Folder Include="Abstractions\Components\WrappedComponent" />
     <Folder Include="Abstractions\CUBase" />
     <Folder Include="Abstractions\CUBase\Data" />
     <Folder Include="Abstractions\CUBase\RemoteTasks" />
     <Folder Include="Abstractions\CUBase\Tasks" />
     <Folder Include="Abstractions\Generic" />
+    <Folder Include="Abstractions\Generic\LightTower" />
     <Folder Include="Abstractions\Generic\TagsPairing" />
     <Folder Include="Abstractions\Generic\NotificationPanel" />
     <Folder Include="Abstractions\Components" />

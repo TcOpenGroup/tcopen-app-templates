@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoTransferSystemComponent" Id="{506cb5bd-b31d-4a21-b081-59f2495c666c}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+{attribute wpf [Group(Layout.Scroll)]}
+FUNCTION_BLOCK TcoTransferSystemComponent EXTENDS TcoCore.TcoComponent
+
+VAR
+    _config : TcoTransferSystem_Config;
+    _status : TcoTransferSystem_Status;
+    _control : TcoTransferSystem_Control;
+    _components : TcoTransferSystemComponents := (Parent := THIS^);
+    _handleIncomingPaletteTask : TcoCore.TcoTask(THIS^);
+    _handleOutgoingPaletteTask : TcoCore.TcoTask(THIS^);
+    _restoreTask : TcoCore.TcoTask(THIS^);
+
+    _progressIncomming : INT;
+    _progressOutgoing : INT;
+
+    {attribute 'hide'}
+    _timerIncoming : TON;
+    {attribute 'hide'}
+    _timerOutcoming : TON;
+
+    {attribute 'hide'}
+    _infoTimer : TON;
+    {attribute 'hide'}
+    _errorTimer : TON;
+
+    _timerOptional : TON;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_handleIncomingPaletteTask.Enabled := TRUE;
+IF (_handleIncomingPaletteTask.Execute()) THEN
+    IncomingPalette(refProgress := _progressIncomming,
+        refStatus := _status,
+        refConfig := _config,
+        refTimer := _timerIncoming,
+        refTask := _handleIncomingPaletteTask);
+
+    CallTimers(TRUE);
+    _handleIncomingPaletteTask.ThrowWhen(_errorTimer.Q);
+    Messenger.OnCondition(_infoTimer.Q).Info(_status.ActionDescription);
+END_IF;
+
+_handleOutgoingPaletteTask.Enabled := TRUE;
+IF (_handleOutgoingPaletteTask.Execute()) THEN
+    OutgoingPalette(refProgress := _progressOutgoing,
+        refStatus := _status,
+        refConfig := _config,
+        refTimer := _timerOutcoming,
+        refTask := _handleOutgoingPaletteTask);
+
+    CallTimers(TRUE);
+    _handleOutgoingPaletteTask.ThrowWhen(_errorTimer.Q);
+    Messenger.OnCondition(_infoTimer.Q).Info(_status.ActionDescription);
+END_IF;
+
+//*************RESTORE********************
+
+_restoreTask.Enabled := TRUE;
+
+IF _restoreTask.Execute() THEN
+    Restore();
+    IF _config.HasPositionUnit THEN
+        _restoreTask.DoneWhen(inCondition := _components.PositionUnit.AtHome);
+	 ELSE
+        _restoreTask.DoneWhen(inCondition :=TRUE);
+    END_IF;
+END_IF
+//****************************************
+
+
+
+
+]]></ST>
+    </Implementation>
+    <Folder Name="Operations" Id="{da1b6679-2b72-4a22-bb1f-1f8f5620e30e}" />
+    <Folder Name="OperationsInternal" Id="{36ce309a-f879-4ca0-9f4c-9b5d175a3e1c}" />
+    <Folder Name="Tasks" Id="{76fcfee9-f70e-45ec-a391-89f5863a7544}" />
+    <Method Name="CallTimers" Id="{3e4596d2-23b1-06b2-16f0-ca1c26adf87d}">
+      <Declaration><![CDATA[METHOD CallTimers
+VAR_INPUT
+	inValue : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF   THIS^._config.ErrorTime <> T#0S OR NOT inValue THEN  
+_errorTimer(IN := inValue, PT := THIS^._config.ErrorTime);
+END_IF;
+IF   THIS^._config.InfoTime <>T#0S OR NOT inValue THEN  
+_infoTimer(IN := inValue, PT := THIS^._config.InfoTime);
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Components" Id="{d9545bab-e09d-4f71-843c-721f765f91e4}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO TcoTransferSystemComponents
+]]></Declaration>
+      <Get Name="Get" Id="{f89c7f96-a937-47f6-8eea-1b187bf8c1e0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components ref=_components;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Config" Id="{0d28cf8b-c136-49e0-bebf-d40be886ccc9}">
+      <Declaration><![CDATA[
+PROPERTY Config : REFERENCE TO TcoTransferSystem_Config]]></Declaration>
+      <Get Name="Get" Id="{8fdcaa0a-83ee-4239-bf18-8d9eca69798c}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config REF= _config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HandleIncomingTask" Id="{72b712da-0c6e-4650-9fe8-39b2ba374d72}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HandleIncomingTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{7ffffce5-a47e-44e6-9bd9-b7fb75c28e8f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HandleIncomingTask ref= _handleIncomingPaletteTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="HandleIncommingPalette" Id="{e2347ad1-088f-475b-8e9f-30e6f5ebe59b}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC HandleIncommingPalette : TcoCore.ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[HandleIncommingPalette:=_handleIncomingPaletteTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleOutgoingPalette" Id="{8e6bf2d3-c867-40fe-ade1-e12c6ca9b8c0}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC HandleOutgoingPalette : TcoCore.ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[HandleOutgoingPalette:=_handleOutgoingPaletteTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="HandleOutgoingTask" Id="{fe9abb6f-d85e-40e2-beb0-85e0f78f7dc3}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HandleOutgoingTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{48f325ba-efc8-42ab-aff9-cde7471751a5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HandleOutgoingTask ref= _handleOutgoingPaletteTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="IncomingPalette" Id="{f488d6a8-1e7d-4b76-971d-3b55056f90aa}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE IncomingPalette
+VAR_INPUT
+	refProgress : REFERENCE TO INT;
+	refStatus: REFERENCE TO TcoTransferSystem_Status;
+	refConfig: REFERENCE TO TcoTransferSystem_Config;
+	refTimer: REFERENCE TO TON;
+	refTask :  REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress    : REFERENCE TO INT;
+
+
+	_status: REFERENCE TO TcoTransferSystem_Status;
+	_config: REFERENCE TO TcoTransferSystem_Config;
+	_timer: REFERENCE TO TON;
+	_task :  REFERENCE TO TcoCore.TcoTask;
+
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF=refTask;
+
+	
+IF _progress = 0 THEN
+	_status.ActionDescription := '<#Handle incoming palette - Handle incoming palette start (Check position unit position)#>'; 
+	IF _Components.PositionUnit.AtHome OR  NOT _config.HasPositionUnit THEN
+		_progress := _progress + 1;	
+	END_IF;
+END_IF
+
+IF _progress = 1 THEN
+	_status.ActionDescription := '<#Handle incoming palette - Wait for pallete at prestopper#>';
+
+	CallTimers(FALSE);
+	IF _components.iStopper.IsTrue THEN
+		_progress:=4;
+	
+	ELSIF _components.iPrestopper.IsTrue THEN
+		_progress := _progress + 1;
+		_timer(IN:=FALSE);
+	END_IF;
+END_IF
+
+IF _progress = 2 THEN
+	_status.ActionDescription := '<#Handle incoming palette - Check status of workposition #>';
+	_timer(IN:=NOT _components.iStopper.Signal AND  NOT _components.qPrestopper.Signal ,PT:=_config.StabilisationTime);
+	
+	IF _components.iStopper.IsFalse
+		AND _components.qStopper.IsFalse
+		AND (_components.PositionUnit.AtHome or not _config.HasPositionUnit) 
+		AND _timerIncoming.Q THEN
+		_timer(IN:=FALSE);
+		_progress := _progress + 1;
+	END_IF
+END_IF
+
+IF _progress = 3 THEN
+	_status.ActionDescription := '<#Handle incoming palette - Open prestopper#>';
+	
+	IF _components.iPrestopper.IsTrue THEN
+		_components.qPrestopper.Set();
+	END_IF;
+	
+	_timer(IN:=NOT _components.iPrestopper.Signal ,PT:=_config.StabilisationTime );
+	
+	IF _components.qPrestopper.IsTrue
+		AND _timer.Q THEN
+		_components.qPrestopper.Reset();
+		_timer(IN:=FALSE);
+		_progress := _progress + 1;
+	END_IF
+END_IF
+
+	
+IF _progress = 4 THEN
+    _status.ActionDescription:='<#Handle incoming palette - Wait for pallete in workposition#>';	
+
+	IF _components.iStopper.IsTrue AND NOT  _config.HasPositionUnit	 THEN
+	 	_task.DoneWhen(TRUE);
+	ELSIF _components.iStopper.IsTrue  THEN
+	 	 	_task.DoneWhen(TRUE);
+	END_IF;
+END_IF;
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OutgoingPalette" Id="{d01180d3-bb71-4ed4-bf8a-c88b9ef50177}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE OutgoingPalette
+VAR_INPUT
+	refProgress : REFERENCE TO INT;
+	refStatus: REFERENCE TO TcoTransferSystem_Status;
+	refConfig: REFERENCE TO TcoTransferSystem_Config;
+	refTimer: REFERENCE TO TON;
+	refTask :  REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress    : REFERENCE TO INT;
+
+
+	_status: REFERENCE TO TcoTransferSystem_Status;
+	_config: REFERENCE TO TcoTransferSystem_Config;
+	_timer: REFERENCE TO TON;
+	_task :  REFERENCE TO TcoCore.TcoTask;
+
+
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF=refTask;
+
+IF _progress = 0 THEN
+
+	_progress := _progress + 1;	
+
+END_IF
+	
+IF _progress = 1 THEN
+	_status.ActionDescription := '<#Handle outgoing palette - Start (Check position unit position)#>';
+ 	IF _config.HasPositionUnit THEN
+		_components.PositionUnit.MoveToHome();
+	END_IF
+	IF _components.PositionUnit.AtHome AND  _config.HasPositionUnit THEN
+		_progress := _progress + 1;	
+		_timer(IN:=FALSE);
+	ELSIF NOT _config.HasPositionUnit THEN
+		_progress := _progress + 1;	
+		_timer(IN:=FALSE);
+	END_IF;
+END_IF
+
+
+
+IF _progress = 2 THEN
+    _status.ActionDescription:='<#Handle outgoing palette - Open stopper to send palette to next station#>';	
+	
+	 IF _components.iWipa.IsFalse THEN
+        _components.qStopper.Set();
+    END_IF
+
+    _timer(IN := _components.qStopper.Signal AND NOT _components.iStopper.Signal, PT := _config.StabilisationTime);
+	_timerOptional(IN:=TRUE,Pt:=T#2S);
+	
+    IF (_components.qStopper.IsTrue AND _timer.Q)
+		OR (_components.qStopper.IsFalse AND _components.iStopper.IsFalse AND _timerOptional.q) THEN
+     	 _components.qStopper.Reset();
+    	_task.DoneWhen(TRUE);
+	END_IF;
+END_IF;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Restore" Id="{a0ff30f7-3a86-4967-84c7-2bad1fabb9c0}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_handleIncomingPaletteTask.Restore();
+_handleOutgoingPaletteTask.Restore();
+CallTimers(FALSE);
+_components.PositionUnit.MoveHomeTask.Invoke();
+_components.qStopper.Reset();
+_components.qPrestopper.Reset();
+_progressIncomming:=0;
+_progressOutgoing:=0;
+THIS^.Messenger.UnPin();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RestoreTask" Id="{b2c77498-f9a7-4725-824e-570392c9c0e5}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC RestoreTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{448fdf3b-222c-451c-a1b3-08868c6d1a14}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RestoreTask ref= _restoreTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ServiceMode" Id="{4535d76d-aac7-4201-b560-d97b7c93bd19}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.PositionUnit.Service();
+_components.qPrestopper.Service();
+_components.qStopper.Service();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Status" Id="{978d9263-6f87-4e94-aac2-90934863ceb7}">
+      <Declaration><![CDATA[
+PROPERTY Status : REFERENCE TO TcoTransferSystem_Status]]></Declaration>
+      <Get Name="Get" Id="{902bfa5d-ec19-4090-82ba-ea1301386883}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF= _status;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

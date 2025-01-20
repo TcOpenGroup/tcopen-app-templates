@@ -66,6 +66,24 @@ TYPE
 		{attribute clr [RenderIgnore()]}
 		PlsPaletizatorComponents:TcoPlsPaletizator_Components := (Parent := THISSTRUCT);  
 		
+		{attribute wpf [Group(Layout.Scroll)]}
+		PlrPaletizator:TcoPlrPaletizator(THISSTRUCT);	
+		{attribute clr [RenderIgnore()]}
+		PlrPaletizatorComponents:TcoPlrPaletizator_Components := (Parent := THISSTRUCT);  
+		
+		{attribute wpf [Group(Layout.Scroll)]}
+		PlbPaletizator:TcoPlbPaletizator(THISSTRUCT);	
+		{attribute clr [RenderIgnore()]}
+		PlbPaletizatorComponents:TcoPlbPaletizator_Components := (Parent := THISSTRUCT);  
+		
+		
+		{attribute wpf [Container(Layout.Stack)]}
+        {attribute wpf [Group(Layout.Scroll)]}
+        OscilatingFeeder : TcoOscilatingConveyorFeeder(THISSTRUCT);
+        {attribute clr [RenderIgnore()]}
+        OscilatingFeederComponents : TcoOscilatingConveyorFeederComponents := (Parent := THISSTRUCT);
+
+		
 		{attribute wpf [Container(Layout.Stack,"Wrapped component example")]}	
 		{attribute wpf [Group(Layout.Scroll)]}
 		PickAndPlace:WrappedComponentExample(THISSTRUCT);

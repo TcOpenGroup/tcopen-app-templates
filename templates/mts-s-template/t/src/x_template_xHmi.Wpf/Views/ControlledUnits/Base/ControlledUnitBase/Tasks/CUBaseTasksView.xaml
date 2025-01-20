@@ -220,6 +220,30 @@
 
             </materialDesign:Card>
         </Grid>
+        <!-- SafetyTaskControls card -->
+        <!--<materialDesign:Card
+                Grid.Row="1"
+                materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                Padding="2.5">
+            <ScrollViewer>
+
+                <ItemsControl ItemsSource="{Binding SafetyTaskControls}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl>
+                                <vortex:RenderableContentControl DataContext="{Binding }" PresentationType="Sequence" />
+                            </ContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+        </materialDesign:Card>-->
         <!-- Diagnostics card -->
         <materialDesign:Card
             VerticalAlignment="Bottom"

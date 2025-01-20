@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eTcoEq2TransferConfiguration" Id="{da3a245f-571a-4125-8644-d8ce75afb788}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE eTcoEq2TransferConfiguration :
+(
+	SingleInDoubleOut := 1,
+	DoubleInSingleOut := 2,
+	SingleInDoubleOutNoPrestopper := 3
+
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

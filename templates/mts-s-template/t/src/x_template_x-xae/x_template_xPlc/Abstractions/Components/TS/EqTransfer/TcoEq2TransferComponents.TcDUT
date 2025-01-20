@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoEq2TransferComponents" Id="{9c23ce4d-4ebd-4daf-9975-27363e87b6aa}">
+    <Declaration><![CDATA[TYPE
+    TcoEq2TransferComponents EXTENDS TcoCore.TcoStruct :
+    STRUCT
+        {attribute addProperty Name "<#Pallete at prestopper - Main Transfer#>"}
+        iPreStopperMainTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Pallete at stopper - Main Transfer#>"}
+        iStopperMainTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Main Transfer is Empty#>"}
+        iMainTransferIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Output buffer full - Main Trasnfer#>"}
+        iWipaMainTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Prestopper - Main Transfer#>"}
+        qPreStopperMainTransfer : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#Pallete at Prestopper Side transfer#>"}
+        iPrestopperSideTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Pallete at stopper Side transfer#>"}
+        iStopperSideTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Side Transfer is Empty#>"}
+        iSideTransferIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Out buffer full - Side Trasnfer#>"}
+        iWipaSideTransfer : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Prestopper Side transfer#>"}
+        qPrestopperSideTransfer : TcoElements.TcoDo(THISSTRUCT);
+
+		 {attribute addProperty Name "<#MotorInError#>"}
+        iMotorError : TcoElements.TcoDi(THISSTRUCT);
+        {attribute  addProperty Name "<#Motor#>"}
+        qMotor : TcoElements.TcoDo(THISSTRUCT);
+        {attribute addProperty Name "<#Transfer Position unit#>"}
+        TransferUnit : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

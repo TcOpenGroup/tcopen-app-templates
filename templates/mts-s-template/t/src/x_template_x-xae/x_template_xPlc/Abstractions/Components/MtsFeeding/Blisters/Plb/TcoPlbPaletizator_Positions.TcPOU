@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoPlbPaletizator_Positions" Id="{c9f46cce-6c18-4669-ae24-84f55103b084}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoPlbPaletizator_Positions EXTENDS TcoDrivesBeckhoff.TcoSingleAxisPositionsRootContainer
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+
+	
+	{attribute addProperty Name "<#Pracovna pozicia#>"}
+	WorkPosition : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Naberacia pozicia Buffer1#>"}
+	LoadFromBuffer1Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Naberacia pozicia Buffer2#>"}
+	LoadFromBuffer2Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Naberacia pozicia Buffer3#>"}
+	LoadFromBuffer3Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Naberacia pozicia Buffer4#>"}
+	LoadFromBuffer4Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Vykladacia pozicia pre prazdne blistre 1#>"}
+	UnloadEmpty1Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+	{attribute addProperty Name "<#Vykladacia pozicia pre prazdne blistre 2#>"}
+	UnloadEmpty2Postion : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="LoadFromBuffer1Pos" Id="{526cb63e-afa2-41b7-883d-49902dde54fe}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoadFromBuffer1Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{41e21bbf-30f2-40ce-841c-e8c11a33ff29}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoadFromBuffer1Pos ref=LoadFromBuffer1Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LoadFromBuffer2Pos" Id="{0702a3a7-c53c-4dfb-ae4f-02f5ac01e40c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoadFromBuffer2Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{de5dab8f-bc2d-4315-9836-112e46e36725}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoadFromBuffer2Pos ref=LoadFromBuffer2Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LoadFromBuffer3Pos" Id="{71757d59-ff6b-41d9-ad40-35473985e7c7}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoadFromBuffer3Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{2a723db0-a444-498d-a71e-ca7b0aed3145}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoadFromBuffer3Pos ref=LoadFromBuffer3Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LoadFromBuffer4Pos" Id="{12cbbb34-1671-4fa4-81f0-bd41cf1f8d50}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoadFromBuffer4Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{b1faea9f-29c2-47e8-b1a2-18f812686bec}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoadFromBuffer4Pos REF=LoadFromBuffer4Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="UnloadEmpty1Pos" Id="{cd844036-7951-42ac-a2b6-3ae839952bbf}">
+      <Declaration><![CDATA[PROPERTY PUBLIC UnloadEmpty1Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{3d346716-383e-49ac-860f-7636816f37c9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[UnloadEmpty1Pos REF=UnloadEmpty1Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="UnloadEmpty2Pos" Id="{e0575526-80b9-40b5-a2a3-1ecb43c5b0a0}">
+      <Declaration><![CDATA[PROPERTY PUBLIC UnloadEmpty2Pos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{5991fb66-ab5d-470b-bab9-b6a4fbbba03b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[UnloadEmpty2Pos REF=UnloadEmpty2Postion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WorkPos" Id="{4a5ede3e-3e1f-4373-80ed-660253e25041}">
+      <Declaration><![CDATA[PROPERTY PUBLIC WorkPos : reference to TcoDrivesBeckhoff.TcoMultiAxisMoveParam;]]></Declaration>
+      <Get Name="Get" Id="{173303b9-a3e7-4a0f-b1c6-49e2108e4bcf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WorkPos ref= WorkPosition;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -253,7 +253,7 @@ namespace x_template_xOp
         {
             try
             {
-                SecurityManager.Manager.Service.ExternalAuthorization = TcOpen.Inxton.Local.Security.Readers.ExternalTokenAuthorization.CreateComReader("COM3");
+                SecurityManager.Manager.Service.ExternalAuthorization = TcOpen.Inxton.Local.Security.Readers.ExternalTokenAuthorization.CreateComReader(Entry.Settings.RfidChipPortName);
             }
             catch (Exception ex)
             {
@@ -341,11 +341,7 @@ namespace x_template_xOp
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability), false);
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability), DataExchangeActive);
 
-            //count data
-            if (DataExchangeActive)
-            {
-                new RavenDbRepository<PlainProcessData>(Traceability).OnUpdateDone = (id, data) => { CuxStatistic.Count(data); };
-            }
+           
            
 
             Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
@@ -393,8 +389,6 @@ namespace x_template_xOp
             var Traceability = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Traceability");
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability), false);
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability), DataExchangeActive);
-
-            new MongoDbRepository<PlainProcessData>(Traceability).OnUpdateDone = (id, data) => { CuxStatistic.Count(data); };
 
             RepositoryEntry.InitializeIndexProcessDataRepositoryMongoDb(Traceability);
 

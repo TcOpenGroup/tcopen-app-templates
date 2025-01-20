@@ -7,7 +7,8 @@ VAR
 	_reworkSettings     : ProcessDataManager(THIS^);  			//a.k.a receipe for rework
     _technologySettings  : TechnologicalDataManager(THIS^);		//a.k.a machine settings
     _processTraceability : ProcessDataManager(THIS^);			//the same structure as process setting but filled with actual production data (measurements, inspection results, etc)
-	
+	_internalStorage : InternalStorage(THIS^);					//
+
 	
 	fbGetCurTaskIndex            : GETCURTASKINDEX;
 	_notificationPanel      : NotificationPanel(THIS^);				//provide technology state signals to side baner in visualisation
@@ -27,6 +28,9 @@ VAR
 	
 	_setDummyConditionsSuffisient:BOOL;
 	_dummyBlinker              : TcoUtilities.TcoBlinker(THIS^);
+	_runOperations:BOOL;
+
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -37,28 +41,59 @@ END_VAR
     <Method Name="AllowAutomat" Id="{0aa54757-4c4d-0cde-13e5-b7414e695af4}">
       <Declaration><![CDATA[METHOD AllowAutomat : BOOL
 VAR_INPUT
+	inCuId : eStations;
 END_VAR
-]]></Declaration>
+
+VAR
+	retVal: BOOL;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[AllowAutomat := TRUE;]]></ST>
+        <ST><![CDATA[retVal := FALSE;
+IF inCuId = eStations.CU00x THEN
+	 retVal := TRUE;// Components.Zone1.Status.State.AnyKeyManual AND Components.ControlVoltages.R1.GlobalControlVoltage.Signal;
+END_IF;
+
+
+AllowAutomat := retVal;]]></ST>
       </Implementation>
     </Method>
     <Method Name="AllowGround" Id="{858f08f9-14d3-065d-1aa4-279cc3111ba4}">
       <Declaration><![CDATA[METHOD AllowGround : BOOL
 VAR_INPUT
+	inCuId : eStations;
 END_VAR
-]]></Declaration>
+
+VAR
+	retVal: BOOL;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[AllowGround := TRUE;]]></ST>
+        <ST><![CDATA[retVal := FALSE;
+IF inCuId = eStations.CU00x THEN
+	 retVal := TRUE;// Components.Zone1.Status.State.AnyKeyManual AND Components.ControlVoltages.R1.GlobalControlVoltage.Signal;
+END_IF;
+
+
+AllowGround := retVal;]]></ST>
       </Implementation>
     </Method>
     <Method Name="AllowManual" Id="{b0df765b-d61a-0a9e-2201-2c76ce14ddcf}">
       <Declaration><![CDATA[METHOD AllowManual :  BOOL
 VAR_INPUT
+	inCuId : eStations;
 END_VAR
-]]></Declaration>
+
+
+VAR
+	retVal: BOOL;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[AllowManual := TRUE;]]></ST>
+        <ST><![CDATA[retVal := FALSE;
+IF inCuId = eStations.CU00x THEN
+	 retVal := TRUE;// Components.Zone1.Status.State.AnyKeyManual AND Components.ControlVoltages.R1.GlobalControlVoltage.Signal;
+END_IF;
+
+
+AllowManual := retVal;]]></ST>
       </Implementation>
     </Method>
     <Property Name="AutomatAllTask" Id="{af39f865-7b9c-0790-2b3f-049d4170441c}">
@@ -69,6 +104,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[AutomatAllTask REF= _automatAllTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Components" Id="{54ba361f-3593-4cd9-ab86-6cb0150fcf1b}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO TechnologyComponents]]></Declaration>
+      <Get Name="Get" Id="{c1738601-8f8c-4d3c-8948-9d06e51a7a65}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components REF= _components;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -213,6 +259,17 @@ _components.Zone.AddKeyNormalService(inKeyNormalService:=_components.NormalServi
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="InternalStorage" Id="{311fed79-b6f6-44c2-8bf8-ced928984e77}">
+      <Declaration><![CDATA[PROPERTY InternalStorage : REFERENCE TO InternalStorage]]></Declaration>
+      <Get Name="Get" Id="{3391eb5b-27a8-47f3-aa13-303f14b175dc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InternalStorage REF= _internalStorage;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Main" Id="{d1d0e200-21d1-4642-b4c8-2fd801b60f39}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -365,6 +422,18 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[ReworkSettings REF= _reworkSettings;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RunOperations" Id="{0fc2534f-73ed-4197-88e4-239fad96e857}">
+      <Declaration><![CDATA[PROPERTY RunOperations : REFERENCE TO BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{fda67989-ec02-432b-93e8-372bc62c8022}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RunOperations REF= _runOperations;]]></ST>
         </Implementation>
       </Get>
     </Property>

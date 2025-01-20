@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="InternalStorage" Id="{534e0d35-48f7-4157-8269-593be69f0ce5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK InternalStorage EXTENDS TcoCore.TcoObject 
+VAR
+	_data : ARRAY[0..40] OF ProcessData; 
+END_VAR
+VAR CONSTANT
+	_maxNumberOfCarriers : UINT := 40;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="GetByCarrier" Id="{301065f4-d903-4b59-8a60-be8ba9d252a8}">
+      <Declaration><![CDATA[METHOD GetByCarrier : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+END_VAR
+VAR_IN_OUT
+	inoData : ProcessData;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF(inCarrier >= 0 AND inCarrier < _maxNumberOfCarriers) THEN
+	inoData := _data[inCarrier];
+	GetByCarrier := TRUE;
+	RETURN;	
+END_IF
+
+Messenger.Post(CONCAT('<#Requested carrier is out of range of internal storage. Max number of carriers is#> ', UINT_TO_STRING(_maxNumberOfCarriers)), eMessageCategory.ProgrammingError);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SaveByCarrier" Id="{3a2f772b-82f7-4e77-b628-277cfa0b1f34}">
+      <Declaration><![CDATA[METHOD SaveByCarrier : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+END_VAR
+VAR_IN_OUT
+	inoData : ProcessData;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF(inCarrier >= 0 AND inCarrier < _maxNumberOfCarriers) THEN
+	_data[inCarrier] := inoData;
+	SaveByCarrier := TRUE;
+	RETURN;	
+END_IF
+
+Messenger.Post(CONCAT('<#Requested carrier is out of range of internal storage. Max number of carriers is#> ', UINT_TO_STRING(_maxNumberOfCarriers)), eMessageCategory.ProgrammingError);
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

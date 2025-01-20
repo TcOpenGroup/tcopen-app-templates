@@ -13,6 +13,7 @@ VAR
 	_stopCleanCycleTime: TIME;
 	_timer_1: TON;
 	_timer_2: TON;
+	_suspenStepExecution:BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Run();]]></ST>
@@ -149,6 +150,22 @@ METHOD PROTECTED  Main : BOOL
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Next" Id="{eafc0316-1e4a-496d-a399-a3f135c3c731}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Completes the execution of the current step and moves the sequencer pointer to the next step in order of execution.
+			The call returns `ITcoObjectRestorer` that allows to restore object upon step completition.
+		</summary>		
+		<returns></returns>	
+	</docu>	
+~*)
+METHOD PROTECTED FINAL Next : ITcoObjectRestorer
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Next := i_CompleteStep();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="OnAbort" Id="{4a8dbf93-63ad-425f-a385-076450b1741f}" FolderPath="TaskRelay\">
       <Declaration><![CDATA[METHOD PUBLIC OnAbort : BOOL
 
@@ -243,6 +260,31 @@ _lastOpeningCycle := Context.StartCycleCount;
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="RequestRestoreOrigin" Id="{1f323207-31e2-4052-b838-44e4d33d526b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Terminates the currently executed step and set the sequencer's pointer to the step with Id that corresponds to ```inRequestedStepID``` parameter.
+			When the order of the requested step is higher than the order of the currently finished step (the requested step is "after" the current one)
+			the requested step is started in the same context cycle.
+			When the order of the requested step is lower than the order of the currently finished step (the requested step is "before" the current one)
+			the requested step is started in the next context cycle.
+			If the requested step is not found even in the next context cycle, the sequencer enters error state ```StepWithRequestedIdDoesNotExists```.
+			<para>
+				See <see cref="TcoCore.eSequencerError"/> for detailed description.
+			</para>
+		</summary>
+	</docu>
+~*)
+METHOD PROTECTED FINAL RequestRestoreOrigin : ITcoSequencer
+
+VAR
+    _message : STRING(254);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RequestRestoreOrigin := i_RequestStep(inRequestedStepID := RESTORE_STEP_ID);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="RequestStep" Id="{05e23ca1-6a4e-00c5-0fd4-d50792c02a3f}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -323,7 +365,8 @@ METHOD PUBLIC Restore : ITcoRestorable
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Restore();
-Task.Restore();]]></ST>
+Task.Restore();
+_suspenStepExecution:=false;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Run" Id="{18d5420d-14f4-0ac5-255d-8d8a78d1e1c6}">
@@ -407,7 +450,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);
+        <ST><![CDATA[IF _suspenStepExecution THEN
+	RETURN;
+END_IF; 
+
+Step := i_Step(inStepID := inStepID, inEnabled := inEnabled, inStepDescription := inStepDescription);
 
 
 ]]></ST>
@@ -477,6 +524,18 @@ _cycleTimeAnalitics.AverageCleanCycle:= (((_cycleTimeAnalitics.FilterConstant-1)
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="SuspendStepExecution" Id="{25db0394-d647-4112-9f24-d8f46aa0b7ed}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SuspendStepExecution : REFERENCE TO BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{c7104b6a-96c1-46fc-bc38-1427eb687811}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SuspendStepExecution ref=_suspenStepExecution;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="Task" Id="{31b22691-83dc-0d45-2152-2f03cc6b6a6e}">
       <Declaration><![CDATA[PROPERTY Task : REFERENCE TO TcoTask]]></Declaration>
       <Get Name="Get" Id="{6c191508-6ada-00b4-2005-7e4c80b0377a}">

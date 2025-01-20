@@ -1,0 +1,829 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoEq2Transfer" Id="{08fb0a49-02ab-4e4f-9a2d-a7e09c575beb}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+{attribute wpf [Group(Layout.Scroll)]}
+FUNCTION_BLOCK TcoEq2Transfer EXTENDS TcoCore.TcoComponent
+
+
+VAR
+	
+	_config:TcoEq2Transfer_Config;
+	_status:TcoEq2Transfer_Status;
+	_control:TcoEq2Transfer_Control;
+    _components:TcoEq2TransferComponents:= (Parent := THIS^);
+	_handleIncomingPaletteTask:TcoCore.TcoTask(THIS^);
+	_handleOutgoingPaletteTask:TcoCore.TcoTask(THIS^);
+	_autoTask:TcoCore.TcoTask(THIS^);
+	_restoreTask:TcoCore.TcoTask(THIS^);
+	
+	_progressIncomming:INT;
+	_progressOutgoing:INT;
+
+	{attribute 'hide'} 
+	_timerIncoming :  TON;
+	{attribute 'hide'} 
+	_timerOutcoming :  TON;
+	
+	{attribute 'hide'} 
+	_infoTimer :  TON;
+    {attribute 'hide'} 
+	_errorTimer :  TON;
+
+	_autoProgress: INT;
+	
+	 {attribute 'hide'} 
+	_timerOptional:  TON;
+	_mode: eTcoEq2TransferHandlingMode;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_handleIncomingPaletteTask.Enabled := NOT _handleOutgoingPaletteTask.Busy;
+IF (_handleIncomingPaletteTask.Execute()) THEN
+
+    IF _config.Configuration = eTcoEq2TransferConfiguration.DoubleInSingleOut THEN
+		 IF IsService THEN
+		   _mode:=_config.Mode;
+	   END_IF
+        IncomingPaletteDoubleIn(inMode := _mode,
+            refProgress := _progressIncomming,
+            refStatus := _status,
+            refConfig := _config,
+            refTimer := _timerIncoming,
+            refTask := _handleIncomingPaletteTask);
+    ELSIF _config.Configuration = eTcoEq2TransferConfiguration.SingleInDoubleOut THEN
+        IncomingPaletteSingleIn(refProgress := _progressIncomming,
+            refStatus := _status,
+            refConfig := _config,
+            refTimer := _timerIncoming,
+            refTask := _handleIncomingPaletteTask);
+    END_IF;
+
+    CallTimers(TRUE);
+    _handleIncomingPaletteTask.ThrowWhen(_errorTimer.Q);
+
+    Messenger.OnCondition(_infoTimer.Q).Info(_status.ActionDescription);
+END_IF;
+
+_handleOutgoingPaletteTask.Enabled := NOT _handleIncomingPaletteTask.Busy;
+IF (_handleOutgoingPaletteTask.Execute()) THEN
+	IF _config.Configuration = eTcoEq2TransferConfiguration.DoubleInSingleOut THEN
+    OutgoingPaletteDoubleIn(refProgress := _progressOutgoing,
+        refStatus := _status,
+        refConfig := _config,
+        refTimer := _timerOutcoming,
+        refTask := _handleOutgoingPaletteTask);
+   ELSIF _config.Configuration = eTcoEq2TransferConfiguration.SingleInDoubleOut THEN
+	   IF IsService THEN
+		   _mode:=_config.Mode;
+	   END_IF
+	   OutgoingPaletteSingleIn(refProgress := _progressOutgoing,
+        inMode := _mode,
+        refStatus := _status,
+        refConfig := _config,
+        refTimer := _timerOutcoming,
+        refTask := _handleOutgoingPaletteTask);
+	END_IF
+    CallTimers(TRUE);
+    _handleOutgoingPaletteTask.ThrowWhen(_errorTimer.Q);
+    Messenger.OnCondition(_infoTimer.Q).Info(_status.ActionDescription);
+END_IF;
+
+_autoTask.Enabled := TRUE;
+IF (_autoTask.Execute()) THEN
+
+    IF _autoProgress = 0 THEN
+        _handleOutgoingPaletteTask.Restore();
+    END_IF
+
+    IF _autoProgress = 1 THEN
+        IF HandleIncommingPalette().Done THEN
+            _autoProgress := _autoProgress + 1;
+            _handleOutgoingPaletteTask.Restore();
+        END_IF
+
+    END_IF;
+
+    IF _autoProgress = 2 THEN
+        IF HandleOutgoingPalette().Done THEN
+            _autoProgress := 0;
+        end_If;
+    END_IF
+
+END_IF;
+
+//*************RESTORE********************
+
+_restoreTask.Enabled := TRUE;
+
+IF _restoreTask.Execute() THEN
+    Restore();
+	_components.TransferUnit.MoveToHome();
+    _restoreTask.DoneWhen(inCondition := _components.TransferUnit.AtHome);
+END_IF
+//****************************************
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <Folder Name="Operations" Id="{ead22d33-2f6b-406d-917a-b49667d2aa8c}" />
+    <Folder Name="OperationsInternal" Id="{61bbdb25-9509-4d36-a724-eb4bdf697c9a}" />
+    <Folder Name="Tasks" Id="{d7253edc-aac3-4fff-842e-fd2bd0df1392}" />
+    <Method Name="AutomatControl" Id="{59b4aed1-1b07-41cb-bbf0-847d8105c235}">
+      <Declaration><![CDATA[METHOD AutomatControl : ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AutomatControl:=_autoTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CallTimers" Id="{10ac51b3-e1e9-4519-a329-36cd45b6336a}">
+      <Declaration><![CDATA[METHOD CallTimers
+VAR_INPUT
+	inValue : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF   THIS^._config.ErrorTime <> T#0S OR NOT inValue THEN  
+_errorTimer(IN := inValue, PT := THIS^._config.ErrorTime);
+END_IF;
+IF   THIS^._config.InfoTime <>T#0S OR NOT inValue THEN  
+_infoTimer(IN := inValue, PT := THIS^._config.InfoTime);
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Components" Id="{e9dd1b09-9b59-4950-91ab-ece794b321e4}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO TcoEq2TransferComponents
+]]></Declaration>
+      <Get Name="Get" Id="{683ab001-38a4-43bc-8037-cf2f9bd817ed}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components ref=_components;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Config" Id="{70a3fc89-11da-4cec-abae-83631dd7ad20}">
+      <Declaration><![CDATA[
+PROPERTY Config : REFERENCE TO TcoEq2Transfer_Config]]></Declaration>
+      <Get Name="Get" Id="{f7df5e27-f624-46f4-8c79-9de43690c4d6}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config REF= _config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HandleIncomingTask" Id="{dddf0f3a-a157-44a9-890e-9a6d47d568e8}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HandleIncomingTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{52de4df1-1df4-4159-9001-a5ab8ecca6d4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HandleIncomingTask ref= _handleIncomingPaletteTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="HandleIncommingPalette" Id="{b1303663-fc55-4931-a29d-9083b4617a62}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC HandleIncommingPalette : TcoCore.ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[HandleIncommingPalette:=_handleIncomingPaletteTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleOutgoingPalette" Id="{8b00186e-e013-4310-8fe4-2eae3e9a59eb}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC HandleOutgoingPalette : TcoCore.ITcoTaskStatus
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[HandleOutgoingPalette:=_handleOutgoingPaletteTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="HandleOutgoingTask" Id="{bfebad16-7be2-4f08-bc76-61152c3ed5ac}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HandleOutgoingTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{bd1be307-83a5-44f4-9c0d-e96363fa914e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HandleOutgoingTask ref= _handleOutgoingPaletteTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="IncomingPaletteDoubleIn" Id="{9e6dba89-d6db-4e7a-a516-a1f7c4d2dbe1}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE IncomingPaletteDoubleIn
+VAR_INPUT
+	inMode : eTcoEq2TransferHandlingMode;
+	refProgress : REFERENCE TO INT;
+	refStatus: REFERENCE TO TcoEq2Transfer_Status;
+	refConfig: REFERENCE TO TcoEq2Transfer_Config;
+	refTimer: REFERENCE TO TON;
+	refTask :  REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress    : REFERENCE TO INT;
+
+
+	_status: REFERENCE TO TcoEq2Transfer_Status;
+	_config: REFERENCE TO TcoEq2Transfer_Config;
+	_timer: REFERENCE TO TON;
+	_task :  REFERENCE TO TcoCore.TcoTask;
+
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF= refTask;
+
+IF _progress = 0 THEN
+
+    _components.qMotor.Set();
+    _components.TransferUnit.Stop();
+    //init
+    IF   NOT _components.TransferUnit.AtHome AND NOT _components.TransferUnit.AtWork THEN
+
+        IF inMode = eTcoEq2TransferHandlingMode.RecieveDirectWay THEN
+            _progress := _progress + 1;
+        ELSIF inMode = eTcoEq2TransferHandlingMode.RecieveSideWay THEN
+            _progress := 5;
+            _timer(IN := FALSE);
+        END_IF;
+    END_IF;
+
+END_IF;
+
+IF _progress = 1 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Wait for pallete at prestopper#>';
+
+    IF _components.iStopperMainTransfer.IsTrue THEN
+        _progress := 5;
+        _timer(IN := FALSE);
+    ELSIF _components.iPreStopperMainTransfer.IsTrue THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF
+END_IF;
+
+IF _progress = 2 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Check transfer unit status#>';
+
+    _timer(IN := _components.iStopperMainTransfer.IsFalse AND
+            _components.iMainTransferIsEmpty.IsTrue AND
+            NOT _components.TransferUnit.AtHome AND
+            NOT _components.TransferUnit.AtWork,
+        PT := _config.StabilisationTime);
+
+    IF _components.iStopperMainTransfer.IsFalse AND
+        _components.iMainTransferIsEmpty.IsTrue AND
+        NOT _components.TransferUnit.AtHome AND
+        NOT _components.TransferUnit.AtWork AND
+        _timer.Q THEN
+        _timer(IN := FALSE);
+        _progress := _progress + 1;
+    END_IF
+END_IF;
+
+IF _progress = 3 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Open prestoper#>';
+    IF _components.iPreStopperMainTransfer.IsTrue THEN
+        _components.qPreStopperMainTransfer.Set();
+    END_IF;
+
+    _timer(IN := NOT _components.iPreStopperMainTransfer.Signal, PT := _config.StabilisationTime);
+
+    IF _components.qPreStopperMainTransfer.IsTrue AND _timer.Q THEN
+        _components.qPreStopperMainTransfer.Reset();
+        _timer(IN := FALSE);
+        _progress := _progress + 1;
+
+    END_IF;
+END_IF;
+
+IF _progress = 4 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Waiting for pallet at stopper - Main Transfer#>';
+    _timer(IN := _components.iStopperMainTransfer.IsTrue, PT := _config.StabilisationTime);
+    IF _components.iStopperMainTransfer.IsTrue AND _timer.Q THEN
+        _progress := 10;
+        _timer(IN := FALSE);
+    END_IF;
+END_IF;
+
+IF _progress = 5 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Waiting for pallet at side transfer#>';
+
+    IF _components.iStopperSideTransfer.IsTrue THEN
+        _progress := 8;
+        _timer(IN := FALSE);
+    ELSIF _components.iPrestopperSideTransfer.IsTrue THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF
+END_IF;
+
+IF _progress = 6 THEN
+
+    _timer(IN := _components.iStopperSideTransfer.IsFalse AND
+            _components.iSideTransferIsEmpty.IsTrue AND
+            NOT _components.TransferUnit.AtHome AND
+            NOT _components.TransferUnit.AtWork,
+        PT := _config.StabilisationTime);
+
+    _status.ActionDescription := '<#Handle incoming palette - Check transfer unit status#>';
+
+    IF _components.iStopperSideTransfer.IsFalse AND
+        _components.iSideTransferIsEmpty.IsTrue AND
+        NOT _components.TransferUnit.AtHome AND
+        NOT _components.TransferUnit.AtWork AND
+        _timer.Q THEN
+        _timer(IN := FALSE);
+        _progress := _progress + 1;
+    END_IF
+END_IF;
+
+IF _progress = 7 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Open side prestoper#>';
+    IF _components.iPreStopperSideTransfer.IsTrue THEN
+        _components.qPreStopperSideTransfer.Set();
+    END_IF;
+
+    _timer(IN := NOT _components.iPreStopperSideTransfer.Signal, PT := _config.StabilisationTime);
+
+    IF _components.iPreStopperSideTransfer.IsFalse AND _timer.Q THEN
+        _components.qPreStopperSideTransfer.Reset();
+        _timer(IN := FALSE);
+        _progress := _progress + 1;
+
+    END_IF;
+END_IF;
+
+IF _progress = 8 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Waiting for pallet at stopper - Side Transfer#>';
+    _timer(IN := _components.iStopperSideTransfer.Signal, PT := _config.StabilisationTime);
+    IF _components.iStopperSideTransfer.IsTrue AND _timer.Q THEN
+        _progress := _progress + 1;
+    END_IF;
+
+END_IF;
+
+IF _progress = 9 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Wait Main transfer is empty#>';
+    _timer(IN := _components.iMainTransferIsEmpty.Signal, PT := _config.StabilisationTime);
+    IF ((_components.iMainTransferIsEmpty.IsTrue AND _timer.Q) AND_THEN _components.TransferUnit.MoveToWork().Done) THEN
+        _progress := _progress + 1;
+    END_IF;
+END_IF;
+
+IF _progress = 10 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Wait for pallete in Main transfer#>';
+    _timer(IN := (*_components.iSideTransferIsEmpty.Signal AND*) NOT _components.iMainTransferIsEmpty.Signal, PT := _config.StabilisationTime);
+    IF ((*_components.iSideTransferIsEmpty.IsTrue AND*) _components.iMainTransferIsEmpty.IsFalse AND _timer.Q) THEN
+        _progress := _progress + 1;
+    END_IF;
+END_IF;
+
+IF _progress = 11 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Wait for pallete in main transfer#>';
+    IF _components.iStopperMainTransfer.IsTrue AND _components.iMainTransferIsEmpty.IsFalse THEN
+        _status.ActionDescription := '<#Done#>';
+        _task.DoneWhen(TRUE);
+        _progress := 0;
+    END_IF;
+END_IF;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IncomingPaletteSingleIn" Id="{8e91ea70-b4f1-4f5c-b61d-7ceb62835f85}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE IncomingPaletteSingleIn
+VAR_INPUT
+	refProgress : REFERENCE TO INT;
+	refStatus: REFERENCE TO TcoEq2Transfer_Status;
+	refConfig: REFERENCE TO TcoEq2Transfer_Config;
+	refTimer: REFERENCE TO TON;
+	refTask :  REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress    : REFERENCE TO INT;
+
+
+	_status: REFERENCE TO TcoEq2Transfer_Status;
+	_config: REFERENCE TO TcoEq2Transfer_Config;
+	_timer: REFERENCE TO TON;
+	_task :  REFERENCE TO TcoCore.TcoTask;
+
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF= refTask;
+
+IF _progress = 0 THEN
+
+    _components.qMotor.Set();
+
+    _components.TransferUnit.Stop();
+
+    IF NOT _components.TransferUnit.AtHome AND NOT _components.TransferUnit.AtWork THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+        _timerOptional(IN := FALSE);
+    END_IF;
+
+END_IF;
+
+IF _progress = 1 THEN
+
+    IF _config.Configuration = eTcoEq2TransferConfiguration.SingleInDoubleOutNoPrestopper THEN
+        _progress := 5;
+    ELSIF _config.Configuration = eTcoEq2TransferConfiguration.SingleInDoubleOut THEN
+        _progress := _progress + 1;
+    END_IF;
+
+    _timer(IN := FALSE);
+END_IF;
+
+IF _progress = 2 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Waiting for pallet at stopper#>';
+    _timer(IN := _components.iStopperMainTransfer.IsTrue, PT := _config.StabilisationTime);
+
+    IF _components.iStopperMainTransfer.IsTrue AND _timer.q THEN
+        _progress := 5;
+        _timer(IN := FALSE);
+        _timerOptional(IN := FALSE);
+
+    ELSIF _components.iPreStopperMainTransfer.IsTrue THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF
+END_IF;
+
+IF _progress = 3 THEN
+
+    _timer(IN := _components.iStopperMainTransfer.IsFalse AND
+            _components.iMainTransferIsEmpty.IsTrue AND
+            NOT _components.TransferUnit.AtHome AND
+            NOT _components.TransferUnit.AtWork,
+        PT := _config.StabilisationTime);
+
+    Messenger.Info('<#Handle incoming palette - Check transfer unit status#>');
+
+    IF _components.iStopperMainTransfer.IsFalse AND
+        _components.iMainTransferIsEmpty.IsTrue AND
+        NOT _components.TransferUnit.AtHome AND
+        NOT _components.TransferUnit.AtWork AND
+        _timer.Q THEN
+        _timer(IN := FALSE);
+        _progress := _progress + 1;
+    END_IF
+END_IF;
+
+IF _progress = 4 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Open prestoper#>';
+    IF _components.iPreStopperMainTransfer.IsTrue THEN
+        _components.qPreStopperMainTransfer.Set();
+    END_IF;
+
+    _timer(IN := NOT _components.iPreStopperMainTransfer.Signal, PT := _config.StabilisationTime);
+
+    IF _components.qPreStopperMainTransfer.IsTrue AND _timer.Q THEN
+        _components.qPreStopperMainTransfer.Reset();
+        _timer(IN := FALSE);
+        _timerOptional(IN := FALSE);
+        _progress := _progress + 1;
+
+    END_IF;
+END_IF;
+
+IF _progress = 5 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Waiting for pallet at stopper - Entry Transfer#>';
+    _timer(IN := _components.iStopperMainTransfer.IsTrue, PT := _config.StabilisationTime);
+    _timerOptional(IN := TRUE, PT := _config.StabilisationTime * 5);
+
+    IF _components.iStopperMainTransfer.IsTrue AND _timer.Q THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    ELSIF _components.iStopperMainTransfer.IsFalse AND _timer.Q THEN
+        _progress := 0;
+    END_IF
+
+END_IF;
+
+IF _progress = 6 THEN
+    _status.ActionDescription := '<#Handle incoming palette - Wait for pallete in workposition#>';
+    IF _components.iStopperMainTransfer.IsTrue AND _components.iMainTransferIsEmpty.IsFalse THEN
+        _status.ActionDescription := '<#Done#>';
+
+        _task.DoneWhen(TRUE);
+        _progress := 0;
+    END_IF;
+END_IF;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Mode" Id="{2f170511-a074-445b-bf88-d640c7c33b20}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Mode : reference to eTcoEq2TransferHandlingMode]]></Declaration>
+      <Get Name="Get" Id="{a657509e-6572-4948-8c9a-424a9a3af148}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Mode ref= _mode;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="OutgoingPaletteDoubleIn" Id="{bacfb316-5631-4dee-b53a-5717dab97db1}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE OutgoingPaletteDoubleIn
+VAR_INPUT
+	refProgress : REFERENCE TO INT;
+	refStatus: REFERENCE TO TcoEq2Transfer_Status;
+	refConfig: REFERENCE TO TcoEq2Transfer_Config;
+	refTimer: REFERENCE TO TON;
+	refTask :  REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress    : REFERENCE TO INT;
+
+
+	_status: REFERENCE TO TcoEq2Transfer_Status;
+	_config: REFERENCE TO TcoEq2Transfer_Config;
+	_timer: REFERENCE TO TON;
+	_task :  REFERENCE TO TcoCore.TcoTask;
+
+	_timerOptional: TON;
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF= refTask;
+IF _progress = 0 THEN
+    //init
+	_components.qMotor.Set();
+    _progress := _progress + 1;
+END_IF;
+
+IF _progress = 1 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Transfer unit home#>';
+
+    IF _components.iWipaMainTransfer.IsFalse AND_THEN _components.TransferUnit.MoveToHome().Done THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF
+
+END_IF;
+
+IF _progress = 2 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Wait to transfer unit is empty#>';
+
+    _timer(IN := NOT _components.iStopperMainTransfer.Signal AND _components.iMainTransferIsEmpty.Signal, PT := _config.StabilisationTime);
+
+    IF (_components.iStopperMainTransfer.IsFalse AND _components.iMainTransferIsEmpty.IsTrue AND _timer.Q) THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF;
+END_IF;
+
+IF _progress = 3 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Transfer unit to middle position#>';
+    _components.TransferUnit.Stop();
+    _timer(IN := TRUE, PT := _config.StabilisationTime);
+
+    IF (NOT _components.TransferUnit.AtHome AND NOT _components.TransferUnit.AtWork) THEN
+        _progress := 10;
+        _timer(IN := FALSE);
+    END_IF;
+END_IF;
+
+IF _progress = 10 THEN
+	_components.qMotor.Reset();
+    _status.ActionDescription := '<#Handle outgoing palette - Done#>';
+    _task.DoneWhen(TRUE);
+    _progress := 0;
+
+END_IF;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OutgoingPaletteSingleIn" Id="{144c0b0d-2414-4f02-b722-6b6769dd7a24}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE OutgoingPaletteSingleIn
+VAR_INPUT
+    inMode : eTcoEq2TransferHandlingMode;
+    refProgress : REFERENCE TO INT;
+    refStatus : REFERENCE TO TcoEq2Transfer_Status;
+    refConfig : REFERENCE TO TcoEq2Transfer_Config;
+    refTimer : REFERENCE TO TON;
+    refTask : REFERENCE TO TcoCore.TcoTask;
+END_VAR
+
+VAR
+    _progress : REFERENCE TO INT;
+
+    _status : REFERENCE TO TcoEq2Transfer_Status;
+    _config : REFERENCE TO TcoEq2Transfer_Config;
+    _timer : REFERENCE TO TON;
+    _task : REFERENCE TO TcoCore.TcoTask;
+
+    _timerOptional : TON;
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_progress REF= refProgress;
+_status REF= refStatus;
+_config REF= refConfig;
+_timer REF= refTimer;
+_task REF= refTask;
+
+IF _progress = 0 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Init#>';
+
+    _components.qMotor.Set();
+    _progress := _progress + 1;
+END_IF;
+
+IF _progress = 1 THEN
+	 _status.ActionDescription := '<#Handle outgoing palette - Send Direct/Send Side#>';
+    IF inMode = eTcoEq2TransferHandlingMode.SendDirectWay THEN
+        IF _components.iWipaMainTransfer.IsFalse AND_THEN _components.TransferUnit.MoveToHome().Done THEN
+            _progress := _progress + 1;
+            _timer(IN := FALSE);
+        END_IF
+    ELSIF inMode = eTcoEq2TransferHandlingMode.SendSideWay THEN
+
+        _progress := 4;
+        _timer(IN := FALSE);
+
+    END_IF;
+END_IF;
+
+IF _progress = 2 THEN
+	 _status.ActionDescription := '<#Handle outgoing palette - Check Main transfer is empty#>';
+
+    _timer(IN := NOT _components.iStopperMainTransfer.Signal AND _components.iMainTransferIsEmpty.Signal,
+        PT := _config.StabilisationTime);
+
+    IF (_components.iStopperMainTransfer.IsFalse AND _components.iMainTransferIsEmpty.IsTrue AND _timer.Q) THEN
+        _progress := _progress + 1;
+        _timer(IN := FALSE);
+    END_IF;
+END_IF;
+
+IF _progress = 3 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Wait Trasnfer unit at Middle position (not home,not work)#>';
+    _components.TransferUnit.Stop();
+    _timer(IN := TRUE, PT := _config.StabilisationTime);
+
+    IF NOT _components.TransferUnit.AtHome AND NOT _components.TransferUnit.AtWork THEN
+        _progress := 10;
+        _timer(IN := FALSE);
+    END_IF;
+END_IF;
+
+IF _progress = 4 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Wait Side transfer is empty#>';
+    _timer(IN := _components.iSideTransferIsEmpty.Signal, PT := _config.StabilisationTime);
+    IF ((_components.iSideTransferIsEmpty.IsTrue AND _timer.Q) AND_THEN _components.TransferUnit.MoveToWork().Done) THEN
+        _progress := _progress + 1;
+    END_IF;
+END_IF;
+
+IF _progress = 5 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Wait for pallete in side transfer#>';
+    _timer(IN := _components.iMainTransferIsEmpty.Signal AND NOT _components.iSideTransferIsEmpty.Signal, PT := _config.StabilisationTime);
+    IF (_components.iMainTransferIsEmpty.IsTrue AND _components.iSideTransferIsEmpty.IsFalse AND _timer.Q) THEN
+        _progress := _progress + 1;
+    END_IF;
+END_IF;
+
+IF _progress = 6 THEN
+    _status.ActionDescription := '<#Handle outgoing palette - Transfer unit middle position#>';
+    IF _components.iWipaSideTransfer.IsFalse THEN
+        _components.TransferUnit.Stop();
+        IF NOT _components.TransferUnit.AtHome AND NOT _components.TransferUnit.AtWork THEN
+            _progress := 10;
+        END_IF;
+    END_IF;
+END_IF;
+
+IF _progress = 10 THEN
+    _components.qMotor.Reset();
+    _status.ActionDescription := '<#Handle outgoing palette - Done#>';
+    _task.DoneWhen(TRUE);
+    _progress := 0;
+
+END_IF;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Restore" Id="{f35eb633-c292-4222-b531-c19b7a6231c9}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_handleIncomingPaletteTask.Restore();
+_handleOutgoingPaletteTask.Restore();
+_autoTask.Restore();
+CallTimers(FALSE);
+_timerOptional(IN:=FALSE);
+
+_components.qMotor.Reset();
+_progressIncomming:=0;
+_progressOutgoing:=0;
+
+IF _config.Configuration = eTcoEq2TransferConfiguration.DoubleInSingleOut THEN
+	Components.qPreStopperMainTransfer.Reset();
+	Components.qPrestopperSideTransfer.Reset();
+ELSIF _config.Configuration = eTcoEq2TransferConfiguration.SingleInDoubleOut THEN
+	Components.qPreStopperMainTransfer.Reset();
+END_IF;
+THIS^.Messenger.UnPin();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RestoreTask" Id="{f6c3e872-af90-441e-8da5-0b94de9f8392}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC RestoreTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{b07d8388-7997-46c4-a5ce-606b983bcab7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RestoreTask ref= _restoreTask; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ServiceMode" Id="{ac7cbc81-2d74-4537-92bc-96fcbbbdce6b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.qPreStopperMainTransfer.Service();
+_components.qPrestopperSideTransfer.Service();
+_components.qMotor.Service();
+
+_components.TransferUnit.Service();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Status" Id="{eb13c6dd-60f8-41d1-9810-5a91d0a4c5f5}">
+      <Declaration><![CDATA[
+PROPERTY Status : REFERENCE TO TcoEq2Transfer_Status]]></Declaration>
+      <Get Name="Get" Id="{10d8902c-48af-436d-b5d9-8e6a0174d866}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF= _status;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TransferIsEmpty" Id="{1bea9682-73fc-4fa0-945b-1a17c950e373}">
+      <Declaration><![CDATA[PROPERTY TransferIsEmpty : bool]]></Declaration>
+      <Get Name="Get" Id="{c687475c-1552-4885-80a7-e1b0a2183808}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TransferIsEmpty:=Components.iMainTransferIsEmpty.Signal AND Components.iSideTransferIsEmpty.Signal AND not Components.TransferUnit.AtHome and not Components.TransferUnit.AtWork;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

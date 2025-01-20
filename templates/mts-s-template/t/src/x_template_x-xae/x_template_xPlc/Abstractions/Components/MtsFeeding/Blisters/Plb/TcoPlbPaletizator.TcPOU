@@ -1,0 +1,1048 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoPlbPaletizator" Id="{8a939652-7ec7-41ba-bcc8-d894ab91f9e4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoPlbPaletizator EXTENDS TcoCore.TcoComponent
+VAR_INPUT
+    inSafeCondition : BOOL;
+    inLightCurtainOk : BOOL;
+END_VAR
+
+VAR_OUTPUT
+END_VAR
+VAR
+    {attribute addProperty Name "<#Config#>"}
+    _config : TcoPlbPaletizator_Config_v_1_x_x;
+    {attribute addProperty Name "<#Status#>"}
+    {attribute clr [ReadOnly()]}
+    _status : TcoPlbPaletizator_Status_v_1_x_x;
+    {attribute addProperty Name "<#Control#>"}
+    _control : TcoPlbPaletizator_Control_v_1_x_x;
+
+    {attribute addProperty Name "<#Components#>"}
+    _components : TcoPlbPaletizator_Components := (Parent := THIS^);
+
+    {attribute addProperty Name "<#Poziadavka novy blister#>"}
+    _feedNewBlisterTask : TcoFeedingSequenceTask(THIS^);
+    {attribute addProperty Name "<#Poziadavka vylozenie blistera#>"}
+    _throwBlisterTask : TcoFeedingSequenceTask(THIS^);
+
+    {attribute addProperty Name "<#Poziadavka vychodzej polohy#>"}
+    _setToDefaultTask : TcoFeedingSequenceTask(THIS^);
+
+    {attribute addProperty Name "<#Restore#>"}
+    _restoreTask : TcoCore.TcoTask(THIS^);
+
+    {attribute addProperty Name "<#Test positions#>"}
+    _positions : TcoPlbPaletizator_Positions(THIS^);
+
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _blinker : TcoBlinker(THIS^);
+    _timerEntryEmpty : ton;
+    _timerOutFull : ton;
+    _timerDisableSafety : TON;
+    {attribute addProperty Name "<#Temporarily disabled safety#>"}
+    _temporarilyDisableSafety : BOOL;
+
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    restoreDone : BOOL;
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _setSequencesToStep : BOOL := FALSE;
+    _requiredPosition : TcoDrivesBeckhoff.TcoMultiAxisMoveParam;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_status.SafeCondition:=inSafeCondition;
+
+Context.Environment.Messaging.Suspend();
+_status.ReadyToUnloadComponents:=
+			Components.P1_PositionUnit.AtWork 
+			AND Components.I11_BlisterInWorkPosition.Signal
+			AND Components.P2_FixUnit.AtWork
+			AND (_positions.WorkPos.Axis1.Position-10)< Components.Manipulator.Axis.AxisStatus.ActPos
+			AND (_positions.WorkPos.Axis1.Position+10)> Components.Manipulator.Axis.AxisStatus.ActPos ;
+
+_status.OutBufferFull:= (Components.I9_iThrowBuffer1Isfull.Signal AND NOT _config.EmptyBuffer1Disabled )
+				XOR  (Components.I10_iThrowBuffer2Isfull.Signal AND NOT _config.EmptyBuffer2Disabled );
+
+_status.EntryBufferEmpty:=NOT ((Components.I1_iBuffer1HasNotCriticalLevel.Signal OR  _config.Buffer1Disabled)
+	AND (Components.I3_iBuffer2HasNotCriticalLevel.Signal OR  _config.Buffer2Disabled) 
+	AND (Components.I5_iBuffer3HasNotCriticalLevel.Signal OR  _config.Buffer3Disabled)
+	AND (Components.I7_iBuffer4HasNotCriticalLevel.Signal OR  _config.Buffer4Disabled));				
+Context.Environment.Messaging.Resume();
+
+	
+IF _config.StepModeManagableFromOutside THEN
+	IF _setSequencesToStep THEN
+		_feedNewBlisterTask.SetStepMode();
+		_throwBlisterTask.SetStepMode();
+		_setToDefaultTask.SetStepMode();
+	ELSE 
+		_feedNewBlisterTask.SetCyclicMode();
+		_throwBlisterTask.SetCyclicMode();
+		_setToDefaultTask.SetCyclicMode();
+	END_IF
+END_IF;
+
+_feedNewBlisterTask.Enabled :=NOT _throwBlisterTask.Busy;
+IF(_feedNewBlisterTask.Execute())THEN
+	SequenceIncomingBlister(refSequenceTask:=_feedNewBlisterTask );
+END_IF;
+
+_throwBlisterTask.Enabled :=NOT _feedNewBlisterTask.Busy;
+IF(_throwBlisterTask.Execute())THEN
+	SequenceOutgoingBlister(refSequenceTask:=_throwBlisterTask);
+END_IF;
+
+
+
+_setToDefaultTask.Enabled :=TRUE;
+IF(_setToDefaultTask.Execute())THEN
+	SequenceSetToDefault(refSequenceTask:=_setToDefaultTask,inResetOnlyManipulator:=_control.ResetOnlyManipulator);
+END_IF;
+
+
+//IF NOT inLightCurtainOk THEN
+//	Components.Manipulator.Restore();
+//END_IF
+
+//*************RESTORE********************
+
+_restoreTask.Enabled := TRUE;
+IF _restoreTask.Execute() THEN
+	Restore();
+	_restoreTask.DoneWhen(inCondition:=TRUE);
+END_IF
+//****************************************
+
+
+//********************SAFETY******************
+_timerDisableSafety(IN:=_temporarilyDisableSafety,PT:=_config.TimeToDisableSafety);
+
+THIS^.Messenger.OnCondition(inCondition:=_temporarilyDisableSafety).Warning('SAFTY TEMPORARILY DISABLED!');
+
+IF NOT  _temporarilyDisableSafety THEN
+	Components.Manipulator.inEnableNegative:=NOT Components.P1_PositionUnit.AtHome;
+	Components.Manipulator.inEnablePositive:=NOT Components.P1_PositionUnit.AtHome;
+
+	
+    Components.P1_PositionUnit
+        .SuspendMoveWorkExpression( Components.P1_PositionUnit.MoveWorkTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    Components.P1_PositionUnit
+        .SuspendMoveHomeExpression(Components.P1_PositionUnit.MoveHomeTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+	Components.P2_FixUnit
+        .SuspendMoveWorkExpression( Components.P2_FixUnit.MoveWorkTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    Components.P2_FixUnit
+        .SuspendMoveHomeExpression(Components.P2_FixUnit.MoveHomeTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+END_IF;
+
+IF _timerDisableSafety.Q THEN
+	_temporarilyDisableSafety:=FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <Folder Name="Operations" Id="{b607e448-ee9c-4ef4-a6dd-123b919c751e}" />
+    <Folder Name="OperationsInternal" Id="{97519240-91c3-49c3-846e-2f26f386af2c}" />
+    <Folder Name="Tasks" Id="{7b9c0b2e-17c2-431f-89cb-273152724e89}" />
+    <Property Name="Components" Id="{f073ddd3-98a9-4deb-89c3-72bfb376f260}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO TcoPlbPaletizator_Components
+]]></Declaration>
+      <Get Name="Get" Id="{ae8899d1-4c0d-46dc-8e56-2c7d7d0a9a48}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components ref=_components;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Config" Id="{4240c191-d99e-45b0-b21d-d8827815607b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the configuration of the MTS Pls feeder. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Config : REFERENCE TO TcoPlbPaletizator_Config_v_1_x_x]]></Declaration>
+      <Get Name="Get" Id="{2a04e54c-a409-4245-8f5b-970aa16b4ebe}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config REF= _config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="DefaultSignalisation" Id="{55669d83-b50d-43eb-8b38-71b984b0f0db}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC DefaultSignalisation
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Components.Q1_AttentionSignalisationR.Reset();
+Components.Q2_AttentionSignalisationG.Reset();
+Components.Q3_AttentionSignalisationB.Reset();
+
+_blinker(inOffTime:=_config.BlinkTime,inOnTime:=_config.BlinkTime);
+_timerEntryEmpty(in:= _status.EntryBufferEmpty,Pt:=_config.InfoTime);
+_timerOutFull(in:=  _status.OutBufferFull ,Pt:=_config.InfoTime);
+IF 
+	NOT _timerEntryEmpty.Q
+	AND NOT _timerOutFull.q THEN
+	Components.Q2_AttentionSignalisationG.Set();
+ELSIF  _blinker.IsOn THEN
+	//all empty or disabled
+//	IF NOT( NOT Components.I2_iBuffer1IsReadyToLoad.Signal
+//		XOR NOT _config.Buffer1Disabled)
+//		AND 
+//		NOT(NOT Components.I4_iBuffer2IsReadyToLoad.Signal
+//		XOR NOT _config.Buffer2Disabled)
+//		AND
+//		NOT( NOT Components.I6_iBuffer3IsReadyToLoad.Signal
+//		XOR NOT _config.Buffer3Disabled)
+//		AND 
+//		NOT( NOT Components.I8_iBuffer4IsReadyToLoad.Signal
+//		XOR NOT _config.Buffer4Disabled)
+		
+//		 THEN
+//		Components.Q1_AttentionSignalisationR.Set();
+	IF inLightCurtainOk AND 
+		(
+		THIS^._feedNewBlisterTask.Busy
+		OR
+		THIS^._throwBlisterTask.Busy
+		)THEN
+		Messenger.Warning('<#CAKANIE NA OBSLUHU PALETIZERA - NARUSENA SVETELNA BRANA!#>');
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+	ELSIF _timerEntryEmpty.Q
+		THEN
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+	ELSIF _timerOutFull.Q
+		THEN
+		
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+	
+//	ELSIF NOT _status.OutBufferFull
+//		AND _status.EntryBufferEmpty 
+//		AND NOT _status.BlisterReady THEN	
+//		Components.Q1_AttentionSignalisationR.Set();
+//	ELSIF  _status.OutBufferFull  THEN
+//		Components.Q1_AttentionSignalisationR.Set();	
+	
+	END_IF;
+
+
+	
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FeedNewBlister" Id="{4a580028-c351-4ab2-ae89-2627af12254a}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC FeedNewBlister : TcoCore.ITcoTaskStatus
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+FeedNewBlister := _feedNewBlisterTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FeedNewBlisterTask" Id="{18deccc2-0e55-4b95-adc8-ed6ba2a67167}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY FeedNewBlisterTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{45421129-e7a5-492e-83e2-4cae7a9df726}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FeedNewBlisterTask ref=_feedNewBlisterTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="LoaadPositions" Id="{385cc19b-0c2c-48e8-804c-589ee3042f98}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PUBLIC LoaadPositions : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[LoaadPositions:= Components.Manipulator.LoadPositionsTask.WithId(_config.PositionsSetName).Invoke().Done and Components.Manipulator.LoadPositionsTask.ReadSuccessfuly ;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="OutBufferFull" Id="{1d317f91-808a-0130-08c0-5b9c69d48cfa}">
+      <Declaration><![CDATA[PROPERTY OutBufferFull : bool]]></Declaration>
+      <Get Name="Get" Id="{44c14d84-ed88-0368-37cb-d03b1a59307b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[OutBufferFull:=_status.OutBufferFull;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReadyToUnloadComponent" Id="{2ee50dd0-5248-0292-3d3b-e0e9726d2ade}">
+      <Declaration><![CDATA[PROPERTY ReadyToUnloadComponent : bool]]></Declaration>
+      <Get Name="Get" Id="{3982e306-040c-0a40-3f76-e2b594da263c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadyToUnloadComponent:=_status.ReadyToUnloadComponents;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{679cdc24-9f67-4c3f-95f7-b339400f0694}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.Manipulator.Restore();
+_feedNewBlisterTask.Restore();
+_throwBlisterTask.Restore();
+_setToDefaultTask.Restore();
+_messenger.UnPin();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceIncomingBlister" Id="{81999a6c-8d58-405d-b7d7-49ba8e2bb570}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceIncomingBlister
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	_moveParam: TcoSingleAxisMoveParam;
+
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus := _status, inoConfig := _config);
+
+IF NOT Components.I1_iBuffer1HasNotCriticalLevel.Signal AND NOT _config.Buffer1Disabled THEN
+    Messenger.Warning('<#Buffer 1  minimalne mnozstvo!#>');
+END_IF
+
+IF NOT Components.I3_iBuffer2HasNotCriticalLevel.Signal AND NOT _config.Buffer2Disabled THEN
+    Messenger.Warning('<#Buffer 2 minimalne mnozstvo!#>');
+END_IF
+
+IF NOT Components.I5_iBuffer3HasNotCriticalLevel.Signal AND NOT _config.Buffer3Disabled THEN
+    Messenger.Warning('<#Buffer 3 minimalne mnozstvo!#>');
+END_IF
+
+IF NOT Components.I7_iBuffer4HasNotCriticalLevel.Signal AND NOT _config.Buffer4Disabled THEN
+    Messenger.Warning('<#Buffer 4 minimalne mnozstvo!#>');
+END_IF
+
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0, TRUE, '<#INIT#>') THEN
+    Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');
+    IF _status.SafeCondition THEN
+        seq.CompleteStep();
+    END_IF;
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(20, TRUE, '<#ZASUNUTIE POZICNEJ JEDNOTKY#>') THEN
+
+    seq.StepCompleteWhen( (*Components.P2_FixUnit.MoveToWork().Done OR*)
+        Components.I11_BlisterInWorkPosition.IsFalse AND_THEN Components.P1_PositionUnit.MoveToHome().Done);
+
+END_IF
+
+//***************************************************************************************************     
+
+//IF (seq.Step(inStepID := 25,
+//    inEnabled := TRUE,
+//    inStepDescription := 'LOAD CREATED POSITIONS')) THEN
+//    //--------------------------------------------------------   
+//    IF Seq.IsFreshState THEN
+//        Components.Manipulator.Restore();
+//    END_IF
+
+//    IF Components.Manipulator.LoadPositionsTask.WithId(_config.PositionsSetName).Invoke().Done AND
+//        Components.Manipulator.LoadPositionsTask.ReadSuccessfuly THEN
+//        seq.CompleteStep();
+//    END_IF
+
+//    //--------------------------------------------------------			
+//END_IF
+
+//***************************************************************************************************     
+IF seq.Step(30, TRUE, '<#KONTROLA STAVU ZASOBNIKOV') THEN
+
+    IF Components.I2_iBuffer1IsReadyToLoad.IsTrue AND NOT _config.Buffer1Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer1Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I4_iBuffer2IsReadyToLoad.Istrue AND NOT _config.Buffer2Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer2Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I6_iBuffer3IsReadyToLoad.IsTrue AND NOT _config.Buffer3Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer3Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I8_iBuffer4IsReadyToLoad.IsTrue AND NOT _config.Buffer4Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer4Pos;
+        seq.StepCompleteWhen(TRUE);
+    ELSE
+        IF _config.Buffer1Disabled AND _config.Buffer2Disabled AND _config.Buffer3Disabled AND _config.Buffer4Disabled THEN
+            Messenger.Error('<#VSETKY ZASDOBNIKY SU VYPNUTE !!!#>');
+        ELSE
+            Messenger.Error('<#CHYBA ZASOBNIKY SU PRAZDNE !!!#>');
+
+        END_IF
+    END_IF
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(34, TRUE, 'RESET MANIPULATORA') THEN
+    IF Seq.IsFreshState OR NOT inLightCurtainOk THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF inLightCurtainOk THEN
+
+        IF Components.Manipulator.ResetDrive().Done AND_THEN
+            Components.Manipulator.SoeReset().Done AND_THEN
+            NOT Components.Manipulator.Axis.AxisStatus.Error THEN
+            seq.CompleteStep();
+        END_IF;
+    END_IF
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(35, TRUE, 'RESET MANIPULATORA') THEN
+    //    IF seq.CurrentStep.Duration >= T#2S THEN
+    //        seq.RequestStep(34);
+
+    //    END_IF
+
+    //    seq.StepCompleteWhen(Components.Manipulator.Initialize());
+    Seq.CompleteStep();
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(40, TRUE, 'PRESUN MANIPULATORA - NOVY BLISTER') THEN
+    IF Seq.IsFreshState THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF Components.Manipulator.Axis.AxisStatus.Error OR Components.Manipulator.Axis.AxisStatus.Disabled THEN
+        seq.RequestStep(34);
+    END_IF
+
+    _moveParam.Position := _requiredPosition.Axis1.Position;
+    _moveParam.Velocity := _requiredPosition.Axis1.Velocity;
+    _moveParam.Acceleration := _requiredPosition.Axis1.Acceleration;
+    _moveParam.Deceleration := _requiredPosition.Axis1.Deceleration;
+    _moveParam.Jerk := _requiredPosition.Axis1.Jerk;
+
+    IF Components.Manipulator.MoveAbsolute(_moveParam).Done THEN
+        seq.CompleteStep();
+    END_IF
+
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(45, TRUE, 'KONTROLA BLISTRA VO FIXTURE') THEN
+
+    Messenger.OnCondition(NOT Components.I12_BlisterPickedCorrectly.Signal).Error('<#KOLIZNY STAV SKONTROLUJTE BLISTRE!!!#>');
+
+    seq.StepCompleteWhen(COmponents.I11_BlisterInWorkPosition.IsFalse);
+
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(50, TRUE, 'VYSUNUTIE POZICNEJ JEDNOTKY') THEN
+    IF seq.IsFreshState THEN
+        _timer(IN := FALSE);
+    END_IF
+
+    _timer(IN := Components.P1_PositionUnit.MoveToWork().Done, PT := _config.StabilisationTime);
+    seq.StepCompleteWhen(Components.P2_FixUnit.MoveToHome().Done AND_THEN Components.P1_PositionUnit.MoveToWork().Done AND _timer.Q);
+
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(60, TRUE, 'UPEVNENIE BLISTRA') THEN
+    IF seq.IsFreshState THEN
+        _timer(IN := FALSE);
+    END_IF
+
+    _timer(IN := Components.P2_FixUnit.MoveToWork().Done, PT := _config.StabilisationTime);
+
+    seq.StepCompleteWhen(_timer.Q);
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(70, TRUE, 'ZASUNUTIE POZICNEJ JEDNOTKY A KONTROLA BLISTRA') THEN
+    Messenger.OnCondition(Components.P1_PositionUnit.AtHome AND NOT Components.I11_BlisterInWorkPosition.Signal)
+        .Error('NEPODARILO SA ODOBRAT BLISTER (PLNY)!');
+
+    Messenger.OnCondition(Components.P1_PositionUnit.AtHome AND
+            NOT Components.I12_BlisterPickedCorrectly.Signal).Error('<#KOLIZNY STAV SKONTROLUJTE BLISTRE!!!#>');
+
+    IF Components.P1_PositionUnit.MoveToHome().Done AND_THEN
+        Components.I11_BlisterInWorkPosition.IsTrue AND
+        Components.I12_BlisterPickedCorrectly.IsTrue THEN
+        seq.RequestStep(75);
+    END_IF
+END_IF
+
+//***************************************************************************************************     
+//***************************************************************************************************     
+IF seq.Step(74, TRUE, 'RESET MANIPULATORA') THEN
+    IF Seq.IsFreshState or not inLightCurtainOk THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF inLightCurtainOk THEN
+        IF Components.Manipulator.ResetDrive().Done AND_THEN
+            Components.Manipulator.SoeReset().Done AND_THEN
+            NOT Components.Manipulator.Axis.AxisStatus.Error THEN
+            seq.CompleteStep();
+        END_IF;
+    END_IF;
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(75, TRUE, 'RESET MANIPULATORA') THEN
+    //    IF seq.CurrentStep.Duration >= T#2S THEN
+    //        seq.RequestStep(34);
+
+    //    END_IF
+
+    //    seq.StepCompleteWhen(Components.Manipulator.Initialize());
+    Seq.CompleteStep();
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(80, TRUE, ' PRESUN MANIPULATORA - VYLOZENIE PRAZDNY BLISTER') THEN
+    IF Seq.IsFreshState THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF Components.Manipulator.Axis.AxisStatus.Error OR Components.Manipulator.Axis.AxisStatus.Disabled THEN
+        seq.RequestStep(74);
+    END_IF
+
+    _requiredPosition := _positions.WorkPos;
+    _moveParam.Position := _requiredPosition.Axis1.Position;
+    _moveParam.Velocity := _requiredPosition.Axis1.Velocity;
+    _moveParam.Acceleration := _requiredPosition.Axis1.Acceleration;
+    _moveParam.Deceleration := _requiredPosition.Axis1.Deceleration;
+    _moveParam.Jerk := _requiredPosition.Axis1.Jerk;
+
+    IF Components.Manipulator.MoveAbsolute(_moveParam).Done THEN
+        seq.CompleteStep();
+    END_IF
+
+END_IF
+
+//***************************************************************************************************     
+IF seq.Step(90, TRUE, 'VYSUNUTIE POZICNEJ JEDNOTKY') THEN
+
+    seq.StepCompleteWhen(Components.P1_PositionUnit.MoveToWork().Done);
+
+END_IF
+
+//***************************************************************************************************     
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+    refSequenceTask.DoneWhen(TRUE);
+    seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+IF refSequenceTask.HandleTaskError() THEN
+    //here we can decide what to do
+    //	refSequenceTask.Restore();
+    _feedNewBlisterTask.Restore();
+END_IF
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceOutgoingBlister" Id="{dc6ddf0b-96f6-426e-84d5-e5b423e9aa95}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceOutgoingBlister
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	_timerOptional:ton;
+	_moveParam: TcoSingleAxisMoveParam;
+
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus := _status, inoConfig := _config);
+
+IF Components.I9_iThrowBuffer1Isfull.Signal AND NOT _config.EmptyBuffer1Disabled THEN
+    Messenger.Warning('<#VYSTUPNY ZASOBNIK 1 PLNY(BUFFER) !!!#>');
+END_IF
+
+IF Components.I10_iThrowBuffer2Isfull.Signal AND NOT _config.EmptyBuffer2Disabled THEN
+    Messenger.Warning('<#VYSTUPNY ZASOBNIK 2 PLNY(BUFFER) !!!#>');
+END_IF
+
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0, TRUE, '<#INIT#>') THEN
+    Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');
+    IF _status.SafeCondition THEN
+        seq.CompleteStep();
+    END_IF;
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(10, TRUE, 'ZASUNUTIE POZICNEJ JEDNOTKY') THEN
+
+    seq.StepCompleteWhen((Components.P2_FixUnit.MoveToWork().Done OR Components.I11_BlisterInWorkPosition.IsFalse) AND_THEN
+            Components.P1_PositionUnit.MoveToHome().Done);
+
+END_IF
+
+//***************************************************************************************************     
+
+//IF (seq.Step(inStepID := 25,
+//    inEnabled := TRUE,
+//    inStepDescription := 'LOAD CREATED POSITIONS')) THEN
+//    //--------------------------------------------------------   
+//    IF Seq.IsFreshState THEN
+//        Components.Manipulator.Restore();
+//    END_IF
+
+//    IF Components.Manipulator.LoadPositionsTask.WithId(_config.PositionsSetName).Invoke().Done AND
+//        Components.Manipulator.LoadPositionsTask.ReadSuccessfuly THEN
+//        seq.CompleteStep();
+//    END_IF
+
+//    //--------------------------------------------------------			
+//END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(20, TRUE, 'KONTROLA ZASOBNIKOU PRE PRAZDNE BLISTRE') THEN
+
+    Messenger.OnCondition(Components.I9_iThrowBuffer1Isfull.Signal AND NOT _config.EmptyBuffer1Disabled)
+        .Warning('<#Zasobnik 1 na prazdne blistre plny!#>');
+
+    Messenger.OnCondition(Components.I10_iThrowBuffer2Isfull.Signal AND NOT _config.EmptyBuffer2Disabled)
+        .Warning('<#Zasobnik 2 na prazdne blistre plny!#>');
+
+    IF Components.I9_iThrowBuffer1Isfull.IsFalse AND NOT _config.EmptyBuffer1Disabled THEN
+        _requiredPosition := _positions.UnloadEmpty1Postion;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I10_iThrowBuffer2Isfull.IsFalse AND NOT _config.EmptyBuffer2Disabled THEN
+        _requiredPosition := _positions.UnloadEmpty2Postion;
+        seq.StepCompleteWhen(TRUE);
+    ELSE
+        IF _config.EmptyBuffer1Disabled AND _config.EmptyBuffer2Disabled THEN
+            Messenger.Error('<#ZASDOBNIKY PRE PRAZDNE BLISTRE SU VYPNUTE !!!#>');
+        ELSE
+            Messenger.Error('<#CHYBA ZASOBNIKY NA PRAZDNE BLISTRE OBSADENE !!!#>');
+
+        END_IF
+    END_IF;
+
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(34, TRUE, 'RESET MANIPULATORA') THEN
+    IF Seq.IsFreshState or not inLightCurtainOk THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF inLightCurtainOk THEN
+        IF Components.Manipulator.ResetDrive().Done AND_THEN
+            Components.Manipulator.SoeReset().Done AND_THEN
+            NOT Components.Manipulator.Axis.AxisStatus.Error THEN
+            seq.CompleteStep();
+        END_IF;
+    END_IF;
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(35, TRUE, 'RESET MANIPULATORA') THEN
+    //    IF seq.CurrentStep.Duration >= T#2S THEN
+    //        seq.RequestStep(34);
+
+    //    END_IF
+
+    //    seq.StepCompleteWhen(Components.Manipulator.Initialize());
+    Seq.CompleteStep();
+END_IF
+
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(40, TRUE, 'PRESUN MANIPULATORA - NOVY BLISTER') THEN
+    IF Seq.IsFreshState THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF Components.Manipulator.Axis.AxisStatus.Error OR Components.Manipulator.Axis.AxisStatus.Disabled THEN
+        seq.RequestStep(34);
+    END_IF
+
+    _moveParam.Position := _requiredPosition.Axis1.Position;
+    _moveParam.Velocity := _requiredPosition.Axis1.Velocity;
+    _moveParam.Acceleration := _requiredPosition.Axis1.Acceleration;
+    _moveParam.Deceleration := _requiredPosition.Axis1.Deceleration;
+    _moveParam.Jerk := _requiredPosition.Axis1.Jerk;
+
+    IF Components.Manipulator.MoveAbsolute(_moveParam).Done THEN
+        seq.CompleteStep();
+    END_IF
+
+END_IF
+
+//***************************************************************************************************    
+
+//***************************************************************************************************     
+IF seq.Step(43, TRUE, 'VYLOZENIE PRAZDNEHO BLISTRA DO ZASOBNIKA PRESUN POZICNEJ JEDNOTKY') THEN
+    IF seq.IsFreshState THEN
+        _timer(IN := FALSE);
+    END_IF
+
+    _timer(IN := Components.P1_PositionUnit.MoveToWork().Done, PT := _config.StabilisationTime);
+
+    seq.StepCompleteWhen(_timer.Q);
+
+END_IF
+
+//***************************************************************************************************     
+IF seq.Step(45, TRUE, 'VYLOZENIE PRAZDNEHO BLISTRA DO ZASOBNIKA') THEN
+    IF seq.IsFreshState THEN
+        _timer(IN := FALSE);
+        _timerOptional(IN := FALSE);
+    END_IF
+
+    _timer(IN := Components.P2_FixUnit.MoveToHome().Done, PT := _config.StabilisationTime);
+    _timerOptional(IN := Components.I11_BlisterInWorkPosition.IsFalse, PT := _config.StabilisationTime);
+
+    seq.StepCompleteWhen(_timer.Q OR _timerOptional.Q);
+END_IF
+
+//***************************************************************************************************     
+IF seq.Step(50, TRUE, 'VYLOZENIE PRAZDNEHO BLISTRA DO ZASOBNIKA') THEN
+
+    seq.StepCompleteWhen(Components.P1_PositionUnit.MoveToHome().Done);
+
+END_IF
+
+//*************************************************************************************************** 
+
+//***************************************************************************************************     
+IF seq.Step(60, TRUE, 'KONTROLA VYLOZENIA BLISTRA DO  ZASOBNIKA (PRAZDNE)') THEN
+    Messenger.Error('NEPODARILO SA VYLOZIT PRAZDNY BLISTER!');
+    seq.StepCompleteWhen(Components.I11_BlisterInWorkPosition.IsFalse);
+
+END_IF
+
+//*************************************************************************************************** 
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+    refSequenceTask.DoneWhen(TRUE);
+    seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+IF refSequenceTask.HandleTaskError() THEN
+    //here we can decide what to do
+    //	refSequenceTask.Restore();
+    _throwBlisterTask.Restore();
+
+END_IF
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceSetToDefault" Id="{59f87475-41d6-4d65-8213-1c076b8e18a1}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceSetToDefault
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	inResetOnlyManipulator:BOOL;
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus:=_status,inoConfig:=_config);
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+
+
+		
+
+
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0,TRUE,'<#INIT#>') THEN   
+	Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');     
+	IF _status.SafeCondition THEN
+    	seq.CompleteStep();
+	END_IF;
+END_IF        
+//***************************************************************************************************     
+
+
+
+//***************************************************************************************************     
+IF seq.Step(10,NOT inResetOnlyManipulator,'<#VYCHODIZA POLOHA - ZASUNUTIE POZICIEJ JEDNOTKY P1 #>') THEN   
+
+    seq.StepCompleteWhen(Components.P1_PositionUnit.MoveToHome().Done );
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(20,not inResetOnlyManipulator,'<#VYCHODIZA POLOHA - ZASUNUTIE UPEVNENIA BLISTRA  P2#>') THEN   
+
+    seq.StepCompleteWhen(Components.P2_FixUnit.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF (seq.Step(inStepID := 30,
+    inEnabled := TRUE,
+    inStepDescription := 'LOAD POSITIONS FROM DB')) THEN
+    //--------------------------------------------------------   
+    IF Seq.IsFreshState THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF Components.Manipulator.LoadPositionsTask.WithId(_config.PositionsSetName).Invoke().Done AND
+        Components.Manipulator.LoadPositionsTask.ReadSuccessfuly THEN
+        seq.CompleteStep();
+    END_IF
+
+    //--------------------------------------------------------			
+END_IF      
+
+//***************************************************************************************************     
+IF seq.Step(40, TRUE, 'RESET MANIPULATORA') THEN
+    IF Seq.IsFreshState THEN
+        Components.Manipulator.Restore();
+    END_IF
+
+    IF Components.Manipulator.ResetDrive().Done AND_THEN
+        Components.Manipulator.SoeReset().Done AND_THEN
+        NOT Components.Manipulator.Axis.AxisStatus.Error THEN
+        seq.CompleteStep();
+    END_IF;
+END_IF
+
+//***************************************************************************************************     
+
+
+
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+		refSequenceTask.DoneWhen(TRUE);
+    	seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+
+
+IF refSequenceTask.HandleTaskError() THEN
+	
+	//here we can decide what to do
+	//	refSequenceTask.Restore();
+
+END_IF
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{924925ea-6060-4553-8859-0c267351f801}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.Q3_AttentionSignalisationB.Service();
+_components.Q2_AttentionSignalisationG.Service();
+_components.Q1_AttentionSignalisationR.Service();
+_components.P2_FixUnit.Service();
+_components.P1_PositionUnit .Service();
+_components.Manipulator.Service();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SetSequencesToStep" Id="{b10003d9-2b5c-48f5-ad7d-026ff4435e4b}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC SetSequencesToStep : bool]]></Declaration>
+      <Get Name="Get" Id="{5e687809-bc70-4010-80b6-40dcf73ee1dd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SetSequencesToStep:=_setSequencesToStep;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4f28df7f-c4e6-46f8-a9b2-91d3620977f1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_setSequencesToStep:=SetSequencesToStep;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="SetToDefault" Id="{888f1fc8-b2ad-4b95-a39c-23a941ade626}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC SetToDefault : TcoCore.ITcoTaskStatus
+
+VAR
+	inResetOnlyManipulator:BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_control.ResetOnlyManipulator:=inResetOnlyManipulator;
+SetToDefault := _setToDefaultTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SetToDefaultTask" Id="{c66618f6-9b06-4778-97cb-7c5940c06430}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY SetToDefaultTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{ba3d06bd-7fad-4e70-bc10-68be81b77971}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SetToDefaultTask ref=_setToDefaultTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Status" Id="{1ded4d43-12b6-4a0d-b809-8daa7a1fbf2b}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the status of the MTS Pls feeder. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Status : REFERENCE TO TcoPlbPaletizator_Status_v_1_x_x]]></Declaration>
+      <Get Name="Get" Id="{ee2fd40c-01df-4695-b0cb-af649437b072}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF= _status;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ThrowBlister" Id="{8e1f1646-bf58-4ad0-86e5-0848ca208934}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC ThrowBlister : TcoCore.ITcoTaskStatus
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+ThrowBlister := _throwBlisterTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ThrowBlisterTask" Id="{97a565d7-f6af-4dac-991c-b09c08ba8192}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ThrowBlisterTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{bb5b7688-5a76-4ca7-bd50-ad8018b8ca06}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ThrowBlisterTask ref=_throwBlisterTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

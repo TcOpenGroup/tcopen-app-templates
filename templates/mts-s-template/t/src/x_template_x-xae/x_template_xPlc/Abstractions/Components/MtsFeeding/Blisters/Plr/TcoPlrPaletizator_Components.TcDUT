@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlrPaletizator_Components" Id="{58516797-8044-4234-8726-df9691cda4cb}">
+    <Declaration><![CDATA[TYPE
+    TcoPlrPaletizator_Components EXTENDS TcoCore.TcoStruct :
+    STRUCT
+
+        {attribute wpf [Container(Layout.Stack,"Vstup Blistrov")]}
+        {attribute addProperty Name "<#(I1) Pritomnost blistra na vstupnej zarazke 1 - vstup#>"}
+        I1_PresentBlisterAtEntryStopper1 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I2) Pritomnost blistra na vstupnej zarazke 1 - plny(WIPA)#>"}
+        I2_PresentBlisterAtEntryStopper1Wipa : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I3) Spravnost nalozenia blistra na vstupnej zarazke 1 - vstup#>"}
+        I3_NotLoadedCorrectlyAtEntryStopper1 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I4) Pritomnost blistra na vstupnej zarazke 2 - vstup#>"}
+        I4_PresentBlisterAtEntryStopper2 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I6) Pritomnost blistra na vstupnej zarazke 2 - plny(WIPA)#>"}
+        I5_PresentBlisterAtEntryStopper2Wipa : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I6) Pritomnost blistra na vstupnej zarazke 3 - vstup#>"}
+        I6_PresentBlisterAtEntryStopper3 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I7) Pritomnost blistra na vstupnej zarazke 3 - plny(WIPA)#>"}
+        I7_PresentBlisterAtEntryStopper3Wipa : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I8) Pritomnost blistra na vstupnej zarazke 4 - vstup#>"}
+        I8_PresentBlisterAtEntryStopper4 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I9) Pritomnost blistra na vstupnej zarazke 4 - plny(WIPA)#>"}
+        I9_PresentBlisterAtEntryStopper4Wipa : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(Q4)Vstupny dopravnik#>"}
+        Q4_EntryConvRun : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#Vstupny dopravnik reverz#>"}
+        Q5_EntryConvRunReverse : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR1)(PR1.1) Zarazka Vstupny dopravnik#>"}
+        PR1_StopperConveyorEntry1 : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR2)(PR2.1) Zarazka Vstupny dopravnik#>"}
+        PR2_StopperConveyorEntry2 : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR3)(PR3.1) Zarazka Vstupny dopravnik#>"}
+        PR3_StopperConveyorEntry3 : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR4)(PR4.1) Zarazka Vstupny dopravnik#>"}
+        PR4_StopperConveyorEntry4 : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR5)(PR5.1) Zarazka Vystupny dopravnik#>"}
+        PR5_StopperConveyorOutgoing1 : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+		
+        {attribute addProperty Name "<#(PR6)(PR6.1) Horizontalny prisun vstupnych blistrov#>"}
+        PR6_HorizontalSepareEntyBlisters : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR7)(PR7.1) Horizontalny prisun vystupnych blistrov#>"}
+        PR7_HorizontalSepareOutgoingBlisters : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR8) Vertikalne separovanie vstupnych blistrov 1#>"}
+        PR8_VerticalSepareEntryBlister1 : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR9) Vertikalne separovanie vstupnych blistrov 2#>"}
+        PR9_VerticalSepareEntryBlister2 : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR12)(PR12.1) Fixovanie vstupneho blistra z boku#>"}
+        PR12_HorizontalHoldEntryBlister : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute wpf [Container(Layout.Stack,"Vystup Blistrov")]}
+        {attribute addProperty Name "<#(I10) Pritomnost blistra na vystupnej zarazke 1 - vstup#>"}
+        I10_PresentBlisterAtOutgoingStopper1 : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I11)Pritomnost blistra na vystupnej zarazke 1 - plny(WIPA)#>"}
+        I11_PresentBlisterAtOutgoingStopper1Wipa : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I12) Vystupny zasobnik blistrov plny #>"}
+        I12_OutgoingBufferIsFull : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#(I13)Vystupny dopravnik blistrov plny #>"}
+        I13_OutgoingConveyorIsFull : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(Q6) Vystupny dopravnik#>"}
+        Q6_OutgoingConvRun : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#(Q7) Vystupny dopravnik reverz#>"}
+        Q7_OutgoingConvRunReverse : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR10) Vertikalne separovanie vstupnych blistrov 1#>"}
+        PR10_VerticalSepareOutgoingBlister1 : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR11)Vertikalne separovanie vstupnych blistrov 2#>"}
+        PR11_VerticalSepareOutgoingBlister2 : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+		
+		
+        {attribute wpf [Container(Layout.Stack,"Vytah")]}
+        {attribute addProperty Name "<#(I16) Pritomnost blistra v na vytahu - koniec #>"}
+        I14_PresentBlisterInLiftEnd : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I15) Pritomnost blistra vo vytahu - vstup #>"}
+        I15_PresentBlisterInLiftEntry : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(Q8) Vytah dopravnik#>"}
+        Q8_LiftConvRun : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#(Q9) Vytah dopravnik reverz#>"}
+        Q9_LiftConvRunReverse : TcoElements.TcoDo(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR13) Centrovanie blistra #>"}
+        PR13_CenteringBlisterInLift : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+
+        {attribute addProperty Name "<#(PR14) Vytah#>"}
+        PR14_Lift : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+        {attribute wpf [Container(Layout.Stack,"Vseobecne")]}
+        {attribute addProperty Name "<#(I16)Tlacidlo - odoslanie blistrov#>"}
+        I16_SendButton : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#(I17) Tlacidlo - privolanie blistrov(DOLE)#>"}
+        I17_EmptyButton : TcoElements.TcoDi(THISSTRUCT);
+		
+		{attribute addProperty Name "<#(I18)Tlacidlo - privolanie blistrov(HORE)#>"}
+		I18_EmptyKey : TcoElements.TcoDi(THISSTRUCT);	
+
+        {attribute wpf [Container(Layout.Stack,"Vseobecne")]}
+
+        {attribute addProperty Name "(Q1) <#Signalizacia upozornenia R#>"}
+        Q1_AttentionSignalisationR : TcoElements.TcoDo(THISSTRUCT);
+        {attribute addProperty Name "(Q2) <#Signalizacia upozornenia G#>"}
+        Q2_AttentionSignalisationG : TcoElements.TcoDo(THISSTRUCT);
+        {attribute addProperty Name "(Q3) <#Signalizacia upozornenia B#>"}
+        Q3_AttentionSignalisationB : TcoElements.TcoDo(THISSTRUCT);
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -405,4 +405,10 @@
   <data name="ShowStationInWindow" xml:space="preserve">
     <value>Zobraziť stanicu v novom okne.</value>
   </data>
+  <data name="LoadData" xml:space="preserve">
+    <value>Načítaj data z plc</value>
+  </data>
+  <data name="LoadDataCyclicaly" xml:space="preserve">
+    <value>Cyklické vyčitavanie dát</value>
+  </data>
 </root>

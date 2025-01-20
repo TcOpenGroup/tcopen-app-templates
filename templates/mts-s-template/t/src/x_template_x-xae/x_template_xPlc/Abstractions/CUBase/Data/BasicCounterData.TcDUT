@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="BasicCounterData" Id="{5462301d-0575-454a-97bb-bcbadc017c65}">
+    <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+{attribute wpf [Group(Layout.Scroll)]}
+{attribute addProperty Name "<#Entity header#>"}
+TYPE BasicCounterData  EXTENDS TcoCore.TcoStruct :
+STRUCT
+	{attribute addProperty Name "<#OK#>"}
+	Passed		: UDINT;
+	{attribute addProperty Name "<#NOK#>"}
+	Failed		: UDINT;
+	{attribute addProperty Name "<#TOTAL#>"}
+	Total		: UDINT;
+	{attribute addProperty Name "<#ALL TIME OK#>"}
+	LifeTimePassed	: UDINT;
+	
+	{attribute addProperty Name "<#ALL TIME NOK#>"}
+	LifeTimeFailed	: UDINT;
+	
+	{attribute addProperty Name "<#ALL TIME #>"}
+	LifeTime	: UDINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

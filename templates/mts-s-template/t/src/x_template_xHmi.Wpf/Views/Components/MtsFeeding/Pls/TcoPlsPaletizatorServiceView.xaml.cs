@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -26,7 +26,7 @@ namespace x_template_xPlc
         {
             if (DesignerProperties.GetIsInDesignMode(this))
             {
-                this.DataContext = new TcoPlsPaletizatorServiceView();
+                this.DataContext = new TcoPlsPaletizatorViewModel();
             }
 
             InitializeComponent();

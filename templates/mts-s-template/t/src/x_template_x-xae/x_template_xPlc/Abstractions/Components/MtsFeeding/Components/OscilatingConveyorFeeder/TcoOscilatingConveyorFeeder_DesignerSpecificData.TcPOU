@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoOscilatingConveyorFeeder_DesignerSpecificData" Id="{4a61ed1f-d015-46fc-84ab-0cad827020cc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoOscilatingConveyorFeeder_DesignerSpecificData EXTENDS TcoCognexVision.TcoDesignerRootContainer  
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute wpf [Container(Layout.Stack,"PcToPlc")]}	
+	{attribute wpf [Group(Layout.GroupBox)]}
+	{attribute addProperty Name "<#PcToPlc#>"}
+	PcToPlc:TcoOscilatingConveyorFeeder_PcToPlc ;
+	{attribute wpf [Container(Layout.Stack,"PlcToPc")]}	
+	{attribute wpf [Group(Layout.GroupBox)]}
+	{attribute addProperty Name "<#PlcToPc#>"}
+	PlcToPc:TcoOscilatingConveyorFeeder_PlcToPc;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="PcToPlcData" Id="{06b38c24-246b-4ed3-baab-08af17809de7}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PcToPlcData : REFERENCE TO TcoOscilatingConveyorFeeder_PcToPlc]]></Declaration>
+      <Get Name="Get" Id="{a8364e38-ee18-4b9d-9485-45e6c5f8f962}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PcToPlcData ref= PcToPlc;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PlcToPcData" Id="{3a73fe47-4c18-4761-a399-0a911f6dbdf9}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PlcToPcData : REFERENCE TO TcoOscilatingConveyorFeeder_PlcToPc]]></Declaration>
+      <Get Name="Get" Id="{a95c60c7-f3ac-4847-b684-1fb777a655cd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PlcToPcData ref= PlcToPc;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

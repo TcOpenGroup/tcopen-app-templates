@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLiftingRotaryTransferComponents" Id="{71f9b9ba-9cec-4f9c-849d-1b02cd786018}">
+    <Declaration><![CDATA[TYPE
+    TcoLiftingRotaryTransferComponents EXTENDS TcoCore.TcoStruct :
+    STRUCT
+
+        {attribute addProperty Name "<#Paleta pred stanicou#>"}
+        iPrestopper : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Paleta v stanici#>"}
+        iStopper : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Transfer je prazdny#>"}
+        iTransferIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#Vystup zo stanice plny#>"}
+        iWipa : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#MotorInError#>"}
+        iMotorError : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Predzarazka#>"}
+        qPrestopper : TcoElements.TcoDo(THISSTRUCT);
+        {attribute  addProperty Name "<#Zarazka#>"}
+        qStopper : TcoElements.TcoDo(THISSTRUCT);
+        {attribute  addProperty Name "<#Motor#>"}
+        qMotor : TcoElements.TcoDo(THISSTRUCT);
+        {attribute addProperty Name "<Rotary unit#>"}
+        RotaryUnit : TcoPneumatics.TcoCylinder(THISSTRUCT);
+        {attribute addProperty Name "<#Vytah#>"}
+        {attribute addProperty Retracted "<#Dole#>"}
+        {attribute addProperty Extended "<#Hore#>"}
+        {attribute addProperty Retracting "<#Pohyb dole#>"}
+        {attribute addProperty Extending "<#Pohyb hore#>"}
+        Lift : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

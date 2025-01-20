@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoEq2Transfer_Control" Id="{c28a45ee-88b7-4214-8996-a935e4c98d44}">
+    <Declaration><![CDATA[TYPE TcoEq2Transfer_Control EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+	
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -25,7 +25,7 @@ namespace x_template_xPlc
         public CUBaseDataView()
         {
             InitializeComponent();
-            SetTimer();
+
         }
 
         private System.Timers.Timer messageUpdateTimer;
@@ -33,13 +33,23 @@ namespace x_template_xPlc
         {
             if (messageUpdateTimer == null)
             {
-                messageUpdateTimer = new System.Timers.Timer(750);
+                messageUpdateTimer = new System.Timers.Timer(2000);
                 messageUpdateTimer.Elapsed += UpdateDataTimer_Elapsed;
                 messageUpdateTimer.AutoReset = true;
                 messageUpdateTimer.Enabled = true;
             }
         }
 
+        private void DisposeTimer()
+        {
+            if (messageUpdateTimer != null)
+            {
+                messageUpdateTimer.Stop();
+                messageUpdateTimer.Elapsed -= UpdateDataTimer_Elapsed;
+                messageUpdateTimer.Dispose();
+                messageUpdateTimer = null;
+            }
+        }
 
         private ProcessData ProcessData { get; set; }
         private dynamic CuProcessData { get; set; }
@@ -52,22 +62,45 @@ namespace x_template_xPlc
             TcOpen.Inxton.TcoAppDomain.Current.Dispatcher.Invoke(() =>
             {
                 context = this.DataContext as CUBaseViewModel;
-                isInSight = UIElementAccessibilityHelper.IsInSight<Grid>(this.Element, this);                
+                isInSight = UIElementAccessibilityHelper.IsInSight<Grid>(this.Element, this);
             });
 
             if (isInSight)
             {
-                if (ProcessData == null) ProcessData = context?.Component.GetDescendants<ProcessData>().FirstOrDefault();
-                if (CuProcessData == null) CuProcessData = context?.Component.GetChildren<CUProcessDataBase>().FirstOrDefault();
-                               
-                CuProcessData.FlushOnlineToShadow();                
-                ProcessData.FlushOnlineToShadow();
+                if (CuProcessData == null) { CuProcessData = context?.Component.GetChildren<CUProcessDataBase>().FirstOrDefault(); }
+                CuProcessData.FlushOnlineToShadow();
 
-           
-                if (CuTechnologyData == null) CuTechnologyData = context?.Component.GetChildren<CUTechnologicalDataBase>().FirstOrDefault();
-
-                CuTechnologyData.FlushOnlineToShadow();
             }
+        }
+
+        private void LoadTechnologyDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            var context = this.DataContext as CUBaseViewModel;
+            if (CuTechnologyData == null)
+            {
+                CuTechnologyData = context?.Component.GetChildren<CUTechnologicalDataBase>().FirstOrDefault();
+            }
+
+            CuTechnologyData.FlushOnlineToShadow();
+        }
+
+        private void LoadFullProcessDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            var context = this.DataContext as CUBaseViewModel;
+            if (ProcessData == null) { ProcessData = context?.Component.GetDescendants<ProcessData>().FirstOrDefault(); }
+            ProcessData.FlushOnlineToShadow();
+        }
+
+
+
+        private void CyclicalyLoadingOnlineData_Checked(object sender, RoutedEventArgs e)
+        {
+            SetTimer();
+        }
+
+        private void CyclicalyLoadingOnlineData_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DisposeTimer();
         }
     }
 }

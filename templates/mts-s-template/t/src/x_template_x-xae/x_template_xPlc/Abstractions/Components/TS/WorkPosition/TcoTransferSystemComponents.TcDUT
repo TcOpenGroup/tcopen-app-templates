@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoTransferSystemComponents" Id="{37bbdf09-8c63-4c08-b0ef-3e93c216873e}">
+    <Declaration><![CDATA[TYPE TcoTransferSystemComponents EXTENDS TcoCore.TcoStruct:
+STRUCT
+	
+
+	{attribute addProperty Name "<#Paleta pred stanicou#>"}
+	iPrestopper  : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Paleta v stanici#>"}
+	iStopper     : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Vystup zo stanice plny#>"}
+	iWipa        : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Predzarazka#>"}
+	qPrestopper  : TcoElements.TcoDo(THISSTRUCT);
+	{attribute  addProperty Name "<#Zarazka#>"}
+	qStopper     : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "<#Pozicna jednotka#>"}
+	{attribute addProperty Retracted "<#Dole#>"}
+	{attribute addProperty Extended "<#Hore#>"}
+	{attribute addProperty Retracting "<#Pohyb dole#>"}
+	{attribute addProperty Extending "<#Pohyb hore#>"}
+	PositionUnit : TcoPneumatics.TcoCylinder(THISSTRUCT);
+	
+	
+	
+
+	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

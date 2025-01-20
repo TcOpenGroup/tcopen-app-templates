@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlbPaletizator_Control_v_1_x_x" Id="{c4e611d3-9e15-4525-a940-e072375099e4}">
+    <Declaration><![CDATA[TYPE TcoPlbPaletizator_Control_v_1_x_x EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+		ResetOnlyManipulator: BOOL;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

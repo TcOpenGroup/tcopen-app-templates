@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeeder_PcToPlc" Id="{d7d70f86-93a4-4689-8843-16804099bbed}">
+    <Declaration><![CDATA[TYPE TcoOscilatingConveyorFeeder_PcToPlc EXTENDS TcoCore.TcoStruct :
+STRUCT
+	EntryFeederRun : BOOL;
+	OscConvRun : BOOL;
+	OscConvRunReverse : BOOL;
+	OscCylinderRow1Right : BOOL;
+	OscCylinderRow1Middle : BOOL;
+	OscCylinderRow1Left : BOOL;
+	OscCylinderRow2Right : BOOL;
+	OscCylinderRow2Middle : BOOL;
+	OscCylinderRow2Left : BOOL;
+	OscCylinderRow3Right : BOOL;
+	OscCylinderRow3Middle : BOOL;
+	OscCylinderRow3Left : BOOL;
+	SideGuard : BOOL;
+	EntryFeederMantinel : BOOL;
+    Status : eTcoOscilatingConveyorStatus;
+	StepDescription:STRING;
+	ErrorDesription:STRING;
+
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -3,134 +3,126 @@
   <POU Name="TcoControlledZone" Id="{f9946378-cf59-4928-83ba-d7fc1c602387}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK TcoControlledZone EXTENDS TcoCore.TcoComponent
 VAR_INPUT
-	{attribute clr [RenderIgnore()]}
-	inDoorCircuit        : ITcoDoorCircuit;
-	
-	{attribute clr [RenderIgnore()]}
-	inAirPressureOK         : BOOL;
-	
-	{attribute clr [RenderIgnore()]}
-	inEstopActive		      : BOOL;
-	
+    {attribute clr [RenderIgnore()]}
+    inDoorCircuit : ITcoDoorCircuit;
+
+    {attribute clr [RenderIgnore()]}
+    inAirPressureOK : BOOL;
+
+    //	{attribute clr [RenderIgnore()]}
+    //	inEstopActive		      : BOOL;
+
 END_VAR
 
 VAR
-	
-	
-	{attribute addProperty Name "<#Status#>"}
+
+    {attribute addProperty Name "<#Status#>"}
     {attribute clr [ReadOnly()]}
     _status : TcoControlledZone_Status;
 
-	{attribute addProperty Name "<#Config#>"}
+    {attribute addProperty Name "<#Config#>"}
     _config : TcoControlledZone_Config;
 
-	{attribute clr [RenderIgnore()]}
-	_controlledUnits      : ARRAY [0..12] OF ICUBase;
-				
-	{attribute clr [RenderIgnore()]}
-	_controlButtons       : ARRAY [0..4] OF ITcoControlButtons;
-	
-	{attribute clr [RenderIgnore()]}
-	_controlKeyMode  : ARRAY [0..2] OF ITcoKeyMode;
-	
-	{attribute clr [RenderIgnore()]}
-	_controlKeyNormalService      : ARRAY [0..2] OF ITcoKeyNormalSevice;
-	
-	// group states
-
-	{attribute clr [RenderIgnore()]}
-	_blinker              : TcoUtilities.TcoBlinker(THIS^);
-	{attribute clr [RenderIgnore()]}
-	_blinkerSlow              : TcoUtilities.TcoBlinker(THIS^);
-	
-	 {attribute addProperty Name "<#Ground task#>"}
-	_groundTask           : TcoControlledZoneActionTask(THIS^);
-	 {attribute addProperty Name "<#Automat task#>"}
-	_autoTask           : TcoControlledZoneActionTask(THIS^);
-	
-	 {attribute addProperty Name "<#Recover task#>"}
-	_recoverTask            : TcoControlledZoneActionTask(THIS^);
-	
-	 {attribute addProperty Name "<#Suspend task#>"}
-	_suspendTask             : TcoControlledZoneActionTask(THIS^);
-	
-	 {attribute addProperty Name "<#Key Auto task#>"}
-	_keyAutoTask          : TcoControlledZoneActionTask(THIS^);
-	
-	{attribute addProperty Name "<#Key Manual task#>"}
-	_keyManualTask        : TcoControlledZoneActionTask(THIS^);
-	
-	{attribute addProperty Name "<#Key Step task#>"}
-	_keyStepTask          : TcoControlledZoneActionTask(THIS^);
-		
-	 {attribute addProperty Name "<#Key service task#>"}
-	_keyServiceTask             : TcoControlledZoneActionTask(THIS^);
-	
-	{attribute clr [RenderIgnore()]}
-	_timerDoorsLocked       : TON;
-	{attribute clr [RenderIgnore()]}
-	_timerAirPressureMonitor       : TON;
-
-
-	
-	{attribute clr [RenderIgnore()]}
-	_serviceKeyRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_serviceKeyFalling 	  : F_Trig;
-	
-	
-	{attribute clr [RenderIgnore()]}
-	_recoverTaskInvokeFalling 	  : F_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_suspendTaskInvokeFalling 	  : F_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_recoverTaskInvokeRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_suspendTaskInvokeRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_groundTaskInvokeFalling 	  : F_Trig;
+    {attribute clr [RenderIgnore()]}
+    _controlledUnits : ARRAY[0..12] OF ICUBase;
 
     {attribute clr [RenderIgnore()]}
-	_autoTaskInvokeFalling 	  : F_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_groundTaskInvokeRising 	  : F_Trig;
+    _controlButtons : ARRAY[0..4] OF ITcoControlButtons;
 
     {attribute clr [RenderIgnore()]}
-	_autoTaskInvokeRising 	  : F_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_keyAutoTaskInvokeFalling 	  : F_Trig;
-	{attribute clr [RenderIgnore()]}
-	_keyAutoTaskInvokeRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_keyManualTaskInvokeFalling 	  : F_Trig;
-	{attribute clr [RenderIgnore()]}
-	_keyManualTaskInvokeRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_keyStepTaskInvokeFalling 	  : F_Trig;
-	{attribute clr [RenderIgnore()]}
-	_keyStepTaskInvokeRising 	  : R_Trig;
-	
-	{attribute clr [RenderIgnore()]}
-	_keyServiceTaskInvokeFalling 	  : F_Trig;
-	{attribute clr [RenderIgnore()]}
-	_keyServiceTaskInvokeRising 	  : R_Trig;
+    _controlKeyMode : ARRAY[0..2] OF ITcoKeyMode;
 
-  
-	_airPressureOk: BOOL;
-	_conditionToRunAreSufficient: BOOL;
+    {attribute clr [RenderIgnore()]}
+    _controlKeyNormalService : ARRAY[0..2] OF ITcoKeyNormalSevice;
+
+    // group states
+
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _blinker : TcoUtilities.TcoBlinker(THIS^);
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _blinkerSlow : TcoUtilities.TcoBlinker(THIS^);
+
+    {attribute addProperty Name "<#Ground task#>"}
+    _groundTask : TcoControlledZoneActionTask(THIS^);
+    {attribute addProperty Name "<#Automat task#>"}
+    _autoTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Recover task#>"}
+    _recoverTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Suspend task#>"}
+    _suspendTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Key Auto task#>"}
+    _keyAutoTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Key Manual task#>"}
+    _keyManualTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Key Step task#>"}
+    _keyStepTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute addProperty Name "<#Key service task#>"}
+    _keyServiceTask : TcoControlledZoneActionTask(THIS^);
+
+    {attribute clr [RenderIgnore()]}
+    _timerDoorsLocked : TON;
+    {attribute clr [RenderIgnore()]}
+    _timerAirPressureMonitor : TON;
+
+    {attribute clr [RenderIgnore()]}
+    _serviceKeyRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _serviceKeyFalling : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _recoverTaskInvokeFalling : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _suspendTaskInvokeFalling : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _recoverTaskInvokeRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _suspendTaskInvokeRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _groundTaskInvokeFalling : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _autoTaskInvokeFalling : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _groundTaskInvokeRising : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _autoTaskInvokeRising : F_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _keyAutoTaskInvokeFalling : F_Trig;
+    {attribute clr [RenderIgnore()]}
+    _keyAutoTaskInvokeRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _keyManualTaskInvokeFalling : F_Trig;
+    {attribute clr [RenderIgnore()]}
+    _keyManualTaskInvokeRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _keyStepTaskInvokeFalling : F_Trig;
+    {attribute clr [RenderIgnore()]}
+    _keyStepTaskInvokeRising : R_Trig;
+
+    {attribute clr [RenderIgnore()]}
+    _keyServiceTaskInvokeFalling : F_Trig;
+    {attribute clr [RenderIgnore()]}
+    _keyServiceTaskInvokeRising : R_Trig;
+
+    _airPressureOk : BOOL;
+    _conditionToRunAreSufficient : BOOL;
 END_VAR
-
-
-
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF _controlledUnits[0] = 0 THEN
@@ -161,10 +153,10 @@ IF _timerAirPressureMonitor.Q THEN
 END_IF;
 
 //Estop monitoring
-IF THIS^.inEstopActive THEN
-    inDoorCircuit.UnLock();
-    THIS^.Messenger.Error('<#Emergency stop active: Unlocking doors!#>').Pin();
-END_IF
+//IF THIS^.inEstopActive THEN
+//    inDoorCircuit.UnLock();
+//    THIS^.Messenger.Error('<#Emergency stop active: Unlocking doors!#>').Pin();
+//END_IF
 // Global Voltage monitoring
 IF NOT inDoorCircuit.IsGlobalVoltageOk THEN
     inDoorCircuit.UnLock();
@@ -183,7 +175,7 @@ IF _timerDoorsLocked.Q THEN
 END_IF
 
 
-_conditionToRunAreSufficient:=(inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) AND NOT inEstopActive  AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk;
+_conditionToRunAreSufficient:=(inAirPressureOK OR _timerAirPressureMonitor.ET<_timerAirPressureMonitor.PT) (*AND NOT inEstopActive*)  AND inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk;
  
 
 
@@ -679,133 +671,131 @@ END_VAR
       <Implementation>
         <ST><![CDATA[
 IF _recoverTask.Execute() THEN
-	AnyButtonSuspend:=FALSE;
+    AnyButtonSuspend := FALSE;
 
-	IF _recoverTask.Progress = 2 THEN
-		AnyButtonRecover:=_blinker.IsOn ;
-	ELSE
-		AnyButtonRecover:=_blinkerSlow.IsOn ;	
-	END_IF;
-	IF _recoverTask.Progress =0 THEN
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].RecoverTask.Restore();
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
+    IF _recoverTask.Progress = 2 THEN
+        AnyButtonRecover := _blinker.IsOn;
+    ELSE
+        AnyButtonRecover := _blinkerSlow.IsOn;
+    END_IF;
 
-		_status.ActionDescription:='<#Waiting to release recover button#>';
-		IF NOT _status.State.AnyButtonRecover THEN
-				_recoverTask.Progress := _recoverTask.Progress + 1;	
-				RETURN;
-		END_IF;
-	
-	END_IF
-	
-	IF _recoverTask.Progress =1 THEN
-		_status.ActionDescription:='<#Check general condition to recover zone (ControlVoltage, EStops, Presure...)!#>';
-				
-		IF inDoorCircuit.IsGlobalVoltageOk
-			AND inDoorCircuit.IsLocalVoltageOk
-			AND inAirPressureOK
-			AND NOT inEstopActive THEN
-			_recoverTask.Progress := _recoverTask.Progress + 1;
-	
-		END_IF;
-	
-	END_IF
-	
-	IF _recoverTask.Progress =2 THEN
-		_status.ActionDescription:='<#Waiting to close and lock  all doors!#>';
-		
-		THIS^.inDoorCircuit.Lock();
-		
-			
-		IF inDoorCircuit.IsLocked
-			AND inDoorCircuit.IsLocked
-			AND inDoorCircuit.IsLocalDoorsVoltageOk THEN
-			_recoverTask.Progress := _recoverTask.Progress + 1;
-	
-		END_IF;
-	
-	END_IF
+    IF _recoverTask.Progress = 0 THEN
+        FOR cu := 0 TO _config.MaxControledUnits DO
+            IF _controlledUnits[cu] <> 0 THEN
+                _controlledUnits[cu].RecoverTask.Restore();
+            ELSE
+                EXIT;
+            END_IF
+        END_FOR
 
+        _status.ActionDescription := '<#Waiting to release recover button#>';
+        IF NOT _status.State.AnyButtonRecover THEN
+            _recoverTask.Progress := _recoverTask.Progress + 1;
+            RETURN;
+        END_IF;
 
-	
-	
-	IF _recoverTask.Progress =3 THEN
-		
-		_status.ActionDescription:='<#Invoke restore sequences on each stations.#>';
-		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
-			_recoverTask.Progress := 100;
-			RETURN;
-		END_IF
-		
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				_controlledUnits[cu].RecoverTask.ModeController.Mode := eSequencerMode.CyclicMode;
-				_controlledUnits[cu].RecoverTask.Task.Invoke();
+    END_IF
 
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
+    IF _recoverTask.Progress = 1 THEN
+        _status.ActionDescription := '<#Check general condition to recover zone (ControlVoltage, EStops, Presure...)!#>';
 
-		IF _status.State.AllRecovered THEN
-			_recoverTask.Progress :=_recoverTask.Progress+1 ;
-		END_IF
-		
-	END_IF
-	
-	IF _recoverTask.Progress =4 THEN
-		
-		_status.ActionDescription:= '<#Setup Cyclic or Step mode. It depends on key position#>';
-		FOR cu := 0 TO _config.MaxControledUnits DO
-			IF _controlledUnits[cu] <> 0 THEN
-				IF _status.State.AllKeysAuto THEN	
-					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
-						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.CyclicMode;
-					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
-						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.CyclicMode;
-					END_IF
-				ELSE
-					IF _controlledUnits[cu].StatusInfo.Mode=eCUMode.AutomatMode THEN
-						_controlledUnits[cu].AutomatTask.ModeController.Mode:=eSequencerMode.StepMode;
-					ELSIF _controlledUnits[cu].StatusInfo.Mode=eCUMode.GroundMode THEN
-						_controlledUnits[cu].GroundTask.ModeController.Mode:=eSequencerMode.StepMode;
-					END_IF
-				END_IF
-	
-			ELSE
-				EXIT;
-			END_IF
-		END_FOR
+        IF inDoorCircuit.IsGlobalVoltageOk AND inDoorCircuit.IsLocalVoltageOk AND inAirPressureOK
+        //			AND NOT inEstopActive 
+            THEN
+            _recoverTask.Progress := _recoverTask.Progress + 1;
 
+        END_IF;
 
-		
-		
-		_recoverTask.Progress := 100;
-		
-	END_IF
+    END_IF
 
-	IF _recoverTask.Progress = 100 THEN
-		
-		_status.ActionDescription:= '<#Recover task has been done.#>';
-		_recoverTask.DoneWhen(TRUE);
-		AnyButtonRecover:=TRUE;
+    IF _recoverTask.Progress = 2 THEN
+        _status.ActionDescription := '<#Waiting to close and lock  all doors!#>';
 
-	END_IF;	
+        THIS^.inDoorCircuit.Lock();
 
+        IF inDoorCircuit.IsLocked AND inDoorCircuit.IsLocked AND inDoorCircuit.IsLocalDoorsVoltageOk THEN
+            _recoverTask.Progress := _recoverTask.Progress + 1;
 
-	IF _status.ActionDescription<>'' THEN
-		THIS^._recoverTask.Messenger.Notify(_status.ActionDescription);
-	END_IF;
-	
+        END_IF;
+
+    END_IF
+
+    IF _recoverTask.Progress = 3 THEN
+
+        _status.ActionDescription := '<#Invoke restore sequences on each stations.#>';
+
+        IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
+            _recoverTask.Progress := 100;
+            RETURN;
+        END_IF
+
+        FOR cu := 0 TO _config.MaxControledUnits DO
+            IF _controlledUnits[cu] <> 0 THEN
+                _controlledUnits[cu].AutomatTask.SuspendStepExecution := TRUE;
+                _controlledUnits[cu].RecoverTask.ModeController.Mode := eSequencerMode.CyclicMode;
+                _controlledUnits[cu].RecoverTask.Task.Invoke();
+
+            ELSE
+                EXIT;
+            END_IF
+        END_FOR
+
+        IF _status.State.AllRecovered THEN
+            FOR cu := 0 TO _config.MaxControledUnits DO
+                IF _controlledUnits[cu] <> 0 THEN
+                    _controlledUnits[cu].AutomatTask.SuspendStepExecution := FALSE;
+                ELSE
+                    EXIT;
+                END_IF
+            END_FOR
+
+            _recoverTask.Progress := _recoverTask.Progress + 1;
+        END_IF
+
+    END_IF
+
+    IF _recoverTask.Progress = 4 THEN
+
+        _status.ActionDescription := '<#Setup Cyclic or Step mode. It depends on key position#>';
+
+        FOR cu := 0 TO _config.MaxControledUnits DO
+            IF _controlledUnits[cu] <> 0 THEN
+                IF _status.State.AllKeysAuto THEN
+                    IF _controlledUnits[cu].StatusInfo.Mode = eCUMode.AutomatMode THEN
+                        _controlledUnits[cu].AutomatTask.ModeController.Mode := eSequencerMode.CyclicMode;
+                    ELSIF _controlledUnits[cu].StatusInfo.Mode = eCUMode.GroundMode THEN
+                        _controlledUnits[cu].GroundTask.ModeController.Mode := eSequencerMode.CyclicMode;
+                    END_IF
+                ELSE
+                    IF _controlledUnits[cu].StatusInfo.Mode = eCUMode.AutomatMode THEN
+                        _controlledUnits[cu].AutomatTask.ModeController.Mode := eSequencerMode.StepMode;
+                    ELSIF _controlledUnits[cu].StatusInfo.Mode = eCUMode.GroundMode THEN
+                        _controlledUnits[cu].GroundTask.ModeController.Mode := eSequencerMode.StepMode;
+                    END_IF
+                END_IF
+
+            ELSE
+                EXIT;
+            END_IF
+        END_FOR
+
+        _recoverTask.Progress := 100;
+
+    END_IF
+
+    IF _recoverTask.Progress = 100 THEN
+
+        _status.ActionDescription := '<#Recover task has been done.#>';
+        _recoverTask.DoneWhen(TRUE);
+        AnyButtonRecover := TRUE;
+
+    END_IF;
+
+    IF _status.ActionDescription <> '' THEN
+        THIS^._recoverTask.Messenger.Notify(_status.ActionDescription);
+    END_IF;
+
 END_IF;
-
-
-
 ]]></ST>
       </Implementation>
     </Method>
@@ -844,7 +834,8 @@ END_VAR
 		IF NOT inDoorCircuit.IsGlobalVoltageOk
 			OR NOT inDoorCircuit.IsLocalVoltageOk
 			OR NOT inAirPressureOK
-			OR inEstopActive THEN
+//			OR inEstopActive 
+			THEN
 			_suspendTask.Progress := 100;
 			
 			THIS^.inDoorCircuit.Unlock();
@@ -859,7 +850,7 @@ END_VAR
 		_status.ActionDescription:= '<#Force step mode.#>';
 		
 		IF _status.State.AllInManual OR _status.State.AllInactiveOrManualOrGrounded THEN
-			_suspendTask.Progress := 100;
+			_suspendTask.Progress := 4;
 			RETURN;
 		END_IF
 		FOR cu := 0 TO _config.MaxControledUnits DO
@@ -880,7 +871,7 @@ END_VAR
 
 
 		
-		IF _status.State.AllInStepMode THEN
+		IF _status.State.AllInStepMode or true THEN
 			_suspendTask.Progress := _suspendTask.Progress + 1;
 		END_IF;
 			
@@ -915,7 +906,7 @@ END_VAR
 		THIS^.inDoorCircuit.UnLock();
 		
 		IF inDoorCircuit.IsUnLocked THEN
-			_suspendTask.Progress := 100;
+		//	_suspendTask.Progress := 100;
 	
 		END_IF;
 	

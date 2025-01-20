@@ -15,16 +15,22 @@ VAR
 	_toggle: TcoUtilities.TcoBlinker(THIS^);
 	_recurringFails:CuBaseRecurringFailures:=(Parent:=THIS^);
 	_productionPlaner:ProductionPlaner(THIS^);
+	_internalData : REFERENCE TO InternalStorage;	
 	
+	{attribute clr [ReadOnly()]}
+	{attribute clr [RenderIgnore()]}
+	_readyForOperations : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="Misc" Id="{89a011fb-946c-4af2-b16f-4abd86442495}" />
     <Folder Name="Modes" Id="{d650a7bf-6367-4a6c-a191-a985e54df897}" />
     <Folder Name="ProcessData" Id="{1a8aa84b-31e4-41aa-b103-fbb20e0c7128}">
       <Folder Name="CrudTaskState" Id="{3cbcef83-2f8f-092f-1642-2d5bb3f25f3f}" />
       <Folder Name="DataFlaging" Id="{aed3d7b3-4fd1-0c13-2eed-417fc6b5b252}" />
       <Folder Name="ExternalData" Id="{8389998d-539c-07b7-2bed-035331c1a0d8}" />
+      <Folder Name="InternalData" Id="{5ea75a1d-a09d-4e05-8586-dc704b6c3cc3}" />
     </Folder>
     <Folder Name="RecurringFailures" Id="{aea7587e-0f13-0992-2127-c34de6e860fe}" />
     <Folder Name="Tasks" Id="{522e67de-7340-4416-b0c7-f54a63e10aed}" />
@@ -51,7 +57,8 @@ END_VAR
 *)
 
 
-AutomatTask.Task.Enabled := (GroundTask.GroundDone OR  AutomatTask.Task.Busy) AND THIS^.Technology.AllowAutomat();
+AutomatTask.Task.Enabled :=  AutomatTask.Task.Busy  XOR
+							(GroundTask.GroundDone AND NOT AutomatTask.Task.Busy AND THIS^.Technology.AllowAutomat(inCuId:=CuId));
 
 (*
 	Invokes `groundTask` from technology object.
@@ -119,6 +126,14 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="DoesBelong" Id="{55fc80ad-32c7-442e-a227-eb2402c499aa}" FolderPath="Misc\">
+      <Declaration><![CDATA[METHOD DoesBelong : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[DoesBelong := THIS^.ProcessDataManager.Data.EntityHeader.NextStation = THIS^.CuId;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="EntityFlowCloseForOperations" Id="{8bf49847-55ad-09e2-18b7-e269b9aac41c}" FolderPath="ProcessData\ExternalData\">
       <Declaration><![CDATA[METHOD EntityFlowCloseForOperations : TcoCore.ITcoTaskStatus
 VAR_IN_OUT
@@ -323,7 +338,7 @@ END_VAR
 	]
 *)
 
-GroundTask.Task.Enabled :=  THIS^.Technology.AllowGround();
+GroundTask.Task.Enabled :=  THIS^.Technology.AllowGround(inCuId:=CuId)  OR GroundTask.Task.Busy ;
 
 (*
 	Invokes `groundTask` from technology object.
@@ -376,6 +391,116 @@ METHOD Idle : BOOL
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="InternalCloseEntity" Id="{dfea0e83-d826-46d9-999d-a40573b91b00}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalCloseEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_IN_OUT
+	inoHeader : CuHeader; 
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.FlagCloseEntity(inoHeader);
+_internalData REF= refStorage;
+InternalCloseEntity := _internalData.SaveByCarrier(inCarrier, THIS^.ProcessDataManager.Data);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InternalCreateNewEntity" Id="{2a260e96-2965-4d92-91e5-527d8ec911bc}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalCreateNewEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_IN_OUT
+	inoHeader : CuHeader; 
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.FlagCreateNewEntity(UINT_TO_STRING(inCarrier), inoHeader);
+THIS^.ProcessDataManager.Data.EntityHeader.Carrier := UINT_TO_STRING(inCarrier);
+_internalData REF= refStorage;
+InternalCreateNewEntity := _internalData.SaveByCarrier(inCarrier, THIS^.ProcessDataManager.Data);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InternalFinishEntity" Id="{f4f6b5d3-650a-43ef-93bf-662dc33f326f}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalFinishEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_IN_OUT
+	inoHeader : CuHeader; 
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.FlagFinishEntity(inoHeader);
+
+_internalData REF= refStorage;
+InternalFinishEntity := _internalData.SaveByCarrier(inCarrier, THIS^.ProcessDataManager.Data);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InternalOpenEntity" Id="{c2a47fa2-fa48-4474-91bc-486ebcf5d6f6}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalOpenEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_IN_OUT
+	inoHeader : CuHeader; 
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_internalData REF= refStorage;
+InternalOpenEntity := _internalData.GetByCarrier(inCarrier, THIS^.ProcessDataManager.Data);
+THIS^.FlagOpenEntity(UINT_TO_STRING(inCarrier), inoHeader);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InternalRetrieveEntity" Id="{4e223708-c43d-4037-a2dd-eac052151e43}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalRetrieveEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_internalData REF= refStorage;
+InternalRetrieveEntity := _internalData.GetByCarrier(inCarrier, THIS^.ProcessDataManager.Data);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InternalThrowAwayEntity" Id="{e3889063-3943-4256-b512-d2920a6f746b}" FolderPath="ProcessData\InternalData\">
+      <Declaration><![CDATA[METHOD InternalThrowAwayEntity : BOOL
+VAR_INPUT
+	inCarrier : UINT;
+	refStorage : REFERENCE TO InternalStorage;
+END_VAR
+VAR_IN_OUT
+	inoHeader : CuHeader; 
+END_VAR
+VAR_INST
+	_internalData : REFERENCE TO InternalStorage;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.FlagThrowAwayEntity(inoHeader);
+_internalData REF= refStorage;
+InternalThrowAwayEntity := _internalData.SaveByCarrier(inCarrier, THIS^.ProcessDataManager.Data);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Manual" Id="{ca59dfc2-4891-4382-ac63-95609aefa41f}" FolderPath="Modes\">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -398,7 +523,7 @@ END_VAR
 	]
 *)
 
-ManualTask.Task.Enabled := THIS^.Technology.AllowManual();
+ManualTask.Task.Enabled :=  THIS^.Technology.AllowManual(inCuId:=CuId)  OR ManualTask.Task.Busy;
 
 
 ]]></ST>
@@ -437,6 +562,15 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="ReadyForOperations" Id="{77a708be-476c-4f16-9146-a2c225c4a4d4}" FolderPath="Misc\">
+      <Declaration><![CDATA[METHOD ReadyForOperations : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ReadyForOperations := _readyForOperations;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="RecoverTask" Id="{3e03c8f5-0e6a-4257-b8ec-f05883753522}" FolderPath="Tasks\">
       <Declaration><![CDATA[PROPERTY ABSTRACT RecoverTask : REFERENCE TO CUBaseRecover ]]></Declaration>
       <Get Name="Get" Id="{b652b901-2fff-46c7-8e8d-0292570c5ddc}">
@@ -459,6 +593,36 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="ResetReadyForOperations" Id="{8bdd63cb-1ddc-4a3a-8a46-b497c45dd233}" FolderPath="Misc\">
+      <Declaration><![CDATA[METHOD ResetReadyForOperations : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_readyForOperations := false;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RunOperations" Id="{a957592c-a5b8-4fd8-8056-4beaed2d9ff5}" FolderPath="Misc\">
+      <Declaration><![CDATA[METHOD  RunOperations : BOOL
+VAR_INPUT
+	refGlobalTrigger:REFERENCE TO BOOL;
+END_VAR
+VAR
+	_trrigger:REFERENCE TO BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_trrigger REF=refGlobalTrigger;
+RunOperations := _trrigger;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetReadyForOperations" Id="{58953506-ec17-4f2c-a7ed-ed0c9eabd4ea}" FolderPath="Misc\">
+      <Declaration><![CDATA[METHOD  SetReadyForOperations : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_readyForOperations := TRUE;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="StatusInfo" Id="{8869b0c0-1b6b-4ea5-bfe7-ba8752959d51}">
       <Declaration><![CDATA[PROPERTY ABSTRACT StatusInfo : REFERENCE TO CUBaseStatusInfo]]></Declaration>
       <Get Name="Get" Id="{6df77d60-346a-4f90-8a89-5b3120d43b1f}">
@@ -495,6 +659,18 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
+    <Property Name="ToggleBlinker" Id="{0ed49b78-0603-4128-ab5c-75f37242700d}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ToggleBlinker : REFERENCE TO TcoUtilities.TcoBlinker
+]]></Declaration>
+      <Get Name="Get" Id="{283c9d38-3bff-4a7f-abd0-6cf25f97bb1d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ToggleBlinker ref= _toggle;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="UpdateEntityTask" Id="{05c804c9-7f4b-0e37-2ebf-2fe6f3b9eb66}" FolderPath="ProcessData\CrudTaskState\">
       <Declaration><![CDATA[PROPERTY  UpdateEntityTask : TcoCore.ITcoTaskStatus]]></Declaration>
       <Get Name="Get" Id="{efded1af-2b8a-0cbf-039b-3695e9082143}">
@@ -514,12 +690,17 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_toggle(inOffTime:=T#500MS,inOnTime:=T#500MS);
 
+IF AutomatTask.ClearCounterDataTask.Execute() THEN
+	AutomatTask.ClearCounter();
+	AutomatTask.ClearCounterDataTask.DoneWhen(TRUE);
+END_IF
+
 _statusInfo.State := eCUState.None;
 
-IF _statusInfo.CurrentCycleTime  >= _settings.WarningCycleTime
-	AND _statusInfo.CurrentCycleTime  < _settings.ErrorCycleTime THEN
+IF _statusInfo.CurrentCleanCycleTime  >= _settings.WarningCycleTime
+	AND _statusInfo.CurrentCleanCycleTime  < _settings.ErrorCycleTime THEN
 	_statusInfo.State:= eCUState.HasWarning;
-ELSIF _statusInfo.CurrentCycleTime   >= _settings.ErrorCycleTime THEN
+ELSIF _statusInfo.CurrentCleanCycleTime   >= _settings.ErrorCycleTime THEN
 	_statusInfo.State := eCUState.HasError;
 END_IF; 
 
@@ -531,6 +712,7 @@ END_IF
 
 
 IF AutomatTask.Task.Busy THEN
+
     _statusInfo.Mode                   := eCUMode.AutomatMode;
     _statusInfo.CurrentTaskDescription := '<#AUTOMAT#>';
     _statusInfo.CurrentCycleTime       := AutomatTask._SequenceElapsedTime;

@@ -1,15 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <DUT Name="TcoPlsPaletizator_Status_v_1_x_x" Id="{44e4d35e-4de6-416e-b94f-93977a6d1dd1}">
+  <DUT Name="TcoFeeding_Status_v_1_x_x" Id="{dbdc34e1-3b9b-4743-9523-db185c563826}">
     <Declaration><![CDATA[TYPE
-    TcoPlsPaletizator_Status_v_1_x_x EXTENDS TcoCore.TcoStruct :
+    TcoFeeding_Status_v_1_x_x EXTENDS TcoCore.TcoStruct :
     STRUCT
 
         ActionDescription : STRING;
         SafeCondition : BOOL;
-		EntryBufferEmpty:BOOL;
-        BlisterReady : BOOL;
-        OutBufferFull : BOOL;
+
     END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeeder_PlcToPc" Id="{8f188680-0707-4f07-a2fc-a268da38e12b}">
+    <Declaration><![CDATA[TYPE
+    TcoOscilatingConveyorFeeder_PlcToPc EXTENDS TcoCore.TcoStruct :
+    STRUCT
+
+        EntryFeederIsEmpty : BOOL;
+        FlowSensor : BOOL;
+        EntryFeederError : BOOL;
+        ThrowBoxPresent : BOOL;
+        OscConvError : BOOL;
+        SideGuardAtHome : BOOL;
+        SideGuardAtWork : BOOL;
+        SafeCondition : BOOL;
+        DoorOpen : BOOL;
+        Mode : eCUMode;
+        Config : TcoOscilatingConveyorFeeder_Config_v_1_x_x;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

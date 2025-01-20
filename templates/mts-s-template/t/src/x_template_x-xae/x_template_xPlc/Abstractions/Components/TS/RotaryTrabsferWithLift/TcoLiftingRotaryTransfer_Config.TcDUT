@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLiftingRotaryTransfer_Config" Id="{50ff7d19-6cf8-417b-971c-d765a53f5466}">
+    <Declaration><![CDATA[TYPE
+    TcoLiftingRotaryTransfer_Config EXTENDS TcoCore.TcoStruct :
+    STRUCT
+     	InfoTime : TIME := T#5S;
+        ErrorTime : TIME := T#0S;
+        StabilisationTime : TIME := T#500MS;
+		InvertLifting : BOOL;
+	
+		
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
