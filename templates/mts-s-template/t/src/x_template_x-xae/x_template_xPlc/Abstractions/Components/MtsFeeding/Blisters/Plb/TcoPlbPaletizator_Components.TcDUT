@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlbPaletizator_Components" Id="{f6059407-ee86-4673-a8aa-b2f97b6187a4}">
+    <Declaration><![CDATA[TYPE TcoPlbPaletizator_Components EXTENDS TcoCore.TcoStruct:
+STRUCT
+	
+	{attribute wpf [Container(Layout.Stack)]}
+	{attribute addProperty Name "<#(I1) Zasobnik blistrov 1 Nema minimalne mnozstvo#>"}
+	I1_iBuffer1HasNotCriticalLevel : TcoElements.TcoDi(THISSTRUCT);
+
+	{attribute addProperty Name "<#(I2) Zasobnik blistrov 1 kus pripraveny na odoberanie#>"}
+	I2_iBuffer1IsReadyToLoad : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I3) Zasobnik blistrov 2 Nema minimalne mnozstvo#>"}
+	I3_iBuffer2HasNotCriticalLevel : TcoElements.TcoDi(THISSTRUCT);
+
+
+	{attribute addProperty Name "<#(I4) Zasobnik blistrov 2 kus pripraveny na odoberanie#>"}
+	I4_iBuffer2IsReadyToLoad : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I5) Zasobnik blistrov 3 Nema minimalne mnozstvo#>"}
+	I5_iBuffer3HasNotCriticalLevel : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I6) Zasobnik blistrov 3 kus pripraveny na odoberanie#>"}
+	I6_iBuffer3IsReadyToLoad : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I7) Zasobnik blistrov 4 Nema minimalne mnozstvo#>"}
+	I7_iBuffer4HasNotCriticalLevel : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I8) Zasobnik blistrov 4 kus pripraveny na odoberanie#>"}
+	I8_iBuffer4IsReadyToLoad : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I9) Zasobnik prazdnych blistrov 1 plny#>"}
+	I9_iThrowBuffer1Isfull : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I10)Zasobnik prazdnych blistrov 2 plny#>"}
+	I10_iThrowBuffer2Isfull : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I11) Blister v pracovnej pozicii#>"}
+	I11_BlisterInWorkPosition : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#(I12) Blister uchopeny spravne(volitelny)#>"}
+	I12_BlisterPickedCorrectly : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute wpf [Container(Layout.Stack)]}
+	{attribute addProperty Name "<#(P1)Pozicna jednoka#>"}
+	P1_PositionUnit :TcoPneumatics.TcoCylinder(THISSTRUCT);
+	{attribute addProperty Name "<#(P2)Upevnenie blistra#>"}
+	P2_FixUnit :TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+	
+	{attribute wpf [Container(Layout.Stack)]}
+	{attribute addProperty Name "<#Manipulator#>"}
+	Manipulator :TcoDrivesBeckhoff.TcoSingleAxis(THISSTRUCT);
+	
+	{attribute wpf [Container(Layout.Stack,"Vseobecne")]}
+	
+	{attribute addProperty Name "(Q1) <#Signalizacia upozornenia R#>"}
+	Q1_AttentionSignalisationR : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "(Q2) <#Signalizacia upozornenia G#>"}
+	Q2_AttentionSignalisationG : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "(Q3) <#Signalizacia upozornenia B#>"}
+	Q3_AttentionSignalisationB : TcoElements.TcoDo(THISSTRUCT);
+
+	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

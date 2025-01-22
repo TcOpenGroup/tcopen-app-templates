@@ -1,16 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TcoFeedingSequenceTask" Id="{6a15bf14-7b1b-4cbd-8547-7cf38af9c488}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TcoFeedingSequenceTask EXTENDS TcoCore.TcoTask
+    <Declaration><![CDATA[FUNCTION_BLOCK  TcoFeedingSequenceTask EXTENDS TcoCore.TcoTask
+VAR_IN_OUT
+	inoStatus:TcoFeeding_Status_v_1_x_x;
+	inoConfig:TcoFeeding_Config_v_1_x_x;
+
+END_VAR
 VAR
 	_sequence      : TcoCore.TcoSequence(THIS^, eRestoreMode.None);
     _observerSequence       : TcoCore.TcoSequencerObserver(THIS^);
+	_infoTime:TIME;
+	_errorTime:	TIME;
+	_errorMessage:TcoCore.TcoMessenger(THIS^);
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-]]></ST>
+      <ST><![CDATA[IF  __ISVALIDREF(inoConfig) THEN  
+_infoTime := THIS^.inoConfig.InfoTime;
+_errorTime := THIS^.inoConfig.ErrorTime;
+END_IF;]]></ST>
     </Implementation>
+    <Property Name="ErrorTime" Id="{05e1ad56-dadc-4374-87ee-8893b1532d45}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ErrorTime : REFERENCE TO TIME]]></Declaration>
+      <Get Name="Get" Id="{cf0c7697-f2bd-4496-a450-d4f32e0dcce0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrorTime REF=_errorTime;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="HandleTaskError" Id="{79e1455e-3b62-4778-9ae8-b65f29dd5ccc}">
+      <Declaration><![CDATA[METHOD PUBLIC HandleTaskError :BOOL;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.ElapsedTime > THIS^.ErrorTime AND THIS^.ErrorTime<>T#0S THEN
+	THIS^.ThrowWhen(TRUE);
+END_IF
+
+HandleTaskError := THIS^.Error AND NOT THIS^._errorMessage.Pinned;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InfoTime" Id="{b3b0b370-1c03-46ec-989c-044a8dcfd7e3}">
+      <Declaration><![CDATA[PROPERTY InfoTime :REFERENCE TO TIME]]></Declaration>
+      <Get Name="Get" Id="{9018b3b8-6b97-4ff3-9498-2731bd542746}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InfoTime REF=_infoTime;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="Observer" Id="{9113932a-5f79-4cb8-913e-f1f163042dcd}">
       <Declaration><![CDATA[PROPERTY PUBLIC Observer : REFERENCE TO TcoCore.TcoSequencerObserver
 ]]></Declaration>
@@ -23,6 +70,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="OnError" Id="{e7b2d8c9-4a9f-4d08-8aa2-c09fc50ea9c7}">
+      <Declaration><![CDATA[METHOD PROTECTED OnError
+VAR
+	description: STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[description := '<#Task finished with error.#>'; 
+IF  __ISVALIDREF(inoStatus) THEN   THIS^.inoStatus.ActionDescription := description; END_IF;
+THIS^._errorMessage.Error('To restore acknowledge this alarm.').Pin();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Restore" Id="{70622ba5-65b1-4df5-a40b-3f44610a5cf5}">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -37,6 +95,9 @@ END_VAR
 METHOD Restore : ITcoRestorable]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Restore();
+_sequence.ModeController.Mode :=eSequencerMode.CyclicMode;
+_messenger.UnPin();
+_errorMessage.UnPin();
 _sequence.Restore();]]></ST>
       </Implementation>
     </Method>
@@ -52,5 +113,23 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="SetCyclicMode" Id="{d8d44d3b-7673-4c73-9e75-69b113838d72}">
+      <Declaration><![CDATA[METHOD SetCyclicMode
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sequence.ModeController.Mode :=eSequencerMode.CyclicMode;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetStepMode" Id="{f61443ff-a06e-4b18-927e-d9bc6fb09bfc}">
+      <Declaration><![CDATA[METHOD SetStepMode
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sequence.ModeController.Mode :=eSequencerMode.StepMode;]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

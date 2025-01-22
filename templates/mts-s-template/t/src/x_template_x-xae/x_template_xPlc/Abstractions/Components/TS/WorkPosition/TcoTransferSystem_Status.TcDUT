@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoTransferSystem_Status" Id="{a17c8a6e-f30f-45cc-8e99-b971569c36c0}">
+    <Declaration><![CDATA[TYPE TcoTransferSystem_Status EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+
+		ActionDescription:STRING;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

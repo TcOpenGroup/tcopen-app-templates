@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLightTower_Status" Id="{d706cf7c-7bf6-414d-b43d-06cf67bb359c}">
+    <Declaration><![CDATA[TYPE TcoLightTower_Status :
+STRUCT
+	ActionDescription : STRING(100);	
+	State : TcoLightTower_Info;	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

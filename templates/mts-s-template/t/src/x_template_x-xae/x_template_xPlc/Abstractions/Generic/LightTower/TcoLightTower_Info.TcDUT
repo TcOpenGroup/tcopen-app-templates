@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLightTower_Info" Id="{f7d6c9ba-1297-428b-b18f-08e504e22b86}">
+    <Declaration><![CDATA[TYPE TcoLightTower_Info EXTENDS TcoControledZone_Info :
+STRUCT
+
+	
+	
+	{attribute addProperty Name "<#Group#> - <#Any station in warning#>"}
+	AnyInWarning            : BOOL;
+	
+	{attribute addProperty Name "<#Group#> - <#Any station in error#>"}
+	AnyInError          : BOOL;
+	
+	
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

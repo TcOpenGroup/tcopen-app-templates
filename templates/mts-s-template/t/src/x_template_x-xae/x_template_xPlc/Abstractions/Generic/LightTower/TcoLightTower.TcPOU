@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoLightTower" Id="{1643626a-af6c-4343-a2ad-cd9efa80aae1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoLightTower EXTENDS TcoCore.TcoComponent
+VAR_IN_OUT
+	{attribute clr [RenderIgnore()]}
+	inoGreenLight   :  BOOL;
+	
+	{attribute clr [RenderIgnore()]}
+	inoRedLight     :  BOOL;
+	
+	{attribute clr [RenderIgnore()]}
+	inoOrangeLight  :  BOOL;
+	
+	{attribute clr [RenderIgnore()]}
+	inoBlueLight    :  BOOL;
+
+	{attribute clr [RenderIgnore()]}
+	inoHorn         :  BOOL;
+END_VAR
+
+VAR
+	
+	
+	{attribute addProperty Name "<#Status#>"}
+    {attribute clr [ReadOnly()]}
+    _status : TcoLightTower_Status;
+
+	{attribute addProperty Name "<#Config#>"}
+    _config : TcoLightTower_Config;
+	
+    _materrialError : bool;
+
+	{attribute clr [RenderIgnore()]}
+	_controlledUnits      : ARRAY [0..12] OF ICUBase;
+				
+	
+	
+	// group states
+
+	{attribute clr [RenderIgnore()]}
+	_blinker              : TcoUtilities.TcoBlinker(THIS^);
+	{attribute clr [RenderIgnore()]}
+	_blinkerSlow              : TcoUtilities.TcoBlinker(THIS^);
+	
+
+END_VAR
+
+
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _controlledUnits[0] = 0 THEN
+    THIS^.Messenger.Programming('<#Missing link to Controlled unit! No function is being executed!#>');
+    RETURN;
+END_IF
+
+inoGreenLight := FALSE;
+inoRedLight := FALSE;
+inoOrangeLight := FALSE;
+inoBlueLight := FALSE;
+inoHorn := FALSE;
+
+_blinker(inOffTime := T#500MS, inOnTime := T#500MS); //2 Hz
+_blinkerSlow(inOffTime := T#1250MS, inOnTime := T#1250MS); //0.8 Hz
+
+THIS^.Initialize();
+
+//ground
+IF _status.State.AnyGrounding THEN
+    inoGreenLight := _blinker.IsOn;
+    inoRedLight := _status.State.AnyInError AND _blinker.IsOn;
+    inoOrangeLight := _status.State.AnyInWarning AND _blinker.IsOn;
+END_IF
+
+//auto
+IF _status.State.AllInAuto AND NOT _status.State.AnyInStepMode AND NOT _status.State.AnyInError AND _status.State.AnyInWarning THEN
+    inoGreenLight := TRUE; // ok production
+ELSIF _status.State.AllInAuto AND _status.State.AnyInStepMode THEN
+    inoGreenLight := _blinker.IsOn; //step mode
+ELSIF _status.State.AllInAuto AND NOT _status.State.AnyInStepMode THEN
+    inoGreenLight := TRUE; // ok production
+    inoRedLight := _status.State.AnyInError AND _blinker.IsOn;
+    inoOrangeLight := _status.State.AnyInWarning AND _blinker.IsOn;
+ELSIF _status.State.AllInManual  THEN
+
+    inoOrangeLight :=  _blinker.IsOn;
+
+END_IF;
+
+IF NOT _config.HornEnabled THEN
+    inoHorn := FALSE;
+END_IF;
+
+//todo blue should be suitable for material feeding
+IF _materrialError AND _status.State.AllInAuto THEN
+	inoBlueLight :=  _blinker.IsOn;
+END_IF]]></ST>
+    </Implementation>
+    <Folder Name="Add" Id="{81f258c1-4e81-4a0a-ad88-3dd55cd8b374}" />
+    <Method Name="AddControlledUnit" Id="{a7cdd5af-7d7d-48a0-b672-482054d749fc}" FolderPath="Add\">
+      <Declaration><![CDATA[METHOD AddControlledUnit : BOOL
+VAR_INPUT
+ 	inControlledUnit : ICUBase;
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddControlledUnit := FALSE;
+
+IF inControlledUnit = 0 THEN
+	RETURN;
+END_IF
+
+FOR i := 0 TO _config.MaxControledUnits DO
+	IF _controlledUnits[i] = inControlledUnit THEN
+		AddControlledUnit := TRUE;
+		RETURN;
+	END_IF
+	
+	IF 	_controlledUnits[i] = 0 THEN
+		_controlledUnits[i] := inControlledUnit;
+		AddControlledUnit    := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Config" Id="{02df387f-5b31-4fce-b00f-3400f135badc}">
+      <Declaration><![CDATA[PROPERTY Config :REFERENCE TO TcoLightTower_Config]]></Declaration>
+      <Get Name="Get" Id="{bbafa3e9-4fbe-4482-bf1a-02e0265cf5b8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config ref=_config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Initialize" Id="{c70b54a5-b787-4e58-aee7-f819587d6468}">
+      <Declaration><![CDATA[METHOD Initialize : BOOL
+VAR
+	i : UINT;
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_status.State.AllInAuto := TRUE;
+_status.State.AllInGrounding := TRUE;
+_status.State.AllInManual := TRUE;
+_status.State.AllIdle := TRUE;
+_status.State.AllGrounded := TRUE;
+_status.State.AllInStepMode := TRUE;
+_status.State.AllSuspended := TRUE;
+_status.State.AllRecovered := TRUE;
+_status.State.AllInactiveOrManualOrGrounded :=true;
+_status.State.AnyInAuto := FALSE;
+_status.State.AnyInManual := FALSE;
+_status.State.AnyGrounding := FALSE;
+_status.State.AnyInStepMode := FALSE;
+
+_status.State.AnyInWarning := FALSE;
+_status.State.AnyInError := FALSE;
+
+i := 0;
+
+FOR i := 0 TO _config.MaxControledUnits DO
+    IF _controlledUnits[i] <> 0 THEN
+        _status.State.AllInAuto := _status.State.AllInAuto AND _controlledUnits[i].StatusInfo.Mode = eCUMode.AutomatMode;
+        _status.State.AllInManual := _status.State.AllInManual AND _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
+        _status.State.AllIdle := _status.State.AllIdle AND _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode;
+        _status.State.AllInGrounding := _status.State.AllInGrounding AND
+            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone XOR
+            _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
+        _status.State.AllGrounded := _status.State.AllGrounded AND _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone;
+        _status.State.AllInStepMode := _status.State.AllInStepMode AND _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
+        _status.State.AllSuspended := _status.State.AllSuspended AND _controlledUnits[i].SuspendTask.Task.Done;
+		_status.State.AllRecovered := _status.State.AllRecovered AND _controlledUnits[i].RecoverTask.Task.Done;
+		_status.State.AllInactiveOrManualOrGrounded := _status.State.AllInactiveOrManualOrGrounded 
+											AND (_controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode 
+												OR _controlledUnits[i].StatusInfo.Mode = eCUMode.NoMode 
+												OR _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone );
+		
+        _status.State.AnyInAuto := _status.State.AnyInAuto OR _controlledUnits[i].StatusInfo.Mode = eCUMode.AutomatMode;
+        _status.State.AnyInManual := _status.State.AnyInManual OR _controlledUnits[i].StatusInfo.Mode = eCUMode.ManualMode;
+        _status.State.AnyInStepMode := _status.State.AnyInStepMode OR _controlledUnits[i].StatusInfo.CurrentIsInStepMode;
+        _status.State.AnyGrounding := _status.State.AnyGrounding OR
+            (_controlledUnits[i].StatusInfo.Mode = eCUMode.GroundModeDone OR
+            _controlledUnits[i].StatusInfo.Mode = eCUMode.GroundMode);
+		_status.State.AnyInWarning := _status.State.AnyInWarning OR _controlledUnits[i].StatusInfo.State =eCUState.HasWarning;	
+		_status.State.AnyInError := _status.State.AnyInError  OR _controlledUnits[i].StatusInfo.State =eCUState.HasError;	
+	
+
+    ELSE
+        EXIT;
+    END_IF
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="MaterialError" Id="{2d314bb1-4bab-4941-9ec3-32935c11fd26}">
+      <Declaration><![CDATA[PROPERTY PUBLIC MaterialError : Reference to BOOL]]></Declaration>
+      <Get Name="Get" Id="{2a1beb22-e757-4131-b1ef-f3a662af7d4c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MaterialError ref=_materrialError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{71221272-a510-458f-a7ea-b6bf198a9e08}">
+      <Declaration><![CDATA[METHOD Restore :  TcoCore.ITcoRestorable
+VAR
+	i : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// clear all linked Controlled units
+FOR i := 0 TO _config.MaxControledUnits DO
+	_controlledUnits[i] := 0;
+END_FOR
+
+
+
+THIS^.Messenger.UnPin();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{3f6d79de-fe78-4cb4-bd84-14b312c44c9e}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Status" Id="{dff9ba92-867a-435a-9bd3-c57300267b9e}">
+      <Declaration><![CDATA[PROPERTY Status : REFERENCE TO TcoLightTower_Status]]></Declaration>
+      <Get Name="Get" Id="{2b5140f4-5853-40f0-9e42-740c499b0ac7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF=_status;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLightTower_Config" Id="{b3902b6a-0db5-49ef-8910-f15b35406e9a}">
+    <Declaration><![CDATA[TYPE
+    TcoLightTower_Config :
+    STRUCT
+        MaxControledUnits : USINT := 12;
+		HornEnabled:BOOL;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

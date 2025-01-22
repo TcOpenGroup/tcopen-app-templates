@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="___Movement_is_blocked_due_safe_zone_is_interupted_robot_in_zone___" xml:space="preserve">
+    <value>Movement is blocked due safe zone is interupted(robot in zone)</value>
+  </data>
   <data name="___Config__" xml:space="preserve">
     <value>Config</value>
   </data>
@@ -135,14 +138,32 @@
   <data name="___Poziadavka_vylozenie_blistera__" xml:space="preserve">
     <value>Poziadavka vylozenie blistera</value>
   </data>
-  <data name="___Poziadavka_obsluhy_vystupny_buffer__" xml:space="preserve">
-    <value>Poziadavka obsluhy vystupny buffer</value>
+  <data name="___Poziadavka_vychodzej_polohy__" xml:space="preserve">
+    <value>Poziadavka vychodzej polohy</value>
   </data>
   <data name="___Restore__" xml:space="preserve">
     <value>Restore</value>
   </data>
-  <data name="___CAKANIE_NA_OBSLUHU_PALETIZERA___ZAVRITE_DVERE___" xml:space="preserve">
-    <value>CAKANIE NA OBSLUHU PALETIZERA - ZAVRITE DVERE!</value>
+  <data name="___Test_positions__" xml:space="preserve">
+    <value>Test positions</value>
+  </data>
+  <data name="___Temporarily_disabled_safety__" xml:space="preserve">
+    <value>Temporarily disabled safety</value>
+  </data>
+  <data name="___CAKANIE_NA_OBSLUHU_PALETIZERA___NARUSENA_SVETELNA_BRANA___" xml:space="preserve">
+    <value>CAKANIE NA OBSLUHU PALETIZERA - NARUSENA SVETELNA BRANA!</value>
+  </data>
+  <data name="___Buffer_1__minimalne_mnozstvo___" xml:space="preserve">
+    <value>Buffer 1  minimalne mnozstvo!</value>
+  </data>
+  <data name="___Buffer_2_minimalne_mnozstvo___" xml:space="preserve">
+    <value>Buffer 2 minimalne mnozstvo!</value>
+  </data>
+  <data name="___Buffer_3_minimalne_mnozstvo___" xml:space="preserve">
+    <value>Buffer 3 minimalne mnozstvo!</value>
+  </data>
+  <data name="___Buffer_4_minimalne_mnozstvo___" xml:space="preserve">
+    <value>Buffer 4 minimalne mnozstvo!</value>
   </data>
   <data name="___INIT__" xml:space="preserve">
     <value>INIT</value>
@@ -150,35 +171,190 @@
   <data name="___BEZPECNOST_ZARIADENIA_NARUSENA__NIEJE_MOZNE_VYKONAT_AKCIU__" xml:space="preserve">
     <value>BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU</value>
   </data>
+  <data name="___ZASUNUTIE_POZICNEJ_JEDNOTKY__" xml:space="preserve">
+    <value>ZASUNUTIE POZICNEJ JEDNOTKY</value>
+  </data>
+  <data name="___KONTROLA_STAVU_ZASOBNIKOV___THEN______IF_Components_I2_iBuffer1IsReadyToLoad_IsTrue_AND_NOT__config_Buffer1Disabled_THEN__________requiredPosition_____positions_LoadFromBuffer1Pos__________seq_StepCompleteWhen_TRUE________ELSIF_Components_I4_iBuffer2IsReadyToLoad_Istrue_AND_NOT__config_Buffer2Disabled_THEN__________requiredPosition_____positions_LoadFromBuffer2Pos__________seq_StepCompleteWhen_TRUE________ELSIF_Components_I6_iBuffer3IsReadyToLoad_IsTrue_AND_NOT__config_Buffer3Disabled_THEN__________requiredPosition_____positions_LoadFromBuffer3Pos__________seq_StepCompleteWhen_TRUE________ELSIF_Components_I8_iBuffer4IsReadyToLoad_IsTrue_AND_NOT__config_Buffer4Disabled_THEN__________requiredPosition_____positions_LoadFromBuffer4Pos__________seq_StepCompleteWhen_TRUE_______ELSE_________IF__config_Buffer1Disabled_AND__config_Buffer2Disabled_AND__config_Buffer3Disabled_AND__config_Buffer4Disabled_THEN_____________Messenger_Error____VSETKY_ZASDOBNIKY_SU_VYPNUTE______" xml:space="preserve">
+    <value>KONTROLA STAVU ZASOBNIKOV') THEN
+
+    IF Components.I2_iBuffer1IsReadyToLoad.IsTrue AND NOT _config.Buffer1Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer1Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I4_iBuffer2IsReadyToLoad.Istrue AND NOT _config.Buffer2Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer2Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I6_iBuffer3IsReadyToLoad.IsTrue AND NOT _config.Buffer3Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer3Pos;
+        seq.StepCompleteWhen(TRUE);
+
+    ELSIF Components.I8_iBuffer4IsReadyToLoad.IsTrue AND NOT _config.Buffer4Disabled THEN
+        _requiredPosition := _positions.LoadFromBuffer4Pos;
+        seq.StepCompleteWhen(TRUE);
+    ELSE
+        IF _config.Buffer1Disabled AND _config.Buffer2Disabled AND _config.Buffer3Disabled AND _config.Buffer4Disabled THEN
+            Messenger.Error('VSETKY ZASDOBNIKY SU VYPNUTE !!!</value>
+  </data>
+  <data name="___CHYBA_ZASOBNIKY_SU_PRAZDNE______" xml:space="preserve">
+    <value>CHYBA ZASOBNIKY SU PRAZDNE !!!</value>
+  </data>
+  <data name="___KOLIZNY_STAV_SKONTROLUJTE_BLISTRE_____" xml:space="preserve">
+    <value>KOLIZNY STAV SKONTROLUJTE BLISTRE!!!</value>
+  </data>
+  <data name="___VYSTUPNY_ZASOBNIK_1_PLNY_BUFFER_______" xml:space="preserve">
+    <value>VYSTUPNY ZASOBNIK 1 PLNY(BUFFER) !!!</value>
+  </data>
+  <data name="___VYSTUPNY_ZASOBNIK_2_PLNY_BUFFER_______" xml:space="preserve">
+    <value>VYSTUPNY ZASOBNIK 2 PLNY(BUFFER) !!!</value>
+  </data>
+  <data name="___Zasobnik_1_na_prazdne_blistre_plny___" xml:space="preserve">
+    <value>Zasobnik 1 na prazdne blistre plny!</value>
+  </data>
+  <data name="___Zasobnik_2_na_prazdne_blistre_plny___" xml:space="preserve">
+    <value>Zasobnik 2 na prazdne blistre plny!</value>
+  </data>
+  <data name="___ZASDOBNIKY_PRE_PRAZDNE_BLISTRE_SU_VYPNUTE______" xml:space="preserve">
+    <value>ZASDOBNIKY PRE PRAZDNE BLISTRE SU VYPNUTE !!!</value>
+  </data>
+  <data name="___CHYBA_ZASOBNIKY_NA_PRAZDNE_BLISTRE_OBSADENE______" xml:space="preserve">
+    <value>CHYBA ZASOBNIKY NA PRAZDNE BLISTRE OBSADENE !!!</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_POZICIEJ_JEDNOTKY_P1___" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE POZICIEJ JEDNOTKY P1 </value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_UPEVNENIA_BLISTRA__P2__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE UPEVNENIA BLISTRA  P2</value>
+  </data>
+  <data name="___Pracovna_pozicia__" xml:space="preserve">
+    <value>Pracovna pozicia</value>
+  </data>
+  <data name="___Naberacia_pozicia_Buffer1__" xml:space="preserve">
+    <value>Naberacia pozicia Buffer1</value>
+  </data>
+  <data name="___Naberacia_pozicia_Buffer2__" xml:space="preserve">
+    <value>Naberacia pozicia Buffer2</value>
+  </data>
+  <data name="___Naberacia_pozicia_Buffer3__" xml:space="preserve">
+    <value>Naberacia pozicia Buffer3</value>
+  </data>
+  <data name="___Naberacia_pozicia_Buffer4__" xml:space="preserve">
+    <value>Naberacia pozicia Buffer4</value>
+  </data>
+  <data name="___Vykladacia_pozicia_pre_prazdne_blistre_1__" xml:space="preserve">
+    <value>Vykladacia pozicia pre prazdne blistre 1</value>
+  </data>
+  <data name="___Vykladacia_pozicia_pre_prazdne_blistre_2__" xml:space="preserve">
+    <value>Vykladacia pozicia pre prazdne blistre 2</value>
+  </data>
+  <data name="___No_timeout_defined_for_Entry_conveyor_running___" xml:space="preserve">
+    <value>No timeout defined for Entry conveyor running.</value>
+  </data>
+  <data name="___No_timeout_defined_for_Our_conveyor_running___" xml:space="preserve">
+    <value>No timeout defined for Our conveyor running.</value>
+  </data>
+  <data name="___Obsluha_vystupny_buffer__" xml:space="preserve">
+    <value>Obsluha vystupny buffer</value>
+  </data>
+  <data name="___Poziadavka_obsluhy_vyprazdnenia_vstupny_buffer__" xml:space="preserve">
+    <value>Poziadavka obsluhy vyprazdnenia vstupny buffer</value>
+  </data>
+  <data name="___CAKANIE_NA_OBSLUHU_PALETIZERA___ZAVRITE_DVERE___" xml:space="preserve">
+    <value>CAKANIE NA OBSLUHU PALETIZERA - ZAVRITE DVERE!</value>
+  </data>
+  <data name="___KLUCIK_NIE_JE_VO_VYCHODZEJ_POZICII___" xml:space="preserve">
+    <value>KLUCIK NIE JE VO VYCHODZEJ POZICII!</value>
+  </data>
+  <data name="___CAKAM_NA_NALOZENIE_BLISTROV__" xml:space="preserve">
+    <value>CAKAM NA NALOZENIE BLISTROV</value>
+  </data>
+  <data name="___VYTAH_NIEJE_V_POZICII_ALEBO_JE_OBSADENY__" xml:space="preserve">
+    <value>VYTAH NIEJE V POZICII ALEBO JE OBSADENY</value>
+  </data>
+  <data name="___CAKANIE_NA_DOKONCENIE_VYSTUPNEHO_BUFFERA__" xml:space="preserve">
+    <value>CAKANIE NA DOKONCENIE VYSTUPNEHO BUFFERA</value>
+  </data>
+  <data name="___START_OBSLUHY_VYSTUPNEHO_BUFFERA__" xml:space="preserve">
+    <value>START OBSLUHY VYSTUPNEHO BUFFERA</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYPNUTIE_DOPRAVNIKOV__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYPNUTIE DOPRAVNIKOV</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_ZARAZIEK_PR1_PR3_PR4_A_PR5__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE ZARAZIEK PR1,PR3,PR4 A PR5</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_ZARAZKY_PR2__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE ZARAZKY PR2</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_PR6__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE PR6</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_PR8__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE PR8</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_PR12__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE PR12</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_PR7__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE PR7</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_PR10___" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE PR10 </value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_PR11___" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE PR11 </value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_VYTAHU_DO_HORNEJ_POZICIE_PR14___" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE VYTAHU DO HORNEJ POZICIE PR14 </value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___CENTROVANIE_KUSU_VO_VYHAHU_VYSUNUTE_PR13___" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - CENTROVANIE KUSU VO VYHAHU VYSUNUTE PR13 </value>
+  </data>
+  <data name="___Poziadavka_obsluhy_vystupny_buffer__" xml:space="preserve">
+    <value>Poziadavka obsluhy vystupny buffer</value>
+  </data>
   <data name="___KONTROLA_POCTU_VSTUPNYCH_BLISTROV__" xml:space="preserve">
     <value>KONTROLA POCTU VSTUPNYCH BLISTROV</value>
   </data>
   <data name="___PODAVAC_PRAZDNY__DOPLNE_VSTUPNE_BLISTRE____" xml:space="preserve">
     <value>PODAVAC PRAZDNY! DOPLNE VSTUPNE BLISTRE !</value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_VYSUNUTE__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE VYSUNUTE</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_VYSUNUTE_P1_A_P2___" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE VYSUNUTE P1 A P2 </value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___SEPAROVANIE_ZASUNUTE__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE ZASUNUTE</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___SEPAROVANIE_ZASUNUTE_P3__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE ZASUNUTE P3</value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_ZASUNUT_JEDEN__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE ZASUNUT JEDEN</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE__ZASUNUT_P1__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE  ZASUNUT P1</value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___SEPAROVANIE_VYSUNUTE__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE VYSUNUTE</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_VYSUNUT_P2__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE VYSUNUT P2</value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_ZASUNUT_OBIDVA__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE ZASUNUT OBIDVA</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___SEPAROVANIE_VYSUNUTE_P3_A_P10__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE VYSUNUTE P3 A P10</value>
   </data>
-  <data name="___KONTROLA_PRITOMNOSTI_SEPAROVANEHO_KUSU__" xml:space="preserve">
-    <value>KONTROLA PRITOMNOSTI SEPAROVANEHO KUSU</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___VERTIKALNE_VALCE_ZASUNUT_P1_A_P___" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE ZASUNUT P1 A P@</value>
+  </data>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___ZASUNUTIE_P10____THEN_________seq_StepCompleteWhen_Components_P10_HoldEntrySepareOutBlister_MoveToHome___Done_____END_IF______________________________________________________________________________________________________________________________________________________________________________________________________________________________IF_seq_Step_70_TRUE____KONTROLA_PRITOMNOSTI_SEPAROVANEHO_KUSU__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - ZASUNUTIE P10&gt;') THEN   
+
+    seq.StepCompleteWhen(Components.P10_HoldEntrySepareOutBlister.MoveToHome().Done  );
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************   
+IF seq.Step(70,TRUE,'KONTROLA PRITOMNOSTI SEPAROVANEHO KUSU</value>
   </data>
   <data name="___PODAVAC_PRAZDNY__DOPLNE_BLISTRE____" xml:space="preserve">
     <value>PODAVAC PRAZDNY! DOPLNE BLISTRE !</value>
   </data>
-  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___PRESUNUTIE_BLISTRA_DO_POZICIE_ODOBERANIA__" xml:space="preserve">
-    <value>SEPAROVANIE VSTUPNEHO BLISTRA - PRESUNUTIE BLISTRA DO POZICIE ODOBERANIA</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___UPEVNENIE_BLISTRA_ZASUNUT_P8__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - UPEVNENIE BLISTRA ZASUNUT P8</value>
+  </data>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___CAKANIE_NA_PRESUNUTIE_BLISTRA_DO_ODOBERACEJ_POLOHY_P4_A_I1___" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - CAKANIE NA PRESUNUTIE BLISTRA DO ODOBERACEJ POLOHY P4 A I1 </value>
   </data>
   <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___UPEVENIE_BLISTRA_ZBOKU__" xml:space="preserve">
     <value>SEPAROVANIE VSTUPNEHO BLISTRA - UPEVENIE BLISTRA ZBOKU</value>
@@ -189,32 +365,193 @@
   <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___ZASUNUTE_P4__" xml:space="preserve">
     <value>SEPAROVANIE VSTUPNEHO BLISTRA - ZASUNUTE P4</value>
   </data>
-  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___UVOLNENIE_BLISTRA__" xml:space="preserve">
-    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - UVOLNENIE BLISTRA</value>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___PODoPRETIE__A_ZAFIXOVANIE_KUSU_P7_VYSUNT_A_P9_ZASUNUT___" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - PODoPRETIE  A ZAFIXOVANIE KUSU P7 VYSUNT A P9 ZASUNUT </value>
   </data>
-  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___ZASUNUTIE_SUPPORTU__" xml:space="preserve">
-    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - ZASUNUTIE SUPPORTU</value>
+  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___UVOLNENIE_BLISTRA_VYSUNUTIE_P9__" xml:space="preserve">
+    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - UVOLNENIE BLISTRA VYSUNUTIE P9</value>
   </data>
-  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___KONTROLA_PRITOMNOSTI_BLISTA_NA_SKLZE__" xml:space="preserve">
-    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - KONTROLA PRITOMNOSTI BLISTA NA SKLZE</value>
+  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___ZASUNUTIE_SUPPORTU_P7__" xml:space="preserve">
+    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - ZASUNUTIE SUPPORTU P7</value>
   </data>
-  <data name="___VYSTUPNY_BUFFER___KONTROLA_PRITOMNOSTI_BLISTA_NAD_BUFFEROM__" xml:space="preserve">
-    <value>VYSTUPNY BUFFER - KONTROLA PRITOMNOSTI BLISTA NAD BUFFEROM</value>
+  <data name="___SEPAROVANIE_VYSTUPNEHO_BLISTRA___KONTROLA_PRITOMNOSTI_BLISTA_NA_SKLZE__I5____" xml:space="preserve">
+    <value>SEPAROVANIE VYSTUPNEHO BLISTRA - KONTROLA PRITOMNOSTI BLISTA NA SKLZE (I5) </value>
   </data>
-  <data name="___VYSTUPNY_BUFFER___KONTROLA_POSCTU_BLISTROV__" xml:space="preserve">
-    <value>VYSTUPNY BUFFER - KONTROLA POSCTU BLISTROV</value>
+  <data name="___VYSTUPNY_BUFFER___KONTROLA_PRITOMNOSTI_BLISTA_NAD_BUFFEROM____" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - KONTROLA PRITOMNOSTI BLISTA NAD BUFFEROM  </value>
   </data>
-  <data name="___PODAVAC_PLNY__ODSTRANTE_PRAZDNE_BLISTRE____" xml:space="preserve">
-    <value>PODAVAC PLNY! ODSTRANTE PRAZDNE BLISTRE !</value>
+  <data name="___VYSTUPNY_BUFFER___KONTROLA_POSCTU_BLISTROV_SNIMAC_I8___" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - KONTROLA POSCTU BLISTROV SNIMAC I8 </value>
   </data>
-  <data name="___VYSTUPNY_BUFFER___POSUN_KUSOV_NAD_BUFFER__" xml:space="preserve">
-    <value>VYSTUPNY BUFFER - POSUN KUSOV NAD BUFFER</value>
+  <data name="___PODAVAC_PLNY__ODSTRANTE_PRAZDNE_BLISTRE__I8_____" xml:space="preserve">
+    <value>PODAVAC PLNY! ODSTRANTE PRAZDNE BLISTRE (I8) !</value>
   </data>
-  <data name="___VYSTUPNY_BUFFER___UVOLNENIE_BLISTRA_A_NAVRAT_NAHOR__" xml:space="preserve">
-    <value>VYSTUPNY BUFFER - UVOLNENIE BLISTRA A NAVRAT NAHOR</value>
+  <data name="___VYSTUPNY_BUFFER___P6_POSUN_KUSOV_NAD_BUFFER__" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - P6 POSUN KUSOV NAD BUFFER</value>
   </data>
-  <data name="___VYSTUPNY_BUFFER___HORIZONTALNE_ZASUNUTIE__" xml:space="preserve">
-    <value>VYSTUPNY BUFFER - HORIZONTALNE ZASUNUTIE</value>
+  <data name="___VYSTUPNY_BUFFER___UVOLNENIE_BLISTRA__P5_PRACOVNA_POZICIA___" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - UVOLNENIE BLISTRA  P5 PRACOVNA POZICIA </value>
+  </data>
+  <data name="___VYSTUPNY_BUFFER___P6_NAVRAT_NAHOR__" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - P6 NAVRAT NAHOR</value>
+  </data>
+  <data name="___VYSTUPNY_BUFFER___HORIZONTALNE_ZASUNUTIE_P5_ZAKLADNA_POZICIA__" xml:space="preserve">
+    <value>VYSTUPNY BUFFER - HORIZONTALNE ZASUNUTIE P5 ZAKLADNA POZICIA</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYSUNUTIE_P3__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYSUNUTIE P3</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_P10__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE P10</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_P1_A_P2____THEN___________seq_StepCompleteWhen_Components_P1_VerticalSepareEntryBlisters_MoveToHome___Done_AND_THEN_Components_P2_VerticalSepareEntryBlisters_MoveToHome___Done____END_IF_______________________________________________________________________________________________________________________________________________________________________________________________________________________________IF_seq_Step_40_TRUE____VYCHODIZA_POLOHA___ZASUNUTIE_P5__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE P1 A P2&gt;') THEN   
+
+
+	    seq.StepCompleteWhen(Components.P1_VerticalSepareEntryBlisters.MoveToHome().Done AND_THEN Components.P2_VerticalSepareEntryBlisters.MoveToHome().Done);
+
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(40,TRUE,'VYCHODIZA POLOHA - ZASUNUTIE P5</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_P6__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE P6</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___ZASUNUTIE_P4_DO_ZAKLADNEJ_POZICIE__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - ZASUNUTIE P4 DO ZAKLADNEJ POZICIE</value>
+  </data>
+  <data name="___Poziadavka_separovania__" xml:space="preserve">
+    <value>Poziadavka separovania</value>
+  </data>
+  <data name="___Poziadavka_vyprazdnenia__" xml:space="preserve">
+    <value>Poziadavka vyprazdnenia</value>
+  </data>
+  <data name="___Oscilating_Specific_Data__" xml:space="preserve">
+    <value>Oscilating Specific Data</value>
+  </data>
+  <data name="___SEPAROVANIE_VSTUPNEHO_BLISTRA___ZASUNUTIE_P10____THEN___________seq_StepCompleteWhen_Components_P10_HoldEntrySepareOutBlister_MoveToHome___Done_______END_IF____________________________________________________________________________________________________________________________________________________________________________________________________________________________________IF_seq_Step_70_TRUE____KONTROLA_PRITOMNOSTI_SEPAROVANEHO_KUSU__" xml:space="preserve">
+    <value>SEPAROVANIE VSTUPNEHO BLISTRA - ZASUNUTIE P10&gt;') THEN   
+
+//    seq.StepCompleteWhen(Components.P10_HoldEntrySepareOutBlister.MoveToHome().Done  );
+//END_IF        
+////***************************************************************************************************     
+
+////***************************************************************************************************   
+//IF seq.Step(70,TRUE,'KONTROLA PRITOMNOSTI SEPAROVANEHO KUSU</value>
+  </data>
+  <data name="___VYCHODIZA_POLOHA___VYPNUTIE_VALCOV__" xml:space="preserve">
+    <value>VYCHODIZA POLOHA - VYPNUTIE VALCOV</value>
+  </data>
+  <data name="___PcToPlc__" xml:space="preserve">
+    <value>PcToPlc</value>
+  </data>
+  <data name="___PlcToPc__" xml:space="preserve">
+    <value>PlcToPc</value>
+  </data>
+  <data name="___Task_finished_with_error___" xml:space="preserve">
+    <value>Task finished with error.</value>
+  </data>
+  <data name="___Handle_incoming_palette___Wait_for_pallete_at_prestopper__" xml:space="preserve">
+    <value>Handle incoming palette - Wait for pallete at prestopper</value>
+  </data>
+  <data name="___Handle_incoming_palette___Check_transfer_unit_status__" xml:space="preserve">
+    <value>Handle incoming palette - Check transfer unit status</value>
+  </data>
+  <data name="___Handle_incoming_palette___Open_prestoper__" xml:space="preserve">
+    <value>Handle incoming palette - Open prestoper</value>
+  </data>
+  <data name="___Handle_incoming_palette___Waiting_for_pallet_at_stopper___Main_Transfer__" xml:space="preserve">
+    <value>Handle incoming palette - Waiting for pallet at stopper - Main Transfer</value>
+  </data>
+  <data name="___Handle_incoming_palette___Waiting_for_pallet_at_side_transfer__" xml:space="preserve">
+    <value>Handle incoming palette - Waiting for pallet at side transfer</value>
+  </data>
+  <data name="___Handle_incoming_palette___Open_side_prestoper__" xml:space="preserve">
+    <value>Handle incoming palette - Open side prestoper</value>
+  </data>
+  <data name="___Handle_incoming_palette___Waiting_for_pallet_at_stopper___Side_Transfer__" xml:space="preserve">
+    <value>Handle incoming palette - Waiting for pallet at stopper - Side Transfer</value>
+  </data>
+  <data name="___Handle_incoming_palette___Wait_Main_transfer_is_empty__" xml:space="preserve">
+    <value>Handle incoming palette - Wait Main transfer is empty</value>
+  </data>
+  <data name="___Handle_incoming_palette___Wait_for_pallete_in_Main_transfer__" xml:space="preserve">
+    <value>Handle incoming palette - Wait for pallete in Main transfer</value>
+  </data>
+  <data name="___Done__" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="___Handle_incoming_palette___Waiting_for_pallet_at_stopper__" xml:space="preserve">
+    <value>Handle incoming palette - Waiting for pallet at stopper</value>
+  </data>
+  <data name="___Handle_incoming_palette___Waiting_for_pallet_at_stopper___Entry_Transfer__" xml:space="preserve">
+    <value>Handle incoming palette - Waiting for pallet at stopper - Entry Transfer</value>
+  </data>
+  <data name="___Handle_incoming_palette___Wait_for_pallete_in_workposition__" xml:space="preserve">
+    <value>Handle incoming palette - Wait for pallete in workposition</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Transfer_unit_home__" xml:space="preserve">
+    <value>Handle outgoing palette - Transfer unit home</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Wait_to_transfer_unit_is_empty__" xml:space="preserve">
+    <value>Handle outgoing palette - Wait to transfer unit is empty</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Transfer_unit_to_middle_position__" xml:space="preserve">
+    <value>Handle outgoing palette - Transfer unit to middle position</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Done__" xml:space="preserve">
+    <value>Handle outgoing palette - Done</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Init__" xml:space="preserve">
+    <value>Handle outgoing palette - Init</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Send_Direct_Send_Side__" xml:space="preserve">
+    <value>Handle outgoing palette - Send Direct/Send Side</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Check_Main_transfer_is_empty__" xml:space="preserve">
+    <value>Handle outgoing palette - Check Main transfer is empty</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Wait_Trasnfer_unit_at_Middle_position__not_home_not_work___" xml:space="preserve">
+    <value>Handle outgoing palette - Wait Trasnfer unit at Middle position (not home,not work)</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Wait_Side_transfer_is_empty__" xml:space="preserve">
+    <value>Handle outgoing palette - Wait Side transfer is empty</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Wait_for_pallete_in_side_transfer__" xml:space="preserve">
+    <value>Handle outgoing palette - Wait for pallete in side transfer</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Transfer_unit_middle_position__" xml:space="preserve">
+    <value>Handle outgoing palette - Transfer unit middle position</value>
+  </data>
+  <data name="___Handle_incoming_palette___Check_status_of_workposition___" xml:space="preserve">
+    <value>Handle incoming palette - Check status of workposition </value>
+  </data>
+  <data name="___Handle_incoming_palette___Open_prestopper__" xml:space="preserve">
+    <value>Handle incoming palette - Open prestopper</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Check_lift_rotary_unit_position___" xml:space="preserve">
+    <value>Handle outgoing palette - Check lift rotary unit position)</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Open_stopper_to_send_palette__" xml:space="preserve">
+    <value>Handle outgoing palette - Open stopper to send palette</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Wait_for_pallete_at_prestopper__" xml:space="preserve">
+    <value>Handle outgoing palette - Wait for pallete at prestopper</value>
+  </data>
+  <data name="___Handle_outgoing_palette___rotary_unit_to_work___" xml:space="preserve">
+    <value>Handle outgoing palette - rotary unit to work </value>
+  </data>
+  <data name="___Handle_incoming_palette___Handle_incoming_palette_start__Check_position_unit_position___" xml:space="preserve">
+    <value>Handle incoming palette - Handle incoming palette start (Check position unit position)</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Start__Check_position_unit_position___" xml:space="preserve">
+    <value>Handle outgoing palette - Start (Check position unit position)</value>
+  </data>
+  <data name="___Handle_outgoing_palette___Open_stopper_to_send_palette_to_next_station__" xml:space="preserve">
+    <value>Handle outgoing palette - Open stopper to send palette to next station</value>
   </data>
   <data name="___STATUS_INFO__" xml:space="preserve">
     <value>STATUS INFO</value>
@@ -234,6 +571,9 @@
   <data name="___IDLE__" xml:space="preserve">
     <value>IDLE</value>
   </data>
+  <data name="___Clear_counter__" xml:space="preserve">
+    <value>Clear counter</value>
+  </data>
   <data name="____Consecutive_failure__The_number_of_any_recurring_failure_count_has_been_reached___" xml:space="preserve">
     <value>(Consecutive failure) The number of any recurring failure count has been reached!</value>
   </data>
@@ -242,6 +582,9 @@
   </data>
   <data name="____Consecutive_failure__The_number_of_same_recurring_failure_count_has_been_reached___" xml:space="preserve">
     <value>(Consecutive failure) The number of same recurring failure count has been reached!</value>
+  </data>
+  <data name="___Missing_link_to_Controlled_unit__No_function_is_being_executed___" xml:space="preserve">
+    <value>Missing link to Controlled unit! No function is being executed!</value>
   </data>
   <data name="___Heart_beat__" xml:space="preserve">
     <value>Heart beat</value>
@@ -258,20 +601,17 @@
   <data name="___ButtonAuto__" xml:space="preserve">
     <value>ButtonAuto</value>
   </data>
-  <data name="___ButtonStartLight__" xml:space="preserve">
-    <value>ButtonStartLight</value>
+  <data name="___ButtonRecoverLight__" xml:space="preserve">
+    <value>ButtonRecoverLight</value>
   </data>
-  <data name="___ButtonStopLight__" xml:space="preserve">
-    <value>ButtonStopLight</value>
+  <data name="___ButtonSuspendLight__" xml:space="preserve">
+    <value>ButtonSuspendLight</value>
   </data>
   <data name="___ButtonGroundLight__" xml:space="preserve">
     <value>ButtonGroundLight</value>
   </data>
   <data name="___ButtonAutoLight__" xml:space="preserve">
     <value>ButtonAutoLight</value>
-  </data>
-  <data name="___Missing_link_to_Controlled_unit__No_function_is_being_executed___" xml:space="preserve">
-    <value>Missing link to Controlled unit! No function is being executed!</value>
   </data>
   <data name="___Missing_link_to_control_panel_components__Buttons__Mode_Keys__Normal_Service___No_function_is_being_executed___" xml:space="preserve">
     <value>Missing link to control panel components (Buttons, Mode Keys, Normal/Service)! No function is being executed!</value>
@@ -546,9 +886,6 @@
   <data name="___RECOVER_PROCESS__" xml:space="preserve">
     <value>RECOVER PROCESS</value>
   </data>
-  <data name="___Test_positions__" xml:space="preserve">
-    <value>Test positions</value>
-  </data>
   <data name="___Test_multi_positions__" xml:space="preserve">
     <value>Test multi positions</value>
   </data>
@@ -563,6 +900,204 @@
   </data>
   <data name="___Technology_Components__" xml:space="preserve">
     <value>Technology Components</value>
+  </data>
+  <data name="____I1__Zasobnik_blistrov_1_Nema_minimalne_mnozstvo__" xml:space="preserve">
+    <value>(I1) Zasobnik blistrov 1 Nema minimalne mnozstvo</value>
+  </data>
+  <data name="____I2__Zasobnik_blistrov_1_kus_pripraveny_na_odoberanie__" xml:space="preserve">
+    <value>(I2) Zasobnik blistrov 1 kus pripraveny na odoberanie</value>
+  </data>
+  <data name="____I3__Zasobnik_blistrov_2_Nema_minimalne_mnozstvo__" xml:space="preserve">
+    <value>(I3) Zasobnik blistrov 2 Nema minimalne mnozstvo</value>
+  </data>
+  <data name="____I4__Zasobnik_blistrov_2_kus_pripraveny_na_odoberanie__" xml:space="preserve">
+    <value>(I4) Zasobnik blistrov 2 kus pripraveny na odoberanie</value>
+  </data>
+  <data name="____I5__Zasobnik_blistrov_3_Nema_minimalne_mnozstvo__" xml:space="preserve">
+    <value>(I5) Zasobnik blistrov 3 Nema minimalne mnozstvo</value>
+  </data>
+  <data name="____I6__Zasobnik_blistrov_3_kus_pripraveny_na_odoberanie__" xml:space="preserve">
+    <value>(I6) Zasobnik blistrov 3 kus pripraveny na odoberanie</value>
+  </data>
+  <data name="____I7__Zasobnik_blistrov_4_Nema_minimalne_mnozstvo__" xml:space="preserve">
+    <value>(I7) Zasobnik blistrov 4 Nema minimalne mnozstvo</value>
+  </data>
+  <data name="____I8__Zasobnik_blistrov_4_kus_pripraveny_na_odoberanie__" xml:space="preserve">
+    <value>(I8) Zasobnik blistrov 4 kus pripraveny na odoberanie</value>
+  </data>
+  <data name="____I9__Zasobnik_prazdnych_blistrov_1_plny__" xml:space="preserve">
+    <value>(I9) Zasobnik prazdnych blistrov 1 plny</value>
+  </data>
+  <data name="____I10_Zasobnik_prazdnych_blistrov_2_plny__" xml:space="preserve">
+    <value>(I10)Zasobnik prazdnych blistrov 2 plny</value>
+  </data>
+  <data name="____I11__Blister_v_pracovnej_pozicii__" xml:space="preserve">
+    <value>(I11) Blister v pracovnej pozicii</value>
+  </data>
+  <data name="____I12__Blister_uchopeny_spravne_volitelny___" xml:space="preserve">
+    <value>(I12) Blister uchopeny spravne(volitelny)</value>
+  </data>
+  <data name="____P1_Pozicna_jednoka__" xml:space="preserve">
+    <value>(P1)Pozicna jednoka</value>
+  </data>
+  <data name="____P2_Upevnenie_blistra__" xml:space="preserve">
+    <value>(P2)Upevnenie blistra</value>
+  </data>
+  <data name="___Manipulator__" xml:space="preserve">
+    <value>Manipulator</value>
+  </data>
+  <data name="___Signalizacia_upozornenia_R__" xml:space="preserve">
+    <value>Signalizacia upozornenia R</value>
+  </data>
+  <data name="___Signalizacia_upozornenia_G__" xml:space="preserve">
+    <value>Signalizacia upozornenia G</value>
+  </data>
+  <data name="___Signalizacia_upozornenia_B__" xml:space="preserve">
+    <value>Signalizacia upozornenia B</value>
+  </data>
+  <data name="___Manipulator___Pozicie_nazov___" xml:space="preserve">
+    <value>Manipulator - Pozicie nazov </value>
+  </data>
+  <data name="___Zasobnik_1_zakazany__" xml:space="preserve">
+    <value>Zasobnik 1 zakazany</value>
+  </data>
+  <data name="___Zasobnik_2_zakazany__" xml:space="preserve">
+    <value>Zasobnik 2 zakazany</value>
+  </data>
+  <data name="___Zasobnik_prazdnych_1_zakazany__" xml:space="preserve">
+    <value>Zasobnik prazdnych 1 zakazany</value>
+  </data>
+  <data name="___Zasobnik_prazdnych_2_zakazany__" xml:space="preserve">
+    <value>Zasobnik prazdnych 2 zakazany</value>
+  </data>
+  <data name="____I1__Pritomnost_blistra_na_vstupnej_zarazke_1___vstup__" xml:space="preserve">
+    <value>(I1) Pritomnost blistra na vstupnej zarazke 1 - vstup</value>
+  </data>
+  <data name="____I2__Pritomnost_blistra_na_vstupnej_zarazke_1___plny_WIPA___" xml:space="preserve">
+    <value>(I2) Pritomnost blistra na vstupnej zarazke 1 - plny(WIPA)</value>
+  </data>
+  <data name="____I3__Spravnost_nalozenia_blistra_na_vstupnej_zarazke_1___vstup__" xml:space="preserve">
+    <value>(I3) Spravnost nalozenia blistra na vstupnej zarazke 1 - vstup</value>
+  </data>
+  <data name="____I4__Pritomnost_blistra_na_vstupnej_zarazke_2___vstup__" xml:space="preserve">
+    <value>(I4) Pritomnost blistra na vstupnej zarazke 2 - vstup</value>
+  </data>
+  <data name="____I6__Pritomnost_blistra_na_vstupnej_zarazke_2___plny_WIPA___" xml:space="preserve">
+    <value>(I6) Pritomnost blistra na vstupnej zarazke 2 - plny(WIPA)</value>
+  </data>
+  <data name="____I6__Pritomnost_blistra_na_vstupnej_zarazke_3___vstup__" xml:space="preserve">
+    <value>(I6) Pritomnost blistra na vstupnej zarazke 3 - vstup</value>
+  </data>
+  <data name="____I7__Pritomnost_blistra_na_vstupnej_zarazke_3___plny_WIPA___" xml:space="preserve">
+    <value>(I7) Pritomnost blistra na vstupnej zarazke 3 - plny(WIPA)</value>
+  </data>
+  <data name="____I8__Pritomnost_blistra_na_vstupnej_zarazke_4___vstup__" xml:space="preserve">
+    <value>(I8) Pritomnost blistra na vstupnej zarazke 4 - vstup</value>
+  </data>
+  <data name="____I9__Pritomnost_blistra_na_vstupnej_zarazke_4___plny_WIPA___" xml:space="preserve">
+    <value>(I9) Pritomnost blistra na vstupnej zarazke 4 - plny(WIPA)</value>
+  </data>
+  <data name="____Q4_Vstupny_dopravnik__" xml:space="preserve">
+    <value>(Q4)Vstupny dopravnik</value>
+  </data>
+  <data name="___Vstupny_dopravnik_reverz__" xml:space="preserve">
+    <value>Vstupny dopravnik reverz</value>
+  </data>
+  <data name="____PR1__PR1_1__Zarazka_Vstupny_dopravnik__" xml:space="preserve">
+    <value>(PR1)(PR1.1) Zarazka Vstupny dopravnik</value>
+  </data>
+  <data name="____PR2__PR2_1__Zarazka_Vstupny_dopravnik__" xml:space="preserve">
+    <value>(PR2)(PR2.1) Zarazka Vstupny dopravnik</value>
+  </data>
+  <data name="____PR3__PR3_1__Zarazka_Vstupny_dopravnik__" xml:space="preserve">
+    <value>(PR3)(PR3.1) Zarazka Vstupny dopravnik</value>
+  </data>
+  <data name="____PR4__PR4_1__Zarazka_Vstupny_dopravnik__" xml:space="preserve">
+    <value>(PR4)(PR4.1) Zarazka Vstupny dopravnik</value>
+  </data>
+  <data name="____PR5__PR5_1__Zarazka_Vystupny_dopravnik__" xml:space="preserve">
+    <value>(PR5)(PR5.1) Zarazka Vystupny dopravnik</value>
+  </data>
+  <data name="____PR6__PR6_1__Horizontalny_prisun_vstupnych_blistrov__" xml:space="preserve">
+    <value>(PR6)(PR6.1) Horizontalny prisun vstupnych blistrov</value>
+  </data>
+  <data name="____PR7__PR7_1__Horizontalny_prisun_vystupnych_blistrov__" xml:space="preserve">
+    <value>(PR7)(PR7.1) Horizontalny prisun vystupnych blistrov</value>
+  </data>
+  <data name="____PR8__Vertikalne_separovanie_vstupnych_blistrov_1__" xml:space="preserve">
+    <value>(PR8) Vertikalne separovanie vstupnych blistrov 1</value>
+  </data>
+  <data name="____PR9__Vertikalne_separovanie_vstupnych_blistrov_2__" xml:space="preserve">
+    <value>(PR9) Vertikalne separovanie vstupnych blistrov 2</value>
+  </data>
+  <data name="____PR12__PR12_1__Fixovanie_vstupneho_blistra_z_boku__" xml:space="preserve">
+    <value>(PR12)(PR12.1) Fixovanie vstupneho blistra z boku</value>
+  </data>
+  <data name="____I10__Pritomnost_blistra_na_vystupnej_zarazke_1___vstup__" xml:space="preserve">
+    <value>(I10) Pritomnost blistra na vystupnej zarazke 1 - vstup</value>
+  </data>
+  <data name="____I11_Pritomnost_blistra_na_vystupnej_zarazke_1___plny_WIPA___" xml:space="preserve">
+    <value>(I11)Pritomnost blistra na vystupnej zarazke 1 - plny(WIPA)</value>
+  </data>
+  <data name="____I12__Vystupny_zasobnik_blistrov_plny___" xml:space="preserve">
+    <value>(I12) Vystupny zasobnik blistrov plny </value>
+  </data>
+  <data name="____I13_Vystupny_dopravnik_blistrov_plny___" xml:space="preserve">
+    <value>(I13)Vystupny dopravnik blistrov plny </value>
+  </data>
+  <data name="____Q6__Vystupny_dopravnik__" xml:space="preserve">
+    <value>(Q6) Vystupny dopravnik</value>
+  </data>
+  <data name="____Q7__Vystupny_dopravnik_reverz__" xml:space="preserve">
+    <value>(Q7) Vystupny dopravnik reverz</value>
+  </data>
+  <data name="____PR10__Vertikalne_separovanie_vstupnych_blistrov_1__" xml:space="preserve">
+    <value>(PR10) Vertikalne separovanie vstupnych blistrov 1</value>
+  </data>
+  <data name="____PR11_Vertikalne_separovanie_vstupnych_blistrov_2__" xml:space="preserve">
+    <value>(PR11)Vertikalne separovanie vstupnych blistrov 2</value>
+  </data>
+  <data name="____I16__Pritomnost_blistra_v_na_vytahu___koniec___" xml:space="preserve">
+    <value>(I16) Pritomnost blistra v na vytahu - koniec </value>
+  </data>
+  <data name="____I15__Pritomnost_blistra_vo_vytahu___vstup___" xml:space="preserve">
+    <value>(I15) Pritomnost blistra vo vytahu - vstup </value>
+  </data>
+  <data name="____Q8__Vytah_dopravnik__" xml:space="preserve">
+    <value>(Q8) Vytah dopravnik</value>
+  </data>
+  <data name="____Q9__Vytah_dopravnik_reverz__" xml:space="preserve">
+    <value>(Q9) Vytah dopravnik reverz</value>
+  </data>
+  <data name="____PR13__Centrovanie_blistra___" xml:space="preserve">
+    <value>(PR13) Centrovanie blistra </value>
+  </data>
+  <data name="____PR14__Vytah__" xml:space="preserve">
+    <value>(PR14) Vytah</value>
+  </data>
+  <data name="____I16_Tlacidlo___odoslanie_blistrov__" xml:space="preserve">
+    <value>(I16)Tlacidlo - odoslanie blistrov</value>
+  </data>
+  <data name="____I17__Tlacidlo___privolanie_blistrov_DOLE___" xml:space="preserve">
+    <value>(I17) Tlacidlo - privolanie blistrov(DOLE)</value>
+  </data>
+  <data name="____I18_Tlacidlo___privolanie_blistrov_HORE___" xml:space="preserve">
+    <value>(I18)Tlacidlo - privolanie blistrov(HORE)</value>
+  </data>
+  <data name="___Vstupna_zarazka__PR2__neaktivna__" xml:space="preserve">
+    <value>Vstupna zarazka (PR2) neaktivna</value>
+  </data>
+  <data name="___Pridrziavanie_blistra__PR12__neaktivne__" xml:space="preserve">
+    <value>Pridrziavanie blistra (PR12) neaktivne</value>
+  </data>
+  <data name="___Automaticke_stahovanie_zarazky_PR5_neaktivne__" xml:space="preserve">
+    <value>Automaticke stahovanie zarazky PR5 neaktivne</value>
+  </data>
+  <data name="___Cas_behu_vstupneho_dopravnika__" xml:space="preserve">
+    <value>Cas behu vstupneho dopravnika</value>
+  </data>
+  <data name="___Cas_behu_vytupneho_dopravnika__" xml:space="preserve">
+    <value>Cas behu vytupneho dopravnika</value>
   </data>
   <data name="___Pritomnost_blistra_v_presuvaci__" xml:space="preserve">
     <value>Pritomnost blistra v presuvaci</value>
@@ -591,6 +1126,9 @@
   <data name="___Vertikalny_prisun_vstupnych_blistrov__" xml:space="preserve">
     <value>Vertikalny prisun vstupnych blistrov</value>
   </data>
+  <data name="___Vertikalny_prisun_vstupnych_blistrov___" xml:space="preserve">
+    <value>Vertikalny prisun vstupnych blistrov </value>
+  </data>
   <data name="___Horizontalny_prisun_vstupnych_blistrov__" xml:space="preserve">
     <value>Horizontalny prisun vstupnych blistrov</value>
   </data>
@@ -615,14 +1153,11 @@
   <data name="___Odelovac_blistrov_na_vstupe__" xml:space="preserve">
     <value>Odelovac blistrov na vstupe</value>
   </data>
-  <data name="___Signalizacia_upozornenia_R__" xml:space="preserve">
-    <value>Signalizacia upozornenia R</value>
+  <data name="___Zamykanie_blistra_zhora_neaktive__P9__P9_1_je_nepritomne__" xml:space="preserve">
+    <value>Zamykanie blistra zhora neaktive (P9)(P9.1)je nepritomne</value>
   </data>
-  <data name="___Signalizacia_upozornenia_G__" xml:space="preserve">
-    <value>Signalizacia upozornenia G</value>
-  </data>
-  <data name="___Signalizacia_upozornenia_B__" xml:space="preserve">
-    <value>Signalizacia upozornenia B</value>
+  <data name="___Oddelovanie_blistrov_na_vstupe_neaktive__P10__P10_1_je_nepritomne__" xml:space="preserve">
+    <value>Oddelovanie blistrov na vstupe neaktive (P10)(P10.1)je nepritomne</value>
   </data>
   <data name="___Stabilizacny_cas__" xml:space="preserve">
     <value>Stabilizacny cas</value>
@@ -630,11 +1165,98 @@
   <data name="___Blink_period__" xml:space="preserve">
     <value>Blink period</value>
   </data>
-  <data name="___Zamykanie_blistra_zhora_neaktive__P9__P9_1_je_nepritomne__" xml:space="preserve">
-    <value>Zamykanie blistra zhora neaktive (P9)(P9.1)je nepritomne</value>
+  <data name="___Time_to_dissable_safety__" xml:space="preserve">
+    <value>Time to dissable safety</value>
   </data>
-  <data name="___Oddelovanie_blistrov_na_vstupe_neaktive__P10__P10_1_je_nepritomne__" xml:space="preserve">
-    <value>Oddelovanie blistrov na vstupe neaktive (P10)(P10.1)je nepritomne</value>
+  <data name="___Volba_krokoveho_Cyklickeho_modu_ovladna_z_vonka__SetSequencesToStep___" xml:space="preserve">
+    <value>Volba krokoveho/Cyklickeho modu ovladna z vonka (SetSequencesToStep)</value>
+  </data>
+  <data name="___Vstupny_podavac_prazdny__" xml:space="preserve">
+    <value>Vstupny podavac prazdny</value>
+  </data>
+  <data name="___Vstupny_podavac_preletovy_senzor__" xml:space="preserve">
+    <value>Vstupny podavac preletovy senzor</value>
+  </data>
+  <data name="___Vstupny_podavac_v_chybe___" xml:space="preserve">
+    <value>Vstupny podavac v chybe </value>
+  </data>
+  <data name="___Vyprazdnovaci_box_pritomny__" xml:space="preserve">
+    <value>Vyprazdnovaci box pritomny</value>
+  </data>
+  <data name="___Vstupny_podavac_Start___" xml:space="preserve">
+    <value>Vstupny podavac Start </value>
+  </data>
+  <data name="___Oscilacny_dopravnik_je_v_chybe__" xml:space="preserve">
+    <value>Oscilacny dopravnik je v chybe</value>
+  </data>
+  <data name="___Oscilacny_dopravnik_Start__" xml:space="preserve">
+    <value>Oscilacny dopravnik Start</value>
+  </data>
+  <data name="___Oscilacny_dopravnik_reverz_Start__" xml:space="preserve">
+    <value>Oscilacny dopravnik reverz Start</value>
+  </data>
+  <data name="___Oscilacny_cylinder__rad_1__vravo__" xml:space="preserve">
+    <value>Oscilacny cylinder  rad 1- vravo</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_1___vstrede__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 1 - vstrede</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_1___vlavo__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 1 - vlavo</value>
+  </data>
+  <data name="___Oscilacny_cylinder__rad_2__vravo__" xml:space="preserve">
+    <value>Oscilacny cylinder  rad 2- vravo</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_2___vstrede__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 2 - vstrede</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_2___vlavo__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 2 - vlavo</value>
+  </data>
+  <data name="___Oscilacny_cylinder__rad_3___vravo__" xml:space="preserve">
+    <value>Oscilacny cylinder  rad 3 - vravo</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_3___vstrede__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 3 - vstrede</value>
+  </data>
+  <data name="___Oscilacny_cylinder_rad_3___vlavo__" xml:space="preserve">
+    <value>Oscilacny cylinder rad 3 - vlavo</value>
+  </data>
+  <data name="___Bocny_matinel__" xml:space="preserve">
+    <value>Bocny matinel</value>
+  </data>
+  <data name="___Cognex_Designer__" xml:space="preserve">
+    <value>Cognex Designer</value>
+  </data>
+  <data name="___Ovladane_kamerovym_systemom__" xml:space="preserve">
+    <value>Ovladane kamerovym systemom</value>
+  </data>
+  <data name="___Oscilacny_cylinder__rad_3__vravo__" xml:space="preserve">
+    <value>Oscilacny cylinder  rad 3- vravo</value>
+  </data>
+  <data name="___Mantinel_aktivny__" xml:space="preserve">
+    <value>Mantinel aktivny</value>
+  </data>
+  <data name="___Mantinel_na_dosipaci_aktivny__" xml:space="preserve">
+    <value>Mantinel na dosipaci aktivny</value>
+  </data>
+  <data name="___FillingTime__" xml:space="preserve">
+    <value>FillingTime</value>
+  </data>
+  <data name="___RunConv_Time__" xml:space="preserve">
+    <value>RunConv Time</value>
+  </data>
+  <data name="___Oscilation_Time___" xml:space="preserve">
+    <value>Oscilation Time </value>
+  </data>
+  <data name="___Oscilation_Type__" xml:space="preserve">
+    <value>Oscilation Type</value>
+  </data>
+  <data name="___Oscilation_Frequency__" xml:space="preserve">
+    <value>Oscilation Frequency</value>
+  </data>
+  <data name="___RunConvReverse_Time__" xml:space="preserve">
+    <value>RunConvReverse Time</value>
   </data>
   <data name="___Entity_Id__" xml:space="preserve">
     <value>Entity Id</value>
@@ -647,6 +1269,102 @@
   </data>
   <data name="___Rework_Instrukcia_najdena__" xml:space="preserve">
     <value>Rework Instrukcia najdena</value>
+  </data>
+  <data name="___Pallete_at_prestopper___Main_Transfer__" xml:space="preserve">
+    <value>Pallete at prestopper - Main Transfer</value>
+  </data>
+  <data name="___Pallete_at_stopper___Main_Transfer__" xml:space="preserve">
+    <value>Pallete at stopper - Main Transfer</value>
+  </data>
+  <data name="___Main_Transfer_is_Empty__" xml:space="preserve">
+    <value>Main Transfer is Empty</value>
+  </data>
+  <data name="___Output_buffer_full___Main_Trasnfer__" xml:space="preserve">
+    <value>Output buffer full - Main Trasnfer</value>
+  </data>
+  <data name="___Prestopper___Main_Transfer__" xml:space="preserve">
+    <value>Prestopper - Main Transfer</value>
+  </data>
+  <data name="___Pallete_at_Prestopper_Side_transfer__" xml:space="preserve">
+    <value>Pallete at Prestopper Side transfer</value>
+  </data>
+  <data name="___Pallete_at_stopper_Side_transfer__" xml:space="preserve">
+    <value>Pallete at stopper Side transfer</value>
+  </data>
+  <data name="___Side_Transfer_is_Empty__" xml:space="preserve">
+    <value>Side Transfer is Empty</value>
+  </data>
+  <data name="___Out_buffer_full___Side_Trasnfer__" xml:space="preserve">
+    <value>Out buffer full - Side Trasnfer</value>
+  </data>
+  <data name="___Prestopper_Side_transfer__" xml:space="preserve">
+    <value>Prestopper Side transfer</value>
+  </data>
+  <data name="___MotorInError__" xml:space="preserve">
+    <value>MotorInError</value>
+  </data>
+  <data name="___Motor__" xml:space="preserve">
+    <value>Motor</value>
+  </data>
+  <data name="___Transfer_Position_unit__" xml:space="preserve">
+    <value>Transfer Position unit</value>
+  </data>
+  <data name="___Paleta_pred_stanicou__" xml:space="preserve">
+    <value>Paleta pred stanicou</value>
+  </data>
+  <data name="___Paleta_v_stanici__" xml:space="preserve">
+    <value>Paleta v stanici</value>
+  </data>
+  <data name="___Transfer_je_prazdny__" xml:space="preserve">
+    <value>Transfer je prazdny</value>
+  </data>
+  <data name="___Vystup_zo_stanice_plny__" xml:space="preserve">
+    <value>Vystup zo stanice plny</value>
+  </data>
+  <data name="___Predzarazka__" xml:space="preserve">
+    <value>Predzarazka</value>
+  </data>
+  <data name="___Zarazka__" xml:space="preserve">
+    <value>Zarazka</value>
+  </data>
+  <data name="___Vytah__" xml:space="preserve">
+    <value>Vytah</value>
+  </data>
+  <data name="___Dole__" xml:space="preserve">
+    <value>Dole</value>
+  </data>
+  <data name="___Hore__" xml:space="preserve">
+    <value>Hore</value>
+  </data>
+  <data name="___Pohyb_dole__" xml:space="preserve">
+    <value>Pohyb dole</value>
+  </data>
+  <data name="___Pohyb_hore__" xml:space="preserve">
+    <value>Pohyb hore</value>
+  </data>
+  <data name="___Pozicna_jednotka__" xml:space="preserve">
+    <value>Pozicna jednotka</value>
+  </data>
+  <data name="___Entity_header__" xml:space="preserve">
+    <value>Entity header</value>
+  </data>
+  <data name="___OK__" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="___NOK__" xml:space="preserve">
+    <value>NOK</value>
+  </data>
+  <data name="___TOTAL__" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="___ALL_TIME_OK__" xml:space="preserve">
+    <value>ALL TIME OK</value>
+  </data>
+  <data name="___ALL_TIME_NOK__" xml:space="preserve">
+    <value>ALL TIME NOK</value>
+  </data>
+  <data name="___ALL_TIME___" xml:space="preserve">
+    <value>ALL TIME </value>
   </data>
   <data name="___Next_on_Passed__" xml:space="preserve">
     <value>Next on Passed</value>
@@ -690,9 +1408,6 @@
   <data name="___Max_allowed_number_of_same_recurring_failures__consecutive___" xml:space="preserve">
     <value>Max allowed number of same recurring failures (consecutive)</value>
   </data>
-  <data name="___Entity_header__" xml:space="preserve">
-    <value>Entity header</value>
-  </data>
   <data name="___Recipe_created__" xml:space="preserve">
     <value>Recipe created</value>
   </data>
@@ -731,6 +1446,15 @@
   </data>
   <data name="___Rework_Count__" xml:space="preserve">
     <value>Rework Count</value>
+  </data>
+  <data name="___Group__" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="___Any_station_in_warning__" xml:space="preserve">
+    <value>Any station in warning</value>
+  </data>
+  <data name="___Any_station_in_error__" xml:space="preserve">
+    <value>Any station in error</value>
   </data>
   <data name="___Control_voltage__" xml:space="preserve">
     <value>Control voltage</value>
@@ -800,9 +1524,6 @@
   </data>
   <data name="___In_Inactive_or_Manual_or_Grounded__" xml:space="preserve">
     <value>In Inactive or Manual or Grounded</value>
-  </data>
-  <data name="___Group__" xml:space="preserve">
-    <value>Group</value>
   </data>
   <data name="___Any_station_in_automatic_mode__" xml:space="preserve">
     <value>Any station in automatic mode</value>

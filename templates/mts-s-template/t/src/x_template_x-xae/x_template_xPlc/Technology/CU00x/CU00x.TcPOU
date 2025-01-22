@@ -179,6 +179,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="CuProcessData" Id="{e8878a33-c264-4258-9c1a-bd4e1ef15149}">
+      <Declaration><![CDATA[PROPERTY CuProcessData : REFERENCE TO CU00xProcessData]]></Declaration>
+      <Get Name="Get" Id="{55b02cc1-6486-4e47-844f-fb1e8177814e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CuProcessData ref=ProcessDataManager.Data.CU00x;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Ground" Id="{7656a7d5-b5cf-0112-2af9-f331cc560782}" FolderPath="Modes\">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -350,7 +361,7 @@ Components.PlsPaletizator.Components.P4_FeedEntryBlister
 				inoAtWorkPos:=GVL_iXlinker.Ec.EC.Ek.AB21.Channel_10.Input,
 				inoToHomePos:=tempBoolP4Home,
 				inoToWorkPos:=tempBoolP4Work);
-				Components.PlsPaletizator.SafetyBlockingMovements();
+				
 
 GVL_iXlinker.Ec.EC.Ek.PNEU.Modules.Outputs.digital_Data_O[0].7:=tempBoolP4Home;
 GVL_iXlinker.Ec.EC.Ek.PNEU.Modules.Outputs.digital_Data_O[0].6:=tempBoolP4Work;
@@ -503,6 +514,17 @@ END_VAR
           <ST><![CDATA[IF __QUERYPOINTER(Parent, _technology) THEN // Check if _Parent is Station001
     Technology REF= _technology^;              // If the check is successful dereference a pointer. simlar to THIS^ or SUPER^
 END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TechnologyData" Id="{aca1d697-f4f3-488b-9b5a-9530162426fc}">
+      <Declaration><![CDATA[PROPERTY TechnologyData : REFERENCE TO CU00xTechnologicalData]]></Declaration>
+      <Get Name="Get" Id="{40d74f1d-1b7a-4557-9de8-53752a2c4e0a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TechnologyData ref=_cuTechnologicalDataDisplay;]]></ST>
         </Implementation>
       </Get>
     </Property>

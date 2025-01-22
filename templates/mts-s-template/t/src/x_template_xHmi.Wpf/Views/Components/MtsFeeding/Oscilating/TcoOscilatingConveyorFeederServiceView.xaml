@@ -1,0 +1,140 @@
+<UserControl
+    x:Class="x_template_xPlc.TcoOscilatingConveyorFeederServiceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:p="clr-namespace:x_template_xHmi.Wpf.Properties"
+   
+    xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vortex="http://vortex.mts/xaml" xmlns:local="clr-namespace:x_template_xPlc"
+    mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <local:TcoOscilatingConveyorFeederViewModel />
+    </d:UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ItemsPanelTemplate x:Key="HorizontalWraped">
+            <WrapPanel Background="Transparent" Width="{Binding (FrameworkElement.ActualWidth) , RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" MinWidth="{Binding ItemWidth , RelativeSource={RelativeSource Self}}" ItemHeight="{Binding (ListView.View).ItemHeight , RelativeSource={RelativeSource AncestorType=ListView}}" ItemWidth="{Binding (ListView.View).ItemWidth , RelativeSource={RelativeSource AncestorType=ListView}}" />
+        </ItemsPanelTemplate>
+
+    </UserControl.Resources>
+    <vortex:TcoComponentView >
+        <vortex:TcoComponentView.ComponentHeader>
+           
+            <WrapPanel VerticalAlignment="Center"   HorizontalAlignment="Left" DataContext="{Binding Component}" >
+                <WrapPanel.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                    </Style>
+   
+                </WrapPanel.Resources>
+
+                <!--<WrapPanel   DataContext="{Binding _status.ReadyToUnloadComponents }"  Visibility="{Binding Cyclic, Converter={vortex:BooleanToVisibilityConverter}}" Margin=" 5,0">
+                    <materialdesign:PackIcon Kind="Check"  Foreground="{StaticResource Notification}"  VerticalAlignment="Center"/>
+                    <TextBlock   Text="{Binding AttributeName }"  Foreground="{StaticResource Notification}"/>
+                </WrapPanel>
+
+                <WrapPanel   DataContext="{Binding _status.OutBufferFull}"  Visibility="{Binding Cyclic, Converter={vortex:BooleanToVisibilityConverter}}" Margin=" 5,0">
+                    <materialdesign:PackIcon Kind="Warning"  Foreground="{StaticResource Warning}"  VerticalAlignment="Center"/>
+                    <TextBlock   Text="{Binding AttributeName }"  Foreground="{StaticResource Warning}"/>
+                </WrapPanel>-->
+
+                <WrapPanel   DataContext="{Binding _status.EntryBufferEmpty}"  Visibility="{Binding Cyclic, Converter={vortex:BooleanToVisibilityConverter}}" Margin=" 5,0">
+                    <materialdesign:PackIcon Kind="Warning"  Foreground="{StaticResource Warning}"  VerticalAlignment="Center"/>
+                    <TextBlock   Text="{Binding AttributeName }"  Foreground="{StaticResource Warning}"/>
+                </WrapPanel>
+                
+                <WrapPanel   DataContext="{Binding _status.SafeCondition }"  Visibility="{Binding Cyclic, Converter={vortex:BooleanToVisibilityConverter},ConverterParameter=true}" Margin=" 5,0">
+                    <materialdesign:PackIcon Kind="Warning"  Foreground="{StaticResource Warning}"  VerticalAlignment="Center"/>
+                    <TextBlock   Text="{Binding AttributeName }"  Foreground="{StaticResource Warning}"/>
+                </WrapPanel>
+
+
+                <vortex:RenderableContentControl Margin="5" DataContext="{Binding _restoreTask }" PresentationType="Base" />
+
+            </WrapPanel>
+
+
+        </vortex:TcoComponentView.ComponentHeader>
+        <vortex:TcoComponentView.ComponentDetails>
+
+            <Grid  DataContext="{Binding Component}" >
+                    <Grid.Resources>
+                        <Style TargetType="GroupBox"  BasedOn="{StaticResource MaterialDesignCardGroupBox}">
+                            <Setter Property="Margin" Value="5,0,0,5"></Setter>
+                        </Style>
+                        <Style TargetType="WrapPanel">
+                            <Setter Property="MinWidth" Value="300"></Setter>
+
+                        </Style>
+                    </Grid.Resources>
+                  
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+
+                        
+                    </Grid.RowDefinitions>
+
+                <GroupBox  Padding="10" Header="{x:Static p:strings.Tasks}" Visibility="{Binding _config.ControledByVisonSystem.Cyclic ,Converter={vortex:BooleanToVisibilityConverter},ConverterParameter=true}" >
+                     <ItemsControl ItemsPanel="{StaticResource HorizontalWraped}" HorizontalAlignment="Left" ItemsSource="{Binding Tasks}">
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <vortex:RenderableContentControl MinWidth="150" DataContext="{Binding}" Margin="5"></vortex:RenderableContentControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+
+
+
+
+                <WrapPanel Grid.Column="1" Grid.Row="1"  >
+                    <GroupBox Grid.Row="1"  Padding="10"  DataContext="{Binding _status}"  Header="{Binding AttributeName}">
+                        <vortex:RenderableContentControl  DataContext="{Binding }" PresentationType="DisplaySlim"    />
+                    </GroupBox>
+                    <GroupBox Padding="10" Header="{Binding _config.AttributeName}">
+                        <vortex:RenderableContentControl  DataContext="{Binding _config}" PresentationType="ControlSlim" />
+                    </GroupBox>
+                    <WrapPanel Visibility="{Binding _config.ControledByVisonSystem.Cyclic ,Converter={vortex:BooleanToVisibilityConverter},ConverterParameter=true}">
+                        <GroupBox  DataContext="{Binding _feedComponentsTask}" Padding="10" Header="{Binding AttributeName}">
+                            <StackPanel>
+                                <vortex:RenderableContentControl DataContext="{Binding}" PresentationType="Base"></vortex:RenderableContentControl>
+                                <vortex:RenderableContentControl DataContext="{Binding _sequence}" PresentationType="Base"></vortex:RenderableContentControl>
+                                <vortex:RenderableContentControl DataContext="{Binding _observerSequence}" PresentationType="Base"></vortex:RenderableContentControl>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox  DataContext="{Binding _throwCompoentsTask}" Padding="10" Header="{Binding AttributeName}">
+                            <StackPanel>
+                                <vortex:RenderableContentControl DataContext="{Binding}" PresentationType="Base"></vortex:RenderableContentControl>
+                                <vortex:RenderableContentControl DataContext="{Binding _sequence}" PresentationType="Base"></vortex:RenderableContentControl>
+                                <vortex:RenderableContentControl DataContext="{Binding _observerSequence}" PresentationType="Base"></vortex:RenderableContentControl>
+                            </StackPanel>
+                        </GroupBox>
+
+
+                        <GroupBox  DataContext="{Binding _components}" Padding="10" Header="{Binding AttributeName}">
+                            <StackPanel>
+                                <vortex:RenderableContentControl DataContext="{Binding}" PresentationType="Service"></vortex:RenderableContentControl>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </WrapPanel>
+
+                    <WrapPanel Visibility="{Binding _config.ControledByVisonSystem.Cyclic ,Converter={ vortex:BooleanToVisibilityConverter},ConverterParameter=false}">
+                      
+                        <GroupBox  DataContext="{Binding _components.Designer}" Padding="10" Header="{Binding AttributeName}">
+                            <StackPanel>
+                                <vortex:RenderableContentControl DataContext="{Binding}" PresentationType="Service"></vortex:RenderableContentControl>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </WrapPanel>
+
+                </WrapPanel>
+                </Grid>
+        </vortex:TcoComponentView.ComponentDetails>
+    </vortex:TcoComponentView>
+</UserControl>

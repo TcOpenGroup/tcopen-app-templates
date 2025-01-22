@@ -5,7 +5,7 @@ namespace x_template_xPlcConnector
     public class ApplicationSettings
     {
 
-        public DeployMode DeployMode{ get; set; } = DeployMode.Local;
+        public DeployMode DeployMode{ get; set; } = DeployMode.Plc;
         public DatabaseEngine DatabaseEngine { get; set; } = DatabaseEngine.MongoDb;
 
 
@@ -24,6 +24,8 @@ namespace x_template_xPlcConnector
         private string MongoDbProduction { get; set; } = @"mongodb://localhost:27017";
         private string RavenDbLocal { get; set; } = @"http://localhost:8080";
         private string RavenDbProduction { get; set; } = @"http://localhost:8080";
+
+        public string RfidChipPortName { get; set; } = @"COM3";
 
         //Verbose - tracing information and debugging minutiae; generally only switched on in unusual situations
         //Debug - internal control flow and diagnostic state dumps to facilitate pinpointing of recognised problems

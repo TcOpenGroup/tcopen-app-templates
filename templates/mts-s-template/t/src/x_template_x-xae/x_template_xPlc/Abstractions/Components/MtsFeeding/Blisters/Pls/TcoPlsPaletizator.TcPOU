@@ -1,0 +1,948 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TcoPlsPaletizator" Id="{169856dd-165c-43ca-8ea1-1e351d34c5c9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TcoPlsPaletizator EXTENDS TcoCore.TcoComponent
+VAR_INPUT
+    inSafeCondition : BOOL;
+    inDoorOpen : BOOL;
+END_VAR
+
+VAR_OUTPUT
+END_VAR
+VAR
+    {attribute addProperty Name "<#Config#>"}
+    _config : TcoPlsPaletizator_Config_v_1_x_x;
+    {attribute addProperty Name "<#Status#>"}
+    {attribute clr [ReadOnly()]}
+    _status : TcoPlsPaletizator_Status_v_1_x_x;
+    {attribute addProperty Name "<#Control#>"}
+    _control : TcoPlsPaletizator_Control_v_1_x_x;
+
+    {attribute addProperty Name "<#Components#>"}
+    _components : TcoPlsPaletizator_Components := (Parent := THIS^);
+
+    {attribute addProperty Name "<#Poziadavka novy blister#>"}
+    _feedNewBlisterTask : TcoFeedingSequenceTask(THIS^);
+    {attribute addProperty Name "<#Poziadavka vylozenie blistera#>"}
+    _throwBlisterTask : TcoFeedingSequenceTask(THIS^);
+    {attribute addProperty Name "<#Poziadavka obsluhy vystupny buffer#>"}
+    _hanldeOutBufferTask : TcoFeedingSequenceTask(THIS^);
+    {attribute addProperty Name "<#Poziadavka vychodzej polohy#>"}
+    _setToDefaultTask : TcoFeedingSequenceTask(THIS^);
+
+    {attribute addProperty Name "<#Restore#>"}
+    _restoreTask : TcoCore.TcoTask(THIS^);
+
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _blinker : TcoBlinker(THIS^);
+    _timerEntryEmpty : ton;
+    _timerOutFull : ton;
+    _timerDisableSafety : TON;
+    {attribute addProperty Name "<#Temporarily disabled safety#>"}
+    _temporarilyDisableSafety : BOOL;
+
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    restoreDone : BOOL;
+    {attribute clr [CompilerOmits("BuilderPlainer", "BuilderOnliner","BuilderOnlinerInterface","BuilderShadowerInterface")]}
+    _setSequencesToStep : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_status.SafeCondition := inSafeCondition;
+Context.Environment.Messaging.Suspend();
+_status.EntryBufferEmpty := NOT Components.I3_PresentBlistersInBufferEmpty.Signal;
+_status.BlisterReady := Components.I4_PresentBlisterInWorkingPos.Signal AND Components.P7_SupportEntryBlister.AtWork;
+_status.OutBufferFull := Components.I8_OutBlistersBufferIsFull.Signal;
+Context.Environment.Messaging.Resume();
+
+IF _config.StepModeManagableFromOutside THEN
+    IF _setSequencesToStep THEN
+        _feedNewBlisterTask.SetStepMode();
+        _throwBlisterTask.SetStepMode();
+        _hanldeOutBufferTask.SetStepMode();
+        _setToDefaultTask.SetStepMode();
+    ELSE
+        _feedNewBlisterTask.SetCyclicMode();
+        _throwBlisterTask.SetCyclicMode();
+        _hanldeOutBufferTask.SetCyclicMode();
+        _setToDefaultTask.SetCyclicMode();
+    END_IF
+END_IF;
+
+_feedNewBlisterTask.Enabled := NOT _throwBlisterTask.Busy;
+IF (_feedNewBlisterTask.Execute()) THEN
+    SequenceIncomingBlister(refSequenceTask := _feedNewBlisterTask);
+END_IF;
+
+_throwBlisterTask.Enabled := NOT _feedNewBlisterTask.Busy;
+IF (_throwBlisterTask.Execute()) THEN
+    SequenceOutgoingBlister(refSequenceTask := _throwBlisterTask);
+END_IF;
+
+_hanldeOutBufferTask.Enabled := TRUE;
+IF (_hanldeOutBufferTask.Execute()) THEN
+    SequenceOutgoingBuffer(refSequenceTask := _hanldeOutBufferTask);
+END_IF;
+
+_setToDefaultTask.Enabled := TRUE;
+IF (_setToDefaultTask.Execute()) THEN
+    SequenceResetToDefault(refSequenceTask := _setToDefaultTask);
+END_IF;
+
+//*************RESTORE********************
+
+_restoreTask.Enabled := TRUE;
+
+IF _restoreTask.Execute() THEN
+    Restore();
+    _restoreTask.DoneWhen(inCondition := TRUE);
+END_IF
+
+//****************************************
+
+//********************SAFETY******************
+_timerDisableSafety(IN := _temporarilyDisableSafety, PT := _config.TimeToDisableSafety);
+
+THIS^.Messenger.OnCondition(inCondition := _temporarilyDisableSafety).Warning('SAFTY TEMPORARILY DISABLED!');
+
+IF NOT _temporarilyDisableSafety THEN
+
+    Components.P7_SupportEntryBlister
+        .SuspendMoveWorkExpression( Components.P7_SupportEntryBlister.MoveWorkTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    Components.P7_SupportEntryBlister
+        .SuspendMoveHomeExpression(Components.P7_SupportEntryBlister.MoveHomeTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    Components.P8_FixEntryBlisterSide
+        .SuspendMoveWorkExpression(Components.P8_FixEntryBlisterSide.MoveWorkTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    Components.P8_FixEntryBlisterSide
+        .SuspendMoveHomeExpression(Components.P8_FixEntryBlisterSide.MoveHomeTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+    IF NOT _config.LockBlisterInPickPosInactive THEN
+        Components.P9_LockEntryBlisterTop
+            .SuspendMoveWorkExpression(Components.P9_LockEntryBlisterTop.MoveWorkTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+
+        Components.P9_LockEntryBlisterTop
+            .SuspendMoveHomeExpression(Components.P9_LockEntryBlisterTop.MoveHomeTask.Busy AND NOT inSafeCondition, '<#Movement is blocked due safe zone is interupted(robot in zone)#>');
+    END_IF;
+
+    Components.P4_FeedEntryBlister
+        .SuspendMoveWorkExpression(NOT Components.P7_SupportEntryBlister.AtHome, 'Movement is blocked due P7 is not in home position');
+
+    Components.P4_FeedEntryBlister
+        .SuspendMoveHomeExpression(NOT Components.P6_VerticalSepareOutBlister.AtHome, 'Movement is blocked due P6 is not in home position');
+
+    Components.P4_FeedEntryBlister
+        .SuspendMoveHomeExpression(NOT Components.P5_HorizontalSepareOutBlisters.AtHome, 'Movement is blocked due P5 is not in home position');
+
+    Components.P4_FeedEntryBlister
+        .SuspendMoveHomeExpression(Components.I7_OutBlistersIsAboveOutBuffer.Signal, 'Movement is blocked due empty blister is not unloaded');
+
+    Components.P7_SupportEntryBlister
+        .SuspendMoveWorkExpression(NOT Components.P4_FeedEntryBlister.AtHome, 'Movement is blocked due P4 is not in home position');
+
+    Components.P7_SupportEntryBlister
+        .SuspendMoveWorkExpression(NOT Components.P4_FeedEntryBlister.AtHome, 'Movement is blocked due P4 is not in home position');
+END_IF;
+
+IF _timerDisableSafety.Q THEN
+    _temporarilyDisableSafety := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <Folder Name="Operations" Id="{ee32c73b-16cf-4bc7-91f7-f8fb30d56f3d}" />
+    <Folder Name="OperationsInternal" Id="{0c0957d1-3b6f-4285-b178-15a13959ea6e}" />
+    <Folder Name="Tasks" Id="{a196491f-d442-477f-98ea-f46f8678ab08}" />
+    <Property Name="Components" Id="{48021fbf-edf4-4fae-88bb-ac3bc4a00c78}">
+      <Declaration><![CDATA[PROPERTY Components : REFERENCE TO TcoPlsPaletizator_Components
+]]></Declaration>
+      <Get Name="Get" Id="{f92ae39f-dc95-45fc-a083-4c728e3eba50}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Components ref=_components;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Config" Id="{888a0495-4309-4973-ba0f-09f2d319a6a8}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the configuration of the MTS Pls feeder. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Config : REFERENCE TO TcoPlsPaletizator_Config_v_1_x_x]]></Declaration>
+      <Get Name="Get" Id="{cee95d2a-5ebb-46d8-b4d7-704c245d6362}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Config REF= _config;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="DefaultSignalisation" Id="{42ef2494-bd92-4bbe-a3c3-1530133fe222}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC DefaultSignalisation
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Components.Q1_AttentionSignalisationR.Reset();
+Components.Q2_AttentionSignalisationG.Reset();
+Components.Q3_AttentionSignalisationB.Reset();
+
+_blinker(inOffTime:=_config.BlinkTime,inOnTime:=_config.BlinkTime);
+_timerEntryEmpty(in:= _status.EntryBufferEmpty,Pt:=_config.InfoTime);
+_timerOutFull(in:=  _status.OutBufferFull ,Pt:=_config.InfoTime);
+IF NOT inDoorOpen  
+	AND NOT _timerEntryEmpty.Q
+	AND NOT _timerOutFull.q THEN
+	Components.Q2_AttentionSignalisationG.Set();
+ELSIF  _blinker.IsOn THEN
+	IF inDoorOpen AND 
+		(
+		THIS^._feedNewBlisterTask.Busy
+		OR
+		THIS^._throwBlisterTask.Busy
+		OR
+		THIS^._hanldeOutBufferTask.Busy )THEN
+		Messenger.Warning('<#CAKANIE NA OBSLUHU PALETIZERA - ZAVRITE DVERE!#>');
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+	ELSIF _timerEntryEmpty.Q
+		THEN
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+	ELSIF _timerOutFull.Q
+		THEN
+		
+		Components.Q1_AttentionSignalisationR.Set();
+		Components.Q2_AttentionSignalisationG.Set();
+
+//	ELSIF NOT _status.OutBufferFull
+//		AND _status.EntryBufferEmpty 
+//		AND NOT _status.BlisterReady THEN	
+//		Components.Q1_AttentionSignalisationR.Set();
+//	ELSIF  _status.OutBufferFull  THEN
+//		Components.Q1_AttentionSignalisationR.Set();	
+	
+	END_IF;
+
+
+	
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FeedNewBlister" Id="{f8d4151a-7503-4df7-91e6-497a80a4bc60}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC FeedNewBlister : TcoCore.ITcoTaskStatus
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+FeedNewBlister := _feedNewBlisterTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FeedNewBlisterTask" Id="{b1f890b8-a6a9-449f-bb33-681f7c5f6106}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY FeedNewBlisterTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{e90633ff-cb89-4373-b487-6cb33e0d1de7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FeedNewBlisterTask ref=_feedNewBlisterTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HandleOutBufferTask" Id="{28e0a013-4028-44bb-9b09-888d2756c92e}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY HandleOutBufferTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{daefbcdb-9b4d-4f1a-806a-c8949366d1d4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HandleOutBufferTask ref=_hanldeOutBufferTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="OutBufferFull" Id="{3ec3f4b9-5dfb-4c17-ad06-2300fb36ee7a}">
+      <Declaration><![CDATA[PROPERTY OutBufferFull : bool]]></Declaration>
+      <Get Name="Get" Id="{62ed5b95-e1f5-4d6d-b33f-7ac2016dea3e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[OutBufferFull:=_status.OutBufferFull;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReadyToUnloadComponent" Id="{2776245d-b373-4013-bf74-c444e7a8c31b}">
+      <Declaration><![CDATA[PROPERTY ReadyToUnloadComponent : bool]]></Declaration>
+      <Get Name="Get" Id="{b3be87f3-f9a3-4a43-a14c-d16356d2bf6b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadyToUnloadComponent:=_status.BlisterReady;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Restore" Id="{9f731c5e-ae6d-48a7-aa4c-79f4ddc4378e}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Restores this instance to the Ready state. Can be called explicitly or from within one of the restore mechanisms.	
+		</summary>			
+	</docu>	
+~*)
+METHOD  Restore : ITcoRestorable
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_hanldeOutBufferTask.Restore();
+_feedNewBlisterTask.Restore();
+_throwBlisterTask.Restore();
+_setToDefaultTask.Restore();
+_messenger.UnPin();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceIncomingBlister" Id="{8084b1e1-40b9-418e-9e58-2077e64d59f9}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceIncomingBlister
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus:=_status,inoConfig:=_config);
+
+
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+
+
+		
+
+
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0,TRUE,'<#INIT#>') THEN   
+	Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');     
+	IF _status.SafeCondition THEN
+    	seq.CompleteStep();
+	END_IF;
+END_IF        
+//***************************************************************************************************     
+
+ 
+//***************************************************************************************************     
+IF seq.Step(10,TRUE,'<#KONTROLA POCTU VSTUPNYCH BLISTROV#>') THEN   
+    Messenger.Warning('<#PODAVAC PRAZDNY! DOPLNE VSTUPNE BLISTRE !#>');
+    seq.StepCompleteWhen(Components.I3_PresentBlistersInBufferEmpty.IsTrue);
+END_IF        
+//***************************************************************************************************     
+
+
+        
+//***************************************************************************************************     
+IF seq.Step(20,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE VYSUNUTE P1 A P2 #>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P1_VerticalSepareEntryBlisters.MoveToWork().Done AND THIS^.Components.P2_VerticalSepareEntryBlisters.MoveToWork().Done);
+END_IF        
+//***************************************************************************************************     
+
+
+//***************************************************************************************************     
+IF seq.Step(30,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE ZASUNUTE P3#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P3_HorizontalSepareEntryBlisters.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************     
+
+
+//***************************************************************************************************     
+IF seq.Step(40,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE  ZASUNUT P1#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P1_VerticalSepareEntryBlisters.MoveToHome().Done );
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(45,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE VYSUNUT P2#>') THEN   
+
+    seq.StepCompleteWhen( THIS^.Components.P2_VerticalSepareEntryBlisters.MoveToWork().Done);
+END_IF        
+//***************************************************************************************************     
+
+
+//***************************************************************************************************     
+IF seq.Step(50,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - SEPAROVANIE VYSUNUTE P3 A P10#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P3_HorizontalSepareEntryBlisters.MoveToWork().Done AND (Components.P10_HoldEntrySepareOutBlister.MoveToWork().Done or _config.SepareBlistersAtEntryInactive));
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(60,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - VERTIKALNE VALCE ZASUNUT P1 A P@#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P1_VerticalSepareEntryBlisters.MoveToHome().Done AND THIS^.Components.P2_VerticalSepareEntryBlisters.MoveToHome().Done); 
+					
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(65,NOT _config.SepareBlistersAtEntryInactive,'<#SEPAROVANIE VSTUPNEHO BLISTRA - ZASUNUTIE P10>') THEN   
+
+    seq.StepCompleteWhen(Components.P10_HoldEntrySepareOutBlister.MoveToHome().Done  );
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************   
+IF seq.Step(70,TRUE,'<#KONTROLA PRITOMNOSTI SEPAROVANEHO KUSU#>') THEN   
+    Messenger.Error('<#PODAVAC PRAZDNY! DOPLNE BLISTRE !#>');
+    seq.StepCompleteWhen(THIS^.Components.I1_PresentBlisterEntry.IsTrue AND (THIS^.Components.I2_PresentBlisterEntryEmptySpace.IsTrue) );
+END_IF        
+//***************************************************************************************************     
+
+
+//***************************************************************************************************     
+IF seq.Step(80,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - UPEVNENIE BLISTRA ZASUNUT P8#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P8_FixEntryBlisterSide.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************     
+
+//***************************************************************************************************     
+IF seq.Step(85,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - CAKANIE NA PRESUNUTIE BLISTRA DO ODOBERACEJ POLOHY P4 A I1 #>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P4_FeedEntryBlister.MoveToWork().Done AND Components.i4_PresentBlisterInWorkingPos.IsTrue);
+END_IF        
+//***************************************************************************************************     
+
+
+//***************************************************************************************************     
+IF seq.Step(90,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - UPEVENIE BLISTRA ZBOKU#>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P8_FixEntryBlisterSide.MoveToWork().Done);
+END_IF        
+//***************************************************************************************************     
+
+
+
+//***************************************************************************************************     
+IF seq.Step(100,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - NPRESUNUTIE BLISTRA DO POZICIE NABERANIA#>') THEN   
+
+   IF THIS^.Components.P6_VerticalSepareOutBlister.AtHome THEN
+	    seq.CompleteStep();
+	ELSE
+		Messenger.Error('VYSTUPNY BUFFER NIEJE V HORNEJ POZICII!(P6)');
+	END_IF
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(110,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - ZASUNUTE P4#>') THEN   
+
+	 seq.StepCompleteWhen(THIS^.Components.P4_FeedEntryBlister.MoveToHome().Done) ;
+	
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(120,TRUE,'<#SEPAROVANIE VSTUPNEHO BLISTRA - PODoPRETIE  A ZAFIXOVANIE KUSU P7 VYSUNT A P9 ZASUNUT #>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P7_SupportEntryBlister.MoveToWork().Done AND (THIS^.Components.P9_LockEntryBlisterTop.MoveToHome().Done OR _config.LockBlisterInPickPosInactive));
+END_IF        
+//***************************************************************************************************   
+
+
+
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+		refSequenceTask.DoneWhen(TRUE);
+    	seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+
+IF refSequenceTask.HandleTaskError() THEN
+	//here we can decide what to do
+	//	refSequenceTask.Restore();
+	_feedNewBlisterTask.Restore();
+END_IF
+
+
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceOutgoingBlister" Id="{e43609b6-404e-4880-bc40-3f63b80daf89}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceOutgoingBlister
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus:=_status,inoConfig:=_config);
+
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+
+
+		
+
+
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0,TRUE,'<#INIT#>') THEN   
+	Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');     
+	IF _status.SafeCondition THEN
+    	seq.CompleteStep();
+	END_IF;
+END_IF        
+//***************************************************************************************************     
+
+IF seq.Step(10,TRUE,'<#SEPAROVANIE VYSTUPNEHO BLISTRA - UVOLNENIE BLISTRA VYSUNUTIE P9#>') THEN   
+
+    seq.StepCompleteWhen( (THIS^.Components.P9_LockEntryBlisterTop.MoveToWork().Done OR _config.LockBlisterInPickPosInactive) AND THIS^.Components.P8_FixEntryBlisterSide.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(20,TRUE,'<#SEPAROVANIE VYSTUPNEHO BLISTRA - ZASUNUTIE SUPPORTU P7#>') THEN   
+
+   seq.StepCompleteWhen(THIS^.Components.P7_SupportEntryBlister.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************   
+
+
+
+//***************************************************************************************************     
+IF seq.Step(30,TRUE,'<#SEPAROVANIE VYSTUPNEHO BLISTRA - KONTROLA PRITOMNOSTI BLISTA NA SKLZE (I5) #>') THEN   
+	IF seq.IsFreshState THEN
+		_timer(IN:=FALSE);
+	END_IF
+	_timer(IN:=THIS^.Components.I5_OutBlistersIsThrowedCorrectly.Signal,PT:=_config.StabilisationTime);
+	
+    seq.StepCompleteWhen(_timer.Q);
+	
+	IF Components.P4_FeedEntryBlister.AtHome AND NOT THIS^.Components.I5_OutBlistersIsThrowedCorrectly.Signal THEN
+		seq.StepCompleteWhen(seq.CurrentStep.Duration>_config.StabilisationTime);
+	END_IF
+END_IF        
+//***************************************************************************************************   
+
+
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+		refSequenceTask.DoneWhen(TRUE);
+    	seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+
+IF refSequenceTask.HandleTaskError() THEN
+	//here we can decide what to do
+	//	refSequenceTask.Restore();
+	_throwBlisterTask.Restore();
+
+
+END_IF
+
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceOutgoingBuffer" Id="{e9336603-a605-4174-8666-a14b03ad4f7f}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceOutgoingBuffer
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus:=_status,inoConfig:=_config);
+
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+
+
+		
+
+
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0,TRUE,'<#INIT#>') THEN   
+	Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');     
+	IF _status.SafeCondition THEN
+    	seq.CompleteStep();
+	END_IF;
+END_IF        
+//***************************************************************************************************     
+
+
+
+//***************************************************************************************************     
+IF seq.Step(10,TRUE,'<#VYSTUPNY BUFFER - KONTROLA PRITOMNOSTI BLISTA NAD BUFFEROM  #>') THEN   
+	IF seq.IsFreshState THEN
+		_timer(IN:=FALSE);
+	END_IF
+	_timer(IN:=(*NOT THIS^.Components.I5_OutBlistersIsThrowedCorrectly.Signal AND*) Components.I7_OutBlistersIsAboveOutBuffer.Signal,PT:=_config.StabilisationTime);
+	
+    seq.StepCompleteWhen(_timer.Q);
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(20,TRUE,'<#VYSTUPNY BUFFER - KONTROLA POSCTU BLISTROV SNIMAC I8 #>') THEN   
+	Messenger.Warning('<#PODAVAC PLNY! ODSTRANTE PRAZDNE BLISTRE (I8) !#>');
+    seq.StepCompleteWhen(THIS^.Components.I8_OutBlistersBufferIsFull.IsFalse);
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(30,TRUE,'<#VYSTUPNY BUFFER - P6 POSUN KUSOV NAD BUFFER#>') THEN   
+
+	THIS^.Components.P6_VerticalSepareOutBlister.MoveToWork();
+	IF Components.I6_OutBlistersLisftSignal.Signal THEN
+	
+		THIS^.Components.P6_VerticalSepareOutBlister.MoveWorkTask.Abort();
+	    seq.StepCompleteWhen(TRUE);
+	END_IF;
+		
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(40,TRUE,'<#VYSTUPNY BUFFER - UVOLNENIE BLISTRA  P5 PRACOVNA POZICIA #>') THEN   
+
+	
+	seq.StepCompleteWhen(Components.P5_HorizontalSepareOutBlisters.MoveToWork().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(45,TRUE,'<#VYSTUPNY BUFFER - P6 NAVRAT NAHOR#>') THEN   
+
+	
+	seq.StepCompleteWhen( THIS^.Components.P6_VerticalSepareOutBlister.MoveToHome().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(50,TRUE,'<#VYSTUPNY BUFFER - HORIZONTALNE ZASUNUTIE P5 ZAKLADNA POZICIA#>') THEN   
+
+	
+	seq.StepCompleteWhen(Components.P5_HorizontalSepareOutBlisters.MoveToHome().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+		refSequenceTask.DoneWhen(TRUE);
+    	seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+
+IF refSequenceTask.HandleTaskError() THEN
+	//here we can decide what to do
+	//refSequenceTask.Restore();
+	_hanldeOutBufferTask.Restore();
+END_IF
+
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SequenceResetToDefault" Id="{3c0e30a2-272e-4407-bfb7-d166be43ff3b}" FolderPath="OperationsInternal\">
+      <Declaration><![CDATA[METHOD PRIVATE SequenceResetToDefault
+VAR_INPUT
+	refSequenceTask : REFERENCE TO TcoFeedingSequenceTask;
+	
+	
+END_VAR
+
+VAR
+    seq    : REFERENCE TO TcoCore.TcoSequence;
+
+END_VAR
+
+VAR_INST
+	_timer:ton;
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[seq REF= refSequenceTask.Sequence;
+refSequenceTask(inoStatus:=_status,inoConfig:=_config);
+seq.Open();
+seq.Observer := refSequenceTask.Observer;
+
+
+
+		
+
+
+
+//***************************************************************************************************     
+//    This step will be executed and immediately finished, as the condition in Await method is true.
+IF seq.Step(0,TRUE,'<#INIT#>') THEN   
+	Messenger.Warning('<#BEZPECNOST ZARIADENIA NARUSENA. NIEJE MOZNE VYKONAT AKCIU#>');     
+	IF _status.SafeCondition THEN
+    	seq.CompleteStep();
+	END_IF;
+END_IF        
+//***************************************************************************************************     
+
+
+
+//***************************************************************************************************     
+IF seq.Step(10,TRUE,'<#VYCHODIZA POLOHA - VYSUNUTIE P3#>') THEN   
+
+    seq.StepCompleteWhen(Components.P3_HorizontalSepareEntryBlisters.MoveToWork().Done );
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(20,NOT _config.SepareBlistersAtEntryInactive,'<#VYCHODIZA POLOHA - ZASUNUTIE P10#>') THEN   
+
+    seq.StepCompleteWhen(Components.P10_HoldEntrySepareOutBlister.MoveToHome().Done);
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(30,TRUE,'<#VYCHODIZA POLOHA - ZASUNUTIE P1 A P2>') THEN   
+
+
+	    seq.StepCompleteWhen(Components.P1_VerticalSepareEntryBlisters.MoveToHome().Done AND_THEN Components.P2_VerticalSepareEntryBlisters.MoveToHome().Done);
+
+END_IF        
+//***************************************************************************************************   
+
+
+//***************************************************************************************************     
+IF seq.Step(40,TRUE,'<#VYCHODIZA POLOHA - ZASUNUTIE P5#>') THEN   
+
+	
+	seq.StepCompleteWhen(Components.P5_HorizontalSepareOutBlisters.MoveToHome().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(50,TRUE,'<#VYCHODIZA POLOHA - ZASUNUTIE P6#>') THEN   
+
+	
+	seq.StepCompleteWhen(Components.P6_VerticalSepareOutBlister.MoveToHome().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(60,TRUE,'<#VYCHODIZA POLOHA - ZASUNUTIE P4 DO ZAKLADNEJ POZICIE#>') THEN   
+
+	
+	seq.StepCompleteWhen(Components.P4_FeedEntryBlister.MoveToHome().Done);
+		
+END_IF        
+//***************************************************************************************************   
+
+//***************************************************************************************************     
+IF seq.Step(70,COmponents.I4_PresentBlisterInWorkingPos.Signal AND
+				Components.P8_FixEntryBlisterSide.AtWork,'<#SEPAROVANIE VSTUPNEHO BLISTRA - PODoPRETIE  A ZAFIXOVANIE KUSU P7 VYSUNT A P9 ZASUNUT #>') THEN   
+
+    seq.StepCompleteWhen(THIS^.Components.P7_SupportEntryBlister.MoveToWork().Done AND (THIS^.Components.P9_LockEntryBlisterTop.MoveToHome().Done OR _config.LockBlisterInPickPosInactive));
+END_IF        
+//***************************************************************************************************   
+
+
+IF (seq.Step(inStepID := seq.RESTORE_STEP_ID,
+    inEnabled := TRUE,
+    inStepDescription := 'RETURN TO THE START OF THE SEQUENCE')) THEN
+    //--------------------------------------------------------	
+		refSequenceTask.DoneWhen(TRUE);
+    	seq.CompleteSequence();
+    //--------------------------------------------------------			
+END_IF;
+
+
+
+IF refSequenceTask.HandleTaskError() THEN
+	
+	//here we can decide what to do
+	//	refSequenceTask.Restore();
+
+END_IF
+
+seq.Close();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ServiceMode" Id="{d6789683-1857-454b-855b-b71fdc95539f}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+		    Custom service (manual, maintenance) logic.
+			This method must be implemented in derived class.
+		</summary>			
+	</docu>	
+~*)
+METHOD PROTECTED  ServiceMode
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_components.Q3_AttentionSignalisationB.Service();
+_components.Q2_AttentionSignalisationG.Service();
+_components.Q1_AttentionSignalisationR.Service();
+_components.P1_VerticalSepareEntryBlisters.Service();
+_components.P2_VerticalSepareEntryBlisters.Service();
+_components.P3_HorizontalSepareEntryBlisters.Service();
+_components.P4_FeedEntryBlister.Service();
+_components.P5_HorizontalSepareOutBlisters.Service();
+_components.P6_VerticalSepareOutBlister.Service();
+_components.P7_SupportEntryBlister.Service();
+_components.P8_FixEntryBlisterSide.Service();
+_components.P9_LockEntryBlisterTop.Service();
+_components.P10_HoldEntrySepareOutBlister.Service();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SetSequencesToStep" Id="{08dda5b8-b112-4832-b695-104e26e3c400}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY PUBLIC SetSequencesToStep : bool]]></Declaration>
+      <Get Name="Get" Id="{34257eb9-2fc0-4004-82ca-3ef4ff05a864}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SetSequencesToStep:=_setSequencesToStep;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2c6419f0-519c-4154-8600-0a64436066c5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_setSequencesToStep:=SetSequencesToStep;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="SetToDefault" Id="{3b6d5b6a-a699-49dd-a34b-8932dab05016}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC SetToDefault : TcoCore.ITcoTaskStatus
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SetToDefault := _setToDefaultTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SetToDefaultTask" Id="{0c23f165-d120-4d1c-a19c-eb3c1e432107}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY SetToDefaultTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{d3c34604-a3b6-440a-81b8-8cf07055ccab}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SetToDefaultTask ref=_setToDefaultTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Status" Id="{4f7c09e9-b9d2-4b30-879c-67a0c1d3ae52}">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Gets the status of the MTS Pls feeder. 					
+		</summary>			
+	</docu>	
+~*)
+PROPERTY Status : REFERENCE TO TcoPlsPaletizator_Status_v_1_x_x]]></Declaration>
+      <Get Name="Get" Id="{b88e2ff8-e862-4b0e-a96c-bb4d6c1ba00f}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status REF= _status;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ThrowBlister" Id="{fc94240a-e997-4851-aa08-c4006d185fe2}" FolderPath="Operations\">
+      <Declaration><![CDATA[METHOD PUBLIC ThrowBlister : TcoCore.ITcoTaskStatus
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+ThrowBlister := _throwBlisterTask.Invoke();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ThrowBlisterTask" Id="{6c05fc74-a894-4d71-9cc9-8b901d635244}" FolderPath="Tasks\">
+      <Declaration><![CDATA[PROPERTY ThrowBlisterTask : REFERENCE TO TcoFeedingSequenceTask
+]]></Declaration>
+      <Get Name="Get" Id="{051ea58b-2014-4589-b17a-f2406721db2a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ThrowBlisterTask ref=_throwBlisterTask;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

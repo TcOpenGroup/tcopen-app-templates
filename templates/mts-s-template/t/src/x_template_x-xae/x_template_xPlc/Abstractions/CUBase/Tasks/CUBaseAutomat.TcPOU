@@ -6,13 +6,73 @@ VAR
     _dialog : TcoCore.TcoDialog(THIS^);
     _dialogCustomized : TcoCore.TcoCustomizedDialog(THIS^);
     _dialogWithInput : TcoCore.TcoInputDialog(THIS^);
+    {attribute addProperty Name "<#Clear counter#>"}
+    _counterDataClear : TcoCore.TcoTask(THIS^);
 END_VAR
-]]></Declaration>
+VAR PERSISTENT
+    _counterData : BasicCounterData := (Parent := THIS^);
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="BasicCounter" Id="{b47a61f7-608d-45ce-b92c-5c74440b0bdf}" />
     <Folder Name="ConsecutiveFailures" Id="{c3dd5496-e25f-034d-3f6e-b4ffa5b188df}" />
     <Folder Name="DataOperations" Id="{edf08b17-d837-0916-3b82-58653463e4f4}" />
+    <Method Name="ClearCounter" Id="{3fe6db25-d81f-47c9-98d7-de41bdcfdffd}" FolderPath="BasicCounter\">
+      <Declaration><![CDATA[METHOD PUBLIC ClearCounter
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_counterData.Passed := 0;
+_counterData.Failed := 0;
+
+
+_counterData.Total := _counterData.Passed + _counterData.Failed;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ClearCounterDataTask" Id="{6e20c5b2-941a-4164-8800-78ec60008e01}" FolderPath="BasicCounter\">
+      <Declaration><![CDATA[PROPERTY PUBLIC ClearCounterDataTask : REFERENCE TO TcoCore.TcoTask
+]]></Declaration>
+      <Get Name="Get" Id="{f4fe5965-8e7d-4759-b6ef-d2bd14c53f27}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ClearCounterDataTask ref=_counterDataClear;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Count" Id="{9415656d-f5b9-4eed-924f-33187354aea4}" FolderPath="BasicCounter\">
+      <Declaration><![CDATA[METHOD Count
+VAR_INPUT
+	Header 		: EntityHeader;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+IF NOT Header.IsEmpty THEN
+
+    _counterData.LifeTime := _counterData.LifeTime + 1;
+
+    IF Header.Results.Result = eOverallResult.Failed THEN
+        _counterData.Failed := _counterData.Failed + 1;
+        _counterData.LifeTimeFailed := _counterData.LifeTimeFailed + 1;
+    ELSE
+        _counterData.Passed := _counterData.Passed + 1;
+        _counterData.LifeTimePassed := _counterData.LifeTimePassed + 1;
+    END_IF
+
+END_IF;
+
+_counterData.Total := _counterData.Passed + _counterData.Failed;
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="DataEntityClose" Id="{a965833c-1ef6-025a-113f-9e8e9e5a762c}" FolderPath="DataOperations\">
       <Declaration><![CDATA[(*~
 	<docu>
@@ -49,6 +109,9 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF (Step(inStepID,TRUE, 'CLOSE ENTITY DATA')) THEN
     //-------------------------------------		
+	IF IsFreshState THEN
+		Count(THIS^.StationBase.ProcessDataManager.Data.EntityHeader);
+	END_IF
 	CASE InvokeAction OF
 		eDataEntityInvokeType.InvokeAndWaitDone: 
 				StepCompleteWhen(THIS^.StationBase.EntityFlowCloseForOperations(Header).Done);

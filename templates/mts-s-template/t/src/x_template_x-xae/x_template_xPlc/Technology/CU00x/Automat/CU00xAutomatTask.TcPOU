@@ -157,6 +157,38 @@ END_VAR
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="DataReadyForOperations" Id="{b4d726fc-6047-4703-bb67-29e16147246b}" FolderPath="DataOperations\">
+      <Declaration><![CDATA[(*~
+	<docu>
+		<summary>
+			Wait for start operations and then go into this controlled unit sequence.						
+		</summary>
+	</docu>
+~*)
+METHOD DataReadyForOperations : BOOL
+VAR_INPUT
+	inStepID : INT;
+END_VAR
+
+VAR
+	_ans: TcoCore.eDialogAnswer;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.Station.ResetReadyForOperations();   
+
+IF (Step(inStepID, TRUE, '<#READY TO START OPERATIONS#>')) THEN
+    //-------------------------------------
+	
+	THIS^.Station.SetReadyForOperations();   
+	
+  	Await(THIS^.Station.InternalRetrieveEntity(inCarrier:=2(*here comes info from carousel position*),refStorage:=Station.Technology.InternalStorage) 
+			 AND_THEN THIS^.Station.DoesBelong() 
+			 AND_THEN THIS^.Station.RunOperations(refGlobalTrigger:=Station.Technology.RunOperations)
+			 AND_THEN THIS^.Station.InternalOpenEntity(inCarrier:=2(*here comes info from carousel position*),refStorage:=Station.Technology.InternalStorage,inoHeader:= THIS^.Station.CuProcessData.Header));
+    //-------------------------------------
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="DialogExamples" Id="{d8d4f5ba-bd5f-4a6d-9786-138841a2b026}" FolderPath="InpspectorExamples\">
       <Declaration><![CDATA[METHOD DialogExamples
 VAR_INPUT
@@ -442,7 +474,7 @@ IF (Step(910, TRUE, 'SINGLE ANALOGUE INSPECTION')) THEN
     Station.ProcessDataManager.Data.CU00x.BoltDimensionPresenceInspector.WithCoordinator(THIS^)
         .Inspect(_inspectionDimensionResult)
         .UpdateComprehensiveResult(Station.ProcessDataManager.Data.EntityHeader.Results)
-        .OnFail().CarryOn();
+        .OnFail().Dialog(300);
     //-------------------------------------
 END_IF
 

@@ -412,6 +412,24 @@ namespace x_template_xHmi.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load data from Plc.
+        /// </summary>
+        public static string LoadData {
+            get {
+                return ResourceManager.GetString("LoadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load data cyclicaly.
+        /// </summary>
+        public static string LoadDataCyclicaly {
+            get {
+                return ResourceManager.GetString("LoadDataCyclicaly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {

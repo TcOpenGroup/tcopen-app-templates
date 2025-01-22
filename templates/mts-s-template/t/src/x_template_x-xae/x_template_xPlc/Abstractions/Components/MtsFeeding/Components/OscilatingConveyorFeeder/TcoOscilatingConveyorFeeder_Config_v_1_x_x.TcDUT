@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeeder_Config_v_1_x_x" Id="{8cb526aa-6f1b-4b88-a183-e5da07982af3}">
+    <Declaration><![CDATA[TYPE
+    TcoOscilatingConveyorFeeder_Config_v_1_x_x EXTENDS TcoFeeding_Config_v_1_x_x :
+    STRUCT
+        {attribute addProperty Name "<#Ovladane kamerovym systemom#>"}
+        ControledByVisonSystem : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder  rad 1- vravo#>"}
+        EnableCylinderRow1Right : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 1 - vstrede#>"}
+        EnableCylinderRow1Middle : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 1 - vlavo#>"}
+        EnableCylinderRow1Left : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder  rad 2- vravo#>"}
+        EnableCylinderRow2Right : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 2 - vstrede#>"}
+        EnableCylinderRow2Middle : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 2 - vlavo#>"}
+        EnableCylinderRow2Left : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder  rad 3- vravo#>"}
+        EnableCylinderRow3Right : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 3 - vstrede#>"}
+        EnableCylinderRow3Middle : BOOL;
+
+        {attribute addProperty Name "<#Oscilacny cylinder rad 3 - vlavo#>"}
+        EnableCylinderRow3Left : BOOL;
+
+        {attribute addProperty Name "<#Mantinel aktivny#>"}
+        EnableSideGuard : BOOL;
+
+        {attribute addProperty Name "<#Mantinel na dosipaci aktivny#>"}
+        EnableEntryFeederMantinel : BOOL;
+
+    //        {attribute addProperty Name "<#FillingTime#>"}
+    //        FillingTime : TIME;
+
+    //        {attribute addProperty Name "<#RunConv Time#>"}
+    //        RunConvTime : TIME;
+
+    //        {attribute addProperty Name "<#Oscilation Time #>"}
+    //        OscilationTime : TIME;
+
+    //        {attribute addProperty Name "<#Oscilation Type#>"}
+    //        OscilationType : eTcoOscilatingConveyorOscilationModes;
+
+    //        {attribute addProperty Name "<#Oscilation Frequency#>"}
+    //        OscilationFreqency : TIME;
+
+    //        {attribute addProperty Name "<#RunConvReverse Time#>"}
+    //        RunConvRevTime : TIME;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

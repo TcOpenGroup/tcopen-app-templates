@@ -2,24 +2,26 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TcoControlButtons" Id="{48959623-996d-47ac-84b8-cb797c359e83}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute wpf [Container(Layout.Stack)]}
+{attribute wpf [Group(Layout.GroupBox)]}
+
 FUNCTION_BLOCK TcoControlButtons EXTENDS TcoCore.TcoObject IMPLEMENTS ITcoControlButtons
-VAR_IN_OUT
+VAR_INPUT
     {attribute clr [RenderIgnore()]}
-    inoButtonRecover : bool;
+    refButtonRecover : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonSuspend : BOOL;
+    refButtonSuspend : REFERENCE TO BOOL;
 	{attribute clr [RenderIgnore()]}
-    inoButtonGround : BOOL;
+    refButtonGround : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonAuto : BOOL;
+    refButtonAuto : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonRecoverLight : BOOL;
+    refButtonRecoverLight : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonSuspendLight : BOOL;
+    refButtonSuspendLight : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonGroundLight : BOOL;
+    refButtonGroundLight : REFERENCE TO BOOL;
     {attribute clr [RenderIgnore()]}
-    inoButtonAutoLight : BOOL;
+    refButtonAutoLight : REFERENCE TO BOOL;
 
 END_VAR
 VAR
@@ -39,10 +41,10 @@ VAR
 
 
 
-    {attribute addProperty Name "<#ButtonStartLight#>"}
+    {attribute addProperty Name "<#ButtonRecoverLight#>"}
     _buttonRecoverLight : TcoElements.TcoDo(THIS^);
 
-    {attribute addProperty Name "<#ButtonStopLight#>"}
+    {attribute addProperty Name "<#ButtonSuspendLight#>"}
     _buttonSuspendLight : TcoElements.TcoDo(THIS^);
 
     {attribute addProperty Name "<#ButtonGroundLight#>"}
@@ -51,20 +53,44 @@ VAR
     _buttonAutoLight : TcoElements.TcoDo(THIS^);
 
 
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[_buttonRecover(inoSignal:= inoButtonRecover);
-_buttonSuspend(inoSignal:= inoButtonSuspend);
-_buttonGround(inoSignal:= inoButtonGround);
-_buttonAuto(inoSignal:= inoButtonAuto);
+      <ST><![CDATA[IF __ISVALIDREF(refButtonRecover) THEN
+    _buttonRecover(inoSignal := refButtonRecover);
+END_IF
 
+IF __ISVALIDREF(refButtonSuspend) THEN
+    _buttonSuspend(inoSignal := refButtonSuspend);
+END_IF;
 
+IF __ISVALIDREF(refButtonGround) THEN
+    _buttonGround(inoSignal := refButtonGround);
+END_IF;
 
-_buttonGroundLight(inoSignal:= inoButtonGroundLight);
-_buttonSuspendLight(inoSignal:= inoButtonSuspendLight);
-_buttonRecoverLight(inoSignal:= inoButtonRecoverLight);
-_buttonAutoLight(inoSignal:= inoButtonAutoLight);
+IF __ISVALIDREF(refButtonAuto) THEN
+    _buttonAuto(inoSignal := refButtonAuto);
+END_IF;
+
+IF __ISVALIDREF(refButtonGroundLight) THEN
+    _buttonGroundLight(inoSignal := refButtonGroundLight);
+END_IF
+
+IF __ISVALIDREF(refButtonSuspendLight) THEN
+    _buttonSuspendLight(inoSignal := refButtonSuspendLight);
+
+END_IF;
+
+IF __ISVALIDREF(refButtonRecoverLight) THEN
+    _buttonRecoverLight(inoSignal := refButtonRecoverLight);
+
+END_IF;
+
+IF __ISVALIDREF(refButtonAutoLight) THEN
+    _buttonAutoLight(inoSignal := refButtonAutoLight);
+
+END_IF;
 ]]></ST>
     </Implementation>
     <Property Name="ButtonAuto" Id="{7975322c-2ce8-4a76-b3ee-77f01bf097d2}">

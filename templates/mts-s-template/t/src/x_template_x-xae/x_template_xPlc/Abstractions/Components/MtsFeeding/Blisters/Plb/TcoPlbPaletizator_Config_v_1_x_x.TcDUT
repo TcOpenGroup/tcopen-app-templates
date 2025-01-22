@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlbPaletizator_Config_v_1_x_x" Id="{56083e8e-b731-4b46-9088-437d9638b500}">
+    <Declaration><![CDATA[TYPE
+    TcoPlbPaletizator_Config_v_1_x_x EXTENDS  TcoFeeding_Config_v_1_x_x:
+    STRUCT
+
+      
+
+        {attribute addProperty Name "<#Manipulator - Pozicie nazov #>"}
+        PositionsSetName : STRING;
+
+        {attribute addProperty Name "<#Zasobnik 1 zakazany#>"}
+        Buffer1Disabled : BOOL;
+
+        {attribute addProperty Name "<#Zasobnik 2 zakazany#>"}
+        Buffer2Disabled : BOOL;
+
+        {attribute addProperty Name "<#Zasobnik 2 zakazany#>"}
+        Buffer3Disabled : BOOL;
+
+        {attribute addProperty Name "<#Zasobnik 2 zakazany#>"}
+        Buffer4Disabled : BOOL;
+
+        {attribute addProperty Name "<#Zasobnik prazdnych 1 zakazany#>"}
+        EmptyBuffer1Disabled : BOOL;
+
+        {attribute addProperty Name "<#Zasobnik prazdnych 2 zakazany#>"}
+        EmptyBuffer2Disabled : BOOL;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

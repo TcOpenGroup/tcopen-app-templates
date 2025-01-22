@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eTcoEq2TransferHandlingMode" Id="{4e0ab13c-5c57-42da-992a-36b7bb74dbce}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE eTcoEq2TransferHandlingMode :
+(
+	SendDirectWay := 1,
+	SendSideWay := 2,
+	RecieveDirectWay := 3,
+	RecieveSideWay := 4
+
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

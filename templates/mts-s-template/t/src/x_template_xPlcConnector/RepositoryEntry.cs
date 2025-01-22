@@ -37,6 +37,30 @@ namespace x_template_xPlcConnector
 
         }
 
+        /// <summary>
+        /// Initializes <see cref="ProcessDataManager"/>s or Initializes <see cref="TechnologicalDataManager"/>s repository for data exchange between PLC and storage (database).
+        /// </summary>
+        /// <typeparam name="T1">Type of manager</typeparam>
+        /// <typeparam name="T2">Type of reposistory</typeparam>
+        /// <param name="manager">Data manager</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="withDataExchange">Define if data are  exchanged between PLC and storage (database)</param>
+        /// <param name="onUpdateDoneAction">Action can be applied from outsise when update was done.</param>
+        public static void InitializeRepository<T1, T2>(T1 manager, IRepository<T2> repository, bool withDataExchange, OnUpdateDoneDelegate<T2> onUpdateDoneAction) where T1 : TcoData.TcoDataExchange
+                                                                                                                      where T2 : PlainTcoEntityBase
+        {
+            repository.OnCreate = (id, data) => { data._Created = DateTime.Now; data._Modified = DateTime.Now; };
+
+
+            repository.OnUpdateDone = onUpdateDoneAction;
+            repository.OnUpdate = (id, data) => { data._Modified = DateTime.Now; };
+            manager.InitializeRepository(repository);
+            if (withDataExchange)
+            {
+                manager.InitializeRemoteDataExchange(repository);
+            }
+
+        }
 
 
         public static IAuthenticationService CreateSecurityManageUsingRavenDb(bool withDefaultGroups, bool withDefaultUsers)

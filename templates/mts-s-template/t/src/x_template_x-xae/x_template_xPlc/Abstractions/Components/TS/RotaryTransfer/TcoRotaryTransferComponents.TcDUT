@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoRotaryTransferComponents" Id="{501cd968-1e0c-4eab-a690-13b2d0c0fae2}">
+    <Declaration><![CDATA[
+TYPE
+    TcoRotaryTransferComponents EXTENDS TcoCore.TcoStruct :
+    STRUCT
+
+        {attribute addProperty Name "<#Paleta pred stanicou#>"}
+        iPrestopper : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Paleta v stanici#>"}
+        iStopper : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Transfer je prazdny#>"}
+        iTransferIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+
+        {attribute addProperty Name "<#Vystup zo stanice plny#>"}
+        iWipa : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#MotorInError#>"}
+        iMotorError : TcoElements.TcoDi(THISSTRUCT);
+        {attribute addProperty Name "<#Predzarazka#>"}
+        qPrestopper : TcoElements.TcoDo(THISSTRUCT);
+        {attribute  addProperty Name "<#Zarazka#>"}
+        qStopper : TcoElements.TcoDo(THISSTRUCT);
+        {attribute  addProperty Name "<#Motor#>"}
+        qMotor : TcoElements.TcoDo(THISSTRUCT);
+        {attribute addProperty Name "<Rotary unit#>"}
+        RotaryUnit : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

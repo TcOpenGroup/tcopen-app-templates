@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eTcoOscilatingConveyorOscilationModes" Id="{6f3a6f27-0b97-033b-2781-052da5178d9f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE eTcoOscilatingConveyorOscilationModes :
+(
+	All:=0,
+	Left:=1,
+	Right:=2,
+	Middle:=3,
+	LeftRight:=4,
+	LeftToRight := 5,
+	RightToLeft :=6
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

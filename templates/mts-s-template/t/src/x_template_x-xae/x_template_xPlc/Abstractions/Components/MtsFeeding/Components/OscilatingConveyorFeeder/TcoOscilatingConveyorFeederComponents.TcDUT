@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeederComponents" Id="{84c9d1c6-1b61-49aa-817a-654b91ad72fc}">
+    <Declaration><![CDATA[TYPE TcoOscilatingConveyorFeederComponents EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+
+	
+
+	
+	
+	{attribute wpf [Container(Layout.Stack,"Nasypnik")]}
+	{attribute addProperty Name "<#Vstupny podavac prazdny#>"}
+	iEntryFeederIsEmpty : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Vstupny podavac preletovy senzor#>"}
+	iFlowSensor : TcoElements.TcoDi(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Vstupny podavac v chybe #>"}
+	iEntryFeederError : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Vyprazdnovaci box pritomny#>"}
+	iThrowBoxPresent : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Vstupny podavac Start #>"}
+	qEntryFeederRun : TcoElements.TcoDo(THISSTRUCT);
+	
+
+	{attribute wpf [Container(Layout.Stack,"Dopravnik")]}
+	{attribute addProperty Name "<#Oscilacny dopravnik je v chybe#>"}
+	iOscConvError : TcoElements.TcoDi(THISSTRUCT);
+	{attribute addProperty Name "<#Oscilacny dopravnik Start#>"}
+	qOscConvRun : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "<#Oscilacny dopravnik reverz Start#>"}
+	qOscConvRunReverse : TcoElements.TcoDo(THISSTRUCT);
+	
+	
+	{attribute wpf [Container(Layout.Stack,"Valce")]}
+	
+	{attribute addProperty Name "<#Oscilacny cylinder  rad 1- vravo#>"}
+	qOscCylinderRow1Right : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 1 - vstrede#>"}
+	qOscCylinderRow1Middle : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 1 - vlavo#>"}
+	qOscCylinderRow1Left : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder  rad 2- vravo#>"}
+	qOscCylinderRow2Right : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 2 - vstrede#>"}
+	qOscCylinderRow2Middle : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 2 - vlavo#>"}
+	qOscCylinderRow2Left : TcoElements.TcoDo(THISSTRUCT);
+	
+	
+	{attribute addProperty Name "<#Oscilacny cylinder  rad 3 - vravo#>"}
+	qOscCylinderRow3Right : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 3 - vstrede#>"}
+	qOscCylinderRow3Middle : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Oscilacny cylinder rad 3 - vlavo#>"}
+	qOscCylinderRow3Left : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Bocny matinel#>"}
+	SideGuard : TcoPneumatics.TcoDoubleCylinder(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Bocny matinel#>"}
+	EntryFeederMantinel : TcoPneumatics.TcoCylinder(THISSTRUCT);
+
+
+	{attribute wpf [Container(Layout.Stack,"Vseobecne")]}
+	
+	{attribute addProperty Name "(Q1) <#Signalizacia upozornenia R#>"}
+	Q1_AttentionSignalisationR : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "(Q2) <#Signalizacia upozornenia G#>"}
+	Q2_AttentionSignalisationG : TcoElements.TcoDo(THISSTRUCT);
+	{attribute addProperty Name "(Q3) <#Signalizacia upozornenia B#>"}
+	Q3_AttentionSignalisationB : TcoElements.TcoDo(THISSTRUCT);
+	
+	{attribute addProperty Name "<#Cognex Designer#>"}
+	Designer : TcoCognexVision.TcoDesigner_v_2_x_x(THISSTRUCT);
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

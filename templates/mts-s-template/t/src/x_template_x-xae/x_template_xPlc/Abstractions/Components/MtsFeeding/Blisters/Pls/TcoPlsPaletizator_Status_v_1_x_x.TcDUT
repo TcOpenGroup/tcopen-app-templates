@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlsPaletizator_Status_v_1_x_x" Id="{44e4d35e-4de6-416e-b94f-93977a6d1dd1}">
+    <Declaration><![CDATA[TYPE
+    TcoPlsPaletizator_Status_v_1_x_x EXTENDS TcoFeeding_Status_v_1_x_x:
+    STRUCT
+
+        
+		EntryBufferEmpty:BOOL;
+        BlisterReady : BOOL;
+        OutBufferFull : BOOL;
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

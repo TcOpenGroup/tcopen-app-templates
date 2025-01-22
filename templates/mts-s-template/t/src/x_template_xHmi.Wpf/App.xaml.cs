@@ -36,6 +36,8 @@ using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using x_template_xReworkInstructor.Instructor;
 using x_template_xReworkInstructor.Instructor.View;
+using System.Collections.Generic;
+using TcoCore;
 
 namespace x_template_xHmi.Wpf
 {
@@ -147,7 +149,7 @@ namespace x_template_xHmi.Wpf
          
 
             // Otherwise undocumented feature in official IVF, for details refer to internal documentation.
-            LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Invisible };
+            LazyRenderer.Get.CreateSecureContainer = (permissions) => new PermissionBox { Permissions = permissions, SecurityMode = SecurityModeEnum.Disabled };
 
 
 
@@ -182,13 +184,34 @@ namespace x_template_xHmi.Wpf
             x_template_xPlc.MAIN._technology._cu00x._components.MultiAxis.IsExpanded = true;
             x_template_xPlc.MAIN._technology._cu00x._components.PlsPaletizator.SearchComponentsDepth = 3;
 
-     
 
+            //define witch components should be expanded by default
+            ListOfComponents = new List<TcoCore.TcoComponent>();
+            Entry.SearchOnlinerHelper(x_template_xPlc.MAIN._technology._cu00x._components, Include);
+            foreach (var item in ListOfComponents)
+            {
+                item.IsExpanded = true;
+            }
 
         }
-        // this is usage, should be placed in remote exec
+        private bool Include(object obj)
+        {
 
-    
+
+            switch (obj)
+            {
+
+                case TcoPlsPaletizator c:
+                    ListOfComponents.Add(c);
+                    return c is TcoPlsPaletizator;
+              
+
+                default:
+                    break;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// this is remontely invoked from plc , 
@@ -261,7 +284,7 @@ namespace x_template_xHmi.Wpf
         {            
             try
             {
-                SecurityManager.Manager.Service.ExternalAuthorization = TcOpen.Inxton.Local.Security.Readers.ExternalTokenAuthorization.CreateComReader("COM3");
+                SecurityManager.Manager.Service.ExternalAuthorization = TcOpen.Inxton.Local.Security.Readers.ExternalTokenAuthorization.CreateComReader(Entry.Settings.RfidChipPortName) ;
             }
             catch (Exception ex)
             {
@@ -331,8 +354,8 @@ namespace x_template_xHmi.Wpf
             var TechnologicalDataRepoSettings = new RavenDbRepositorySettings<PlainTechnologyData>(new string[] { Entry.Settings.GetConnectionString() }, "TechnologySettings", "", "");
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._technologySettings, new RavenDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings), DataExchangeActive);
 
-            var ReworklDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "ReworkSettings", "", "");
-            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), DataExchangeActive) ;
+            var ReworkDataRepoSettings = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "ReworkSettings", "", "");
+            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._reworkSettings, new RavenDbRepository<PlainProcessData>(ReworkDataRepoSettings), DataExchangeActive) ;
 
             //Statistics
             var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new RavenDbRepository<EntitySet<StatisticsDataItem>>(new RavenDbRepositorySettings<EntitySet<StatisticsDataItem>>(new string[] { Entry.Settings.GetConnectionString() }, "Statistics", "", "")));
@@ -345,16 +368,10 @@ namespace x_template_xHmi.Wpf
 
             var Traceability = new RavenDbRepositorySettings<PlainProcessData>(new string[] { Entry.Settings.GetConnectionString() }, "Traceability", "", "");
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._processTraceability, new RavenDbRepository<PlainProcessData>(Traceability),false);
-            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability),DataExchangeActive);
+            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new RavenDbRepository<PlainProcessData>(Traceability),DataExchangeActive, (id, data) => { CuxStatistic.Count(data); });
 
-            //count data
-            //count data
-            if (DataExchangeActive)
-            {
-                new RavenDbRepository<PlainProcessData>(Traceability).OnUpdateDone = (id, data) => { CuxStatistic.Count(data); };
-            }
 
-            Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworklDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
+            Rework = new ReworkModel(new RavenDbRepository<PlainProcessData>(ReworkDataRepoSettings), new RavenDbRepository<PlainProcessData>(Traceability));
 
             //Production planer         
             var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new RavenDbRepository<EntitySet<ProductionItem>>(new RavenDbRepositorySettings<EntitySet<ProductionItem>>(new string[] { Entry.Settings.GetConnectionString() }, "ProductionPlan", "", "")));
@@ -382,8 +399,8 @@ namespace x_template_xHmi.Wpf
             var TechnologicalDataRepoSettings = new MongoDbRepositorySettings<PlainTechnologyData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "TechnologySettings");
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._technologySettings, new MongoDbRepository<PlainTechnologyData>(TechnologicalDataRepoSettings), DataExchangeActive);
 
-            var ReworklDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkSettings");
-            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings), DataExchangeActive);
+            var ReworkDataRepoSettings = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkSettings");
+            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._reworkSettings, new MongoDbRepository<PlainProcessData>(ReworkDataRepoSettings), DataExchangeActive);
 
             //Statistics
             var _statisticsDataHandler = RepositoryDataSetHandler<StatisticsDataItem>.CreateSet(new MongoDbRepository<EntitySet<StatisticsDataItem>>(new MongoDbRepositorySettings<EntitySet<StatisticsDataItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Statistics")));
@@ -396,14 +413,11 @@ namespace x_template_xHmi.Wpf
 
             var Traceability = new MongoDbRepositorySettings<PlainProcessData>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "Traceability");
             RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._processTraceability, new MongoDbRepository<PlainProcessData>(Traceability),false);
-            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability), DataExchangeActive);
+            RepositoryEntry.InitializeRepository(x_template_xPlc.MAIN._technology._cu00x._processData, new MongoDbRepository<PlainProcessData>(Traceability), DataExchangeActive,(id, data) => { CuxStatistic.Count(data); });
 
-            //count data
-            new MongoDbRepository<PlainProcessData>(Traceability).OnUpdateDone = (id, data) => {CuxStatistic.Count(data); };
 
-            RepositoryEntry.InitializeIndexProcessDataRepositoryMongoDb(Traceability);
 
-            Rework = new ReworkModel(new MongoDbRepository<PlainProcessData>(ReworklDataRepoSettings), new MongoDbRepository<PlainProcessData>(Traceability));
+            Rework = new ReworkModel(new MongoDbRepository<PlainProcessData>(ReworkDataRepoSettings), new MongoDbRepository<PlainProcessData>(Traceability));
 
             //Production planer         
             var _productionPlanHandler = RepositoryDataSetHandler<ProductionItem>.CreateSet(new MongoDbRepository<EntitySet<ProductionItem>>(new MongoDbRepositorySettings<EntitySet<ProductionItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ProductionPlan")));
@@ -428,7 +442,7 @@ namespace x_template_xHmi.Wpf
             //Rework Instructor
             var _reworkInstructionPlanHandler = RepositoryDataSetHandler<ReworkInstructionItem>.CreateSet(new MongoDbRepository<EntitySet<ReworkInstructionItem>>(new MongoDbRepositorySettings<EntitySet<ReworkInstructionItem>>(Entry.Settings.GetConnectionString(), Entry.Settings.DbName, "ReworkInstructions")));
 
-            CuxReworkInstructor = new ReworkInstructorController(_reworkInstructionPlanHandler, new MongoDbRepository<PlainProcessData>(ProcessDataRepoSettings), x_template_xPlc.MAIN._technology._cu00x._processData._data);
+            CuxReworkInstructor = new ReworkInstructorController(_reworkInstructionPlanHandler, new MongoDbRepository<PlainProcessData>(ReworkDataRepoSettings), x_template_xPlc.MAIN._technology._cu00x._processData._data);
 
             Action getReworkInstruction = () => GetReworkInstruction(x_template_xPlc.MAIN._technology._cu00x._components.ReworkInstructionTask,CuxReworkInstructor);
             x_template_xPlc.MAIN._technology._cu00x._components.ReworkInstructionTask.InitializeExclusively(getReworkInstruction);
@@ -503,6 +517,7 @@ namespace x_template_xHmi.Wpf
         public static ShutdownViewModel AppShutdownModel { get; private set; } = new ShutdownViewModel();
         public bool DataExchangeActive { get; private set; } = true;
         public static ReworkInstructorController CuxReworkInstructor { get; private set; }
+        public List<TcoComponent> ListOfComponents { get; private set; }
 
 
         /// <summary>

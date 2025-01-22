@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeeder_Control_v_1_x_x" Id="{007299f7-6e05-4cce-8f59-4d243d77c654}">
+    <Declaration><![CDATA[TYPE TcoOscilatingConveyorFeeder_Control_v_1_x_x EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+	
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

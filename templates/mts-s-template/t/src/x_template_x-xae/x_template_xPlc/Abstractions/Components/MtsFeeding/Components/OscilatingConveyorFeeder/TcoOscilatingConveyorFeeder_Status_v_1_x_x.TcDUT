@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoOscilatingConveyorFeeder_Status_v_1_x_x" Id="{59e6df44-1249-494d-88dd-2c804ad2d1f3}">
+    <Declaration><![CDATA[TYPE TcoOscilatingConveyorFeeder_Status_v_1_x_x EXTENDS TcoFeeding_Status_v_1_x_x:
+STRUCT
+
+
+		EntryBufferEmpty:BOOL;
+		PcToPlcData:TcoOscilatingConveyorFeeder_PcToPlc;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

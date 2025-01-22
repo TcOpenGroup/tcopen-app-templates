@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoTransferSystem_Config" Id="{aaf0c867-0085-4d82-ac83-276020cec609}">
+    <Declaration><![CDATA[TYPE
+    TcoTransferSystem_Config EXTENDS TcoCore.TcoStruct :
+    STRUCT
+     	InfoTime : TIME := T#5S;
+        ErrorTime : TIME := T#0S;
+        StabilisationTime : TIME := T#200MS;
+		HasPositionUnit : BOOL :=TRUE;
+		
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoFeeding_Config_v_1_x_x" Id="{edbfbbf6-57d7-4b3e-ab28-36a2c91073c1}">
+    <Declaration><![CDATA[TYPE
+    TcoFeeding_Config_v_1_x_x EXTENDS TcoCore.TcoStruct :
+    STRUCT
+
+        InfoTime : TIME := T#5S;
+        ErrorTime : TIME := T#0S;
+        {attribute addProperty Name "<#Stabilizacny cas#>"}
+        StabilisationTime : TIME := T#500MS;
+        {attribute addProperty Name "<#Blink period#> "}
+        BlinkTime : TIME := T#500MS;
+
+        {attribute addProperty Name "<#Time to dissable safety#> "}
+        TimeToDisableSafety : TIME := T#10S;
+
+        {attribute addProperty Name "<#Volba krokoveho/Cyklickeho modu ovladna z vonka (SetSequencesToStep)#>"}
+        StepModeManagableFromOutside : BOOL;
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

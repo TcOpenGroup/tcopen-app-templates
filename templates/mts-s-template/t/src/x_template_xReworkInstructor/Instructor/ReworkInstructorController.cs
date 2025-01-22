@@ -24,7 +24,7 @@ namespace x_template_xReworkInstructor.Instructor
         {
             OnlineData = onlineData;
             DataHandler = instructionData;
-            RewrkSetRepository = repository;
+            ReworkSetRepository = repository;
             transferEntityObject = new TransformationEntityData(repository);
             RepositorySource = repository;
             RefreshReworkSet(repository);
@@ -40,7 +40,7 @@ namespace x_template_xReworkInstructor.Instructor
         /// Gets production of this 
         /// </summary>
         protected RepositoryDataSetHandler<ReworkInstructionItem> DataHandler { get; }
-        public IRepository<PlainProcessData> RewrkSetRepository { get; private set; }
+        public IRepository<PlainProcessData> ReworkSetRepository { get; private set; }
 
         public string ConfigName { get; set; }
 

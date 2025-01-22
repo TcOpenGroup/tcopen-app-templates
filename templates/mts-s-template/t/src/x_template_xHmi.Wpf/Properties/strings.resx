@@ -390,7 +390,6 @@
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
   </data>
-
   <data name="FullProcessData" xml:space="preserve">
     <value>Full process  data</value>
   </data>
@@ -399,12 +398,17 @@
   </data>
   <data name="StationTechnologyData" xml:space="preserve">
     <value>Station technology data</value>
-</data>
+  </data>
   <data name="OnlineData" xml:space="preserve">
     <value>ONLINE DATA</value>
-
   </data>
   <data name="ShowStationInWindow" xml:space="preserve">
     <value>Show station data in new window</value>
+  </data>
+  <data name="LoadData" xml:space="preserve">
+    <value>Load data from Plc</value>
+  </data>
+  <data name="LoadDataCyclicaly" xml:space="preserve">
+    <value>Load data cyclicaly</value>
   </data>
 </root>

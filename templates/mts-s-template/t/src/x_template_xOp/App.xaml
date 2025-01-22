@@ -31,12 +31,21 @@
 
 
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="CheckSwitch" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                <Setter Property="materialDesign:CheckBoxAssist.CheckBoxSize" Value="30" />
+            </Style>
 
-
-
-
-
+            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MaterialDesignScrollViewer}">
+                <Setter Property="PanningMode" Value="Both" />
+                <Setter Property="IsManipulationEnabled" Value="True" />
+                <Setter Property="PanningDeceleration" Value="0.001" />
+                <Setter Property="PanningRatio" Value="1" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <!--<Setter Property="HorizontalScrollBarVisibility" Value="Auto" />-->
+            </Style>
         </ResourceDictionary>
+
+
 
     </Application.Resources>
 </Application>

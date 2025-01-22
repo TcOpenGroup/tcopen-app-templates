@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoPlrPaletizator_Config_v_1_x_x" Id="{40331a64-d34d-4e00-8f43-18832ac075e3}">
+    <Declaration><![CDATA[TYPE
+    TcoPlrPaletizator_Config_v_1_x_x EXTENDS TcoFeeding_Config_v_1_x_x :
+    STRUCT
+		
+	{attribute addProperty Name "<#Vstupna zarazka (PR2) neaktivna#>"}
+	PR2_StopperConveyorEntry2Disabled : BOOL;
+	
+	{attribute addProperty Name "<#Pridrziavanie blistra (PR12) neaktivne#>"}
+	PR12_HorizontalHoldEntryBlisterDisabled:BOOL;
+	
+	{attribute addProperty Name "<#Automaticke stahovanie zarazky PR5 neaktivne#>"}
+	UseAutoHidePr5Dispabled:BOOL;
+	
+	{attribute addProperty Name "<#Cas behu vstupneho dopravnika#>"}
+	ConveyorEntryRunTime:TIME;
+	
+	{attribute addProperty Name "<#Cas behu vytupneho dopravnika#>"}
+	ConveyorOutRunTime:TIME;
+
+    END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

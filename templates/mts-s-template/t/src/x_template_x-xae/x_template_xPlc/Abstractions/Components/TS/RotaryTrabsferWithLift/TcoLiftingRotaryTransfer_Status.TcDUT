@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TcoLiftingRotaryTransfer_Status" Id="{8607e361-bfa6-4bca-9098-00584a439579}">
+    <Declaration><![CDATA[TYPE TcoLiftingRotaryTransfer_Status EXTENDS TcoCore.TcoStruct:
+STRUCT
+
+
+		ActionDescription:STRING;
+		
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
